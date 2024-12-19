@@ -15,9 +15,9 @@
             color: #ffffff;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
         }
 
         .gradient-bg {
@@ -44,27 +44,24 @@
             margin-bottom: 1rem;
             letter-spacing: 15px;
             text-transform: uppercase;
-            text-shadow: 0 0 30px rgba(26, 71, 42, 0.5);
             line-height: 1.2;
+            animation: subtleGlow 3s infinite ease-in-out;
         }
 
         .enterprises {
             font-size: 2rem;
             font-weight: 200;
             letter-spacing: 12px;
-            opacity: 0.9;
             margin-top: 0.5rem;
         }
 
         .tagline {
-            font-family: 'Jost', sans-serif;
             font-size: 1.3rem;
             font-weight: 300;
             margin-top: 3rem;
             opacity: 0;
             transform: translateY(20px);
             letter-spacing: 4px;
-            text-transform: capitalize;
         }
 
         .line {
@@ -76,42 +73,48 @@
             box-shadow: 0 0 15px rgba(26, 71, 42, 0.8);
         }
 
-        .email-widget {
+        .reach-out-btn {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: #1a472a;
-            padding: 10px 20px;
-            border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(26, 71, 42, 0.6);
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.3s ease;
-        }
-
-        .email-widget:hover {
-            background: #145028;
-        }
-
-        .email-widget a {
-            color: #ffffff;
+            padding: 12px 36px;
+            font-family: 'Jost', sans-serif;
             font-size: 1rem;
-            font-weight: 300;
-            text-decoration: none;
             letter-spacing: 2px;
+            color: #e5e5e5;
+            text-transform: uppercase;
+            background: linear-gradient(145deg, #0d301a, #0b2516);
+            border-radius: 30px;
+            border: 1px solid #1a472a;
+            box-shadow: 0 6px 15px rgba(10, 25, 15, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
         }
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        .reach-out-btn:hover {
+            background: linear-gradient(145deg, #162f23, #0d2617);
+            border-color: #2a6947;
+            box-shadow: 0 8px 20px rgba(10, 25, 15, 1);
+        }
+
+        .reach-out-btn:active {
+            background: linear-gradient(145deg, #0b2516, #081a10);
+            box-shadow: 0 4px 10px rgba(10, 25, 15, 0.6);
+        }
+
+        @keyframes subtleGlow {
+            0%, 100% { 
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                            0 0 20px rgba(255, 255, 255, 0.4),
+                            0 0 30px rgba(26, 71, 42, 0.4),
+                            0 0 40px rgba(26, 71, 42, 0.2);
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            50% { 
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.9),
+                            0 0 25px rgba(255, 255, 255, 0.5),
+                            0 0 35px rgba(26, 71, 42, 0.5),
+                            0 0 45px rgba(26, 71, 42, 0.3);
             }
         }
     </style>
@@ -127,23 +130,39 @@
         <div class="tagline">Illuminating The Path Forward</div>
     </div>
 
-    <div class="email-widget">
-        <a href="mailto:amadio@tyrrel.org">Email Us</a>
-    </div>
+    <!-- Reach Out Button -->
+    <button class="reach-out-btn" onclick="window.location.href='mailto:info@tyrrel.org'">Reach Out</button>
 
     <script>
-        gsap.to(".line", {
-            opacity: 1,
-            duration: 1.5,
-            delay: 0.5
-        });
+        const timeline = gsap.timeline({defaults: {ease: "power2.out"}});
         
-        gsap.to(".tagline", {
-            opacity: 0.9,
-            y: 0,
-            duration: 1.5,
-            delay: 1
-        });
+        function intensifyGlow() {
+            gsap.to(".logo", {
+                textShadow: "0 0 20px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.7), 0 0 40px rgba(26, 71, 42, 0.6), 0 0 50px rgba(26, 71, 42, 0.4)",
+                duration: 0.1,
+                yoyo: true,
+                repeat: 3,
+                onComplete: () => {
+                    gsap.to(".logo", {
+                        textShadow: "0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4), 0 0 30px rgba(26, 71, 42, 0.4), 0 0 40px rgba(26, 71, 42, 0.2)",
+                        duration: 0.2
+                    });
+                }
+            });
+        }
+
+        timeline
+            .to(".line", {
+                opacity: 1,
+                duration: 1.5,
+                delay: 0.5
+            })
+            .to(".tagline", {
+                opacity: 0.9,
+                y: 0,
+                duration: 1.5,
+                onStart: intensifyGlow
+            });
     </script>
 </body>
 </html>
