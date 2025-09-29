@@ -115,7 +115,7 @@
             opacity: 0.6;
         }
 
-        .gradient-bg.impact-active {
+        .gradient-bg.solutions-active {
             background: radial-gradient(ellipse at 75% center, 
                 rgba(26, 71, 42, 0.8) 0%, 
                 rgba(40, 85, 55, 0.6) 20%,
@@ -218,7 +218,7 @@
             background-image: url('https://raw.githubusercontent.com/tyrrelcorp/tyrrel.org/main/assets/images/film-still-car.jpg');
         }
 
-        .impact-portal .portal-background {
+        .solutions-portal .portal-background {
             background: radial-gradient(ellipse at center, rgba(40, 80, 50, 0.3) 0%, rgba(20, 45, 30, 0.2) 40%, transparent 70%);
         }
 
@@ -328,7 +328,7 @@
             color: #ffffff;
         }
 
-        .impact-portal .portal-title {
+        .solutions-portal .portal-title {
             color: #ffffff;
         }
 
@@ -336,7 +336,7 @@
             background: linear-gradient(135deg, rgba(20, 35, 25, 0.6) 0%, rgba(15, 28, 20, 0.8) 100%);
         }
 
-        .impact-portal:hover {
+        .solutions-portal:hover {
             background: linear-gradient(135deg, rgba(18, 40, 25, 0.6) 0%, rgba(12, 30, 18, 0.8) 100%);
         }
 
@@ -461,7 +461,7 @@
                 opacity: 0.8;
             }
             
-            .gradient-bg.impact-active {
+            .gradient-bg.solutions-active {
                 background: radial-gradient(ellipse at center bottom, 
                     rgba(40, 85, 55, 0.8) 0%, 
                     rgba(26, 71, 42, 0.9) 15%,
@@ -630,11 +630,11 @@
                     </div>
                 </div>
 
-                <div class="portal impact-portal" onclick="navigateToSection('impact')">
+                <div class="portal solutions-portal" onclick="navigateToSection('solutions')">
                     <div class="portal-background"></div>
                     <div class="portal-glow"></div>
                     <div class="portal-content">
-                        <h2 class="portal-title">Impact</h2>
+                        <h2 class="portal-title">Solutions</h2>
                         <p class="portal-subtitle">Community Transformation</p>
                         <p class="portal-description">
                             Transformative programs in conflict resolution and crisis response that create lasting change in our communities.
@@ -657,8 +657,8 @@
         function navigateToSection(section) {
             if (section === 'stories') {
                 window.location.href = '/stories';
-            } else if (section === 'impact') {
-                window.location.href = '/impact';
+            } else if (section === 'solutions') {
+                window.location.href = '/solutions';
             }
         }
 
@@ -728,9 +728,9 @@
                     const gradientBg = document.querySelector('.gradient-bg');
                     if (portal.classList.contains('stories-portal')) {
                         gradientBg.classList.add('stories-active');
-                        gradientBg.classList.remove('impact-active');
-                    } else if (portal.classList.contains('impact-portal')) {
-                        gradientBg.classList.add('impact-active');
+                        gradientBg.classList.remove('solutions-active');
+                    } else if (portal.classList.contains('solutions-portal')) {
+                        gradientBg.classList.add('solutions-active');
                         gradientBg.classList.remove('stories-active');
                     }
                 }
@@ -740,7 +740,7 @@
                 if (window.innerWidth <= 768) {
                     setTimeout(() => {
                         portal.classList.remove('active');
-                        document.querySelector('.gradient-bg').classList.remove('stories-active', 'impact-active');
+                        document.querySelector('.gradient-bg').classList.remove('stories-active', 'solutions-active');
                     }, 200);
                 }
             });
@@ -749,22 +749,22 @@
         // Enhanced hover effects for desktop background
         const gradientBg = document.querySelector('.gradient-bg');
         const storiesPortal = document.querySelector('.stories-portal');
-        const impactPortal = document.querySelector('.impact-portal');
+        const solutionsPortal = document.querySelector('.solutions-portal');
 
         if (isDesktop) {
             storiesPortal.addEventListener('mouseenter', () => {
                 gradientBg.classList.add('stories-active');
-                gradientBg.classList.remove('impact-active');
+                gradientBg.classList.remove('solutions-active');
             });
 
-            impactPortal.addEventListener('mouseenter', () => {
-                gradientBg.classList.add('impact-active');
+            solutionsPortal.addEventListener('mouseenter', () => {
+                gradientBg.classList.add('solutions-active');
                 gradientBg.classList.remove('stories-active');
             });
 
             document.addEventListener('mouseleave', (e) => {
                 if (!e.target.closest('.portal')) {
-                    gradientBg.classList.remove('stories-active', 'impact-active');
+                    gradientBg.classList.remove('stories-active', 'solutions-active');
                 }
             });
         }
