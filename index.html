@@ -20,6 +20,73 @@
             color: #ffffff;
             overflow-x: hidden;
             min-height: 100vh;
+            cursor: none;
+            touch-action: manipulation;
+        }
+
+        /* Custom cursor for desktop */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, 
+                rgba(220, 180, 80, 0.95) 0%,
+                rgba(180, 140, 60, 0.8) 40%,
+                rgba(26, 71, 42, 0.6) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(180, 140, 60, 0.8),
+                        0 0 30px rgba(26, 71, 42, 0.4);
+            transition: all 0.2s ease;
+            mix-blend-mode: screen;
+        }
+
+        .custom-cursor.hover-state {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, 
+                rgba(255, 220, 120, 1) 0%,
+                rgba(200, 160, 80, 0.9) 30%,
+                rgba(26, 71, 42, 0.7) 100%);
+            box-shadow: 0 0 25px rgba(255, 220, 120, 0.9),
+                        0 0 50px rgba(180, 140, 60, 0.6);
+        }
+
+        /* Mobile touch orb */
+        .mobile-orb {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle, 
+                rgba(220, 180, 80, 0.95) 0%,
+                rgba(180, 140, 60, 0.8) 40%,
+                rgba(26, 71, 42, 0.6) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(180, 140, 60, 0.8),
+                        0 0 30px rgba(26, 71, 42, 0.4);
+            opacity: 0;
+            transition: all 0.3s ease;
+            mix-blend-mode: screen;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+            
+            .custom-cursor {
+                display: none;
+            }
+            
+            .mobile-orb {
+                display: block;
+            }
         }
 
         .gradient-bg {
@@ -48,13 +115,41 @@
             opacity: 0.6;
         }
 
-        .gradient-bg.solutions-active {
+        .gradient-bg.impact-active {
             background: radial-gradient(ellipse at 75% center, 
                 rgba(26, 71, 42, 0.8) 0%, 
                 rgba(40, 85, 55, 0.6) 20%,
                 rgba(15, 40, 22, 0.8) 35%, 
                 rgba(8, 20, 12, 0.95) 65%);
             opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .gradient-bg {
+                background: radial-gradient(ellipse at center, 
+                    rgba(26, 71, 42, 0.8) 0%, 
+                    rgba(45, 80, 55, 0.6) 20%,
+                    rgba(13, 35, 20, 0.9) 35%, 
+                    rgba(8, 20, 12, 0.98) 60%);
+                opacity: 0.7;
+            }
+            
+            .gradient-bg.stories-active {
+                background: radial-gradient(ellipse at center top, 
+                    rgba(60, 90, 70, 0.8) 0%, 
+                    rgba(80, 120, 40, 0.5) 15%,
+                    rgba(45, 75, 55, 0.9) 25%,
+                    rgba(20, 45, 28, 0.95) 40%);
+                opacity: 0.8;
+            }
+            
+            .gradient-bg.impact-active {
+                background: radial-gradient(ellipse at center bottom, 
+                    rgba(40, 85, 55, 0.8) 0%, 
+                    rgba(26, 71, 42, 0.9) 15%,
+                    rgba(15, 40, 22, 0.95) 30%);
+                opacity: 0.8;
+            }
         }
 
         .container {
@@ -354,37 +449,153 @@
 
         @media (max-width: 768px) {
             .logo {
-                font-size: 3rem;
-                letter-spacing: 8px;
+                font-size: 2.8rem;
+                letter-spacing: 6px;
+                margin-bottom: 1rem;
             }
             
             .enterprises {
-                font-size: 1.5rem;
-                letter-spacing: 6px;
+                font-size: 1.4rem;
+                letter-spacing: 4px;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+                letter-spacing: 2px;
+                margin-top: 2rem;
+            }
+            
+            .header {
+                padding: 2rem 1rem 1.5rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+                margin-top: 0;
             }
             
             .portals-container {
                 grid-template-columns: 1fr;
-                gap: 3rem;
-                padding: 0 1rem;
+                gap: 2rem;
+                padding: 0;
+                max-width: 400px;
             }
             
             .portal {
-                height: 300px;
+                height: 280px;
+                border-radius: 16px;
+                border: 1px solid rgba(26, 71, 42, 0.4);
+                background: linear-gradient(135deg, 
+                    rgba(13, 25, 18, 0.6) 0%, 
+                    rgba(8, 18, 12, 0.8) 100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 8px 25px rgba(10, 25, 15, 0.3);
+            }
+            
+            .portal.active {
+                transform: translateY(-4px) scale(1.02);
+                border-color: rgba(180, 140, 60, 0.6);
+                box-shadow: 
+                    0 15px 35px rgba(10, 25, 15, 0.5),
+                    0 0 40px rgba(180, 140, 60, 0.3);
+                background: linear-gradient(135deg, 
+                    rgba(20, 35, 25, 0.8) 0%, 
+                    rgba(15, 28, 20, 0.9) 100%);
+            }
+            
+            .portal-content {
+                padding: 2.5rem 2rem;
             }
             
             .portal-title {
-                font-size: 2.2rem;
+                font-size: 2rem;
                 letter-spacing: 4px;
+                margin-bottom: 1rem;
+                transition: all 0.3s ease;
+            }
+            
+            .portal.active .portal-title {
+                letter-spacing: 6px;
+                transform: translateY(-3px);
+                color: rgba(220, 180, 80, 0.95);
+            }
+            
+            .portal-subtitle {
+                font-size: 0.9rem;
+                letter-spacing: 1.5px;
+                margin-bottom: 1.5rem;
+                opacity: 0.7;
+                transition: all 0.3s ease;
+            }
+            
+            .portal.active .portal-subtitle {
+                opacity: 1;
+                color: rgba(180, 140, 60, 0.9);
+            }
+            
+            .portal-description {
+                font-size: 1rem;
+                line-height: 1.5;
+                opacity: 0.6;
+                transform: translateY(10px);
+                transition: all 0.4s ease 0.1s;
+                letter-spacing: 0.5px;
+            }
+            
+            .portal.active .portal-description {
+                opacity: 0.9;
+                transform: translateY(0);
+                color: rgba(255, 255, 255, 0.9);
+            }
+            
+            .portal-background {
+                opacity: 0.1;
+                filter: blur(2px) contrast(1.3);
+            }
+            
+            .portal.active .portal-background {
+                opacity: 0.3;
+                filter: blur(0px) contrast(1.5);
+                transform: scale(1.1);
+            }
+            
+            .portal-glow {
+                display: none;
             }
             
             .divider {
                 display: none;
             }
+            
+            .center-icon {
+                display: none;
+            }
+            
+            .reach-out-btn {
+                bottom: 20px;
+                padding: 12px 32px;
+                font-size: 0.9rem;
+                letter-spacing: 1.5px;
+            }
+            
+            body {
+                cursor: auto;
+            }
+            
+            .custom-cursor {
+                display: none;
+            }
+            
+            .mobile-orb {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="custom-cursor"></div>
+    <div class="mobile-orb"></div>
+    
     <div class="gradient-bg"></div>
     
     <div class="container">
@@ -436,29 +647,121 @@
         function navigateToSection(section) {
             if (section === 'stories') {
                 window.location.href = '/stories';
-            } else if (section === 'solutions') {
-                window.location.href = '/solutions';
+            } else if (section === 'impact') {
+                window.location.href = '/impact';
             }
         }
 
-        // Enhanced hover effects for background
+        // Custom cursor system for desktop
+        const cursor = document.querySelector('.custom-cursor');
+        const mobileOrb = document.querySelector('.mobile-orb');
+        let isDesktop = window.innerWidth > 768;
+
+        // Desktop cursor tracking
+        if (isDesktop) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            // Cursor hover states
+            const hoverElements = document.querySelectorAll('.portal, .reach-out-btn, .logo');
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.classList.add('hover-state');
+                });
+                element.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('hover-state');
+                });
+            });
+        }
+
+        // Mobile touch orb system
+        function handleTouchInteraction(e) {
+            if (window.innerWidth <= 768) {
+                const touch = e.touches[0];
+                mobileOrb.style.left = touch.clientX + 'px';
+                mobileOrb.style.top = touch.clientY + 'px';
+                mobileOrb.style.opacity = '1';
+                
+                // Enhanced touch feedback
+                mobileOrb.style.transform = 'translate(-50%, -50%) scale(1.2)';
+                setTimeout(() => {
+                    mobileOrb.style.transform = 'translate(-50%, -50%) scale(1)';
+                }, 100);
+            }
+        }
+
+        // Mobile portal interactions
+        const portals = document.querySelectorAll('.portal');
+        portals.forEach(portal => {
+            portal.addEventListener('touchstart', (e) => {
+                if (window.innerWidth <= 768) {
+                    handleTouchInteraction(e);
+                    portal.classList.add('active');
+                    
+                    // Trigger background gradient change
+                    const gradientBg = document.querySelector('.gradient-bg');
+                    if (portal.classList.contains('stories-portal')) {
+                        gradientBg.classList.add('stories-active');
+                        gradientBg.classList.remove('impact-active');
+                    } else if (portal.classList.contains('impact-portal')) {
+                        gradientBg.classList.add('impact-active');
+                        gradientBg.classList.remove('stories-active');
+                    }
+                }
+            });
+
+            portal.addEventListener('touchend', (e) => {
+                if (window.innerWidth <= 768) {
+                    setTimeout(() => {
+                        mobileOrb.style.opacity = '0';
+                        portal.classList.remove('active');
+                        document.querySelector('.gradient-bg').classList.remove('stories-active', 'impact-active');
+                    }, 200);
+                }
+            });
+
+            portal.addEventListener('touchmove', (e) => {
+                if (window.innerWidth <= 768) {
+                    handleTouchInteraction(e);
+                    e.preventDefault(); // Prevent scrolling
+                }
+            });
+        });
+
+        // Enhanced hover effects for desktop background
         const gradientBg = document.querySelector('.gradient-bg');
         const storiesPortal = document.querySelector('.stories-portal');
-        const solutionsPortal = document.querySelector('.solutions-portal');
+        const impactPortal = document.querySelector('.impact-portal');
 
-        storiesPortal.addEventListener('mouseenter', () => {
-            gradientBg.classList.add('stories-active');
-            gradientBg.classList.remove('solutions-active');
-        });
+        if (isDesktop) {
+            storiesPortal.addEventListener('mouseenter', () => {
+                gradientBg.classList.add('stories-active');
+                gradientBg.classList.remove('impact-active');
+            });
 
-        solutionsPortal.addEventListener('mouseenter', () => {
-            gradientBg.classList.add('solutions-active');
-            gradientBg.classList.remove('stories-active');
-        });
+            impactPortal.addEventListener('mouseenter', () => {
+                gradientBg.classList.add('impact-active');
+                gradientBg.classList.remove('stories-active');
+            });
 
-        document.addEventListener('mouseleave', (e) => {
-            if (!e.target.closest('.portal')) {
-                gradientBg.classList.remove('stories-active', 'solutions-active');
+            document.addEventListener('mouseleave', (e) => {
+                if (!e.target.closest('.portal')) {
+                    gradientBg.classList.remove('stories-active', 'impact-active');
+                }
+            });
+        }
+
+        // Responsive handler
+        window.addEventListener('resize', () => {
+            isDesktop = window.innerWidth > 768;
+            if (!isDesktop) {
+                cursor.style.display = 'none';
+                mobileOrb.style.display = 'block';
+            } else {
+                cursor.style.display = 'block';
+                mobileOrb.style.display = 'none';
             }
         });
 
@@ -496,25 +799,17 @@
                 delay: 0.4
             }, "-=0.5");
 
-        // Subtle floating animation for center icon
-        gsap.to(".center-icon", {
-            y: -5,
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            ease: "power2.inOut",
-            delay: 2
-        });
-
-        // Ambient glow pulse animation
-        gsap.to(".center-icon::before", {
-            boxShadow: "0 0 25px rgba(26, 71, 42, 1)",
-            duration: 3,
-            repeat: -1,
-            yoyo: true,
-            ease: "power2.inOut",
-            delay: 3
-        });
+        // Subtle floating animation for center icon (desktop only)
+        if (isDesktop) {
+            gsap.to(".center-icon", {
+                y: -5,
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: "power2.inOut",
+                delay: 2
+            });
+        }
     </script>
 </body>
 </html>
