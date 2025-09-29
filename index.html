@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tyrrel Enterprises</title>
+    <title>Tyrrel Institute</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap');
@@ -24,6 +24,10 @@
             touch-action: manipulation;
         }
 
+        * {
+            cursor: none !important;
+        }
+
         /* Custom cursor for desktop */
         .custom-cursor {
             position: fixed;
@@ -39,7 +43,7 @@
             transform: translate(-50%, -50%);
             box-shadow: 0 0 15px rgba(180, 140, 60, 0.8),
                         0 0 30px rgba(26, 71, 42, 0.4);
-            transition: all 0.2s ease;
+            transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
             mix-blend-mode: screen;
         }
 
@@ -57,8 +61,8 @@
         /* Mobile touch orb */
         .mobile-orb {
             position: fixed;
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             background: radial-gradient(circle, 
                 rgba(220, 180, 80, 0.95) 0%,
                 rgba(180, 140, 60, 0.8) 40%,
@@ -67,10 +71,10 @@
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 15px rgba(180, 140, 60, 0.8),
-                        0 0 30px rgba(26, 71, 42, 0.4);
+            box-shadow: 0 0 20px rgba(180, 140, 60, 0.9),
+                        0 0 40px rgba(26, 71, 42, 0.5);
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: opacity 0.2s ease, transform 0.05s ease;
             mix-blend-mode: screen;
             display: none;
         }
@@ -89,6 +93,16 @@
             opacity: 0.4;
             z-index: 0;
             transition: all 2s ease-in-out;
+            animation: subtleGlow 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes subtleGlow {
+            0% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0.5;
+            }
         }
 
         .gradient-bg.stories-active {
@@ -426,6 +440,16 @@
                     rgba(13, 35, 20, 0.9) 35%, 
                     rgba(8, 20, 12, 0.98) 60%);
                 opacity: 0.7;
+                animation: subtleGlowMobile 4s infinite alternate ease-in-out;
+            }
+
+            @keyframes subtleGlowMobile {
+                0% {
+                    opacity: 0.6;
+                }
+                100% {
+                    opacity: 0.8;
+                }
             }
             
             .gradient-bg.stories-active {
@@ -587,7 +611,7 @@
         <header class="header">
             <div class="logo">
                 TYRREL
-                <div class="enterprises">ENTERPRISES</div>
+                <div class="enterprises">INSTITUTE</div>
             </div>
             <div class="tagline">Illuminating The Path Forward</div>
         </header>
@@ -662,28 +686,42 @@
             });
         }
 
-        // Mobile touch orb system
-        function handleTouchInteraction(e) {
+        // Mobile touch orb system - follows finger continuously
+        let touchActive = false;
+        
+        document.addEventListener('touchstart', (e) => {
             if (window.innerWidth <= 768) {
+                touchActive = true;
                 const touch = e.touches[0];
                 mobileOrb.style.left = touch.clientX + 'px';
                 mobileOrb.style.top = touch.clientY + 'px';
                 mobileOrb.style.opacity = '1';
-                
-                // Enhanced touch feedback
-                mobileOrb.style.transform = 'translate(-50%, -50%) scale(1.2)';
-                setTimeout(() => {
-                    mobileOrb.style.transform = 'translate(-50%, -50%) scale(1)';
-                }, 100);
             }
-        }
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (window.innerWidth <= 768 && touchActive) {
+                const touch = e.touches[0];
+                mobileOrb.style.left = touch.clientX + 'px';
+                mobileOrb.style.top = touch.clientY + 'px';
+                mobileOrb.style.opacity = '1';
+            }
+        });
+
+        document.addEventListener('touchend', () => {
+            if (window.innerWidth <= 768) {
+                touchActive = false;
+                setTimeout(() => {
+                    mobileOrb.style.opacity = '0';
+                }, 150);
+            }
+        });
 
         // Mobile portal interactions
         const portals = document.querySelectorAll('.portal');
         portals.forEach(portal => {
             portal.addEventListener('touchstart', (e) => {
                 if (window.innerWidth <= 768) {
-                    handleTouchInteraction(e);
                     portal.classList.add('active');
                     
                     // Trigger background gradient change
@@ -701,16 +739,9 @@
             portal.addEventListener('touchend', (e) => {
                 if (window.innerWidth <= 768) {
                     setTimeout(() => {
-                        mobileOrb.style.opacity = '0';
                         portal.classList.remove('active');
                         document.querySelector('.gradient-bg').classList.remove('stories-active', 'impact-active');
                     }, 200);
-                }
-            });
-
-            portal.addEventListener('touchmove', (e) => {
-                if (window.innerWidth <= 768) {
-                    handleTouchInteraction(e);
                 }
             });
         });
