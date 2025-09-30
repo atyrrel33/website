@@ -194,127 +194,6 @@
             transform: translateY(40px);
         }
 
-        /* The 5 S's Hero Section */
-        .five-s-hero {
-            margin-bottom: 8rem;
-            text-align: center;
-        }
-
-        .five-s-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            color: rgba(220, 180, 80, 0.95);
-            margin-bottom: 1rem;
-            transition: all 0.4s ease;
-        }
-
-        .five-s-subtitle {
-            font-size: 1rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            opacity: 0.6;
-            margin-bottom: 4rem;
-            text-transform: uppercase;
-        }
-
-        .five-s-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .s-card {
-            position: relative;
-            border-radius: 16px;
-            border: 1px solid rgba(26, 71, 42, 0.3);
-            background: linear-gradient(135deg, rgba(13, 25, 18, 0.4) 0%, rgba(8, 18, 12, 0.6) 100%);
-            padding: 2.5rem 1.5rem;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            overflow: hidden;
-        }
-
-        .s-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(135deg,
-                rgba(220, 180, 80, 0) 0%,
-                rgba(26, 71, 42, 0) 100%);
-            border-radius: 16px;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-
-        .s-card.proximity-glow::before {
-            opacity: 0.3;
-            background: linear-gradient(135deg,
-                rgba(220, 180, 80, 0.2) 0%,
-                rgba(26, 71, 42, 0.3) 100%);
-        }
-
-        .s-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(26, 71, 42, 0.7);
-            box-shadow: 0 20px 40px rgba(10, 25, 15, 0.4),
-                0 0 60px rgba(26, 71, 42, 0.3);
-        }
-
-        .s-number {
-            font-size: 5rem;
-            font-weight: 200;
-            color: rgba(220, 180, 80, 0.3);
-            line-height: 1;
-            margin-bottom: 1rem;
-            transition: all 0.4s ease;
-        }
-
-        .s-card:hover .s-number {
-            color: rgba(220, 180, 80, 0.8);
-            text-shadow: 0 0 20px rgba(220, 180, 80, 0.6);
-        }
-
-        .s-label {
-            font-size: 1.4rem;
-            font-weight: 400;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1rem;
-        }
-
-        .s-description {
-            font-size: 0.95rem;
-            font-weight: 300;
-            line-height: 1.6;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.5s ease 0.1s;
-            letter-spacing: 0.5px;
-        }
-
-        .s-card:hover .s-description {
-            opacity: 0.75;
-            transform: translateY(0);
-        }
-
-        .five-s-context {
-            font-size: 1.05rem;
-            font-weight: 300;
-            line-height: 1.8;
-            opacity: 0.65;
-            letter-spacing: 0.5px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
         /* Program Sections */
         .program-section {
             margin-bottom: 6rem;
@@ -625,51 +504,6 @@
                 padding: 0 1rem 3rem;
             }
 
-            .five-s-hero {
-                margin-bottom: 5rem;
-            }
-
-            .five-s-title {
-                font-size: 1.8rem;
-                letter-spacing: 4px;
-                margin-bottom: 0.5rem;
-            }
-
-            .five-s-subtitle {
-                font-size: 0.85rem;
-                letter-spacing: 1.5px;
-                margin-bottom: 2.5rem;
-            }
-
-            .five-s-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                margin-bottom: 2rem;
-            }
-
-            .s-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .s-number {
-                font-size: 3.5rem;
-            }
-
-            .s-label {
-                font-size: 1.2rem;
-                letter-spacing: 2px;
-            }
-
-            .s-description {
-                opacity: 0.7;
-                transform: translateY(0);
-            }
-
-            .five-s-context {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-
             .program-section {
                 margin-bottom: 4rem;
             }
@@ -764,48 +598,6 @@
         </header>
 
         <div class="content-container">
-            <!-- The 5 S's Hero Section -->
-            <section class="five-s-hero">
-                <h2 class="five-s-title">The 5 S's of Handling Your Business</h2>
-                <p class="five-s-subtitle">A Conflict Resolution Framework</p>
-                
-                <div class="five-s-grid">
-                    <div class="s-card">
-                        <div class="s-number">1</div>
-                        <div class="s-label">Slow Down</div>
-                        <p class="s-description">Don't react, respond. Take a breath.</p>
-                    </div>
-                    
-                    <div class="s-card">
-                        <div class="s-number">2</div>
-                        <div class="s-label">Size Up</div>
-                        <p class="s-description">Read the room. What's really happening here?</p>
-                    </div>
-                    
-                    <div class="s-card">
-                        <div class="s-number">3</div>
-                        <div class="s-label">Speak Smart</div>
-                        <p class="s-description">Keep everyone's dignity intact.</p>
-                    </div>
-                    
-                    <div class="s-card">
-                        <div class="s-number">4</div>
-                        <div class="s-label">Select A Move</div>
-                        <p class="s-description">Choose the smart move, not the emotional one.</p>
-                    </div>
-                    
-                    <div class="s-card">
-                        <div class="s-number">5</div>
-                        <div class="s-label">Shut It Down</div>
-                        <p class="s-description">End it right. Make sure it stays handled.</p>
-                    </div>
-                </div>
-                
-                <p class="five-s-context">
-                    Taught to incarcerated youth at Rockingham County Youth Development Center through a five-week intensive program.
-                </p>
-            </section>
-
             <!-- Juvenile Justice Program -->
             <section class="program-section">
                 <div class="program-header">
@@ -815,7 +607,7 @@
                 
                 <div class="program-content">
                     <p class="program-description">
-                        Working directly with incarcerated youth to teach practical conflict resolution skills through interactive learning, real-world scenarios, and the 5 S's framework.
+                        Working directly with incarcerated youth using The 5 S's of Handling Your Business—a conflict resolution framework that teaches practical de-escalation and decision-making skills through interactive learning and real-world scenarios.
                     </p>
                     
                     <div class="program-details">
@@ -874,7 +666,6 @@
         const mobileOrb = document.querySelector('.mobile-orb');
         const ambientLight = document.querySelector('.ambient-light');
         const logo = document.querySelector('.logo');
-        const sCards = document.querySelectorAll('.s-card');
         const programContents = document.querySelectorAll('.program-content');
         const scenarioCards = document.querySelectorAll('.scenario-card');
         const gradientBg = document.querySelector('.gradient-bg');
@@ -921,23 +712,6 @@
                 } else {
                     logo.classList.remove('illuminated');
                 }
-                
-                // S-card proximity detection
-                sCards.forEach(card => {
-                    const rect = card.getBoundingClientRect();
-                    const cardCenterX = rect.left + rect.width / 2;
-                    const cardCenterY = rect.top + rect.height / 2;
-                    const distanceToCard = Math.sqrt(
-                        Math.pow(mouseX - cardCenterX, 2) + 
-                        Math.pow(mouseY - cardCenterY, 2)
-                    );
-                    
-                    if (distanceToCard < 200) {
-                        card.classList.add('proximity-glow');
-                    } else {
-                        card.classList.remove('proximity-glow');
-                    }
-                });
                 
                 // Program content proximity detection
                 programContents.forEach(content => {
