@@ -28,7 +28,11 @@
             cursor: none !important;
         }
 
-        /* Custom cursor for desktop */
+        iframe {
+            cursor: auto !important;
+        }
+
+        /* Custom cursor - the orb itself */
         .custom-cursor {
             position: fixed;
             width: 20px;
@@ -39,11 +43,11 @@
                 rgba(26, 71, 42, 0.6) 100%);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 10001;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 15px rgba(180, 140, 60, 0.8),
                 0 0 30px rgba(26, 71, 42, 0.4);
-            transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            transition: width 0.2s ease, height 0.2s ease, opacity 0.3s ease;
             mix-blend-mode: screen;
         }
 
@@ -56,6 +60,33 @@
                 rgba(26, 71, 42, 0.7) 100%);
             box-shadow: 0 0 25px rgba(255, 220, 120, 0.9),
                 0 0 50px rgba(180, 140, 60, 0.6);
+        }
+
+        .custom-cursor.near-video {
+            opacity: 0.3;
+        }
+
+        /* Ambient halo that follows cursor with delay */
+        .cursor-halo {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle,
+                rgba(220, 180, 80, 0.15) 0%,
+                rgba(180, 140, 60, 0.08) 30%,
+                rgba(26, 71, 42, 0.04) 60%,
+                transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .cursor-halo.hover-state {
+            width: 300px;
+            height: 300px;
         }
 
         /* Mobile touch orb */
@@ -93,6 +124,7 @@
             opacity: 0.4;
             z-index: 0;
             animation: subtleGlow 4s infinite alternate ease-in-out;
+            transition: background 0.6s ease;
         }
 
         @keyframes subtleGlow {
@@ -100,9 +132,27 @@
             100% { opacity: 0.5; }
         }
 
+        /* Dynamic light source following cursor */
+        .ambient-light {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle,
+                rgba(220, 180, 80, 0.12) 0%,
+                rgba(26, 71, 42, 0.08) 30%,
+                transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
         .container {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -110,7 +160,7 @@
 
         .header {
             text-align: center;
-            padding: 4rem 2rem 2rem;
+            padding: 4rem 2rem 3rem;
             opacity: 0;
             transform: translateY(-30px);
         }
@@ -118,38 +168,17 @@
         .logo {
             font-size: 4.5rem;
             font-weight: 200;
-            margin-bottom: 0.5rem;
             letter-spacing: 15px;
             text-transform: uppercase;
             line-height: 1.1;
+            transition: text-shadow 0.3s ease, color 0.3s ease;
+            position: relative;
         }
 
-        .enterprises {
-            font-size: 2rem;
-            font-weight: 200;
-            letter-spacing: 12px;
-            opacity: 0.9;
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            font-weight: 300;
-            margin-top: 2.5rem;
-            opacity: 0.7;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-
-        .page-subtitle {
-            text-align: center;
-            font-size: 1.4rem;
-            font-weight: 300;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            opacity: 0.6;
-            margin: 3rem 0 4rem;
-            opacity: 0;
-            transform: translateY(20px);
+        .logo.illuminated {
+            text-shadow: 0 0 30px rgba(220, 180, 80, 0.6),
+                0 0 60px rgba(180, 140, 60, 0.3);
+            color: rgba(255, 255, 255, 1);
         }
 
         .films-container {
@@ -169,6 +198,31 @@
             background: linear-gradient(135deg, rgba(13, 25, 18, 0.4) 0%, rgba(8, 18, 12, 0.6) 100%);
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        /* Pre-hover glow based on proximity */
+        .film-module::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg,
+                rgba(220, 180, 80, 0) 0%,
+                rgba(26, 71, 42, 0) 100%);
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .film-module.proximity-glow::before {
+            opacity: 0.3;
+            background: linear-gradient(135deg,
+                rgba(220, 180, 80, 0.2) 0%,
+                rgba(26, 71, 42, 0.3) 100%);
         }
 
         .film-module:hover {
@@ -180,7 +234,7 @@
 
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             background: #000;
@@ -255,41 +309,15 @@
             transform: translateY(-3px);
         }
 
-        .reach-out-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 14px 40px;
-            font-family: 'Jost', sans-serif;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.9);
-            text-transform: uppercase;
-            background: linear-gradient(145deg, rgba(13, 35, 20, 0.7), rgba(8, 25, 15, 0.6));
-            border-radius: 50px;
-            border: 1px solid rgba(26, 71, 42, 0.6);
-            box-shadow: 0 8px 20px rgba(10, 25, 15, 0.4);
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-            z-index: 10;
-        }
-
-        .reach-out-btn:hover {
-            background: linear-gradient(145deg, rgba(20, 50, 30, 0.9), rgba(15, 35, 22, 0.8));
-            box-shadow: 0 12px 30px rgba(26, 71, 42, 0.6), 0 0 25px rgba(26, 71, 42, 0.5);
-            transform: translateX(-50%) translateY(-3px);
-        }
-
         /* Mobile Responsive Styles */
         @media (max-width: 768px) {
             body {
                 cursor: auto;
             }
 
-            .custom-cursor {
+            .custom-cursor,
+            .cursor-halo,
+            .ambient-light {
                 display: none;
             }
 
@@ -315,28 +343,10 @@
             .logo {
                 font-size: 2.8rem;
                 letter-spacing: 6px;
-                margin-bottom: 1rem;
-            }
-
-            .enterprises {
-                font-size: 1.4rem;
-                letter-spacing: 4px;
-            }
-
-            .tagline {
-                font-size: 1rem;
-                letter-spacing: 2px;
-                margin-top: 2rem;
             }
 
             .header {
-                padding: 2rem 1rem 1.5rem;
-            }
-
-            .page-subtitle {
-                font-size: 1.1rem;
-                letter-spacing: 3px;
-                margin: 2rem 0 3rem;
+                padding: 2rem 1rem 2rem;
             }
 
             .films-container {
@@ -372,19 +382,14 @@
                 font-size: 0.9rem;
                 letter-spacing: 1.5px;
             }
-
-            .reach-out-btn {
-                bottom: 20px;
-                padding: 12px 32px;
-                font-size: 0.9rem;
-                letter-spacing: 1.5px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="custom-cursor"></div>
+    <div class="cursor-halo"></div>
     <div class="mobile-orb"></div>
+    <div class="ambient-light"></div>
     
     <div class="gradient-bg"></div>
     
@@ -397,7 +402,7 @@
 
         <div class="films-container">
             <!-- MOVERS -->
-            <div class="film-module">
+            <div class="film-module" data-film="movers">
                 <div class="video-wrapper">
                     <iframe src="https://player.vimeo.com/video/1028655169?badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="MOVERS"></iframe>
                 </div>
@@ -408,7 +413,7 @@
             </div>
 
             <!-- JEGNA -->
-            <div class="film-module">
+            <div class="film-module" data-film="jegna">
                 <div class="video-wrapper">
                     <iframe src="https://player.vimeo.com/video/337594693?badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="JEGNA"></iframe>
                 </div>
@@ -419,7 +424,7 @@
             </div>
 
             <!-- WAREHOUSE #33 -->
-            <div class="film-module">
+            <div class="film-module" data-film="warehouse">
                 <div class="video-wrapper">
                     <iframe src="https://player.vimeo.com/video/545606028?badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="WAREHOUSE #33"></iframe>
                 </div>
@@ -433,31 +438,118 @@
         <div class="navigation">
             <a href="/" class="back-link">Return to Main Portal</a>
         </div>
-
-
     </div>
 
     <script>
-        // Custom cursor system for desktop
+        // Ambient illumination system
         const cursor = document.querySelector('.custom-cursor');
+        const halo = document.querySelector('.cursor-halo');
         const mobileOrb = document.querySelector('.mobile-orb');
+        const ambientLight = document.querySelector('.ambient-light');
+        const logo = document.querySelector('.logo');
+        const filmModules = document.querySelectorAll('.film-module');
+        const gradientBg = document.querySelector('.gradient-bg');
+        
         let isDesktop = window.innerWidth > 768;
+        let mouseX = 0;
+        let mouseY = 0;
+        let haloX = 0;
+        let haloY = 0;
 
-        // Desktop cursor tracking
+        // Desktop cursor and ambient lighting
         if (isDesktop) {
+            // Immediate cursor tracking
             document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+                ambientLight.style.left = mouseX + 'px';
+                ambientLight.style.top = mouseY + 'px';
+                
+                // Dynamic background gradient follows cursor
+                const xPercent = (mouseX / window.innerWidth) * 100;
+                const yPercent = (mouseY / window.innerHeight) * 100;
+                
+                gradientBg.style.background = `radial-gradient(ellipse at ${xPercent}% ${yPercent}%,
+                    rgba(26, 71, 42, 0.7) 0%,
+                    rgba(45, 80, 55, 0.5) 20%,
+                    rgba(13, 35, 20, 0.85) 35%,
+                    rgba(8, 20, 12, 0.95) 60%)`;
+                
+                // Header illumination based on proximity
+                const headerRect = logo.getBoundingClientRect();
+                const headerCenterX = headerRect.left + headerRect.width / 2;
+                const headerCenterY = headerRect.top + headerRect.height / 2;
+                const distanceToHeader = Math.sqrt(
+                    Math.pow(mouseX - headerCenterX, 2) + 
+                    Math.pow(mouseY - headerCenterY, 2)
+                );
+                
+                if (distanceToHeader < 250) {
+                    logo.classList.add('illuminated');
+                } else {
+                    logo.classList.remove('illuminated');
+                }
+                
+                // Film module proximity detection
+                filmModules.forEach(module => {
+                    const rect = module.getBoundingClientRect();
+                    const moduleCenterX = rect.left + rect.width / 2;
+                    const moduleCenterY = rect.top + rect.height / 2;
+                    const distanceToModule = Math.sqrt(
+                        Math.pow(mouseX - moduleCenterX, 2) + 
+                        Math.pow(mouseY - moduleCenterY, 2)
+                    );
+                    
+                    if (distanceToModule < 350) {
+                        module.classList.add('proximity-glow');
+                    } else {
+                        module.classList.remove('proximity-glow');
+                    }
+                    
+                    // Detect if cursor is over video iframe
+                    const videoWrapper = module.querySelector('.video-wrapper');
+                    const videoRect = videoWrapper.getBoundingClientRect();
+                    
+                    if (mouseX >= videoRect.left && mouseX <= videoRect.right &&
+                        mouseY >= videoRect.top && mouseY <= videoRect.bottom) {
+                        cursor.classList.add('near-video');
+                    } else {
+                        cursor.classList.remove('near-video');
+                    }
+                });
             });
-
-            // Cursor hover states
-            const hoverElements = document.querySelectorAll('.film-module, .back-link, .reach-out-btn, .logo');
+            
+            // Delayed halo following with smooth lerp
+            function animateHalo() {
+                const ease = 0.15;
+                haloX += (mouseX - haloX) * ease;
+                haloY += (mouseY - haloY) * ease;
+                
+                halo.style.left = haloX + 'px';
+                halo.style.top = haloY + 'px';
+                
+                requestAnimationFrame(animateHalo);
+            }
+            animateHalo();
+            
+            // Show ambient light after initial load
+            setTimeout(() => {
+                ambientLight.style.opacity = '1';
+            }, 1000);
+            
+            // Hover states for cursor and halo
+            const hoverElements = document.querySelectorAll('.film-module, .back-link, .logo');
             hoverElements.forEach(element => {
                 element.addEventListener('mouseenter', () => {
                     cursor.classList.add('hover-state');
+                    halo.classList.add('hover-state');
                 });
                 element.addEventListener('mouseleave', () => {
                     cursor.classList.remove('hover-state');
+                    halo.classList.remove('hover-state');
                 });
             });
         }
@@ -497,9 +589,13 @@
             isDesktop = window.innerWidth > 768;
             if (!isDesktop) {
                 cursor.style.display = 'none';
+                halo.style.display = 'none';
+                ambientLight.style.display = 'none';
                 mobileOrb.style.display = 'block';
             } else {
                 cursor.style.display = 'block';
+                halo.style.display = 'block';
+                ambientLight.style.display = 'block';
                 mobileOrb.style.display = 'none';
             }
         });
@@ -514,12 +610,6 @@
                 duration: 1.2,
                 delay: 0.3
             })
-            .to(".page-subtitle", {
-                opacity: 0.6,
-                y: 0,
-                duration: 1,
-                delay: 0.1
-            }, "-=0.6")
             .to(".films-container", {
                 opacity: 1,
                 y: 0,
@@ -530,12 +620,7 @@
                 opacity: 1,
                 duration: 1,
                 delay: 0.2
-            }, "-=0.8")
-            .to(".reach-out-btn", {
-                opacity: 1,
-                duration: 1,
-                delay: 0.2
-            }, "-=0.6");
+            }, "-=0.8");
     </script>
 </body>
 </html>
