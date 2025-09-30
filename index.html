@@ -460,6 +460,108 @@ box-shadow: 0 0 15px rgba(180, 140, 60, 0.8),
 0 0 30px rgba(26, 71, 42, 0.6);
 }
 
+/* Hybrid Project Bridge Section */
+.hybrid-bridge {
+padding: 4rem 2rem;
+max-width: 1000px;
+margin: 0 auto;
+opacity: 0;
+transform: translateY(30px);
+}
+
+.hybrid-project {
+border-radius: 20px;
+border: 1px solid rgba(26, 71, 42, 0.5);
+background: linear-gradient(135deg, rgba(8, 18, 12, 0.7) 0%, rgba(5, 12, 8, 0.9) 100%);
+padding: 3rem;
+text-align: center;
+position: relative;
+overflow: hidden;
+transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+backdrop-filter: blur(10px);
+}
+
+.hybrid-project::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: radial-gradient(ellipse at center,
+rgba(220, 180, 80, 0.08) 0%,
+transparent 60%);
+opacity: 0.5;
+}
+
+.hybrid-project::after {
+content: '';
+position: absolute;
+top: -2px;
+left: -2px;
+right: -2px;
+bottom: -2px;
+background: linear-gradient(135deg,
+rgba(220, 180, 80, 0) 0%,
+rgba(26, 71, 42, 0) 100%);
+border-radius: 20px;
+opacity: 0;
+transition: opacity 0.4s ease;
+z-index: -1;
+}
+
+.hybrid-project.proximity-glow::after {
+opacity: 0.3;
+background: linear-gradient(135deg,
+rgba(220, 180, 80, 0.2) 0%,
+rgba(26, 71, 42, 0.3) 100%);
+}
+
+.hybrid-project:hover {
+transform: translateY(-4px);
+border-color: rgba(26, 71, 42, 0.8);
+box-shadow: 0 20px 40px rgba(10, 25, 15, 0.5),
+0 0 60px rgba(26, 71, 42, 0.4);
+}
+
+.hybrid-badge {
+display: inline-block;
+padding: 0.5rem 1.5rem;
+border: 1px solid rgba(220, 180, 80, 0.5);
+border-radius: 30px;
+font-size: 0.85rem;
+font-weight: 400;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 1.5rem;
+position: relative;
+z-index: 1;
+}
+
+.hybrid-title {
+font-size: 2rem;
+font-weight: 300;
+letter-spacing: 5px;
+text-transform: uppercase;
+color: rgba(255, 255, 255, 0.9);
+margin-bottom: 1.5rem;
+position: relative;
+z-index: 1;
+}
+
+.hybrid-description {
+font-size: 1.05rem;
+font-weight: 300;
+line-height: 1.8;
+opacity: 0.7;
+letter-spacing: 0.5px;
+max-width: 700px;
+margin: 0 auto;
+position: relative;
+z-index: 1;
+}
+
 .reach-out-btn {
 position: fixed;
 bottom: 30px;
@@ -662,6 +764,24 @@ display: none;
 display: none;
 }
 
+.hybrid-bridge {
+padding: 2rem 1rem;
+}
+
+.hybrid-project {
+padding: 2rem 1.5rem;
+}
+
+.hybrid-title {
+font-size: 1.5rem;
+letter-spacing: 3px;
+}
+
+.hybrid-description {
+font-size: 0.95rem;
+line-height: 1.6;
+}
+
 .reach-out-btn {
 bottom: 20px;
 padding: 12px 32px;
@@ -743,6 +863,7 @@ const logo = document.querySelector('.logo');
 const tagline = document.querySelector('.tagline');
 const centerIcon = document.querySelector('.center-icon');
 const portals = document.querySelectorAll('.portal');
+const hybridProject = document.querySelector('.hybrid-project');
 const gradientBg = document.querySelector('.gradient-bg');
 
 let isDesktop = window.innerWidth > 768;
@@ -977,6 +1098,12 @@ scale: 1,
 duration: 1,
 delay: 0.2
 }, "-=0.6")
+.to(".hybrid-bridge", {
+opacity: 1,
+y: 0,
+duration: 1.2,
+delay: 0.2
+}, "-=0.4")
 .to(".reach-out-btn", {
 opacity: 1,
 duration: 1,
