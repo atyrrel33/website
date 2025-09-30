@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solutions | Tyrrel Institute</title>
+    <title>Stories | Tyrrel Institute</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap');
@@ -26,6 +26,10 @@
 
         * {
             cursor: none !important;
+        }
+
+        iframe {
+            cursor: auto !important;
         }
 
         /* Custom cursor - the orb itself */
@@ -56,6 +60,10 @@
                 rgba(26, 71, 42, 0.7) 100%);
             box-shadow: 0 0 25px rgba(255, 220, 120, 0.9),
                 0 0 50px rgba(180, 140, 60, 0.6);
+        }
+
+        .custom-cursor.near-video {
+            opacity: 0.3;
         }
 
         /* Ambient halo that follows cursor with delay */
@@ -173,19 +181,7 @@
             color: rgba(255, 255, 255, 1);
         }
 
-        .mission-statement {
-            font-size: 1.2rem;
-            font-weight: 300;
-            line-height: 1.8;
-            opacity: 0.7;
-            letter-spacing: 1px;
-            margin-top: 2rem;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .content-container {
+        .films-container {
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
@@ -194,356 +190,94 @@
             transform: translateY(40px);
         }
 
-        /* The 5 S's Hero Section */
-        .five-s-hero {
-            margin-bottom: 8rem;
-            text-align: center;
+        .film-module {
+            margin-bottom: 6rem;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(26, 71, 42, 0.3);
+            background: linear-gradient(135deg, rgba(13, 25, 18, 0.4) 0%, rgba(8, 18, 12, 0.6) 100%);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
         }
 
-        .five-s-title {
-            font-size: 2.5rem;
+        /* Pre-hover glow based on proximity */
+        .film-module::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg,
+                rgba(220, 180, 80, 0) 0%,
+                rgba(26, 71, 42, 0) 100%);
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .film-module.proximity-glow::before {
+            opacity: 0.3;
+            background: linear-gradient(135deg,
+                rgba(220, 180, 80, 0.2) 0%,
+                rgba(26, 71, 42, 0.3) 100%);
+        }
+
+        .film-module:hover {
+            border-color: rgba(26, 71, 42, 0.7);
+            box-shadow: 0 20px 40px rgba(10, 25, 15, 0.4),
+                0 0 60px rgba(26, 71, 42, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .film-info {
+            padding: 2.5rem;
+        }
+
+        .film-title {
+            font-size: 2.2rem;
             font-weight: 300;
             letter-spacing: 8px;
             text-transform: uppercase;
+            margin-bottom: 1.5rem;
             color: rgba(220, 180, 80, 0.95);
-            margin-bottom: 1rem;
             transition: all 0.4s ease;
         }
 
-        .five-s-subtitle {
-            font-size: 1rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            opacity: 0.6;
-            margin-bottom: 4rem;
-            text-transform: uppercase;
+        .film-module:hover .film-title {
+            letter-spacing: 10px;
         }
 
-        .five-s-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .s-card {
-            position: relative;
-            border-radius: 16px;
-            border: 1px solid rgba(26, 71, 42, 0.3);
-            background: linear-gradient(135deg, rgba(13, 25, 18, 0.4) 0%, rgba(8, 18, 12, 0.6) 100%);
-            padding: 2.5rem 1.5rem;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            overflow: hidden;
-        }
-
-        .s-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(135deg,
-                rgba(220, 180, 80, 0) 0%,
-                rgba(26, 71, 42, 0) 100%);
-            border-radius: 16px;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-
-        .s-card.proximity-glow::before {
-            opacity: 0.3;
-            background: linear-gradient(135deg,
-                rgba(220, 180, 80, 0.2) 0%,
-                rgba(26, 71, 42, 0.3) 100%);
-        }
-
-        .s-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(26, 71, 42, 0.7);
-            box-shadow: 0 20px 40px rgba(10, 25, 15, 0.4),
-                0 0 60px rgba(26, 71, 42, 0.3);
-        }
-
-        .s-number {
-            font-size: 5rem;
-            font-weight: 200;
-            color: rgba(220, 180, 80, 0.3);
-            line-height: 1;
-            margin-bottom: 1rem;
-            transition: all 0.4s ease;
-        }
-
-        .s-card:hover .s-number {
-            color: rgba(220, 180, 80, 0.8);
-            text-shadow: 0 0 20px rgba(220, 180, 80, 0.6);
-        }
-
-        .s-label {
-            font-size: 1.4rem;
-            font-weight: 400;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1rem;
-        }
-
-        .s-description {
-            font-size: 0.95rem;
-            font-weight: 300;
-            line-height: 1.6;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.5s ease 0.1s;
-            letter-spacing: 0.5px;
-        }
-
-        .s-card:hover .s-description {
-            opacity: 0.75;
-            transform: translateY(0);
-        }
-
-        .five-s-context {
-            font-size: 1.05rem;
-            font-weight: 300;
-            line-height: 1.8;
-            opacity: 0.65;
-            letter-spacing: 0.5px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Program Sections */
-        .program-section {
-            margin-bottom: 6rem;
-        }
-
-        .program-header {
-            margin-bottom: 2.5rem;
-            text-align: center;
-        }
-
-        .program-title {
-            font-size: 2.2rem;
-            font-weight: 300;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            color: rgba(220, 180, 80, 0.95);
-            margin-bottom: 1rem;
-        }
-
-        .program-subtitle {
-            font-size: 1rem;
-            font-weight: 300;
-            letter-spacing: 1.5px;
-            opacity: 0.6;
-            text-transform: uppercase;
-        }
-
-        .program-content {
-            border-radius: 20px;
-            border: 1px solid rgba(26, 71, 42, 0.3);
-            background: linear-gradient(135deg, rgba(13, 25, 18, 0.4) 0%, rgba(8, 18, 12, 0.6) 100%);
-            padding: 3rem;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            position: relative;
-        }
-
-        .program-content::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(135deg,
-                rgba(220, 180, 80, 0) 0%,
-                rgba(26, 71, 42, 0) 100%);
-            border-radius: 20px;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-
-        .program-content.proximity-glow::before {
-            opacity: 0.3;
-            background: linear-gradient(135deg,
-                rgba(220, 180, 80, 0.2) 0%,
-                rgba(26, 71, 42, 0.3) 100%);
-        }
-
-        .program-content:hover {
-            transform: translateY(-4px);
-            border-color: rgba(26, 71, 42, 0.7);
-            box-shadow: 0 20px 40px rgba(10, 25, 15, 0.4),
-                0 0 60px rgba(26, 71, 42, 0.3);
-        }
-
-        .program-description {
+        .film-logline {
             font-size: 1.1rem;
             font-weight: 300;
             line-height: 1.8;
             opacity: 0.75;
-            letter-spacing: 0.5px;
-            text-align: center;
-        }
-
-        .program-details {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 2.5rem;
-            flex-wrap: wrap;
-        }
-
-        .detail-item {
-            text-align: center;
-        }
-
-        .detail-label {
-            font-size: 0.85rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 0.5;
-            margin-bottom: 0.5rem;
-        }
-
-        .detail-value {
-            font-size: 1.3rem;
-            font-weight: 300;
             letter-spacing: 1px;
-            color: rgba(220, 180, 80, 0.95);
+            transition: all 0.4s ease;
         }
 
-        /* Crisis Response Section */
-        .crisis-scenarios {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .scenario-card {
-            border-radius: 16px;
-            border: 1px solid rgba(26, 71, 42, 0.3);
-            background: linear-gradient(135deg, rgba(13, 25, 18, 0.4) 0%, rgba(8, 18, 12, 0.6) 100%);
-            padding: 2rem;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            position: relative;
-        }
-
-        .scenario-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(135deg,
-                rgba(220, 180, 80, 0) 0%,
-                rgba(26, 71, 42, 0) 100%);
-            border-radius: 16px;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-
-        .scenario-card.proximity-glow::before {
-            opacity: 0.3;
-            background: linear-gradient(135deg,
-                rgba(220, 180, 80, 0.2) 0%,
-                rgba(26, 71, 42, 0.3) 100%);
-        }
-
-        .scenario-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(26, 71, 42, 0.7);
-            box-shadow: 0 15px 35px rgba(10, 25, 15, 0.4),
-                0 0 50px rgba(26, 71, 42, 0.3);
-        }
-
-        .scenario-title {
-            font-size: 1.3rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: rgba(220, 180, 80, 0.95);
-            margin-bottom: 1rem;
-        }
-
-        .scenario-description {
-            font-size: 1rem;
-            font-weight: 300;
-            line-height: 1.7;
-            opacity: 0.7;
-            letter-spacing: 0.5px;
-        }
-
-        /* Hybrid Project Teaser */
-        .hybrid-project {
-            border-radius: 20px;
-            border: 1px solid rgba(26, 71, 42, 0.5);
-            background: linear-gradient(135deg, rgba(8, 18, 12, 0.7) 0%, rgba(5, 12, 8, 0.9) 100%);
-            padding: 3rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hybrid-project::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at center,
-                rgba(220, 180, 80, 0.08) 0%,
-                transparent 60%);
-            opacity: 0.5;
-        }
-
-        .hybrid-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            border: 1px solid rgba(220, 180, 80, 0.5);
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: rgba(220, 180, 80, 0.95);
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hybrid-title {
-            font-size: 2rem;
-            font-weight: 300;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hybrid-description {
-            font-size: 1.05rem;
-            font-weight: 300;
-            line-height: 1.8;
-            opacity: 0.7;
-            letter-spacing: 0.5px;
-            max-width: 700px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
+        .film-module:hover .film-logline {
+            opacity: 0.95;
         }
 
         .navigation {
@@ -615,123 +349,27 @@
                 padding: 2rem 1rem 2rem;
             }
 
-            .mission-statement {
-                font-size: 1rem;
-                line-height: 1.6;
-                margin-top: 1.5rem;
-            }
-
-            .content-container {
+            .films-container {
                 padding: 0 1rem 3rem;
             }
 
-            .five-s-hero {
-                margin-bottom: 5rem;
-            }
-
-            .five-s-title {
-                font-size: 1.8rem;
-                letter-spacing: 4px;
-                margin-bottom: 0.5rem;
-            }
-
-            .five-s-subtitle {
-                font-size: 0.85rem;
-                letter-spacing: 1.5px;
-                margin-bottom: 2.5rem;
-            }
-
-            .five-s-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                margin-bottom: 2rem;
-            }
-
-            .s-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .s-number {
-                font-size: 3.5rem;
-            }
-
-            .s-label {
-                font-size: 1.2rem;
-                letter-spacing: 2px;
-            }
-
-            .s-description {
-                opacity: 0.7;
-                transform: translateY(0);
-            }
-
-            .five-s-context {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-
-            .program-section {
+            .film-module {
                 margin-bottom: 4rem;
+                border-radius: 16px;
             }
 
-            .program-title {
+            .film-info {
+                padding: 2rem 1.5rem;
+            }
+
+            .film-title {
                 font-size: 1.6rem;
-                letter-spacing: 3px;
+                letter-spacing: 4px;
+                margin-bottom: 1rem;
             }
 
-            .program-subtitle {
-                font-size: 0.85rem;
-                letter-spacing: 1px;
-            }
-
-            .program-content {
-                padding: 2rem 1.5rem;
-            }
-
-            .program-description {
+            .film-logline {
                 font-size: 1rem;
-                line-height: 1.6;
-            }
-
-            .program-details {
-                gap: 2rem;
-                margin-top: 2rem;
-            }
-
-            .detail-value {
-                font-size: 1.1rem;
-            }
-
-            .crisis-scenarios {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .scenario-card {
-                padding: 1.5rem;
-            }
-
-            .scenario-title {
-                font-size: 1.1rem;
-                letter-spacing: 1.5px;
-            }
-
-            .scenario-description {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-
-            .hybrid-project {
-                padding: 2rem 1.5rem;
-            }
-
-            .hybrid-title {
-                font-size: 1.5rem;
-                letter-spacing: 3px;
-            }
-
-            .hybrid-description {
-                font-size: 0.95rem;
                 line-height: 1.6;
             }
 
@@ -757,109 +395,44 @@
     
     <div class="container">
         <header class="header">
-            <div class="logo">SOLUTIONS</div>
-            <p class="mission-statement">
-                Teaching conflict resolution and crisis response skills that create lasting behavioral change.
-            </p>
+            <div class="logo">
+                STORIES
+            </div>
         </header>
 
-        <div class="content-container">
-            <!-- The 5 S's Hero Section -->
-            <section class="five-s-hero">
-                <h2 class="five-s-title">The 5 S's of Handling Your Business</h2>
-                <p class="five-s-subtitle">A Conflict Resolution Framework</p>
-                
-                <div class="five-s-grid">
-                    <div class="s-card">
-                        <div class="s-number">1</div>
-                        <div class="s-label">Slow Down</div>
-                        <p class="s-description">Don't react, respond. Take a breath.</p>
-                    </div>
-                    
-                    <div class="s-card">
-                        <div class="s-number">2</div>
-                        <div class="s-label">Size Up</div>
-                        <p class="s-description">Read the room. What's really happening here?</p>
-                    </div>
-                    
-                    <div class="s-card">
-                        <div class="s-number">3</div>
-                        <div class="s-label">Speak Smart</div>
-                        <p class="s-description">Keep everyone's dignity intact.</p>
-                    </div>
-                    
-                    <div class="s-card">
-                        <div class="s-number">4</div>
-                        <div class="s-label">Select A Move</div>
-                        <p class="s-description">Choose the smart move, not the emotional one.</p>
-                    </div>
-                    
-                    <div class="s-card">
-                        <div class="s-number">5</div>
-                        <div class="s-label">Shut It Down</div>
-                        <p class="s-description">End it right. Make sure it stays handled.</p>
-                    </div>
+        <div class="films-container">
+            <!-- MOVERS -->
+            <div class="film-module" data-film="movers">
+                <div class="video-wrapper">
+                    <iframe src="https://player.vimeo.com/video/1028655169?badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="MOVERS"></iframe>
                 </div>
-                
-                <p class="five-s-context">
-                    Taught to incarcerated youth at Rockingham County Youth Development Center through a five-week intensive program.
-                </p>
-            </section>
+                <div class="film-info">
+                    <h2 class="film-title">Movers</h2>
+                    <p class="film-logline">Two brothers set out to rob their third and final corner store, but are intercepted by a mysterious figure before they can finish.</p>
+                </div>
+            </div>
 
-            <!-- Juvenile Justice Program -->
-            <section class="program-section">
-                <div class="program-header">
-                    <h3 class="program-title">Juvenile Justice Program</h3>
-                    <p class="program-subtitle">Conflict Resolution Training</p>
+            <!-- JEGNA -->
+            <div class="film-module" data-film="jegna">
+                <div class="video-wrapper">
+                    <iframe src="https://player.vimeo.com/video/337594693?badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="JEGNA"></iframe>
                 </div>
-                
-                <div class="program-content">
-                    <p class="program-description">
-                        Working directly with incarcerated youth to teach practical conflict resolution skills through interactive learning, real-world scenarios, and the 5 S's framework.
-                    </p>
-                    
-                    <div class="program-details">
-                        <div class="detail-item">
-                            <div class="detail-label">Duration</div>
-                            <div class="detail-value">5 Weeks</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Location</div>
-                            <div class="detail-value">Rockingham County YDC</div>
-                        </div>
-                    </div>
+                <div class="film-info">
+                    <h2 class="film-title">Jegna</h2>
+                    <p class="film-logline">A young boy escapes from his foster home to spend a therapeutic day with his older brother.</p>
                 </div>
-            </section>
+            </div>
 
-            <!-- Crisis Response Training -->
-            <section class="program-section">
-                <div class="program-header">
-                    <h3 class="program-title">Crisis Response Training</h3>
-                    <p class="program-subtitle">Real-Time Scenario Work</p>
+            <!-- WAREHOUSE #33 -->
+            <div class="film-module" data-film="warehouse">
+                <div class="video-wrapper">
+                    <iframe src="https://player.vimeo.com/video/545606028?badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="WAREHOUSE #33"></iframe>
                 </div>
-                
-                <div class="crisis-scenarios">
-                    <div class="scenario-card">
-                        <h4 class="scenario-title">Overdose Response</h4>
-                        <p class="scenario-description">
-                            Crisis teams encounter a simulated overdose victim. Training focuses on assessment, de-escalation, and managing stress reactions in real-time.
-                        </p>
-                    </div>
-                    
-                    <div class="scenario-card">
-                        <h4 class="scenario-title">Domestic Disturbance</h4>
-                        <p class="scenario-description">
-                            Teams navigate a volatile domestic situation between actors. Emphasis on reading emotional escalation, maintaining safety, and finding resolution pathways.
-                        </p>
-                    </div>
+                <div class="film-info">
+                    <h2 class="film-title">Warehouse #33</h2>
+                    <p class="film-logline">A young man starts a new job and finds it difficult to follow the rules set by the rebellious workers.</p>
                 </div>
-                
-                <div class="program-content" style="margin-top: 2rem;">
-                    <p class="program-description">
-                        Experiential training for social workers and crisis response teams through immersive roleplay scenarios. Partnership with Durham HEART community safety initiative.
-                    </p>
-                </div>
-            </section>
+            </div>
         </div>
 
         <div class="navigation">
@@ -874,9 +447,7 @@
         const mobileOrb = document.querySelector('.mobile-orb');
         const ambientLight = document.querySelector('.ambient-light');
         const logo = document.querySelector('.logo');
-        const sCards = document.querySelectorAll('.s-card');
-        const programContents = document.querySelectorAll('.program-content');
-        const scenarioCards = document.querySelectorAll('.scenario-card');
+        const filmModules = document.querySelectorAll('.film-module');
         const gradientBg = document.querySelector('.gradient-bg');
         
         let isDesktop = window.innerWidth > 768;
@@ -922,54 +493,31 @@
                     logo.classList.remove('illuminated');
                 }
                 
-                // S-card proximity detection
-                sCards.forEach(card => {
-                    const rect = card.getBoundingClientRect();
-                    const cardCenterX = rect.left + rect.width / 2;
-                    const cardCenterY = rect.top + rect.height / 2;
-                    const distanceToCard = Math.sqrt(
-                        Math.pow(mouseX - cardCenterX, 2) + 
-                        Math.pow(mouseY - cardCenterY, 2)
+                // Film module proximity detection
+                filmModules.forEach(module => {
+                    const rect = module.getBoundingClientRect();
+                    const moduleCenterX = rect.left + rect.width / 2;
+                    const moduleCenterY = rect.top + rect.height / 2;
+                    const distanceToModule = Math.sqrt(
+                        Math.pow(mouseX - moduleCenterX, 2) + 
+                        Math.pow(mouseY - moduleCenterY, 2)
                     );
                     
-                    if (distanceToCard < 200) {
-                        card.classList.add('proximity-glow');
+                    if (distanceToModule < 350) {
+                        module.classList.add('proximity-glow');
                     } else {
-                        card.classList.remove('proximity-glow');
+                        module.classList.remove('proximity-glow');
                     }
-                });
-                
-                // Program content proximity detection
-                programContents.forEach(content => {
-                    const rect = content.getBoundingClientRect();
-                    const contentCenterX = rect.left + rect.width / 2;
-                    const contentCenterY = rect.top + rect.height / 2;
-                    const distanceToContent = Math.sqrt(
-                        Math.pow(mouseX - contentCenterX, 2) + 
-                        Math.pow(mouseY - contentCenterY, 2)
-                    );
                     
-                    if (distanceToContent < 350) {
-                        content.classList.add('proximity-glow');
-                    } else {
-                        content.classList.remove('proximity-glow');
-                    }
-                });
-                
-                // Scenario card proximity detection
-                scenarioCards.forEach(card => {
-                    const rect = card.getBoundingClientRect();
-                    const cardCenterX = rect.left + rect.width / 2;
-                    const cardCenterY = rect.top + rect.height / 2;
-                    const distanceToCard = Math.sqrt(
-                        Math.pow(mouseX - cardCenterX, 2) + 
-                        Math.pow(mouseY - cardCenterY, 2)
-                    );
+                    // Detect if cursor is over video iframe
+                    const videoWrapper = module.querySelector('.video-wrapper');
+                    const videoRect = videoWrapper.getBoundingClientRect();
                     
-                    if (distanceToCard < 250) {
-                        card.classList.add('proximity-glow');
+                    if (mouseX >= videoRect.left && mouseX <= videoRect.right &&
+                        mouseY >= videoRect.top && mouseY <= videoRect.bottom) {
+                        cursor.classList.add('near-video');
                     } else {
-                        card.classList.remove('proximity-glow');
+                        cursor.classList.remove('near-video');
                     }
                 });
             });
@@ -993,7 +541,7 @@
             }, 1000);
             
             // Hover states for cursor and halo
-            const hoverElements = document.querySelectorAll('.s-card, .program-content, .scenario-card, .back-link, .logo');
+            const hoverElements = document.querySelectorAll('.film-module, .back-link, .logo');
             hoverElements.forEach(element => {
                 element.addEventListener('mouseenter', () => {
                     cursor.classList.add('hover-state');
@@ -1062,7 +610,7 @@
                 duration: 1.2,
                 delay: 0.3
             })
-            .to(".content-container", {
+            .to(".films-container", {
                 opacity: 1,
                 y: 0,
                 duration: 1.4,
