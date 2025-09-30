@@ -544,7 +544,7 @@ font-size: 2rem;
 font-weight: 300;
 letter-spacing: 5px;
 text-transform: uppercase;
-color: rgba(255, 255, 255, 0.9);
+color: rgba(220, 180, 80, 0.95);
 margin-bottom: 1.5rem;
 position: relative;
 z-index: 1;
@@ -839,6 +839,17 @@ Transformative programs in conflict resolution and crisis response that create l
 <div class="center-icon"></div>
 </main>
 
+<!-- Hybrid Project Bridge -->
+<section class="hybrid-bridge">
+<div class="hybrid-project">
+<div class="hybrid-badge">Coming Soon</div>
+<h3 class="hybrid-title">The Bridge</h3>
+<p class="hybrid-description">
+A cinematic work that lives at the intersection of narrative fiction and documentary truth—uniting Stories and Solutions to explore conflict resolution through both imagined and real human experience.
+</p>
+</div>
+</section>
+
 <button class="reach-out-btn" onclick="window.location.href='mailto:info@tyrrel.org'">
 Reach Out
 </button>
@@ -895,232 +906,247 @@ rgba(13, 35, 20, 0.85) 35%,
 rgba(8, 20, 12, 0.95) 60%)`;
 
 // Header illumination based on proximity
-const headerRect = logo.getBoundingClientRect();
-const headerCenterX = headerRect.left + headerRect.width / 2;
-const headerCenterY = headerRect.top + headerRect.height / 2;
-const distanceToHeader = Math.sqrt(
-Math.pow(mouseX - headerCenterX, 2) +
-Math.pow(mouseY - headerCenterY, 2)
-);
+                const headerRect = logo.getBoundingClientRect();
+                const headerCenterX = headerRect.left + headerRect.width / 2;
+                const headerCenterY = headerRect.top + headerRect.height / 2;
+                const distanceToHeader = Math.sqrt(
+                    Math.pow(mouseX - headerCenterX, 2) +
+                    Math.pow(mouseY - headerCenterY, 2)
+                );
 
-if (distanceToHeader < 300) {
-logo.classList.add('illuminated');
-tagline.classList.add('illuminated');
-} else {
-logo.classList.remove('illuminated');
-tagline.classList.remove('illuminated');
-}
+                if (distanceToHeader < 300) {
+                    logo.classList.add('illuminated');
+                    tagline.classList.add('illuminated');
+                } else {
+                    logo.classList.remove('illuminated');
+                    tagline.classList.remove('illuminated');
+                }
 
-// Center icon illumination
-const iconRect = centerIcon.getBoundingClientRect();
-const iconCenterX = iconRect.left + iconRect.width / 2;
-const iconCenterY = iconRect.top + iconRect.height / 2;
-const distanceToIcon = Math.sqrt(
-Math.pow(mouseX - iconCenterX, 2) +
-Math.pow(mouseY - iconCenterY, 2)
-);
+                // Center icon illumination
+                const iconRect = centerIcon.getBoundingClientRect();
+                const iconCenterX = iconRect.left + iconRect.width / 2;
+                const iconCenterY = iconRect.top + iconRect.height / 2;
+                const distanceToIcon = Math.sqrt(
+                    Math.pow(mouseX - iconCenterX, 2) +
+                    Math.pow(mouseY - iconCenterY, 2)
+                );
 
-if (distanceToIcon < 150) {
-centerIcon.classList.add('illuminated');
-} else {
-centerIcon.classList.remove('illuminated');
-}
+                if (distanceToIcon < 150) {
+                    centerIcon.classList.add('illuminated');
+                } else {
+                    centerIcon.classList.remove('illuminated');
+                }
 
-// Portal proximity detection
-portals.forEach(portal => {
-const rect = portal.getBoundingClientRect();
-const portalCenterX = rect.left + rect.width / 2;
-const portalCenterY = rect.top + rect.height / 2;
-const distanceToPortal = Math.sqrt(
-Math.pow(mouseX - portalCenterX, 2) +
-Math.pow(mouseY - portalCenterY, 2)
-);
+                // Portal proximity detection
+                portals.forEach(portal => {
+                    const rect = portal.getBoundingClientRect();
+                    const portalCenterX = rect.left + rect.width / 2;
+                    const portalCenterY = rect.top + rect.height / 2;
+                    const distanceToPortal = Math.sqrt(
+                        Math.pow(mouseX - portalCenterX, 2) +
+                        Math.pow(mouseY - portalCenterY, 2)
+                    );
 
-if (distanceToPortal < 350) {
-portal.classList.add('proximity-glow');
-} else {
-portal.classList.remove('proximity-glow');
-}
-});
-});
+                    if (distanceToPortal < 350) {
+                        portal.classList.add('proximity-glow');
+                    } else {
+                        portal.classList.remove('proximity-glow');
+                    }
+                });
 
-// Delayed halo following with smooth lerp
-function animateHalo() {
-const ease = 0.15;
-haloX += (mouseX - haloX) * ease;
-haloY += (mouseY - haloY) * ease;
+                // Hybrid project proximity detection
+                if (hybridProject) {
+                    const rect = hybridProject.getBoundingClientRect();
+                    const projectCenterX = rect.left + rect.width / 2;
+                    const projectCenterY = rect.top + rect.height / 2;
+                    const distanceToProject = Math.sqrt(
+                        Math.pow(mouseX - projectCenterX, 2) +
+                        Math.pow(mouseY - projectCenterY, 2)
+                    );
 
-halo.style.left = haloX + 'px';
-halo.style.top = haloY + 'px';
+                    if (distanceToProject < 400) {
+                        hybridProject.classList.add('proximity-glow');
+                    } else {
+                        hybridProject.classList.remove('proximity-glow');
+                    }
+                }
+            });
 
-requestAnimationFrame(animateHalo);
-}
-animateHalo();
+            // Delayed halo following with smooth lerp
+            function animateHalo() {
+                const ease = 0.15;
+                haloX += (mouseX - haloX) * ease;
+                haloY += (mouseY - haloY) * ease;
 
-// Show ambient light after initial load
-setTimeout(() => {
-ambientLight.style.opacity = '1';
-}, 1000);
+                halo.style.left = haloX + 'px';
+                halo.style.top = haloY + 'px';
 
-// Hover states for cursor and halo
-const hoverElements = document.querySelectorAll('.portal, .reach-out-btn, .logo');
-hoverElements.forEach(element => {
-element.addEventListener('mouseenter', () => {
-cursor.classList.add('hover-state');
-halo.classList.add('hover-state');
-});
-element.addEventListener('mouseleave', () => {
-cursor.classList.remove('hover-state');
-halo.classList.remove('hover-state');
-});
-});
-}
+                requestAnimationFrame(animateHalo);
+            }
+            animateHalo();
 
-// Mobile touch orb system
-let touchActive = false;
-document.addEventListener('touchstart', (e) => {
-if (window.innerWidth <= 768) {
-touchActive = true;
-const touch = e.touches[0];
-mobileOrb.style.left = touch.clientX + 'px';
-mobileOrb.style.top = touch.clientY + 'px';
-mobileOrb.style.opacity = '1';
-}
-});
+            // Show ambient light after initial load
+            setTimeout(() => {
+                ambientLight.style.opacity = '1';
+            }, 1000);
 
-document.addEventListener('touchmove', (e) => {
-if (window.innerWidth <= 768 && touchActive) {
-const touch = e.touches[0];
-mobileOrb.style.left = touch.clientX + 'px';
-mobileOrb.style.top = touch.clientY + 'px';
-mobileOrb.style.opacity = '1';
-}
-});
+            // Hover states for cursor and halo
+            const hoverElements = document.querySelectorAll('.portal, .reach-out-btn, .logo, .hybrid-project');
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.classList.add('hover-state');
+                    halo.classList.add('hover-state');
+                });
+                element.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('hover-state');
+                    halo.classList.remove('hover-state');
+                });
+            });
+        }
 
-document.addEventListener('touchend', () => {
-if (window.innerWidth <= 768) {
-touchActive = false;
-setTimeout(() => {
-mobileOrb.style.opacity = '0';
-}, 150);
-}
-});
+        // Mobile touch orb system
+        let touchActive = false;
+        document.addEventListener('touchstart', (e) => {
+            if (window.innerWidth <= 768) {
+                touchActive = true;
+                const touch = e.touches[0];
+                mobileOrb.style.left = touch.clientX + 'px';
+                mobileOrb.style.top = touch.clientY + 'px';
+                mobileOrb.style.opacity = '1';
+            }
+        });
 
-// Mobile portal interactions
-portals.forEach(portal => {
-portal.addEventListener('touchstart', (e) => {
-if (window.innerWidth <= 768) {
-portal.classList.add('active');
-// Trigger background gradient change
-if (portal.classList.contains('stories-portal')) {
-gradientBg.classList.add('stories-active');
-gradientBg.classList.remove('solutions-active');
-} else if (portal.classList.contains('solutions-portal')) {
-gradientBg.classList.add('solutions-active');
-gradientBg.classList.remove('stories-active');
-}
-}
-});
+        document.addEventListener('touchmove', (e) => {
+            if (window.innerWidth <= 768 && touchActive) {
+                const touch = e.touches[0];
+                mobileOrb.style.left = touch.clientX + 'px';
+                mobileOrb.style.top = touch.clientY + 'px';
+                mobileOrb.style.opacity = '1';
+            }
+        });
 
-portal.addEventListener('touchend', (e) => {
-if (window.innerWidth <= 768) {
-setTimeout(() => {
-portal.classList.remove('active');
-gradientBg.classList.remove('stories-active', 'solutions-active');
-}, 200);
-}
-});
-});
+        document.addEventListener('touchend', () => {
+            if (window.innerWidth <= 768) {
+                touchActive = false;
+                setTimeout(() => {
+                    mobileOrb.style.opacity = '0';
+                }, 150);
+            }
+        });
 
-// Enhanced hover effects for desktop background
-const storiesPortal = document.querySelector('.stories-portal');
-const solutionsPortal = document.querySelector('.solutions-portal');
+        // Mobile portal interactions
+        portals.forEach(portal => {
+            portal.addEventListener('touchstart', (e) => {
+                if (window.innerWidth <= 768) {
+                    portal.classList.add('active');
+                    if (portal.classList.contains('stories-portal')) {
+                        gradientBg.classList.add('stories-active');
+                        gradientBg.classList.remove('solutions-active');
+                    } else if (portal.classList.contains('solutions-portal')) {
+                        gradientBg.classList.add('solutions-active');
+                        gradientBg.classList.remove('stories-active');
+                    }
+                }
+            });
 
-if (isDesktop) {
-storiesPortal.addEventListener('mouseenter', () => {
-gradientBg.classList.add('stories-active');
-gradientBg.classList.remove('solutions-active');
-});
+            portal.addEventListener('touchend', (e) => {
+                if (window.innerWidth <= 768) {
+                    setTimeout(() => {
+                        portal.classList.remove('active');
+                        gradientBg.classList.remove('stories-active', 'solutions-active');
+                    }, 200);
+                }
+            });
+        });
 
-solutionsPortal.addEventListener('mouseenter', () => {
-gradientBg.classList.add('solutions-active');
-gradientBg.classList.remove('stories-active');
-});
+        // Enhanced hover effects for desktop background
+        const storiesPortal = document.querySelector('.stories-portal');
+        const solutionsPortal = document.querySelector('.solutions-portal');
 
-document.addEventListener('mouseleave', (e) => {
-if (!e.target.closest('.portal')) {
-gradientBg.classList.remove('stories-active', 'solutions-active');
-}
-});
-}
+        if (isDesktop) {
+            storiesPortal.addEventListener('mouseenter', () => {
+                gradientBg.classList.add('stories-active');
+                gradientBg.classList.remove('solutions-active');
+            });
 
-// Responsive handler
-window.addEventListener('resize', () => {
-isDesktop = window.innerWidth > 768;
-if (!isDesktop) {
-cursor.style.display = 'none';
-halo.style.display = 'none';
-ambientLight.style.display = 'none';
-mobileOrb.style.display = 'block';
-} else {
-cursor.style.display = 'block';
-halo.style.display = 'block';
-ambientLight.style.display = 'block';
-mobileOrb.style.display = 'none';
-}
-});
+            solutionsPortal.addEventListener('mouseenter', () => {
+                gradientBg.classList.add('solutions-active');
+                gradientBg.classList.remove('stories-active');
+            });
 
-// GSAP Animation Timeline
-const timeline = gsap.timeline({defaults: {ease: "power3.out"}});
+            document.addEventListener('mouseleave', (e) => {
+                if (!e.target.closest('.portal')) {
+                    gradientBg.classList.remove('stories-active', 'solutions-active');
+                }
+            });
+        }
 
-// Initial page load animations
-timeline
-.to(".header", {
-opacity: 1,
-y: 0,
-duration: 1.2,
-delay: 0.3
-})
-.to(".portals-container", {
-opacity: 1,
-y: 0,
-duration: 1.4,
-delay: 0.2
-}, "-=0.6")
-.to(".divider", {
-opacity: 1,
-duration: 1.5,
-delay: 0.3
-}, "-=0.8")
-.to(".center-icon", {
-opacity: 1,
-scale: 1,
-duration: 1,
-delay: 0.2
-}, "-=0.6")
-.to(".hybrid-bridge", {
-opacity: 1,
-y: 0,
-duration: 1.2,
-delay: 0.2
-}, "-=0.4")
-.to(".reach-out-btn", {
-opacity: 1,
-duration: 1,
-delay: 0.4
-}, "-=0.5");
+        // Responsive handler
+        window.addEventListener('resize', () => {
+            isDesktop = window.innerWidth > 768;
+            if (!isDesktop) {
+                cursor.style.display = 'none';
+                halo.style.display = 'none';
+                ambientLight.style.display = 'none';
+                mobileOrb.style.display = 'block';
+            } else {
+                cursor.style.display = 'block';
+                halo.style.display = 'block';
+                ambientLight.style.display = 'block';
+                mobileOrb.style.display = 'none';
+            }
+        });
 
-// Subtle floating animation for center icon (desktop only)
-if (isDesktop) {
-gsap.to(".center-icon", {
-y: -5,
-duration: 2,
-repeat: -1,
-yoyo: true,
-ease: "power2.inOut",
-delay: 2
-});
-}
-</script>
+        // GSAP Animation Timeline
+        const timeline = gsap.timeline({defaults: {ease: "power3.out"}});
+
+        timeline
+            .to(".header", {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                delay: 0.3
+            })
+            .to(".portals-container", {
+                opacity: 1,
+                y: 0,
+                duration: 1.4,
+                delay: 0.2
+            }, "-=0.6")
+            .to(".divider", {
+                opacity: 1,
+                duration: 1.5,
+                delay: 0.3
+            }, "-=0.8")
+            .to(".center-icon", {
+                opacity: 1,
+                scale: 1,
+                duration: 1,
+                delay: 0.2
+            }, "-=0.6")
+            .to(".hybrid-bridge", {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                delay: 0.2
+            }, "-=0.4")
+            .to(".reach-out-btn", {
+                opacity: 1,
+                duration: 1,
+                delay: 0.4
+            }, "-=0.5");
+
+        // Subtle floating animation for center icon (desktop only)
+        if (isDesktop) {
+            gsap.to(".center-icon", {
+                y: -5,
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: "power2.inOut",
+                delay: 2
+            });
+        }
+    </script>
 </body>
 </html>
