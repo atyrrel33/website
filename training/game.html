@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closing Time - Interactive Scene</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap');
+
+- {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
+body {
+font-family: ‘Jost’, sans-serif;
+background: #0a0a0a;
+color: #ffffff;
+min-height: 100vh;
+position: relative;
+}
+
+.gradient-bg {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: radial-gradient(ellipse at center,
+rgba(26, 71, 42, 0.6) 0%,
+rgba(45, 80, 55, 0.4) 25%,
+rgba(13, 35, 20, 0.8) 40%,
+rgba(8, 20, 12, 0.95) 70%);
+z-index: 0;
+animation: breathe 4s infinite alternate ease-in-out;
+}
+
+@keyframes breathe {
+0% { opacity: 0.4; }
+100% { opacity: 0.6; }
+}
+
+.container {
+position: relative;
+z-index: 1;
+max-width: 1000px;
+margin: 0 auto;
+padding: 2rem;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+}
+
+.scene-header {
+text-align: center;
+margin-bottom: 2rem;
+padding: 1.5rem;
+background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 16px;
+backdrop-filter: blur(10px);
+}
+
+.scene-header h1 {
+font-size: 2rem;
+font-weight: 300;
+letter-spacing: 6px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 0.5rem;
+}
+
+.scene-info {
+font-size: 0.9rem;
+opacity: 0.7;
+letter-spacing: 1px;
+}
+
+.tracker-container {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 0.8rem;
+margin-bottom: 2rem;
+}
+
+.s-badge {
+padding: 0.8rem;
+background: rgba(13, 25, 18, 0.6);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 12px;
+text-align: center;
+transition: all 0.3s ease;
+}
+
+.s-badge.used {
+background: rgba(26, 71, 42, 0.8);
+border-color: rgba(220, 180, 80, 0.6);
+box-shadow: 0 0 15px rgba(220, 180, 80, 0.3);
+}
+
+.s-badge.active {
+background: rgba(220, 180, 80, 0.2);
+border-color: rgba(220, 180, 80, 0.8);
+animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+0%, 100% { box-shadow: 0 0 10px rgba(220, 180, 80, 0.3); }
+50% { box-shadow: 0 0 20px rgba(220, 180, 80, 0.6); }
+}
+
+.s-badge .number {
+font-size: 1.5rem;
+font-weight: 300;
+color: rgba(220, 180, 80, 0.95);
+display: block;
+margin-bottom: 0.3rem;
+}
+
+.s-badge .label {
+font-size: 0.75rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+opacity: 0.8;
+}
+
+.story-card {
+background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 16px;
+padding: 2rem;
+margin-bottom: 2rem;
+backdrop-filter: blur(10px);
+animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.story-content {
+font-size: 1.1rem;
+line-height: 1.8;
+margin-bottom: 2rem;
+}
+
+.story-content p {
+margin-bottom: 1rem;
+}
+
+.story-content .emphasis {
+color: rgba(220, 180, 80, 0.95);
+font-weight: 400;
+}
+
+.story-content .character-name {
+color: rgba(180, 140, 60, 0.9);
+font-weight: 500;
+}
+
+.choice-prompt {
+font-size: 1.2rem;
+font-weight: 400;
+letter-spacing: 1px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 1.5rem;
+padding-bottom: 1rem;
+border-bottom: 1px solid rgba(26, 71, 42, 0.4);
+}
+
+.choices-container {
+display: flex;
+flex-direction: column;
+gap: 1rem;
+}
+
+.choice-btn {
+padding: 1.5rem;
+background: rgba(26, 71, 42, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 12px;
+text-align: left;
+cursor: pointer;
+transition: all 0.3s ease;
+position: relative;
+overflow: hidden;
+}
+
+.choice-btn:hover {
+background: rgba(26, 71, 42, 0.5);
+border-color: rgba(220, 180, 80, 0.6);
+transform: translateX(8px);
+box-shadow: 0 8px 20px rgba(26, 71, 42, 0.4);
+}
+
+.choice-btn .choice-text {
+font-size: 1.05rem;
+line-height: 1.6;
+color: rgba(255, 255, 255, 0.95);
+margin-bottom: 0.5rem;
+}
+
+.choice-btn .choice-meta {
+display: flex;
+gap: 0.8rem;
+flex-wrap: wrap;
+margin-top: 0.8rem;
+}
+
+.choice-tag {
+display: inline-block;
+padding: 0.3rem 0.8rem;
+background: rgba(220, 180, 80, 0.15);
+border: 1px solid rgba(220, 180, 80, 0.3);
+border-radius: 20px;
+font-size: 0.75rem;
+letter-spacing: 1px;
+text-transform: uppercase;
+color: rgba(220, 180, 80, 0.9);
+}
+
+.choice-tag.uses-s {
+background: rgba(26, 71, 42, 0.3);
+border-color: rgba(180, 140, 60, 0.5);
+}
+
+.ending-card {
+background: linear-gradient(135deg, rgba(26, 71, 42, 0.4) 0%, rgba(13, 25, 18, 0.8) 100%);
+border: 2px solid rgba(220, 180, 80, 0.6);
+border-radius: 16px;
+padding: 2.5rem;
+margin-bottom: 2rem;
+}
+
+.ending-card h2 {
+font-size: 2rem;
+font-weight: 300;
+letter-spacing: 4px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 1.5rem;
+text-align: center;
+}
+
+.ending-card .outcome {
+font-size: 1.1rem;
+line-height: 1.8;
+margin-bottom: 2rem;
+}
+
+.teaching-moment {
+background: rgba(220, 180, 80, 0.1);
+border-left: 3px solid rgba(220, 180, 80, 0.6);
+border-radius: 8px;
+padding: 1.5rem;
+margin-bottom: 1.5rem;
+}
+
+.teaching-moment h3 {
+font-size: 1.2rem;
+font-weight: 400;
+letter-spacing: 2px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 1rem;
+}
+
+.teaching-moment p {
+line-height: 1.7;
+opacity: 0.9;
+}
+
+.summary-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1rem;
+margin-bottom: 2rem;
+}
+
+.summary-item {
+background: rgba(13, 25, 18, 0.6);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 8px;
+padding: 1rem;
+}
+
+.summary-item .label {
+font-size: 0.85rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+opacity: 0.7;
+margin-bottom: 0.5rem;
+}
+
+.summary-item .value {
+font-size: 1.3rem;
+font-weight: 400;
+color: rgba(220, 180, 80, 0.95);
+}
+
+.action-buttons {
+display: flex;
+gap: 1rem;
+justify-content: center;
+flex-wrap: wrap;
+}
+
+.btn {
+padding: 14px 32px;
+font-family: ‘Jost’, sans-serif;
+font-size: 1rem;
+font-weight: 400;
+letter-spacing: 2px;
+text-transform: uppercase;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.3s ease;
+text-decoration: none;
+display: inline-block;
+border: none;
+}
+
+.btn-primary {
+background: linear-gradient(145deg, rgba(26, 71, 42, 0.8), rgba(20, 50, 30, 0.9));
+border: 1px solid rgba(220, 180, 80, 0.5);
+color: rgba(255, 255, 255, 0.9);
+}
+
+.btn-primary:hover {
+background: linear-gradient(145deg, rgba(26, 71, 42, 1), rgba(20, 50, 30, 1));
+box-shadow: 0 8px 20px rgba(220, 180, 80, 0.3);
+transform: translateY(-2px);
+}
+
+.btn-secondary {
+background: rgba(13, 25, 18, 0.6);
+border: 1px solid rgba(26, 71, 42, 0.5);
+color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-secondary:hover {
+background: rgba(13, 25, 18, 0.8);
+border-color: rgba(26, 71, 42, 0.8);
+}
+
+.custom-notes {
+background: rgba(180, 140, 60, 0.1);
+border: 1px dashed rgba(220, 180, 80, 0.4);
+border-radius: 8px;
+padding: 1.5rem;
+margin-top: 1.5rem;
+}
+
+.custom-notes h4 {
+font-size: 1rem;
+font-weight: 400;
+letter-spacing: 2px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 0.8rem;
+}
+
+.custom-notes p {
+font-size: 0.95rem;
+line-height: 1.6;
+opacity: 0.8;
+font-style: italic;
+}
+
+@media (max-width: 768px) {
+.container {
+padding: 1rem;
+}
+.tracker-container {
+grid-template-columns: repeat(5, 1fr);
+gap: 0.5rem;
+}
+.s-badge {
+padding: 0.5rem;
+}
+.s-badge .number {
+font-size: 1.2rem;
+}
+.s-badge .label {
+font-size: 0.65rem;
+}
+.summary-grid {
+grid-template-columns: 1fr;
+}
+.action-buttons {
+flex-direction: column;
+}
+.btn {
+width: 100%;
+}
+}
+</style>
+
+</head>
+<body>
+<div class="gradient-bg"></div>
+
+<div class="container">
+<div class="scene-header">
+<h1 id="sceneTitle">CLOSING TIME</h1>
+<div class="scene-info" id="sceneInfo">Loading scene...</div>
+</div>
+
+<div class="tracker-container">
+<div class="s-badge" id="s1">
+<span class="number">1</span>
+<span class="label">Slow Down</span>
+</div>
+<div class="s-badge" id="s2">
+<span class="number">2</span>
+<span class="label">Size Up</span>
+</div>
+<div class="s-badge" id="s3">
+<span class="number">3</span>
+<span class="label">Speak Smart</span>
+</div>
+<div class="s-badge" id="s4">
+<span class="number">4</span>
+<span class="label">Select</span>
+</div>
+<div class="s-badge" id="s5">
+<span class="number">5</span>
+<span class="label">Shut Down</span>
+</div>
+</div>
+
+<div id="storyContent">
+<!-- Story will be dynamically inserted here -->
+</div>
+</div>
+
+<script>
+// Check authentication
+if (sessionStorage.getItem('5s_authenticated') !== 'true') {
+window.location.href = 'closing-time-login.html';
+}
+
+// Get scene setup
+const setupData = JSON.parse(sessionStorage.getItem('scene_setup') || '{}');
+if (!setupData.storeName) {
+window.location.href = 'closing-time-setup.html';
+}
+
+// Display scene info
+document.getElementById('sceneInfo').textContent = 
+`${setupData.storeName} | ${setupData.currentTime} (Closes at ${setupData.closingTime})`;
+
+// Game state
+let currentScene = 'intro';
+let usedSs = new Set();
+let cycleCount = 0;
+let decisionPath = [];
+
+// S tracking
+function markSUsed(sNumber) {
+usedSs.add(sNumber);
+document.getElementById(`s${sNumber}`).classList.add('used');
+}
+
+function highlightActiveS(sNumber) {
+// Remove all active states
+for (let i = 1; i <= 5; i++) {
+document.getElementById(`s${i}`).classList.remove('active');
+}
+// Add active to current
+if (sNumber) {
+document.getElementById(`s${sNumber}`).classList.add('active');
+}
+}
+
+// Scene definitions with branching narrative
+const scenes = {
+intro: {
+content: `
+<div class="story-card">
+<div class="story-content">
+<p>The lights are already half-dimmed at <span class="emphasis">${setupData.storeName}</span>. It's ${setupData.currentTime}—two minutes until closing.</p>
+
+<p><span class="character-name">${setupData.characters.mainWorker.name}</span> is behind the counter, counting the register. He's been here all day${setupData.characters.mainWorker.detail ? `, and ${setupData.characters.mainWorker.detail.toLowerCase()}` : ''}. Every minute past ${setupData.closingTime} is another minute he's not getting back.</p>
+
+<p><span class="character-name">${setupData.characters.regular.name}</span>, a regular customer, is finishing up at the counter${setupData.characters.regular.detail ? `—he ${setupData.characters.regular.detail.toLowerCase()}` : ''}. He's almost done, about to head out.</p>
+
+<p>Then the door chime rings.</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}</span> walks in, phone pressed to his ear, mid-conversation. He doesn't even glance at the time or acknowledge <span class="character-name">${setupData.characters.mainWorker.name}</span>. Just walks in like the store isn't about to close.</p>
+
+<p class="emphasis">This is the moment. What does ${setupData.characters.mainWorker.name} do first?</p>
+</div>
+<div class="choice-prompt">You are ${setupData.characters.mainWorker.name}. Choose your response:</div>
+<div class="choices-container">
+<div class="choice-btn" onclick="makeChoice('immediate-reaction')">
+<div class="choice-text">"Man, we're closed!" (Say it immediately with frustration in your voice)</div>
+<div class="choice-meta">
+<span class="choice-tag">Skip S1</span>
+<span class="choice-tag">React from emotion</span>
+</div>
+</div>
+<div class="choice-btn" onclick="makeChoice('slow-down')">
+<div class="choice-text">Take 3 seconds. Look at the clock. Take a breath. Then decide what to say.</div>
+<div class="choice-meta">
+<span class="choice-tag uses-s">Uses S1: Slow Down</span>
+<span class="choice-tag">Foundation move</span>
+</div>
+</div>
+<div class="choice-btn" onclick="makeChoice('ignore')">
+<div class="choice-text">Say nothing. Just keep counting the register and hope he figures it out.</div>
+<div class="choice-meta">
+<span class="choice-tag">Passive approach</span>
+<span class="choice-tag">Avoid conflict</span>
+</div>
+</div>
+</div>
+</div>
+`,
+sPotential: 1
+},
+
+'immediate-reaction': {
+content: `
+<div class="story-card">
+<div class="story-content">
+<p><span class="character-name">${setupData.characters.mainWorker.name}</span> doesn't hesitate. The frustration of the long day, the two minutes on the clock, seeing someone walk in like time doesn't matter—it all comes out at once.</p>
+
+<p><span class="character-name">${setupData.characters.mainWorker.name}:</span> <span class="emphasis">"Man, we're closed!"</span></p>
+
+<p>The tone isn't neutral. It's sharp. It's got an edge. <span class="character-name">${setupData.characters.lateCustomer.name}</span> finally looks up from his phone.</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}:</span> "Door was open, wasn't it?"</p>
+
+<p>He says it matter-of-fact, but there's challenge in it. He's not apologizing. He's not acknowledging the time. He's throwing it back.</p>
+
+<p><span class="character-name">${setupData.characters.regular.name}</span> pauses near the door, watching. This could go either way.</p>
+
+<p class="emphasis">The temperature just went up. Without SLOW DOWN, ${setupData.characters.mainWorker.name} skipped straight to reaction. Now both people feel some type of way.</p>
+</div>
+<div class="choice-prompt">What happens next?</div>
+<div class="choices-container">
+<div class="choice-btn" onclick="makeChoice('escalate')">
+<div class="choice-text">"Yeah well we're closed NOW. You gotta go."</div>
+<div class="choice-meta">
+<span class="choice-tag">Double down</span>
+<span class="choice-tag">Confrontational</span>
+</div>
+</div>
+<div class="choice-btn" onclick="makeChoice('try-repair')">
+<div class="choice-text">Realize you came in too hot. Take a breath NOW and try again. "Look, my bad for the tone—but we do close at ${setupData.closingTime}. What do you need?"</div>
+<div class="choice-meta">
+<span class="choice-tag uses-s">Late S1: Slow Down</span>
+<span class="choice-tag uses-s">Try S3: Speak Smart</span>
+<span class="choice-tag">Repair attempt</span>
+</div>
+</div>
+<div class="choice-btn" onclick="makeChoice('manager-help')">
+<div class="choice-text">Look to ${setupData.characters.manager.name}${setupData.characters.manager.detail ? ` (who's ${setupData.characters.manager.detail.toLowerCase()})` : ''} for backup.</div>
+<div class="choice-meta">
+<span class="choice-tag">Get help</span>
+</div>
+</div>
+</div>
+</div>
+`,
+sPotential: null
+},
+
+'slow-down': {
+content: `
+<div class="story-card">
+<div class="story-content">
+<p><span class="character-name">${setupData.characters.mainWorker.name}</span> feels the irritation rise—but he doesn't let it take over. Instead, he does something most people skip:</p>
+
+<p class="emphasis">He counts to three in his head. 1... 2... 3.</p>
+
+<p>Looks at the clock. ${setupData.currentTime}. Two minutes until close, but they're not closed yet.</p>
+
+<p>Takes a breath.</p>
+
+<p>This is <span class="emphasis">S1: SLOW DOWN</span>. The foundation. Without this three-second pause, everything that follows is reaction instead of response.</p>
+
+<p>Now, with a clear head, <span class="character-name">${setupData.characters.mainWorker.name}</span> can actually <span class="emphasis">SIZE UP</span> what's happening:</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}</span> is on his phone, seems distracted—probably doesn't even know what time it is. The door WAS unlocked. <span class="character-name">${setupData.characters.regular.name}</span> is watching to see how this goes.</p>
+
+<p class="emphasis">Question: Is this guy being disrespectful on purpose, or is he just oblivious?</p>
+</div>
+<div class="choice-prompt">Now that you've slowed down and sized up the situation, how do you speak to him?</div>
+<div class="choices-container">
+<div class="choice-btn" onclick="makeChoice('speak-smart-firm')">
+<div class="choice-text">"Hey man, we're about to close but what do you need? If it's quick I can help you out."</div>
+<div class="choice-meta">
+<span class="choice-tag uses-s">Uses S3: Speak Smart</span>
+<span class="choice-tag">Firm but respectful</span>
+<span class="choice-tag">Sets boundary</span>
+</div>
+</div>
+<div class="choice-btn" onclick="makeChoice('speak-smart-soft')">
+<div class="choice-text">"Yo, just so you know, we close at ${setupData.closingTime}. What you looking for?"</div>
+<div class="choice-meta">
+<span class="choice-tag uses-s">Uses S3: Speak Smart</span>
+<span class="choice-tag">Information first</span>
+<span class="choice-tag">Neutral tone</span>
+</div>
+</div>
+<div class="choice-btn" onclick="makeChoice('speak-passive')">
+<div class="choice-text">"...We're closing soon." (Say it quietly, hoping he gets the hint)</div>
+<div class="choice-meta">
+<span class="choice-tag">Skip S3</span>
+<span class="choice-tag">Passive</span>
+<span class="choice-tag">Unclear boundary</span>
+</div>
+</div>
+</div>
+</div>
+`,
+sPotential: [2, 3]
+},
+
+'ignore': {
+content: `
+<div class="story-card">
+<div class="story-content">
+<p><span class="character-name">${setupData.characters.mainWorker.name}</span> says nothing. Just keeps counting bills, head down, hoping <span class="character-name">${setupData.characters.lateCustomer.name}</span> will see the dimmed lights and figure it out.</p>
+
+<p>But he doesn't.</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}</span> ends his phone call and starts browsing, taking his time. Thirty seconds pass. A minute. He's looking around like he's got all night.</p>
+
+<p><span class="character-name">${setupData.characters.regular.name}</span> glances at <span class="character-name">${setupData.characters.mainWorker.name}</span>, confused. Why isn't he saying anything?</p>
+
+<p>Finally, <span class="character-name">${setupData.characters.manager.name}</span> notices and walks over.</p>
+
+<p><span class="character-name">${setupData.characters.manager.name}:</span> "Sir, we're closing in one minute. If you need something, now's the time."</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}</span> looks surprised: "Oh, my bad, didn't know."</p>
+
+<p class="emphasis">By staying silent, ${setupData.characters.mainWorker.name} avoided direct conflict—but also avoided solving the problem. Someone else had to step in. Sometimes avoiding isn't resolving.</p>
+</div>
+<div class="choice-prompt">Scene resolved, but not by you. What's the lesson here?</div>
+<div class="choices-container">
+<div class="choice-btn" onclick="makeChoice('ending-passive')">
+<div class="choice-text">See how this played out</div>
+<div class="choice-meta">
+<span class="choice-tag">View outcome</span>
+</div>
+</div>
+</div>
+</div>
+`,
+sPotential: null
+},
+
+'speak-smart-firm': {
+content: `
+<div class="story-card">
+<div class="story-content">
+<p><span class="character-name">${setupData.characters.mainWorker.name}:</span> <span class="emphasis">"Hey man, we're about to close but what do you need? If it's quick I can help you out."</span></p>
+
+<p>The tone is firm but not hostile. He's setting a boundary without disrespect. This is <span class="emphasis">S3: SPEAK SMART</span>—keeping everyone's dignity intact while being clear about the reality.</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}</span> finally looks up from his phone. He processes what was said.</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}:</span> "Oh shit, my bad—I didn't realize. I just need [something quick]."</p>
+
+<p>He actually sounds apologetic. Turns out he WAS oblivious, not disrespectful. <span class="emphasis">SIZE UP was right</span>—this wasn't about attitude, it was about awareness.</p>
+
+<p class="emphasis">Now ${setupData.characters.mainWorker.name} has a decision to make. The customer acknowledged the situation and what he needs is quick. What's the smart play?</p>
+</div>
+<div class="choice-prompt">SELECT A MOVE (S4):</div>
+<div class="choices-container">
+<div class="choice-btn" onclick="makeChoice('help-quick')">
+<div class="choice-text">"Alright, I got you. But we lock up at ${setupData.closingTime} sharp, so let's move."</div>
+<div class="choice-meta">
+<span class="choice-tag uses-s">Uses S4: Select</span>
+<span class="choice-tag">Help with firm boundary</span>
+</div>
+</div>
+<div class="choice-btn" onclick="makeChoice('help-generous')">
+<div class="choice-text">"No problem, take your time. I appreciate you being cool about it."</div>
+<div class="choice-meta">
+<span class="choice-tag uses-s">Uses S4: Select</span>
+<span class="choice-tag">Generous approach</span>
+</div>
+</div>
+<div class="choice-btn" onclick="makeChoice('refuse-now')">
+<div class="choice-text">"I hear you, but we're locked in on time. Gotta come back tomorrow."</div>
+<div class="choice-meta">
+<span class="choice-tag uses-s">Uses S4: Select</span>
+<span class="choice-tag">Hard boundary</span>
+</div>
+</div>
+</div>
+</div>
+`,
+sPotential: 4
+},
+
+'speak-smart-soft': {
+content: `
+<div class="story-card">
+<div class="story-content">
+<p><span class="character-name">${setupData.characters.mainWorker.name}:</span> <span class="emphasis">"Yo, just so you know, we close at ${setupData.closingTime}. What you looking for?"</span></p>
+
+<p>Neutral tone. Just information. This is <span class="emphasis">S3: SPEAK SMART</span>—giving someone the facts without judgment or attitude.</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}</span> looks at his phone to check the time, then back at <span class="character-name">${setupData.characters.mainWorker.name}</span>.</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}:</span> "Damn, didn't know it was that late. I just need [something quick]. That cool?"</p>
+
+<p>He's asking permission now. The neutral tone worked—no defensiveness, no challenge. He's actually being respectful.</p>
+
+<p class="emphasis">This is where SIZE UP pays off. You read him right—he wasn't trying to be disrespectful, just wasn't paying attention.</p>
+</div>
+<div class="choice-prompt">SELECT A MOVE (S4):</div>
+<div class="choices-container">
+<div class="choice-btn" onclick="makeChoice('help-quick')">
+<div class="choice-text">"Yeah, I got you. Quick though—we lock up right at ${setupData.closingTime}."</div>
+<div class="choice-meta">
+<span class="choice-tag uses-s">Uses S4: Select</span>
+<span class="choice-tag">Help with timeline</span>
+</div>
+</div>
+<div class="choice-btn" onclick="makeChoice('help-generous')">
+<div class="choice-text">"For sure, no rush. Appreciate you asking."</div>
+<div class="choice-meta">
+<span class="choice-tag uses-s">Uses S4: Select</span>
+<span class="choice-tag">Generous</span>
+</div>
+</div>
+</div>
+</div>
+`,
+sPotential: 4
+},
+
+'help-quick': {
+content: `
+<div class="story-card">
+<div class="story-content">
+<p><span class="character-name">${setupData.characters.mainWorker.name}</span> helps him out. It takes two minutes. The transaction is smooth, professional, respectful on both sides.</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}:</span> "Thanks man, I appreciate it. My bad for coming in late."</p>
+
+<p><span class="character-name">${setupData.characters.mainWorker.name}:</span> "You're good. Have a good night."</p>
+
+<p>The customer leaves. <span class="character-name">${setupData.characters.regular.name}</span>, who watched the whole thing, nods at <span class="character-name">${setupData.characters.mainWorker.name}</span> on his way out.</p>
+
+<p><span class="character-name">${setupData.characters.regular.name}:</span> "You handled that well."</p>
+
+<p class="emphasis">This is S5: SHUT IT DOWN. Both people walk away with dignity. The problem got resolved. Nobody's heated. Nobody's embarrassed. ${setupData.characters.mainWorker.name} stood up for his boundary but stayed human about it.</p>
+
+<p><span class="emphasis">Perfect execution of all 5 S's.</span></p>
+</div>
+<div class="choice-prompt">Scene Complete</div>
+<div class="choices-container">
+<div class="choice-btn" onclick="makeChoice('ending-perfect')">
+<div class="choice-text">See the outcome</div>
+<div class="choice-meta">
+<span class="choice-tag">Ideal resolution</span>
+</div>
+</div>
+</div>
+</div>
+`,
+sPotential: 5
+},
+
+// Continue with more scene branches...
+// I'll add the key endings and some alternate paths
+
+'escalate': {
+content: `
+<div class="story-card">
+<div class="story-content">
+<p><span class="character-name">${setupData.characters.mainWorker.name}:</span> <span class="emphasis">"Yeah well we're closed NOW. You gotta go."</span></p>
+
+<p>Doubled down. More aggressive than the first time.</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}</span> stops, stands up straight. Now he's not backing down either.</p>
+
+<p><span class="character-name">${setupData.characters.lateCustomer.name}:</span> "Man, don't talk to me like that. Door's open, sign says you close at ${setupData.closingTime}, it ain't ${setupData.closingTime} yet."</p>
+
+<p>Both people are right about the facts. But both people are making it about pride now.</p>
+
+<p><span class="character-name">${setupData.characters.manager.name}</span> steps in, sensing this is going somewhere bad.</p>
+
+<p><span class="emphasis">By skipping SLOW DOWN at the beginning and then ESCALATING instead of trying the cycle again, this situation went from a two-minute transaction to a potential confrontation.</span></p>
+</div>
+<div class="choice-prompt">This could still be saved. What do you do?</div>
+<div class="choices-container">
+<div class="choice-btn" onclick="makeChoice('ending-escalated')">
+<div class="choice-text">Keep arguing. Make him leave.</div>
+<div class="choice-meta">
+<span class="choice-tag">Confrontation</span>
+</div>
+</div>
+<div class="choice-btn" onclick="makeChoice('try-repair-late')">
+<div class="choice-text">CYCLE BACK TO S1. Take a breath. "You know what, you're right. My bad. What do you need?"</div>
+<div class="choice-meta">
+<span class="choice-tag uses-s">Second cycle</span>
+<span class="choice-tag">Late repair</span>
+</div>
+</div>
+</div>
+</div>
+`,
+sPotential: null
+},
+
+'ending-perfect': {
+ending: true,
+content: `
+<div class="ending-card">
+<h2>Perfect Execution</h2>
+<div class="outcome">
+<p>Every S was used. Every move was intentional.</p>
+<p><strong>S1 - SLOW DOWN:</strong> ${setupData.characters.mainWorker.name} took three seconds before reacting. That pause changed everything.</p>
+<p><strong>S2 - SIZE UP:</strong> He correctly read that ${setupData.characters.lateCustomer.name} was oblivious, not disrespectful.</p>
+<p><strong>S3 - SPEAK SMART:</strong> Firm boundary, respectful tone. No one's dignity was damaged.</p>
+<p><strong>S4 - SELECT A MOVE:</strong> Chose to help within clear boundaries. Smart play.</p>
+<p><strong>S5 - SHUT IT DOWN:</strong> Everyone walked away clean. Problem solved, respect maintained.</p>
+</div>
+
+<div class="teaching-moment">
+<h3>The Real Lesson</h3>
+<p>This is what conflict resolution actually looks like. No one became a hero. No one "won." Both people just handled a normal situation like adults. ${setupData.characters.mainWorker.name} stood up for his boundary (the store is closing) but stayed human about it (I'll still help you out).</p>
+<p>That three-second pause at the beginning? That's what made all the difference. Without S1, none of the other S's work right.</p>
+</div>
+
+<div class="custom-notes">
+<h4>Space for Your Discoveries</h4>
+<p>In your improv sessions, you'll find specific lines and moments that work better than anything written here. Write those down. Those discoveries—the exact words that feel true when you're actually doing the scene—those are the real teaching tools.</p>
+</div>
+</div>
+`
+},
+
+'ending-escalated': {
+ending: true,
+content: `
+<div class="ending-card">
+<h2>Unnecessary Conflict</h2>
+<div class="outcome">
+<p>What started as a two-minute inconvenience became a confrontation. ${setupData.characters.manager.name} had to step in. ${setupData.characters.lateCustomer.name} left angry. ${setupData.characters.mainWorker.name} is still frustrated.</p>
+<p>Nobody won.</p>
+</div>
+
+<div class="teaching-moment">
+<h3>What Went Wrong</h3>
+<p><strong>Skipped S1 (SLOW DOWN):</strong> The first reaction was emotion, not thought. That set the temperature.</p>
+<p><strong>Never tried S2 (SIZE UP):</strong> Didn't stop to ask "why is this person here?" Assumed disrespect when it might have been oblivious.</p>
+<p><strong>Failed S3 (SPEAK SMART):</strong> The tone escalated instead of de-escalated. Words had attitude attached.</p>
+<p><strong>Didn't cycle back:</strong> When the first approach didn't work, doubled down instead of going back to S1 and trying again.</p>
+</div>
+
+<div class="teaching-moment">
+<h3>The Real Cost</h3>
+<p>This scene didn't end in violence, but it ended badly. ${setupData.characters.mainWorker.name} was right about the store closing, but being right doesn't mean you made the smart play. Now both people feel disrespected. The next time ${setupData.characters.lateCustomer.name} comes in, there's history. One small situation created ongoing tension.</p>
+<p>This is how most conflicts start—not with big things, but with small moments handled wrong.</p>
+</div>
+</div>
+`
+},
+
+'ending-passive': {
+ending: true,
+content: `
+<div class="ending-card">
+<h2>Conflict Avoided, Problem Unsolved</h2>
+<div class="outcome">
+<p>${setupData.characters.manager.name} had to handle it. ${setupData.characters.mainWorker.name} didn't have to confront anyone, but he also didn't solve anything. Someone else did his job.</p>
+</div>
+
+<div class="teaching-moment">
+<h3>The Passive Trap</h3>
+<p>Staying silent isn't the same as using the 5 S's. The 5 S's are about resolving conflict with dignity—passive avoidance is about hoping the conflict resolves itself.</p>
+<p>Sometimes it works. ${setupData.characters.lateCustomer.name} wasn't trying to cause problems, so when ${setupData.characters.manager.name} said something, he left without issue. But that only works when the other person is reasonable AND someone else is willing to step in.</p>
+<p>What happens when there's no ${setupData.characters.manager.name}? What happens when the other person isn't reasonable? Passive avoidance stops working.</p>
+</div>
+
+<div class="teaching-moment">
+<h3>Setting Boundaries Isn't Confrontation</h3>
+<p>Using the 5 S's doesn't mean being aggressive. It means being clear. ${setupData.characters.mainWorker.name} could have said "Hey man, we're about to close—what do you need?" and kept it respectful. That's not confrontation. That's communication.</p>
+<p>Avoiding that conversation didn't keep the peace. It just delayed the problem until someone else had to deal with it.</p>
+</div>
+</div>
+`
+}
+};
+
+// Render current scene
+function renderScene() {
+const scene = scenes[currentScene];
+const container = document.getElementById('storyContent');
+container.innerHTML = scene.content;
+
+// Highlight relevant S
+if (scene.sPotential !== undefined) {
+highlightActiveS(scene.sPotential);
+}
+
+// If ending, show summary
+if (scene.ending) {
+showSummary();
+}
+}
+
+// Make a choice
+function makeChoice(nextScene) {
+// Track which S's are used based on the choice
+const choiceData = {
+from: currentScene,
+to: nextScene
+};
+decisionPath.push(choiceData);
+
+// Mark S's as used based on the path
+if (nextScene === 'slow-down') {
+markSUsed(1);
+cycleCount++;
+}
+if (nextScene.includes('speak-smart')) {
+markSUsed(2); // They sized up
+markSUsed(3);
+}
+if (nextScene.includes('help-') || nextScene.includes('refuse-')) {
+markSUsed(4);
+}
+if (nextScene.startsWith('ending-') && nextScene !== 'ending-escalated') {
+if (usedSs.has(1) && usedSs.has(3) && usedSs.has(4)) {
+markSUsed(5);
+}
+}
+
+// Move to next scene
+currentScene = nextScene;
+renderScene();
+
+// Scroll to top
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Show summary at the end
+function showSummary() {
+const summaryHTML = `
+<div class="summary-grid">
+<div class="summary-item">
+<div class="label">S's Used</div>
+<div class="value">${usedSs.size}/5</div>
+</div>
+<div class="summary-item">
+<div class="label">Decisions Made</div>
+<div class="value">${decisionPath.length}</div>
+</div>
+<div class="summary-item">
+<div class="label">Cycles Attempted</div>
+<div class="value">${cycleCount}</div>
+</div>
+<div class="summary-item">
+<div class="label">Path</div>
+<div class="value">${currentScene.replace('ending-', '').replace('-', ' ')}</div>
+</div>
+</div>
+
+<div class="action-buttons">
+<button class="btn btn-primary" onclick="resetGame()">Try Different Path</button>
+<a href="closing-time-setup.html" class="btn btn-secondary">New Scene Setup</a>
+<a href="closing-time-login.html" class="btn btn-secondary">Exit</a>
+</div>
+`;
+document.getElementById('storyContent').insertAdjacentHTML('beforeend', summaryHTML);
+}
+
+// Reset game
+function resetGame() {
+currentScene = 'intro';
+usedSs = new Set();
+cycleCount = 0;
+decisionPath = [];
+// Reset tracker display
+for (let i = 1; i <= 5; i++) {
+const badge = document.getElementById(`s${i}`);
+badge.classList.remove('used', 'active');
+}
+renderScene();
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Start the game
+renderScene();
+</script>
+
+</body>
+</html>
