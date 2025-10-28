@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 5 S's Training - Access</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap');
+
+- {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
+body {
+font-family: ‘Jost’, sans-serif;
+background: #0a0a0a;
+color: #ffffff;
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+position: relative;
+overflow: hidden;
+}
+
+.gradient-bg {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: radial-gradient(ellipse at center,
+rgba(26, 71, 42, 0.6) 0%,
+rgba(45, 80, 55, 0.4) 25%,
+rgba(13, 35, 20, 0.8) 40%,
+rgba(8, 20, 12, 0.95) 70%);
+z-index: 0;
+animation: breathe 4s infinite alternate ease-in-out;
+}
+
+@keyframes breathe {
+0% { opacity: 0.4; }
+100% { opacity: 0.6; }
+}
+
+.login-container {
+position: relative;
+z-index: 1;
+max-width: 450px;
+width: 90%;
+padding: 3rem 2.5rem;
+background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 20px;
+backdrop-filter: blur(10px);
+box-shadow: 0 20px 40px rgba(10, 25, 15, 0.4);
+}
+
+.logo {
+text-align: center;
+margin-bottom: 2rem;
+}
+
+.logo h1 {
+font-size: 2.5rem;
+font-weight: 200;
+letter-spacing: 8px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 0.5rem;
+}
+
+.logo p {
+font-size: 0.9rem;
+font-weight: 300;
+letter-spacing: 3px;
+text-transform: uppercase;
+opacity: 0.7;
+}
+
+.access-info {
+margin-bottom: 2rem;
+padding: 1.5rem;
+background: rgba(26, 71, 42, 0.2);
+border-left: 3px solid rgba(220, 180, 80, 0.6);
+border-radius: 8px;
+}
+
+.access-info p {
+font-size: 0.95rem;
+line-height: 1.6;
+opacity: 0.9;
+}
+
+.form-group {
+margin-bottom: 1.5rem;
+}
+
+.form-group label {
+display: block;
+margin-bottom: 0.5rem;
+font-size: 0.9rem;
+font-weight: 400;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: rgba(220, 180, 80, 0.9);
+}
+
+.form-group input {
+width: 100%;
+padding: 12px 16px;
+background: rgba(8, 18, 12, 0.6);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 8px;
+font-family: ‘Jost’, sans-serif;
+font-size: 1rem;
+color: #ffffff;
+transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+outline: none;
+border-color: rgba(220, 180, 80, 0.8);
+box-shadow: 0 0 15px rgba(220, 180, 80, 0.2);
+}
+
+.submit-btn {
+width: 100%;
+padding: 14px;
+background: linear-gradient(145deg, rgba(26, 71, 42, 0.8), rgba(20, 50, 30, 0.9));
+border: 1px solid rgba(220, 180, 80, 0.5);
+border-radius: 8px;
+font-family: ‘Jost’, sans-serif;
+font-size: 1rem;
+font-weight: 400;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: rgba(255, 255, 255, 0.9);
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+background: linear-gradient(145deg, rgba(26, 71, 42, 1), rgba(20, 50, 30, 1));
+box-shadow: 0 8px 20px rgba(220, 180, 80, 0.3);
+transform: translateY(-2px);
+}
+
+.error-message {
+display: none;
+margin-top: 1rem;
+padding: 1rem;
+background: rgba(180, 50, 50, 0.2);
+border-left: 3px solid rgba(180, 50, 50, 0.8);
+border-radius: 8px;
+color: rgba(255, 150, 150, 0.9);
+font-size: 0.9rem;
+}
+
+.error-message.show {
+display: block;
+}
+
+@media (max-width: 768px) {
+.login-container {
+padding: 2rem 1.5rem;
+}
+.logo h1 {
+font-size: 2rem;
+letter-spacing: 4px;
+}
+}
+</style>
+
+</head>
+<body>
+<div class="gradient-bg"></div>
+
+<div class="login-container">
+<div class="logo">
+<h1>THE 5 S'S</h1>
+<p>Training Access</p>
+</div>
+
+<div class="access-info">
+<p>This section is for authorized training participants only. Enter the password provided during your session.</p>
+</div>
+
+<form id="loginForm">
+<div class="form-group">
+<label for="password">Password</label>
+<input 
+type="password" 
+id="password" 
+name="password" 
+placeholder="Enter training password"
+autocomplete="off"
+required
+>
+</div>
+
+<button type="submit" class="submit-btn">Access Training</button>
+
+<div class="error-message" id="errorMessage">
+Incorrect password. Please try again or contact your facilitator.
+</div>
+</form>
+</div>
+
+<script>
+// Password configuration - change this to your desired password
+const CORRECT_PASSWORD = 'tyrrel5s';
+
+// Store password in session storage so they don't have to re-enter
+const loginForm = document.getElementById('loginForm');
+const passwordInput = document.getElementById('password');
+const errorMessage = document.getElementById('errorMessage');
+
+// Check if already authenticated
+if (sessionStorage.getItem('5s_authenticated') === 'true') {
+window.location.href = 'closing-time-setup.html';
+}
+
+loginForm.addEventListener('submit', (e) => {
+e.preventDefault();
+const enteredPassword = passwordInput.value;
+
+if (enteredPassword === CORRECT_PASSWORD) {
+sessionStorage.setItem('5s_authenticated', 'true');
+window.location.href = 'closing-time-setup.html';
+} else {
+errorMessage.classList.add('show');
+passwordInput.value = '';
+passwordInput.focus();
+setTimeout(() => {
+errorMessage.classList.remove('show');
+}, 3000);
+}
+});
+</script>
+
+</body>
+</html>
