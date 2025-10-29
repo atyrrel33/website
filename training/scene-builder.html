@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 5 S's - Scene Builder</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500;600&display=swap');
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Jost', sans-serif;
+background: #0a0a0a;
+color: #ffffff;
+min-height: 100vh;
+position: relative;
+}
+
+.gradient-bg {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: radial-gradient(ellipse at center,
+rgba(26, 71, 42, 0.6) 0%,
+rgba(45, 80, 55, 0.4) 25%,
+rgba(13, 35, 20, 0.8) 40%,
+rgba(8, 20, 12, 0.95) 70%);
+z-index: 0;
+animation: breathe 4s infinite alternate ease-in-out;
+}
+
+@keyframes breathe {
+0% { opacity: 0.4; }
+100% { opacity: 0.6; }
+}
+
+.container {
+position: relative;
+z-index: 1;
+max-width: 1400px;
+margin: 0 auto;
+padding: 2rem;
+}
+
+/* Header */
+.header {
+text-align: center;
+margin-bottom: 2rem;
+padding: 1.5rem;
+background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 16px;
+backdrop-filter: blur(10px);
+}
+
+.header h1 {
+font-size: 2rem;
+font-weight: 300;
+letter-spacing: 6px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 0.5rem;
+}
+
+.header p {
+font-size: 0.9rem;
+opacity: 0.7;
+letter-spacing: 1px;
+}
+
+/* Mode Selector */
+.mode-selector {
+display: flex;
+gap: 1rem;
+margin-bottom: 2rem;
+background: rgba(13, 25, 18, 0.6);
+padding: 1rem;
+border-radius: 12px;
+border: 1px solid rgba(26, 71, 42, 0.4);
+}
+
+.mode-btn {
+flex: 1;
+padding: 1rem;
+background: rgba(26, 71, 42, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.3s ease;
+text-align: center;
+}
+
+.mode-btn.active {
+background: rgba(26, 71, 42, 0.8);
+border-color: rgba(220, 180, 80, 0.6);
+box-shadow: 0 0 15px rgba(220, 180, 80, 0.3);
+}
+
+.mode-btn:hover {
+transform: translateY(-2px);
+}
+
+.mode-label {
+font-size: 0.85rem;
+text-transform: uppercase;
+letter-spacing: 2px;
+opacity: 0.7;
+margin-bottom: 0.3rem;
+}
+
+.mode-title {
+font-size: 1.1rem;
+font-weight: 400;
+color: rgba(220, 180, 80, 0.95);
+}
+
+/* Capture Mode - Minimal Interface */
+.capture-mode {
+display: none;
+}
+
+.capture-mode.active {
+display: block;
+}
+
+.quick-capture {
+background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 16px;
+padding: 2rem;
+margin-bottom: 1rem;
+}
+
+.quick-capture h2 {
+font-size: 1.5rem;
+font-weight: 300;
+letter-spacing: 3px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 1.5rem;
+text-align: center;
+}
+
+.capture-field {
+margin-bottom: 1.5rem;
+}
+
+.capture-field label {
+display: block;
+font-size: 0.9rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+opacity: 0.7;
+margin-bottom: 0.5rem;
+}
+
+.capture-field input,
+.capture-field textarea,
+.capture-field select {
+width: 100%;
+padding: 1rem;
+background: rgba(0, 0, 0, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 8px;
+color: #ffffff;
+font-family: 'Jost', sans-serif;
+font-size: 1.1rem;
+}
+
+.capture-field textarea {
+min-height: 100px;
+resize: vertical;
+}
+
+.capture-field input:focus,
+.capture-field textarea:focus,
+.capture-field select:focus {
+outline: none;
+border-color: rgba(220, 180, 80, 0.6);
+box-shadow: 0 0 10px rgba(220, 180, 80, 0.2);
+}
+
+.quick-tags {
+display: flex;
+gap: 0.5rem;
+flex-wrap: wrap;
+}
+
+.tag-btn {
+padding: 0.5rem 1rem;
+background: rgba(26, 71, 42, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 20px;
+cursor: pointer;
+font-size: 0.85rem;
+letter-spacing: 1px;
+transition: all 0.2s ease;
+}
+
+.tag-btn.selected {
+background: rgba(220, 180, 80, 0.3);
+border-color: rgba(220, 180, 80, 0.6);
+}
+
+.capture-actions {
+display: flex;
+gap: 1rem;
+margin-top: 2rem;
+}
+
+.btn {
+flex: 1;
+padding: 1rem 2rem;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-family: 'Jost', sans-serif;
+font-size: 1rem;
+letter-spacing: 1px;
+text-transform: uppercase;
+transition: all 0.3s ease;
+}
+
+.btn-primary {
+background: rgba(26, 71, 42, 0.8);
+border: 1px solid rgba(220, 180, 80, 0.6);
+color: rgba(220, 180, 80, 0.95);
+}
+
+.btn-primary:hover {
+background: rgba(26, 71, 42, 1);
+box-shadow: 0 8px 20px rgba(220, 180, 80, 0.3);
+transform: translateY(-2px);
+}
+
+.btn-secondary {
+background: rgba(26, 71, 42, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.5);
+color: rgba(255, 255, 255, 0.9);
+}
+
+.btn-secondary:hover {
+background: rgba(26, 71, 42, 0.5);
+}
+
+/* Captured Beats Preview */
+.beats-preview {
+margin-top: 2rem;
+}
+
+.beats-preview h3 {
+font-size: 1.2rem;
+font-weight: 300;
+letter-spacing: 2px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 1rem;
+}
+
+.beat-item {
+background: rgba(13, 25, 18, 0.5);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 8px;
+padding: 1rem;
+margin-bottom: 0.8rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.beat-content {
+flex: 1;
+}
+
+.beat-number {
+color: rgba(220, 180, 80, 0.95);
+font-weight: 500;
+margin-right: 1rem;
+}
+
+.beat-text {
+opacity: 0.9;
+}
+
+.beat-meta {
+font-size: 0.85rem;
+opacity: 0.6;
+margin-top: 0.3rem;
+}
+
+.beat-actions {
+display: flex;
+gap: 0.5rem;
+}
+
+.icon-btn {
+padding: 0.5rem;
+background: rgba(26, 71, 42, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 6px;
+cursor: pointer;
+transition: all 0.2s ease;
+font-size: 0.9rem;
+}
+
+.icon-btn:hover {
+background: rgba(26, 71, 42, 0.6);
+}
+
+/* Finalize Mode */
+.finalize-mode {
+display: none;
+}
+
+.finalize-mode.active {
+display: block;
+}
+
+.scene-overview {
+background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 16px;
+padding: 2rem;
+margin-bottom: 2rem;
+}
+
+.scene-overview h2 {
+font-size: 1.5rem;
+font-weight: 300;
+letter-spacing: 3px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 1.5rem;
+}
+
+.overview-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 1rem;
+margin-bottom: 1.5rem;
+}
+
+.overview-stat {
+background: rgba(0, 0, 0, 0.3);
+padding: 1rem;
+border-radius: 8px;
+text-align: center;
+}
+
+.stat-value {
+font-size: 2rem;
+font-weight: 300;
+color: rgba(220, 180, 80, 0.95);
+}
+
+.stat-label {
+font-size: 0.85rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+opacity: 0.7;
+margin-top: 0.5rem;
+}
+
+.beat-editor {
+background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 16px;
+padding: 2rem;
+margin-bottom: 1.5rem;
+}
+
+.beat-header-edit {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 1.5rem;
+padding-bottom: 1rem;
+border-bottom: 1px solid rgba(26, 71, 42, 0.4);
+}
+
+.beat-title-edit {
+font-size: 1.3rem;
+font-weight: 400;
+color: rgba(220, 180, 80, 0.95);
+}
+
+.form-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1rem;
+margin-bottom: 1rem;
+}
+
+.form-group {
+margin-bottom: 1.5rem;
+}
+
+.form-group label {
+display: block;
+font-size: 0.9rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+opacity: 0.7;
+margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+width: 100%;
+padding: 0.8rem;
+background: rgba(0, 0, 0, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 8px;
+color: #ffffff;
+font-family: 'Jost', sans-serif;
+font-size: 1rem;
+}
+
+.form-group textarea {
+min-height: 80px;
+resize: vertical;
+}
+
+.s-selector {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 0.5rem;
+}
+
+.s-checkbox {
+display: none;
+}
+
+.s-label {
+padding: 0.8rem;
+background: rgba(26, 71, 42, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 8px;
+text-align: center;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+
+.s-checkbox:checked + .s-label {
+background: rgba(26, 71, 42, 0.8);
+border-color: rgba(220, 180, 80, 0.6);
+box-shadow: 0 0 10px rgba(220, 180, 80, 0.3);
+}
+
+.s-label .s-num {
+display: block;
+font-size: 1.2rem;
+font-weight: 500;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 0.3rem;
+}
+
+.s-label .s-name {
+font-size: 0.7rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+opacity: 0.7;
+}
+
+.lines-container {
+margin-top: 1rem;
+}
+
+.line-editor {
+background: rgba(0, 0, 0, 0.2);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 8px;
+padding: 1rem;
+margin-bottom: 1rem;
+}
+
+.line-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 0.8rem;
+}
+
+.add-line-btn {
+width: 100%;
+padding: 0.8rem;
+background: rgba(26, 71, 42, 0.3);
+border: 1px dashed rgba(26, 71, 42, 0.5);
+border-radius: 8px;
+cursor: pointer;
+text-align: center;
+color: rgba(220, 180, 80, 0.8);
+transition: all 0.2s ease;
+}
+
+.add-line-btn:hover {
+background: rgba(26, 71, 42, 0.5);
+border-style: solid;
+}
+
+/* Playback Mode */
+.playback-mode {
+display: none;
+}
+
+.playback-mode.active {
+display: block;
+}
+
+.tracker-container {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 0.8rem;
+margin-bottom: 2rem;
+}
+
+.s-badge {
+padding: 0.8rem;
+background: rgba(13, 25, 18, 0.6);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 12px;
+text-align: center;
+transition: all 0.3s ease;
+}
+
+.s-badge.used {
+background: rgba(26, 71, 42, 0.8);
+border-color: rgba(220, 180, 80, 0.6);
+box-shadow: 0 0 15px rgba(220, 180, 80, 0.3);
+}
+
+.s-badge .number {
+font-size: 1.5rem;
+font-weight: 300;
+color: rgba(220, 180, 80, 0.95);
+display: block;
+margin-bottom: 0.3rem;
+}
+
+.s-badge .label {
+font-size: 0.75rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+opacity: 0.8;
+}
+
+.version-selector {
+display: flex;
+gap: 1rem;
+margin-bottom: 2rem;
+}
+
+.version-btn {
+flex: 1;
+padding: 1rem;
+background: rgba(26, 71, 42, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.3s ease;
+text-align: center;
+}
+
+.version-btn.active {
+background: rgba(26, 71, 42, 0.8);
+border-color: rgba(220, 180, 80, 0.6);
+}
+
+.scene-display {
+background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 16px;
+padding: 2rem;
+margin-bottom: 2rem;
+}
+
+.beat-display {
+margin-bottom: 2rem;
+padding-bottom: 2rem;
+border-bottom: 1px solid rgba(26, 71, 42, 0.3);
+}
+
+.beat-display:last-child {
+border-bottom: none;
+}
+
+.beat-display h3 {
+font-size: 1.3rem;
+font-weight: 400;
+letter-spacing: 2px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 1rem;
+}
+
+.line-display {
+margin-bottom: 1.5rem;
+padding: 1rem;
+background: rgba(0, 0, 0, 0.2);
+border-left: 3px solid rgba(220, 180, 80, 0.4);
+border-radius: 6px;
+}
+
+.character-name-display {
+color: rgba(220, 180, 80, 0.95);
+font-weight: 500;
+letter-spacing: 1px;
+display: block;
+margin-bottom: 0.5rem;
+}
+
+.dialogue-display {
+font-size: 1.1rem;
+line-height: 1.7;
+margin-bottom: 0.5rem;
+}
+
+.stage-direction-display {
+font-style: italic;
+opacity: 0.7;
+color: rgba(180, 140, 60, 0.8);
+margin-top: 0.5rem;
+}
+
+.s-indicator {
+display: inline-block;
+padding: 0.2rem 0.6rem;
+background: rgba(26, 71, 42, 0.6);
+border: 1px solid rgba(220, 180, 80, 0.5);
+border-radius: 4px;
+font-size: 0.8rem;
+font-weight: 500;
+letter-spacing: 1px;
+color: rgba(220, 180, 80, 0.95);
+margin-left: 0.5rem;
+}
+
+/* Export Mode */
+.export-actions {
+display: flex;
+gap: 1rem;
+justify-content: center;
+margin-top: 2rem;
+}
+
+/* Utility */
+.hidden {
+display: none;
+}
+
+.text-center {
+text-align: center;
+}
+
+.mt-2 {
+margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+.container {
+padding: 1rem;
+}
+.mode-selector {
+flex-direction: column;
+}
+.form-row {
+grid-template-columns: 1fr;
+}
+.s-selector {
+grid-template-columns: repeat(5, 1fr);
+gap: 0.3rem;
+}
+}
+</style>
+</head>
+<body>
+<div class="gradient-bg"></div>
+
+<div class="container">
+<div class="header">
+<h1>SCENE BUILDER</h1>
+<p>The 5 S's Training Tool</p>
+</div>
+
+<div class="mode-selector">
+<div class="mode-btn active" onclick="switchMode('capture')">
+<div class="mode-label">Step 1</div>
+<div class="mode-title">Capture</div>
+</div>
+<div class="mode-btn" onclick="switchMode('finalize')">
+<div class="mode-label">Step 2</div>
+<div class="mode-title">Finalize</div>
+</div>
+<div class="mode-btn" onclick="switchMode('playback')">
+<div class="mode-label">Step 3</div>
+<div class="mode-title">Playback</div>
+</div>
+</div>
+
+<!-- CAPTURE MODE -->
+<div class="capture-mode active">
+<div class="quick-capture">
+<h2>Quick Capture</h2>
+<p style="text-align: center; opacity: 0.7; margin-bottom: 2rem;">Capture what's happening right now. Keep it fast.</p>
+
+<div class="capture-field">
+<label>Beat Title</label>
+<input type="text" id="captureTitle" placeholder="E.g., Customer 2 enters loud on phone">
+</div>
+
+<div class="capture-field">
+<label>Character</label>
+<input type="text" id="captureCharacter" placeholder="Who's speaking or acting?">
+</div>
+
+<div class="capture-field">
+<label>What Happened / What They Said</label>
+<textarea id="captureContent" placeholder="The line, the action, what just happened..."></textarea>
+</div>
+
+<div class="capture-field">
+<label>Quick Tags</label>
+<div class="quick-tags">
+<div class="tag-btn" onclick="toggleTag(this, 'wrong')">Wrong Version</div>
+<div class="tag-btn" onclick="toggleTag(this, 'right')">Right Version</div>
+<div class="tag-btn" onclick="toggleTag(this, 'aggressive')">Aggressive</div>
+<div class="tag-btn" onclick="toggleTag(this, 'calm')">Calm</div>
+<div class="tag-btn" onclick="toggleTag(this, 'oblivious')">Oblivious</div>
+<div class="tag-btn" onclick="toggleTag(this, 'respectful')">Respectful</div>
+</div>
+</div>
+
+<div class="capture-actions">
+<button class="btn btn-primary" onclick="quickSave()">Save & Continue</button>
+<button class="btn btn-secondary" onclick="clearCapture()">Clear</button>
+</div>
+</div>
+
+<div class="beats-preview">
+<h3>Captured Beats (<span id="beatCount">0</span>)</h3>
+<div id="beatsList"></div>
+</div>
+</div>
+
+<!-- FINALIZE MODE -->
+<div class="finalize-mode">
+<div class="scene-overview">
+<h2>Scene Overview</h2>
+<div class="overview-grid">
+<div class="overview-stat">
+<div class="stat-value" id="totalBeats">0</div>
+<div class="stat-label">Total Beats</div>
+</div>
+<div class="overview-stat">
+<div class="stat-value" id="wrongBeats">0</div>
+<div class="stat-label">Wrong Version</div>
+</div>
+<div class="overview-stat">
+<div class="stat-value" id="rightBeats">0</div>
+<div class="stat-label">Right Version</div>
+</div>
+<div class="overview-stat">
+<div class="stat-value" id="sUsageCount">0</div>
+<div class="stat-label">S's Tagged</div>
+</div>
+</div>
+<div class="export-actions">
+<button class="btn btn-primary" onclick="exportScript()">📄 Export Script</button>
+<button class="btn btn-secondary" onclick="clearAllData()">🗑️ Clear All & Start Over</button>
+</div>
+</div>
+
+<div id="finalizeContent">
+<p class="text-center" style="opacity: 0.7; padding: 2rem;">Capture some beats first, then come here to finalize them.</p>
+</div>
+</div>
+
+<!-- PLAYBACK MODE -->
+<div class="playback-mode">
+<div class="tracker-container">
+<div class="s-badge" id="s1">
+<span class="number">1</span>
+<span class="label">Slow Down</span>
+</div>
+<div class="s-badge" id="s2">
+<span class="number">2</span>
+<span class="label">Size Up</span>
+</div>
+<div class="s-badge" id="s3">
+<span class="number">3</span>
+<span class="label">Speak Smart</span>
+</div>
+<div class="s-badge" id="s4">
+<span class="number">4</span>
+<span class="label">Select</span>
+</div>
+<div class="s-badge" id="s5">
+<span class="number">5</span>
+<span class="label">Shut Down</span>
+</div>
+</div>
+
+<div class="version-selector">
+<div class="version-btn active" onclick="switchPlaybackVersion('wrong')">
+<div class="mode-label">Version A</div>
+<div class="mode-title">Without 5 S's</div>
+</div>
+<div class="version-btn" onclick="switchPlaybackVersion('right')">
+<div class="mode-label">Version B</div>
+<div class="mode-title">With 5 S's</div>
+</div>
+</div>
+
+<div id="playbackContent">
+<p class="text-center" style="opacity: 0.7; padding: 2rem;">Finalize your beats first, then watch the scene play here.</p>
+</div>
+</div>
+
+</div>
+
+<script>
+// Data structure
+let sceneData = {
+beats: [],
+metadata: {
+created: new Date().toISOString(),
+modified: new Date().toISOString()
+}
+};
+
+// Load saved data
+function loadData() {
+const saved = localStorage.getItem('sceneBuilderData');
+if (saved) {
+sceneData = JSON.parse(saved);
+updateBeatsList();
+updateFinalizeView();
+updatePlaybackView();
+}
+}
+
+// Save data
+function saveData() {
+sceneData.metadata.modified = new Date().toISOString();
+localStorage.setItem('sceneBuilderData', JSON.stringify(sceneData));
+}
+
+// Current mode
+let currentMode = 'capture';
+let selectedTags = [];
+let currentPlaybackVersion = 'wrong';
+
+// Mode switching
+function switchMode(mode) {
+currentMode = mode;
+document.querySelectorAll('.capture-mode, .finalize-mode, .playback-mode').forEach(el => {
+el.classList.remove('active');
+});
+document.querySelector(`.${mode}-mode`).classList.add('active');
+document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+event.target.closest('.mode-btn').classList.add('active');
+
+if (mode === 'finalize') {
+updateFinalizeView();
+} else if (mode === 'playback') {
+updatePlaybackView();
+}
+}
+
+// Tag selection in capture mode
+function toggleTag(element, tag) {
+element.classList.toggle('selected');
+const index = selectedTags.indexOf(tag);
+if (index > -1) {
+selectedTags.splice(index, 1);
+} else {
+selectedTags.push(tag);
+}
+}
+
+// Quick save in capture mode
+function quickSave() {
+const title = document.getElementById('captureTitle').value.trim();
+const character = document.getElementById('captureCharacter').value.trim();
+const content = document.getElementById('captureContent').value.trim();
+
+if (!content) {
+alert('Please enter what happened or what was said.');
+return;
+}
+
+const beat = {
+id: Date.now(),
+title: title || 'Untitled Beat',
+character: character,
+content: content,
+tags: [...selectedTags],
+version: selectedTags.includes('wrong') ? 'wrong' : selectedTags.includes('right') ? 'right' : 'both',
+sUsed: [],
+stageDirection: '',
+attitude: '',
+timestamp: new Date().toISOString()
+};
+
+sceneData.beats.push(beat);
+saveData();
+updateBeatsList();
+
+// Clear form
+clearCapture();
+
+// Visual feedback
+const btn = event.target;
+const originalText = btn.textContent;
+btn.textContent = '✓ Saved!';
+btn.style.background = 'rgba(26, 71, 42, 1)';
+setTimeout(() => {
+btn.textContent = originalText;
+btn.style.background = '';
+}, 1000);
+}
+
+// Clear capture form
+function clearCapture() {
+document.getElementById('captureTitle').value = '';
+document.getElementById('captureCharacter').value = '';
+document.getElementById('captureContent').value = '';
+document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('selected'));
+selectedTags = [];
+document.getElementById('captureContent').focus();
+}
+
+// Update beats list in capture mode
+function updateBeatsList() {
+const list = document.getElementById('beatsList');
+const count = document.getElementById('beatCount');
+count.textContent = sceneData.beats.length;
+
+if (sceneData.beats.length === 0) {
+list.innerHTML = '<p style="opacity: 0.5; text-align: center; padding: 2rem;">No beats captured yet.</p>';
+return;
+}
+
+list.innerHTML = sceneData.beats.map((beat, index) => `
+<div class="beat-item">
+<div class="beat-content">
+<span class="beat-number">Beat ${index + 1}</span>
+<span class="beat-text">${beat.title || 'Untitled'}</span>
+<div class="beat-meta">${beat.character ? beat.character + ' • ' : ''}${beat.tags.join(', ')}</div>
+</div>
+<div class="beat-actions">
+<button class="icon-btn" onclick="editBeat(${beat.id})" title="Edit">✏️</button>
+<button class="icon-btn" onclick="deleteBeat(${beat.id})" title="Delete">🗑️</button>
+</div>
+</div>
+`).join('');
+}
+
+// Delete beat
+function deleteBeat(id) {
+if (!confirm('Delete this beat?')) return;
+sceneData.beats = sceneData.beats.filter(b => b.id !== id);
+saveData();
+updateBeatsList();
+updateFinalizeView();
+}
+
+// Update finalize view
+function updateFinalizeView() {
+// Update stats
+document.getElementById('totalBeats').textContent = sceneData.beats.length;
+document.getElementById('wrongBeats').textContent = sceneData.beats.filter(b => b.version === 'wrong' || b.version === 'both').length;
+document.getElementById('rightBeats').textContent = sceneData.beats.filter(b => b.version === 'right' || b.version === 'both').length;
+document.getElementById('sUsageCount').textContent = sceneData.beats.reduce((sum, b) => sum + (b.sUsed ? b.sUsed.length : 0), 0);
+
+const content = document.getElementById('finalizeContent');
+if (sceneData.beats.length === 0) {
+content.innerHTML = '<p class="text-center" style="opacity: 0.7; padding: 2rem;">Capture some beats first, then come here to finalize them.</p>';
+return;
+}
+
+content.innerHTML = sceneData.beats.map((beat, index) => `
+<div class="beat-editor">
+<div class="beat-header-edit">
+<div class="beat-title-edit">Beat ${index + 1}: ${beat.title}</div>
+<button class="icon-btn" onclick="deleteBeat(${beat.id})">🗑️ Delete</button>
+</div>
+
+<div class="form-row">
+<div class="form-group">
+<label>Beat Title</label>
+<input type="text" value="${beat.title}" onchange="updateBeatField(${beat.id}, 'title', this.value)">
+</div>
+<div class="form-group">
+<label>Character</label>
+<input type="text" value="${beat.character || ''}" onchange="updateBeatField(${beat.id}, 'character', this.value)">
+</div>
+</div>
+
+<div class="form-group">
+<label>Dialogue / Action</label>
+<textarea onchange="updateBeatField(${beat.id}, 'content', this.value)">${beat.content}</textarea>
+</div>
+
+<div class="form-row">
+<div class="form-group">
+<label>Stage Direction</label>
+<input type="text" value="${beat.stageDirection || ''}" placeholder="How they say it, what they're doing..." onchange="updateBeatField(${beat.id}, 'stageDirection', this.value)">
+</div>
+<div class="form-group">
+<label>Attitude / Energy</label>
+<input type="text" value="${beat.attitude || ''}" placeholder="Aggressive, calm, oblivious..." onchange="updateBeatField(${beat.id}, 'attitude', this.value)">
+</div>
+</div>
+
+<div class="form-group">
+<label>Version</label>
+<select onchange="updateBeatField(${beat.id}, 'version', this.value)">
+<option value="wrong" ${beat.version === 'wrong' ? 'selected' : ''}>Wrong Version (Without 5 S's)</option>
+<option value="right" ${beat.version === 'right' ? 'selected' : ''}>Right Version (With 5 S's)</option>
+<option value="both" ${beat.version === 'both' ? 'selected' : ''}>Both Versions</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Which S's Are Used? (Select for Right Version)</label>
+<div class="s-selector">
+${[1,2,3,4,5].map(num => {
+const sNames = ['Slow Down', 'Size Up', 'Speak Smart', 'Select', 'Shut Down'];
+const isChecked = beat.sUsed && beat.sUsed.includes(num);
+return `
+<div>
+<input type="checkbox" class="s-checkbox" id="s${num}_${beat.id}" ${isChecked ? 'checked' : ''} onchange="toggleSUsed(${beat.id}, ${num})">
+<label for="s${num}_${beat.id}" class="s-label">
+<span class="s-num">${num}</span>
+<span class="s-name">${sNames[num-1]}</span>
+</label>
+</div>
+`;
+}).join('')}
+</div>
+</div>
+
+<div class="form-group">
+<label>Teaching Note (Why this S works/doesn't work)</label>
+<textarea placeholder="What's the lesson here?" onchange="updateBeatField(${beat.id}, 'teachingNote', this.value)">${beat.teachingNote || ''}</textarea>
+</div>
+</div>
+`).join('');
+}
+
+// Update beat field
+function updateBeatField(id, field, value) {
+const beat = sceneData.beats.find(b => b.id === id);
+if (beat) {
+beat[field] = value;
+saveData();
+updatePlaybackView();
+}
+}
+
+// Toggle S used
+function toggleSUsed(beatId, sNum) {
+const beat = sceneData.beats.find(b => b.id === beatId);
+if (!beat) return;
+
+if (!beat.sUsed) beat.sUsed = [];
+
+const index = beat.sUsed.indexOf(sNum);
+if (index > -1) {
+beat.sUsed.splice(index, 1);
+} else {
+beat.sUsed.push(sNum);
+beat.sUsed.sort();
+}
+
+saveData();
+updateFinalizeView();
+updatePlaybackView();
+}
+
+// Update playback view
+function updatePlaybackView() {
+const content = document.getElementById('playbackContent');
+
+// Clear S tracking
+for (let i = 1; i <= 5; i++) {
+document.getElementById(`s${i}`).classList.remove('used');
+}
+
+// Filter beats by current version
+const beats = sceneData.beats.filter(b => b.version === currentPlaybackVersion || b.version === 'both');
+
+if (beats.length === 0) {
+content.innerHTML = '<p class="text-center" style="opacity: 0.7; padding: 2rem;">No beats for this version yet. Add some in Finalize mode.</p>';
+return;
+}
+
+// Group beats by title (for organizing)
+const groupedBeats = beats.reduce((acc, beat) => {
+if (!acc[beat.title]) acc[beat.title] = [];
+acc[beat.title].push(beat);
+return acc;
+}, {});
+
+content.innerHTML = Object.entries(groupedBeats).map(([title, beatGroup]) => `
+<div class="scene-display">
+<div class="beat-display">
+<h3>${title}</h3>
+${beatGroup.map(beat => {
+// Mark S's as used if in right version
+if (currentPlaybackVersion === 'right' && beat.sUsed) {
+beat.sUsed.forEach(s => {
+setTimeout(() => {
+document.getElementById(`s${s}`).classList.add('used');
+}, 100);
+});
+}
+
+return `
+<div class="line-display">
+${beat.character ? `<span class="character-name-display">${beat.character}</span>` : ''}
+<div class="dialogue-display">
+${beat.content}
+${beat.sUsed && beat.sUsed.length > 0 && currentPlaybackVersion === 'right' ? 
+beat.sUsed.map(s => `<span class="s-indicator">S${s}</span>`).join('') : ''}
+</div>
+${beat.stageDirection ? `<div class="stage-direction-display">${beat.stageDirection}</div>` : ''}
+${beat.attitude ? `<div class="stage-direction-display">Energy: ${beat.attitude}</div>` : ''}
+${beat.teachingNote && currentPlaybackVersion === 'right' ? `<div style="margin-top: 1rem; padding: 1rem; background: rgba(220, 180, 80, 0.1); border-radius: 6px; font-size: 0.95rem;">💡 ${beat.teachingNote}</div>` : ''}
+</div>
+`;
+}).join('')}
+</div>
+</div>
+`).join('');
+}
+
+// Switch playback version
+function switchPlaybackVersion(version) {
+currentPlaybackVersion = version;
+document.querySelectorAll('.version-btn').forEach(btn => btn.classList.remove('active'));
+event.target.closest('.version-btn').classList.add('active');
+updatePlaybackView();
+}
+
+// Export script
+function exportScript() {
+if (sceneData.beats.length === 0) {
+alert('No beats to export yet!');
+return;
+}
+
+const wrongBeats = sceneData.beats.filter(b => b.version === 'wrong' || b.version === 'both');
+const rightBeats = sceneData.beats.filter(b => b.version === 'right' || b.version === 'both');
+
+let script = `CLOSING TIME - SCENE SCRIPT
+Generated: ${new Date().toLocaleString()}
+Total Beats: ${sceneData.beats.length}
+
+================================================================================
+VERSION A: WITHOUT THE 5 S's (The Wrong Way)
+================================================================================
+
+`;
+
+wrongBeats.forEach((beat, index) => {
+script += `BEAT ${index + 1}: ${beat.title.toUpperCase()}\n\n`;
+if (beat.character) script += `${beat.character}:\n`;
+script += `${beat.content}\n`;
+if (beat.stageDirection) script += `[${beat.stageDirection}]\n`;
+if (beat.attitude) script += `Attitude: ${beat.attitude}\n`;
+script += `\n`;
+});
+
+script += `
+================================================================================
+VERSION B: WITH THE 5 S's (The Right Way)
+================================================================================
+
+`;
+
+rightBeats.forEach((beat, index) => {
+script += `BEAT ${index + 1}: ${beat.title.toUpperCase()}\n\n`;
+if (beat.character) script += `${beat.character}:\n`;
+script += `${beat.content}\n`;
+if (beat.stageDirection) script += `[${beat.stageDirection}]\n`;
+if (beat.attitude) script += `Attitude: ${beat.attitude}\n`;
+if (beat.sUsed && beat.sUsed.length > 0) {
+const sNames = ['Slow Down', 'Size Up', 'Speak Smart', 'Select', 'Shut Down'];
+script += `5 S's Used: ${beat.sUsed.map(s => `S${s} (${sNames[s-1]})`).join(', ')}\n`;
+}
+if (beat.teachingNote) script += `Teaching Note: ${beat.teachingNote}\n`;
+script += `\n`;
+});
+
+// Create downloadable file
+const blob = new Blob([script], { type: 'text/plain' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = `closing-time-script-${Date.now()}.txt`;
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
+
+alert('Script exported! Check your downloads folder.');
+}
+
+// Clear all data
+function clearAllData() {
+if (!confirm('This will delete ALL captured beats and start over. Are you sure?')) return;
+if (!confirm('Really sure? This cannot be undone.')) return;
+
+sceneData = {
+beats: [],
+metadata: {
+created: new Date().toISOString(),
+modified: new Date().toISOString()
+}
+};
+saveData();
+updateBeatsList();
+updateFinalizeView();
+updatePlaybackView();
+alert('All data cleared. Starting fresh.');
+}
+
+// Initialize
+loadData();
+</script>
+</body>
+</html>
