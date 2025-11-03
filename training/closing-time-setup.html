@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scene Setup - The 5 S's</title>
+<title>Scene Setup - The 5 S's Training</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap');
 
@@ -44,7 +44,7 @@ animation: breathe 4s infinite alternate ease-in-out;
 .container {
 position: relative;
 z-index: 1;
-max-width: 1000px;
+max-width: 900px;
 margin: 0 auto;
 padding: 3rem 2rem;
 }
@@ -65,9 +65,9 @@ margin-bottom: 1rem;
 .header p {
 font-size: 1.1rem;
 font-weight: 300;
-line-height: 1.7;
+line-height: 1.6;
 opacity: 0.8;
-max-width: 700px;
+max-width: 600px;
 margin: 0 auto;
 }
 
@@ -85,125 +85,162 @@ font-size: 1.5rem;
 font-weight: 300;
 letter-spacing: 4px;
 color: rgba(220, 180, 80, 0.95);
-margin-bottom: 0.5rem;
-}
-
-.setup-card .section-subtitle {
-font-size: 0.95rem;
-opacity: 0.7;
-line-height: 1.6;
 margin-bottom: 1.5rem;
 }
 
-.form-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 1.5rem;
+.setup-card p.description {
+font-size: 0.95rem;
+line-height: 1.6;
+opacity: 0.8;
 margin-bottom: 1.5rem;
 }
 
 .form-group {
-display: flex;
-flex-direction: column;
-}
-
-.form-group.full-width {
-grid-column: 1 / -1;
+margin-bottom: 1.5rem;
 }
 
 .form-group label {
-font-size: 0.9rem;
-text-transform: uppercase;
-letter-spacing: 1px;
-opacity: 0.7;
+display: block;
 margin-bottom: 0.5rem;
+font-size: 0.9rem;
+font-weight: 400;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: rgba(220, 180, 80, 0.9);
 }
 
 .form-group input,
-.form-group select,
 .form-group textarea {
-padding: 0.9rem;
-background: rgba(0, 0, 0, 0.3);
+width: 100%;
+padding: 12px 16px;
+background: rgba(8, 18, 12, 0.6);
 border: 1px solid rgba(26, 71, 42, 0.5);
 border-radius: 8px;
-color: #ffffff;
 font-family: 'Jost', sans-serif;
 font-size: 1rem;
+color: #ffffff;
 transition: all 0.3s ease;
 }
 
 .form-group textarea {
-min-height: 80px;
+min-height: 100px;
 resize: vertical;
 }
 
 .form-group input:focus,
-.form-group select:focus,
 .form-group textarea:focus {
 outline: none;
-border-color: rgba(220, 180, 80, 0.6);
-box-shadow: 0 0 10px rgba(220, 180, 80, 0.2);
+border-color: rgba(220, 180, 80, 0.8);
+box-shadow: 0 0 15px rgba(220, 180, 80, 0.2);
 }
 
-.character-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-gap: 1.5rem;
-margin-bottom: 1.5rem;
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+color: rgba(255, 255, 255, 0.4);
 }
 
-.character-card {
-background: rgba(0, 0, 0, 0.3);
-border: 1px solid rgba(26, 71, 42, 0.4);
-border-radius: 12px;
-padding: 1.5rem;
-}
-
-.character-card h3 {
-font-size: 1.1rem;
-font-weight: 400;
-letter-spacing: 2px;
-color: rgba(220, 180, 80, 0.95);
-margin-bottom: 0.4rem;
-}
-
-.character-card .role {
+.form-group small {
+display: block;
+margin-top: 0.5rem;
 font-size: 0.85rem;
 opacity: 0.6;
-margin-bottom: 1rem;
 font-style: italic;
 }
 
-.character-card input,
-.character-card textarea {
-width: 100%;
-padding: 0.8rem;
-background: rgba(0, 0, 0, 0.3);
+/* Character Builder */
+.characters-section {
+margin-top: 2rem;
+}
+
+.character-list {
+display: flex;
+flex-direction: column;
+gap: 1rem;
+margin-bottom: 1rem;
+}
+
+.character-item {
+background: rgba(26, 71, 42, 0.2);
 border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 12px;
+padding: 1.5rem;
+display: grid;
+grid-template-columns: 1fr 1fr auto;
+gap: 1rem;
+align-items: start;
+}
+
+.character-input-group {
+display: flex;
+flex-direction: column;
+}
+
+.character-input-group label {
+font-size: 0.75rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+opacity: 0.7;
+margin-bottom: 0.3rem;
+}
+
+.character-input-group input,
+.character-input-group textarea {
+padding: 8px 12px;
+background: rgba(8, 18, 12, 0.6);
+border: 1px solid rgba(26, 71, 42, 0.5);
 border-radius: 6px;
-color: #ffffff;
 font-family: 'Jost', sans-serif;
 font-size: 0.95rem;
-margin-bottom: 0.8rem;
+color: #ffffff;
 }
 
-.character-card textarea {
+.character-input-group textarea {
 min-height: 60px;
 resize: vertical;
+grid-column: 1 / -2;
 }
 
-.character-card input:focus,
-.character-card textarea:focus {
-outline: none;
-border-color: rgba(220, 180, 80, 0.5);
+.character-item .remove-btn {
+padding: 0.5rem;
+background: rgba(200, 50, 50, 0.2);
+border: 1px solid rgba(200, 50, 50, 0.4);
+border-radius: 6px;
+cursor: pointer;
+transition: all 0.2s ease;
+font-size: 1.2rem;
+color: rgba(255, 255, 255, 0.7);
+height: fit-content;
+}
+
+.character-item .remove-btn:hover {
+background: rgba(200, 50, 50, 0.4);
+}
+
+.add-character-btn {
+padding: 12px 24px;
+background: rgba(26, 71, 42, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.5);
+border-radius: 8px;
+font-family: 'Jost', sans-serif;
+font-size: 0.9rem;
+letter-spacing: 1px;
+color: rgba(220, 180, 80, 0.95);
+cursor: pointer;
+transition: all 0.3s ease;
+text-transform: uppercase;
+}
+
+.add-character-btn:hover {
+background: rgba(26, 71, 42, 0.5);
+transform: translateY(-2px);
 }
 
 .info-box {
-background: rgba(220, 180, 80, 0.08);
-border-left: 3px solid rgba(220, 180, 80, 0.5);
+background: rgba(220, 180, 80, 0.1);
+border-left: 3px solid rgba(220, 180, 80, 0.6);
 border-radius: 8px;
 padding: 1.5rem;
-margin-top: 1.5rem;
+margin-bottom: 2rem;
 }
 
 .info-box h3 {
@@ -237,8 +274,6 @@ text-transform: uppercase;
 border-radius: 8px;
 cursor: pointer;
 transition: all 0.3s ease;
-text-decoration: none;
-display: inline-block;
 border: none;
 }
 
@@ -269,12 +304,11 @@ border-color: rgba(26, 71, 42, 0.8);
 .container {
 padding: 2rem 1rem;
 }
-.form-grid {
+.character-item {
 grid-template-columns: 1fr;
-gap: 1rem;
 }
-.character-grid {
-grid-template-columns: 1fr;
+.character-input-group textarea {
+grid-column: 1;
 }
 .button-group {
 flex-direction: column;
@@ -291,122 +325,119 @@ width: 100%;
 <div class="container">
 <div class="header">
 <h1>SCENE SETUP</h1>
-<p>Before we begin, let's build the world of this scene together. These decisions create the context for what you'll discover through improvisation.</p>
+<p>Before we begin, let's establish the world. Define the scenario, the people, and the pressure that brings them together.</p>
 </div>
 
 <form id="setupForm">
-<!-- Section 1: Scene Context -->
 <div class="setup-card">
-<h2>The Setting</h2>
-<p class="section-subtitle">Where are we, and what time is it?</p>
-<div class="form-grid">
+<h2>The Scenario</h2>
+<p class="description">What's the situation we're exploring? This could be anything—a workplace conflict, a family moment, a service interaction, a negotiation. The 5 S's work anywhere people need to navigate tension.</p>
+
 <div class="form-group">
-<label for="storeType">Type of Store</label>
-<select id="storeType" required>
-<option value="">Choose...</option>
-<option value="corner-store">Corner Store</option>
-<option value="phone-store">Phone Store</option>
-<option value="clothing-store">Clothing Store</option>
-<option value="restaurant">Restaurant / Fast Food</option>
-<option value="gas-station">Gas Station</option>
-<option value="custom">Other (specify below)</option>
-</select>
+<label for="scenarioTitle">Scenario Title</label>
+<input type="text" id="scenarioTitle" placeholder="e.g., Closing Time, The Emergency Room, Family Dinner" required>
+<small>Give this scenario a name you'll remember</small>
 </div>
 
 <div class="form-group">
-<label for="storeName">Store Name</label>
-<input type="text" id="storeName" placeholder="What's it called?" required>
+<label for="setting">Setting</label>
+<input type="text" id="setting" placeholder="Where does this take place?" required>
+<small>The physical space matters—it shapes behavior</small>
 </div>
 
 <div class="form-group">
-<label for="closingTime">Closing Time</label>
-<input type="text" id="closingTime" placeholder="e.g., 10 PM" required>
+<label for="context">Context & Stakes</label>
+<textarea id="context" placeholder="What's the situation? What's at stake? What pressure exists?" required></textarea>
+<small>The more specific the pressure, the more real the choices become</small>
 </div>
 
 <div class="form-group">
-<label for="currentTime">Current Time</label>
-<input type="text" id="currentTime" placeholder="e.g., 9:58 PM" required>
-</div>
-
-<div class="form-group full-width">
-<label for="location">Location / Neighborhood</label>
-<input type="text" id="location" placeholder="Does the neighborhood context matter to this scene?">
-</div>
+<label for="timing">Timing / Time Pressure</label>
+<input type="text" id="timing" placeholder="Is there a deadline? A clock ticking? Time running out?">
+<small>Optional, but time pressure often reveals character</small>
 </div>
 </div>
 
-<!-- Section 2: The Stakes -->
-<div class="setup-card">
-<h2>Why Closing Matters</h2>
-<p class="section-subtitle">Stakes give the scene tension. Why is it important that the store closes on time today?</p>
-<div class="form-group full-width">
-<label for="stakes">The Reason</label>
-<textarea id="stakes" placeholder="E.g., Main worker has to catch the last bus home. Or manager said no overtime. Or they're exhausted and just need to go. What makes closing time matter?"></textarea>
-</div>
-</div>
-
-<!-- Section 3: The Characters -->
 <div class="setup-card">
 <h2>The People</h2>
-<p class="section-subtitle">These four people will drive the scene. Give them names and think about who they are.</p>
+<p class="description">Who's in this scene? Add as many characters as you need. Give each one enough detail that their choices will make sense.</p>
 
-<div class="character-grid">
-<div class="character-card">
-<h3>Main Worker</h3>
-<div class="role">Been here all day, wants to leave</div>
-<input type="text" id="worker1Name" placeholder="Name" required>
-<textarea id="worker1Detail" placeholder="What's his energy right now? Why does he need to leave? What's his usual personality?"></textarea>
+<div class="characters-section">
+<div class="character-list" id="characterList">
+<!-- Characters will be added here dynamically -->
 </div>
-
-<div class="character-card">
-<h3>Manager / Co-Worker</h3>
-<div class="role">The support or the complication</div>
-<input type="text" id="worker2Name" placeholder="Name" required>
-<textarea id="worker2Detail" placeholder="Is this the manager or another worker? More chill or more by-the-book? Will they help or make it harder?"></textarea>
-</div>
-
-<div class="character-card">
-<h3>Regular Customer</h3>
-<div class="role">Already in the store, a familiar face</div>
-<input type="text" id="regularName" placeholder="Name" required>
-<textarea id="regularDetail" placeholder="How do the workers know him? Does he come in daily? Weekly? Is he respectful? Does he tip even though he doesn't have to?"></textarea>
-</div>
-
-<div class="character-card">
-<h3>Late Customer</h3>
-<div class="role">The catalyst</div>
-<input type="text" id="lateCustomerName" placeholder="Name" required>
-<textarea id="lateCustomerDetail" placeholder="Is he oblivious to the time or does he know and not care? On his phone? In a hurry himself? What's his energy?"></textarea>
-</div>
-</div>
-</div>
-
-<!-- Section 4: The Initial Situation -->
-<div class="setup-card">
-<h2>When The Scene Starts</h2>
-<p class="section-subtitle">Set the opening image. What's happening in the first moment?</p>
-<div class="form-group full-width">
-<label for="openingMoment">The Opening</label>
-<textarea id="openingMoment" placeholder="E.g., Main worker is counting the register while Regular Customer is finishing up his purchase. Lights are already dimmed. Two minutes until closing. What does this moment look like?"></textarea>
+<button type="button" class="add-character-btn" onclick="addCharacter()">+ Add Character</button>
 </div>
 </div>
 
 <div class="info-box">
-<h3>Remember</h3>
-<p>You're not writing the scene yet—you're creating the conditions for discovery. The improvisation will reveal what actually happens. These details just give you a solid foundation to build from.</p>
+<h3>A Note on Discovery</h3>
+<p>These details aren't final. As you work through the scene, you'll discover things you didn't plan. That's not a bug—it's the entire point. Let the improvisation reveal what's true, then come back and adjust if needed.</p>
 </div>
 
 <div class="button-group">
-<a href="closing-time-login.html" class="btn btn-secondary">Back</a>
-<button type="submit" class="btn btn-primary">Begin Building The Scene</button>
+<button type="button" class="btn btn-secondary" onclick="window.history.back()">Back</button>
+<button type="submit" class="btn btn-primary">Begin Building</button>
 </div>
 </form>
 </div>
 
 <script>
-// Check authentication
-if (sessionStorage.getItem('5s_authenticated') !== 'true') {
-window.location.href = 'closing-time-login.html';
+let characterCount = 0;
+const characterColors = [
+'rgba(220, 180, 80, 0.3)',
+'rgba(100, 150, 180, 0.3)',
+'rgba(180, 100, 150, 0.3)',
+'rgba(150, 180, 100, 0.3)'
+];
+
+// Initialize with 2 characters by default
+window.addEventListener('DOMContentLoaded', () => {
+addCharacter();
+addCharacter();
+});
+
+function addCharacter() {
+characterCount++;
+const characterList = document.getElementById('characterList');
+const colorIndex = (characterCount - 1) % characterColors.length;
+
+const characterDiv = document.createElement('div');
+characterDiv.className = 'character-item';
+characterDiv.dataset.characterId = characterCount;
+characterDiv.innerHTML = `
+<div class="character-input-group">
+<label>Character Name</label>
+<input type="text" 
+class="character-name" 
+placeholder="e.g., Alex, Manager, The Customer" 
+required>
+</div>
+<div class="character-input-group">
+<label>Role / Relationship</label>
+<input type="text" 
+class="character-role" 
+placeholder="e.g., Employee, Authority figure, Outsider">
+</div>
+<button type="button" class="remove-btn" onclick="removeCharacter(${characterCount})" title="Remove character">×</button>
+<div class="character-input-group" style="grid-column: 1 / -1;">
+<label>Details / Motivation</label>
+<textarea class="character-details" placeholder="What do they want? What pressure are they under? What's their perspective?"></textarea>
+</div>
+`;
+
+characterList.appendChild(characterDiv);
+}
+
+function removeCharacter(id) {
+if (document.querySelectorAll('.character-item').length <= 1) {
+alert('You need at least one character in the scene.');
+return;
+}
+const characterItem = document.querySelector(`[data-character-id="${id}"]`);
+if (characterItem) {
+characterItem.remove();
+}
 }
 
 const setupForm = document.getElementById('setupForm');
@@ -414,42 +445,57 @@ const setupForm = document.getElementById('setupForm');
 setupForm.addEventListener('submit', (e) => {
 e.preventDefault();
 
-// Gather all the setup data
+// Gather all characters
+const characterItems = document.querySelectorAll('.character-item');
+const characters = [];
+let allCharactersValid = true;
+
+characterItems.forEach((item) => {
+const name = item.querySelector('.character-name').value.trim();
+const role = item.querySelector('.character-role').value.trim();
+const details = item.querySelector('.character-details').value.trim();
+
+if (!name) {
+allCharactersValid = false;
+return;
+}
+
+characters.push({
+name: name,
+role: role,
+details: details
+});
+});
+
+if (!allCharactersValid) {
+alert('Please provide a name for each character.');
+return;
+}
+
+if (characters.length === 0) {
+alert('Please add at least one character.');
+return;
+}
+
+// Gather all setup data
 const setupData = {
-storeType: document.getElementById('storeType').value,
-storeName: document.getElementById('storeName').value,
-closingTime: document.getElementById('closingTime').value,
-currentTime: document.getElementById('currentTime').value,
-location: document.getElementById('location').value,
-stakes: document.getElementById('stakes').value,
-openingMoment: document.getElementById('openingMoment').value,
-characters: {
-mainWorker: {
-name: document.getElementById('worker1Name').value,
-detail: document.getElementById('worker1Detail').value
-},
-manager: {
-name: document.getElementById('worker2Name').value,
-detail: document.getElementById('worker2Detail').value
-},
-regular: {
-name: document.getElementById('regularName').value,
-detail: document.getElementById('regularDetail').value
-},
-lateCustomer: {
-name: document.getElementById('lateCustomerName').value,
-detail: document.getElementById('lateCustomerDetail').value
-}
-}
+scenarioTitle: document.getElementById('scenarioTitle').value.trim(),
+setting: document.getElementById('setting').value.trim(),
+context: document.getElementById('context').value.trim(),
+timing: document.getElementById('timing').value.trim(),
+characters: characters,
+created: new Date().toISOString()
 };
 
 // Store in session storage
-sessionStorage.setItem('sceneSetup', JSON.stringify(setupData));
+sessionStorage.setItem('scene_setup', JSON.stringify(setupData));
 
-// Go to the scene builder tool
-window.location.href = 'scene-builder.html';
+// Go to scene builder
+alert('Setup complete! Redirecting to Scene Builder...');
+// In production, this would redirect to the scene builder
+// window.location.href = 'scene-builder-enhanced.html';
+console.log('Setup data saved:', setupData);
 });
 </script>
 </body>
-</html>}
-
+</html>
