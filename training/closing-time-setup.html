@@ -300,6 +300,123 @@ background: rgba(13, 25, 18, 0.8);
 border-color: rgba(26, 71, 42, 0.8);
 }
 
+/* Upload Zone */
+.upload-zone {
+border: 2px dashed rgba(26, 71, 42, 0.5);
+border-radius: 12px;
+padding: 3rem;
+text-align: center;
+cursor: pointer;
+transition: all 0.3s ease;
+background: rgba(8, 18, 12, 0.3);
+}
+
+.upload-zone:hover {
+border-color: rgba(220, 180, 80, 0.6);
+background: rgba(8, 18, 12, 0.5);
+}
+
+.upload-zone.dragover {
+border-color: rgba(220, 180, 80, 0.8);
+background: rgba(220, 180, 80, 0.1);
+}
+
+.upload-content {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 1rem;
+}
+
+.upload-icon {
+font-size: 3rem;
+opacity: 0.7;
+}
+
+.upload-text strong {
+font-size: 1.1rem;
+letter-spacing: 1px;
+color: rgba(220, 180, 80, 0.95);
+}
+
+.upload-text p {
+font-size: 0.85rem;
+opacity: 0.6;
+margin-top: 0.5rem;
+}
+
+/* Preview Section */
+.preview-header {
+margin-bottom: 1.5rem;
+padding-bottom: 1rem;
+border-bottom: 1px solid rgba(26, 71, 42, 0.4);
+}
+
+.preview-header h3 {
+font-size: 1.1rem;
+font-weight: 400;
+letter-spacing: 2px;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 0.5rem;
+}
+
+.preview-header p {
+font-size: 0.9rem;
+opacity: 0.7;
+}
+
+.preview-content {
+background: rgba(0, 0, 0, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 8px;
+padding: 1.5rem;
+margin-bottom: 1.5rem;
+max-height: 400px;
+overflow-y: auto;
+}
+
+.preview-item {
+margin-bottom: 1.5rem;
+}
+
+.preview-item:last-child {
+margin-bottom: 0;
+}
+
+.preview-label {
+font-size: 0.8rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+opacity: 0.6;
+margin-bottom: 0.3rem;
+}
+
+.preview-value {
+font-size: 1rem;
+opacity: 0.9;
+line-height: 1.6;
+}
+
+.preview-character {
+background: rgba(26, 71, 42, 0.2);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 8px;
+padding: 1rem;
+margin-bottom: 1rem;
+}
+
+.preview-character-name {
+font-weight: 500;
+color: rgba(220, 180, 80, 0.95);
+margin-bottom: 0.5rem;
+}
+
+.preview-actions {
+display: flex;
+gap: 1rem;
+justify-content: center;
+}
+
 @media (max-width: 768px) {
 .container {
 padding: 2rem 1rem;
@@ -326,6 +443,35 @@ width: 100%;
 <div class="header">
 <h1>SCENE SETUP</h1>
 <p>Before we begin, let's establish the world. Define the scenario, the people, and the pressure that brings them together.</p>
+</div>
+
+<!-- Document Upload Section -->
+<div class="setup-card" id="uploadSection">
+<h2>Start From a Document</h2>
+<p class="description">Have a scenario already written? Upload a text file and we'll extract the details for you. Or skip this and fill out the form manually below.</p>
+
+<div class="upload-zone" id="uploadZone">
+<input type="file" id="fileInput" accept=".txt,.doc,.docx,.pdf" style="display: none;">
+<div class="upload-content">
+<div class="upload-icon">📄</div>
+<div class="upload-text">
+<strong>Drop a document here or click to browse</strong>
+<p>Supports .txt, .doc, .docx, .pdf files</p>
+</div>
+</div>
+</div>
+
+<div id="parsePreview" style="display: none;">
+<div class="preview-header">
+<h3>Extracted Information</h3>
+<p>Review what we found, then click "Apply to Form" to use it.</p>
+</div>
+<div id="previewContent" class="preview-content"></div>
+<div class="preview-actions">
+<button type="button" class="btn btn-secondary" onclick="clearUpload()">Clear</button>
+<button type="button" class="btn btn-primary" onclick="applyParsedData()">Apply to Form</button>
+</div>
+</div>
 </div>
 
 <form id="setupForm">
@@ -395,7 +541,281 @@ const characterColors = [
 window.addEventListener('DOMContentLoaded', () => {
 addCharacter();
 addCharacter();
+setupUploadHandlers();
 });
+
+// Document Upload Functionality
+let parsedData = null;
+
+function setupUploadHandlers() {
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+
+// Click to upload
+uploadZone.addEventListener('click', () => {
+fileInput.click();
+});
+
+// File selected
+fileInput.addEventListener('change', (e) => {
+if (e.target.files.length > 0) {
+handleFile(e.target.files[0]);
+}
+});
+
+// Drag and drop
+uploadZone.addEventListener('dragover', (e) => {
+e.preventDefault();
+uploadZone.classList.add('dragover');
+});
+
+uploadZone.addEventListener('dragleave', () => {
+uploadZone.classList.remove('dragover');
+});
+
+uploadZone.addEventListener('drop', (e) => {
+e.preventDefault();
+uploadZone.classList.remove('dragover');
+if (e.dataTransfer.files.length > 0) {
+handleFile(e.dataTransfer.files[0]);
+}
+});
+}
+
+function handleFile(file) {
+const reader = new FileReader();
+const fileName = file.name.toLowerCase();
+
+if (fileName.endsWith('.txt') || fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
+reader.onload = (e) => {
+const text = e.target.result;
+parseDocument(text);
+};
+reader.readAsText(file);
+} else if (fileName.endsWith('.pdf')) {
+// For PDF, we'll just read as text (won't be perfect but will work for simple PDFs)
+reader.onload = (e) => {
+const text = e.target.result;
+parseDocument(text);
+};
+reader.readAsText(file);
+} else {
+alert('Unsupported file type. Please upload a .txt, .doc, .docx, or .pdf file.');
+}
+}
+
+function parseDocument(text) {
+// Initialize parsed data structure
+parsedData = {
+scenarioTitle: '',
+setting: '',
+context: '',
+timing: '',
+characters: []
+};
+
+// Parse the text intelligently
+const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+
+let currentSection = null;
+let currentCharacter = null;
+
+for (let i = 0; i < lines.length; i++) {
+const line = lines[i];
+const lowerLine = line.toLowerCase();
+
+// Detect sections
+if (lowerLine.match(/^(scenario|title):/i)) {
+parsedData.scenarioTitle = line.split(':').slice(1).join(':').trim();
+} else if (lowerLine.match(/^setting:/i)) {
+parsedData.setting = line.split(':').slice(1).join(':').trim();
+} else if (lowerLine.match(/^(context|stakes):/i)) {
+parsedData.context = line.split(':').slice(1).join(':').trim();
+} else if (lowerLine.match(/^(timing|time pressure):/i)) {
+parsedData.timing = line.split(':').slice(1).join(':').trim();
+} else if (lowerLine.match(/^characters?:/i)) {
+currentSection = 'characters';
+} else if (currentSection === 'characters' && lowerLine.match(/^name:/i)) {
+// Save previous character if exists
+if (currentCharacter && currentCharacter.name) {
+parsedData.characters.push(currentCharacter);
+}
+// Start new character
+currentCharacter = {
+name: line.split(':').slice(1).join(':').trim(),
+role: '',
+details: ''
+};
+} else if (currentCharacter && lowerLine.match(/^(role|relationship):/i)) {
+currentCharacter.role = line.split(':').slice(1).join(':').trim();
+} else if (currentCharacter && lowerLine.match(/^(details|motivation|description):/i)) {
+currentCharacter.details = line.split(':').slice(1).join(':').trim();
+} else if (currentSection === 'characters' && currentCharacter) {
+// Continuation of previous field
+if (currentCharacter.details) {
+currentCharacter.details += ' ' + line;
+} else if (currentCharacter.role) {
+currentCharacter.role += ' ' + line;
+}
+} else if (!parsedData.scenarioTitle && i === 0) {
+// First line might be the title if not labeled
+parsedData.scenarioTitle = line;
+}
+}
+
+// Add last character if exists
+if (currentCharacter && currentCharacter.name) {
+parsedData.characters.push(currentCharacter);
+}
+
+// Try to extract info from unstructured text if structured parsing failed
+if (!parsedData.scenarioTitle && !parsedData.setting && parsedData.characters.length === 0) {
+parseUnstructuredText(text);
+}
+
+showPreview();
+}
+
+function parseUnstructuredText(text) {
+// More flexible parsing for freeform text
+// Take first non-empty line as title
+const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+if (lines.length > 0) {
+parsedData.scenarioTitle = lines[0].substring(0, 100); // Limit length
+}
+
+// Look for location keywords
+const locationMatch = text.match(/(at|in|location:|setting:)\s+([^\n.]+)/i);
+if (locationMatch) {
+parsedData.setting = locationMatch[2].trim();
+}
+
+// Extract everything as context if we can't parse more specifically
+if (lines.length > 1) {
+parsedData.context = lines.slice(1).join(' ').substring(0, 500);
+}
+}
+
+function showPreview() {
+const previewDiv = document.getElementById('parsePreview');
+const contentDiv = document.getElementById('previewContent');
+
+let html = '';
+
+if (parsedData.scenarioTitle) {
+html += `
+<div class="preview-item">
+<div class="preview-label">Scenario Title</div>
+<div class="preview-value">${parsedData.scenarioTitle}</div>
+</div>
+`;
+}
+
+if (parsedData.setting) {
+html += `
+<div class="preview-item">
+<div class="preview-label">Setting</div>
+<div class="preview-value">${parsedData.setting}</div>
+</div>
+`;
+}
+
+if (parsedData.context) {
+html += `
+<div class="preview-item">
+<div class="preview-label">Context & Stakes</div>
+<div class="preview-value">${parsedData.context}</div>
+</div>
+`;
+}
+
+if (parsedData.timing) {
+html += `
+<div class="preview-item">
+<div class="preview-label">Timing</div>
+<div class="preview-value">${parsedData.timing}</div>
+</div>
+`;
+}
+
+if (parsedData.characters.length > 0) {
+html += `
+<div class="preview-item">
+<div class="preview-label">Characters (${parsedData.characters.length})</div>
+`;
+parsedData.characters.forEach(char => {
+html += `
+<div class="preview-character">
+<div class="preview-character-name">${char.name}</div>
+${char.role ? `<div style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 0.3rem;">${char.role}</div>` : ''}
+${char.details ? `<div style="font-size: 0.9rem; opacity: 0.8;">${char.details}</div>` : ''}
+</div>
+`;
+});
+html += `</div>`;
+}
+
+if (!html) {
+html = '<p style="opacity: 0.7;">No structured information could be extracted from this document. Try manually filling out the form instead.</p>';
+}
+
+contentDiv.innerHTML = html;
+previewDiv.style.display = 'block';
+document.getElementById('uploadZone').style.display = 'none';
+}
+
+function applyParsedData() {
+if (!parsedData) return;
+
+// Fill in basic fields
+if (parsedData.scenarioTitle) {
+document.getElementById('scenarioTitle').value = parsedData.scenarioTitle;
+}
+if (parsedData.setting) {
+document.getElementById('setting').value = parsedData.setting;
+}
+if (parsedData.context) {
+document.getElementById('context').value = parsedData.context;
+}
+if (parsedData.timing) {
+document.getElementById('timing').value = parsedData.timing;
+}
+
+// Clear existing characters
+document.querySelectorAll('.character-item').forEach(item => item.remove());
+characterCount = 0;
+
+// Add parsed characters
+if (parsedData.characters.length > 0) {
+parsedData.characters.forEach(char => {
+addCharacter();
+const items = document.querySelectorAll('.character-item');
+const lastItem = items[items.length - 1];
+lastItem.querySelector('.character-name').value = char.name;
+lastItem.querySelector('.character-role').value = char.role;
+lastItem.querySelector('.character-details').value = char.details;
+});
+} else {
+// Add default empty characters
+addCharacter();
+addCharacter();
+}
+
+// Hide preview, show success message
+document.getElementById('parsePreview').style.display = 'none';
+document.getElementById('uploadZone').style.display = 'none';
+
+// Scroll to form
+document.getElementById('setupForm').scrollIntoView({ behavior: 'smooth' });
+}
+
+function clearUpload() {
+parsedData = null;
+document.getElementById('parsePreview').style.display = 'none';
+document.getElementById('uploadZone').style.display = 'block';
+document.getElementById('fileInput').value = '';
+}
+
 
 function addCharacter() {
 characterCount++;
