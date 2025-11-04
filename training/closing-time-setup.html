@@ -614,9 +614,156 @@ timing: '',
 characters: []
 };
 
-// Parse the text intelligently
+const lines = text.split('\n');
+
+// Extract scenario title from first line if it matches pattern
+const firstLine = lines[0].trim();
+if (firstLine.includes(' - SCENE SCRIPT') || firstLine.includes('SCENE SCRIPT')) {
+parsedData.scenarioTitle = firstLine.replace(' - SCENE SCRIPT', '').replace('SCENE SCRIPT', '').trim();
+}
+
+// Look for setting/context in the header area
+for (let i = 0; i < Math.min(10, lines.length); i++) {
+const line = lines[i].trim();
+if (line.match(/^setting:/i)) {
+parsedData.setting = line.split(':').slice(1).join(':').trim();
+}
+if (line.match(/^context:/i)) {
+parsedData.context = line.split(':').slice(1).join(':').trim();
+}
+if (line.match(/^timing:/i)) {
+parsedData.timing = line.split(':').slice(1).join(':').trim();
+}
+}
+
+// Extract characters from the script
+const characterSet = new Set();
+const characterContext = {};
+
+// Parse through beats to find character names
+let inBeat = false;
+let currentBeatTitle = '';
+let beatContent = [];
+
+for (let i = 0; i < lines.length; i++) {
+const line = lines[i].trim();
+const lowerLine = line.toLowerCase();
+
+// Detect beat start
+if (line.match(/^BEAT \d+:/i)) {
+// Process previous beat if exists
+if (beatContent.length > 0) {
+extractCharactersFromBeat(beatContent, characterSet, characterContext);
+}
+currentBeatTitle = line;
+beatContent = [];
+inBeat = true;
+continue;
+}
+
+// Skip version headers
+if (line.match(/^={20,}/) || lowerLine.includes('version a') || lowerLine.includes('version b')) {
+inBeat = false;
+continue;
+}
+
+if (inBeat && line.length > 0) {
+beatContent.push(line);
+}
+}
+
+// Process last beat
+if (beatContent.length > 0) {
+extractCharactersFromBeat(beatContent, characterSet, characterContext);
+}
+
+// Convert character set to array with details
+characterSet.forEach(name => {
+parsedData.characters.push({
+name: name,
+role: '',
+details: characterContext[name] || ''
+});
+});
+
+// If no characters found, try alternate parsing
+if (parsedData.characters.length === 0) {
+parseAlternateFormat(text);
+}
+
+// Infer setting from scenario title or content if not explicitly set
+if (!parsedData.setting && parsedData.scenarioTitle) {
+const titleLower = parsedData.scenarioTitle.toLowerCase();
+if (titleLower.includes('closing time')) {
+parsedData.setting = 'Retail Store';
+parsedData.timing = 'Store is about to close';
+}
+}
+
+// If still no context, extract from early beat descriptions
+if (!parsedData.context && beatContent.length > 0) {
+parsedData.context = 'Scene involves interactions between characters in a dynamic situation.';
+}
+
+showPreview();
+}
+
+function extractCharactersFromBeat(beatLines, characterSet, characterContext) {
+for (let i = 0; i < beatLines.length; i++) {
+const line = beatLines[i];
+const trimmed = line.trim();
+		
+// Skip empty lines
+if (!trimmed) continue;
+
+// Pattern 1: Character list at start of beat (e.g., "JonJon and Tre:" or "LaJonJon & Tre:")
+if (i === 0) {
+const headerMatch = trimmed.match(/^([A-Za-z\s&,]+):\s*$/);
+if (headerMatch) {
+const names = headerMatch[1].split(/\s+(?:and|&|,)\s+/);
+names.forEach(name => {
+const cleanName = name.trim();
+if (cleanName && cleanName !== 'All' && cleanName.length > 1) {
+characterSet.add(cleanName);
+}
+});
+continue;
+}
+}
+
+// Pattern 2: Direct dialogue format "CharacterName: dialogue text"
+const dialogueMatch = trimmed.match(/^([A-Z][a-zA-Z]+):\s+(.+)/);
+if (dialogueMatch) {
+const charName = dialogueMatch[1].trim();
+const content = dialogueMatch[2].trim();
+characterSet.add(charName);
+// Store a sample of their dialogue as context
+if (!characterContext[charName] && content.length > 10) {
+characterContext[charName] = content.substring(0, 150);
+}
+continue;
+}
+
+// Pattern 3: Character mentioned in action lines
+// Look for capitalized names (e.g., "JonJon greets Tre")
+const capitalizedWords = trimmed.match(/\b([A-Z][a-z]+(?:[A-Z][a-z]+)*)\b/g);
+if (capitalizedWords) {
+capitalizedWords.forEach(word => {
+// Filter out common words that aren't names
+const commonWords = ['All', 'The', 'And', 'But', 'For', 'With', 'Says', 'Asks', 'Tells', 'His', 'Her', 'Their'];
+if (!commonWords.includes(word) && word.length >= 3) {
+characterSet.add(word);
+}
+});
+}
+}
+}
+
+function parseAlternateFormat(text) {
+// Fallback parser for other formats
 const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
 
+// Try structured format
 let currentSection = null;
 let currentCharacter = null;
 
@@ -624,7 +771,6 @@ for (let i = 0; i < lines.length; i++) {
 const line = lines[i];
 const lowerLine = line.toLowerCase();
 
-// Detect sections
 if (lowerLine.match(/^(scenario|title):/i)) {
 parsedData.scenarioTitle = line.split(':').slice(1).join(':').trim();
 } else if (lowerLine.match(/^setting:/i)) {
@@ -636,11 +782,9 @@ parsedData.timing = line.split(':').slice(1).join(':').trim();
 } else if (lowerLine.match(/^characters?:/i)) {
 currentSection = 'characters';
 } else if (currentSection === 'characters' && lowerLine.match(/^name:/i)) {
-// Save previous character if exists
 if (currentCharacter && currentCharacter.name) {
 parsedData.characters.push(currentCharacter);
 }
-// Start new character
 currentCharacter = {
 name: line.split(':').slice(1).join(':').trim(),
 role: '',
@@ -651,29 +795,24 @@ currentCharacter.role = line.split(':').slice(1).join(':').trim();
 } else if (currentCharacter && lowerLine.match(/^(details|motivation|description):/i)) {
 currentCharacter.details = line.split(':').slice(1).join(':').trim();
 } else if (currentSection === 'characters' && currentCharacter) {
-// Continuation of previous field
 if (currentCharacter.details) {
 currentCharacter.details += ' ' + line;
 } else if (currentCharacter.role) {
 currentCharacter.role += ' ' + line;
 }
 } else if (!parsedData.scenarioTitle && i === 0) {
-// First line might be the title if not labeled
 parsedData.scenarioTitle = line;
 }
 }
 
-// Add last character if exists
 if (currentCharacter && currentCharacter.name) {
 parsedData.characters.push(currentCharacter);
 }
 
-// Try to extract info from unstructured text if structured parsing failed
+// Try unstructured if still no data
 if (!parsedData.scenarioTitle && !parsedData.setting && parsedData.characters.length === 0) {
 parseUnstructuredText(text);
 }
-
-showPreview();
 }
 
 function parseUnstructuredText(text) {
