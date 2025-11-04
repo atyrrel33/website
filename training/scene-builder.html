@@ -839,7 +839,9 @@ Action
 <div id="finalizeContent"></div>
 
 <div class="export-actions">
+<button class="btn btn-secondary" onclick="document.getElementById('backupInput').click()">📂 Import Backup</button>
 <button class="btn btn-secondary" onclick="clearAllData()">Clear All Data</button>
+<input type="file" id="backupInput" accept=".json" style="display: none;" onchange="if(this.files.length > 0) importBackup(this.files[0])">
 </div>
 </div>
 
@@ -883,6 +885,7 @@ Action
 
 <div class="export-actions">
 <button class="btn btn-primary" onclick="exportScript()">📄 Export Script</button>
+<button class="btn btn-secondary" onclick="exportBackup()">💾 Export Full Backup</button>
 </div>
 </div>
 </div>
@@ -946,6 +949,73 @@ updatePlaybackView();
 function saveData() {
 sceneData.metadata.modified = new Date().toISOString();
 localStorage.setItem('sceneBuilderData', JSON.stringify(sceneData));
+
+// Also save setup data if it exists
+if (setupData) {
+sessionStorage.setItem('scene_setup', JSON.stringify(setupData));
+}
+
+// Visual feedback for autosave
+showSaveIndicator();
+}
+
+// Visual save indicator
+function showSaveIndicator() {
+let indicator = document.getElementById('saveIndicator');
+if (!indicator) {
+indicator = document.createElement('div');
+indicator.id = 'saveIndicator';
+indicator.style.cssText = `
+position: fixed;
+top: 20px;
+right: 20px;
+background: rgba(26, 71, 42, 0.9);
+border: 1px solid rgba(220, 180, 80, 0.6);
+color: rgba(220, 180, 80, 0.95);
+padding: 12px 20px;
+border-radius: 8px;
+font-size: 0.9rem;
+letter-spacing: 1px;
+z-index: 10000;
+opacity: 0;
+transition: opacity 0.3s ease;
+pointer-events: none;
+`;
+document.body.appendChild(indicator);
+}
+
+indicator.textContent = '✓ Saved';
+indicator.style.opacity = '1';
+
+setTimeout(() => {
+indicator.style.opacity = '0';
+}, 2000);
+}
+
+// Autosave setup - saves every 30 seconds and on critical actions
+let autosaveInterval;
+
+function initializeAutosave() {
+// Auto-save every 30 seconds if there's unsaved work
+autosaveInterval = setInterval(() => {
+if (sceneData.beats.length > 0) {
+saveData();
+}
+}, 30000);
+
+// Save before page unload
+window.addEventListener('beforeunload', (e) => {
+if (sceneData.beats.length > 0) {
+saveData();
+}
+});
+
+// Save on visibility change (tab switching, minimizing)
+document.addEventListener('visibilitychange', () => {
+if (document.hidden && sceneData.beats.length > 0) {
+saveData();
+}
+});
 }
 
 // Switch mode
@@ -1356,11 +1426,43 @@ const rightBeats = sceneData.beats.filter(b => b.version === 'right' || b.versio
 // Use scenario title from setup, or default
 const scenarioTitle = (setupData && setupData.scenarioTitle) ? setupData.scenarioTitle.toUpperCase() : 'SCENE';
 
+// Build complete header with all setup metadata for re-import
 let script = `${scenarioTitle} - SCENE SCRIPT
 Generated: ${new Date().toLocaleString()}
 Total Beats: ${sceneData.beats.length}
-${setupData && setupData.setting ? `Setting: ${setupData.setting}\n` : ''}
-${setupData && setupData.context ? `Context: ${setupData.context}\n` : ''}
+
+--- SETUP INFORMATION (For Re-Import) ---
+Setting: ${setupData && setupData.setting ? setupData.setting : 'Not specified'}
+Context: ${setupData && setupData.context ? setupData.context : 'Not specified'}
+Timing: ${setupData && setupData.timing ? setupData.timing : 'Not specified'}
+
+CHARACTERS:
+`;
+
+// Add character information
+if (setupData && setupData.characters && setupData.characters.length > 0) {
+setupData.characters.forEach(char => {
+script += `\nName: ${char.name}\n`;
+if (char.role) script += `Role: ${char.role}\n`;
+if (char.details) script += `Details: ${char.details}\n`;
+});
+} else {
+// Extract characters from beats if setup data missing
+const allCharacters = new Set();
+sceneData.beats.forEach(beat => {
+beat.lines.forEach(line => {
+if (line.type === 'dialogue' && line.character) {
+allCharacters.add(line.character);
+}
+});
+});
+allCharacters.forEach(name => {
+script += `\nName: ${name}\n`;
+});
+}
+
+script += `
+--- END SETUP INFORMATION ---
 
 ================================================================================
 VERSION A: WITHOUT THE 5 S's (The Wrong Way)
@@ -1429,6 +1531,62 @@ URL.revokeObjectURL(url);
 alert('Script exported in professional format! Check your downloads folder.');
 }
 
+// Export complete backup (JSON format for perfect restoration)
+function exportBackup() {
+const backupData = {
+version: '1.0',
+exported: new Date().toISOString(),
+setupData: setupData,
+sceneData: sceneData
+};
+
+const json = JSON.stringify(backupData, null, 2);
+const blob = new Blob([json], { type: 'application/json' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+const filename = setupData && setupData.scenarioTitle 
+? `${setupData.scenarioTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-backup-${Date.now()}.json`
+: `scene-backup-${Date.now()}.json`;
+a.download = filename;
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
+
+alert('Complete backup exported! This file contains all your setup data and beats. You can re-import it anytime to restore your exact progress.');
+}
+
+// Import backup from JSON file
+function importBackup(file) {
+const reader = new FileReader();
+reader.onload = (e) => {
+try {
+const backupData = JSON.parse(e.target.result);
+if (backupData.version && backupData.sceneData) {
+// Restore data
+if (backupData.setupData) {
+setupData = backupData.setupData;
+sessionStorage.setItem('scene_setup', JSON.stringify(setupData));
+loadSetupData();
+}
+sceneData = backupData.sceneData;
+nextBeatId = Math.max(...sceneData.beats.map(b => b.id), 0) + 1;
+saveData();
+updateBeatsList();
+updateFinalizeView();
+updatePlaybackView();
+alert('Backup restored successfully! All your work has been recovered.');
+} else {
+alert('Invalid backup file format.');
+}
+} catch (error) {
+alert('Error reading backup file: ' + error.message);
+}
+};
+reader.readAsText(file);
+}
+
 // Clear all data
 function clearAllData() {
 if (!confirm('This will delete ALL captured beats and start over. Are you sure?')) return;
@@ -1452,6 +1610,7 @@ alert('All data cleared. Starting fresh.');
 // Initialize
 loadSetupData();
 loadData();
+initializeAutosave();
 </script>
 </body>
 </html>
