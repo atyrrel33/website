@@ -286,28 +286,6 @@ margin-top: 1rem;
 background: rgba(0, 0, 0, 0.3);
 border: 1px solid rgba(26, 71, 42, 0.4);
 border-radius: 8px;
-padding: 1rem;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-
-.character-name {
-font-weight: 500;
-color: rgba(220, 180, 80, 0.95);
-margin-bottom: 0.3rem;
-}
-
-.character-role {
-font-size: 0.85rem;
-opacity: 0.7;
-}
-
-
-.character-item {
-background: rgba(0, 0, 0, 0.3);
-border: 1px solid rgba(26, 71, 42, 0.4);
-border-radius: 8px;
 padding: 1.5rem;
 margin-bottom: 1rem;
 display: flex;
@@ -337,40 +315,40 @@ display: flex;
 gap: 0.5rem;
 }
 
-
-
-
-
 .add-btn {
-width: 100%;
-padding: 1rem;
-background: rgba(26, 71, 42, 0.3);
-border: 1px dashed rgba(26, 71, 42, 0.5);
+padding: 0.8rem 1.5rem;
+background: rgba(26, 71, 42, 0.5);
+border: 1px solid rgba(26, 71, 42, 0.7);
 border-radius: 8px;
+color: rgba(220, 180, 80, 0.95);
 cursor: pointer;
-text-align: center;
-color: rgba(220, 180, 80, 0.8);
-font-size: 0.9rem;
+font-family: 'Jost', sans-serif;
+font-size: 0.95rem;
 letter-spacing: 1px;
-text-transform: uppercase;
-transition: all 0.2s ease;
+transition: all 0.3s ease;
 }
 
 .add-btn:hover {
-background: rgba(26, 71, 42, 0.5);
-border-color: rgba(220, 180, 80, 0.6);
+background: rgba(26, 71, 42, 0.8);
+border-color: rgba(220, 180, 80, 0.5);
+}
+
+.form-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1rem;
 }
 
 .btn-group {
 display: flex;
 gap: 1rem;
+justify-content: flex-end;
 margin-top: 2rem;
 }
 
 .btn {
-flex: 1;
 padding: 1rem 2rem;
-border: none;
+border: 1px solid;
 border-radius: 8px;
 cursor: pointer;
 font-family: 'Jost', sans-serif;
@@ -382,7 +360,7 @@ transition: all 0.3s ease;
 
 .btn-primary {
 background: rgba(26, 71, 42, 0.8);
-border: 1px solid rgba(220, 180, 80, 0.6);
+border-color: rgba(220, 180, 80, 0.6);
 color: rgba(220, 180, 80, 0.95);
 }
 
@@ -393,16 +371,16 @@ transform: translateY(-2px);
 }
 
 .btn-secondary {
-background: rgba(26, 71, 42, 0.3);
-border: 1px solid rgba(26, 71, 42, 0.5);
-color: rgba(255, 255, 255, 0.9);
+background: rgba(0, 0, 0, 0.3);
+border-color: rgba(26, 71, 42, 0.6);
+color: #ffffff;
 }
 
 .btn-secondary:hover {
-background: rgba(26, 71, 42, 0.5);
+background: rgba(26, 71, 42, 0.4);
 }
 
-/* Capture Mode */
+/* Capture View */
 .capture-panel {
 background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
 border: 1px solid rgba(26, 71, 42, 0.5);
@@ -415,123 +393,149 @@ margin-bottom: 1.5rem;
 display: flex;
 justify-content: space-between;
 align-items: center;
-margin-bottom: 1.5rem;
+margin-bottom: 2rem;
+padding-bottom: 1rem;
+border-bottom: 1px solid rgba(26, 71, 42, 0.4);
 }
 
 .capture-title {
-font-size: 1.3rem;
+font-size: 1.5rem;
 font-weight: 300;
 letter-spacing: 3px;
 color: rgba(220, 180, 80, 0.95);
 }
 
 .beat-counter {
-font-size: 0.9rem;
-opacity: 0.7;
+font-size: 1rem;
+letter-spacing: 1px;
+color: rgba(220, 180, 80, 0.9);
 }
 
-.form-row {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 1rem;
-margin-bottom: 1rem;
-}
-
-/* Beat List */
 .beats-list {
-margin-top: 2rem;
+background: linear-gradient(135deg, rgba(13, 25, 18, 0.5) 0%, rgba(8, 18, 12, 0.7) 100%);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 12px;
+padding: 1.5rem;
+margin-bottom: 1.5rem;
 }
 
 .beats-list h3 {
 font-size: 1.1rem;
-font-weight: 300;
+font-weight: 400;
 letter-spacing: 2px;
-color: rgba(220, 180, 80, 0.95);
+color: rgba(220, 180, 80, 0.9);
 margin-bottom: 1rem;
+text-transform: uppercase;
 }
 
 .beat-item {
-background: rgba(13, 25, 18, 0.5);
-border: 1px solid rgba(26, 71, 42, 0.4);
+background: rgba(0, 0, 0, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.3);
 border-radius: 8px;
 padding: 1rem;
-margin-bottom: 0.8rem;
+margin-bottom: 1rem;
 }
 
 .beat-header {
 display: flex;
 justify-content: space-between;
-align-items: start;
-margin-bottom: 0.5rem;
+align-items: center;
+margin-bottom: 0.8rem;
+padding-bottom: 0.8rem;
+border-bottom: 1px solid rgba(26, 71, 42, 0.3);
 }
 
 .beat-number {
-color: rgba(220, 180, 80, 0.95);
 font-weight: 500;
+color: rgba(220, 180, 80, 0.95);
 }
 
 .beat-content-preview {
-margin-top: 0.5rem;
+font-size: 0.9rem;
+opacity: 0.8;
+line-height: 1.6;
 }
 
 .beat-character {
+color: rgba(220, 180, 80, 0.9);
 font-weight: 500;
 margin-bottom: 0.3rem;
 }
 
 .beat-dialogue {
-opacity: 0.9;
+margin-bottom: 0.3rem;
 font-style: italic;
 }
 
 .beat-action {
 opacity: 0.7;
-font-size: 0.9rem;
-margin-top: 0.3rem;
 }
 
-/* Finalize Mode */
+/* Finalize View */
 .finalize-overview {
 background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
 border: 1px solid rgba(26, 71, 42, 0.5);
 border-radius: 16px;
 padding: 2rem;
+margin-bottom: 1.5rem;
+}
+
+.finalize-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
 margin-bottom: 2rem;
+padding-bottom: 1rem;
+border-bottom: 1px solid rgba(26, 71, 42, 0.4);
+}
+
+.finalize-title {
+font-size: 1.5rem;
+font-weight: 300;
+letter-spacing: 3px;
+color: rgba(220, 180, 80, 0.95);
 }
 
 .overview-stats {
 display: grid;
-grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-gap: 1rem;
-margin-bottom: 1.5rem;
+grid-template-columns: repeat(3, 1fr);
+gap: 2rem;
 }
 
 .stat-box {
-background: rgba(0, 0, 0, 0.3);
-padding: 1rem;
-border-radius: 8px;
 text-align: center;
+padding: 1.5rem;
+background: rgba(0, 0, 0, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 8px;
 }
 
 .stat-value {
-font-size: 2rem;
+font-size: 2.5rem;
 font-weight: 300;
 color: rgba(220, 180, 80, 0.95);
+margin-bottom: 0.5rem;
 }
 
 .stat-label {
-font-size: 0.85rem;
+font-size: 0.9rem;
+opacity: 0.7;
 text-transform: uppercase;
 letter-spacing: 1px;
-opacity: 0.7;
-margin-top: 0.5rem;
+}
+
+.finalize-content {
+background: linear-gradient(135deg, rgba(13, 25, 18, 0.5) 0%, rgba(8, 18, 12, 0.7) 100%);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 12px;
+padding: 1.5rem;
 }
 
 .beat-editor {
-background: linear-gradient(135deg, rgba(13, 25, 18, 0.7) 0%, rgba(8, 18, 12, 0.9) 100%);
-border: 1px solid rgba(26, 71, 42, 0.5);
-border-radius: 16px;
-padding: 2rem;
+background: rgba(0, 0, 0, 0.3);
+border: 1px solid rgba(26, 71, 42, 0.3);
+border-radius: 8px;
+padding: 1.5rem;
 margin-bottom: 1.5rem;
 }
 
@@ -541,12 +545,12 @@ justify-content: space-between;
 align-items: center;
 margin-bottom: 1.5rem;
 padding-bottom: 1rem;
-border-bottom: 1px solid rgba(26, 71, 42, 0.4);
+border-bottom: 1px solid rgba(26, 71, 42, 0.3);
 }
 
 .beat-title-edit {
-font-size: 1.2rem;
-font-weight: 400;
+font-size: 1.1rem;
+font-weight: 500;
 color: rgba(220, 180, 80, 0.95);
 }
 
@@ -558,40 +562,41 @@ margin-top: 0.5rem;
 }
 
 .s-checkbox {
-display: none;
+margin-right: 0.5rem;
 }
 
 .s-label {
-padding: 0.8rem;
-background: rgba(26, 71, 42, 0.3);
-border: 1px solid rgba(26, 71, 42, 0.5);
-border-radius: 8px;
-text-align: center;
-cursor: pointer;
-transition: all 0.2s ease;
 display: flex;
 flex-direction: column;
 align-items: center;
+gap: 0.3rem;
+padding: 0.8rem;
+background: rgba(26, 71, 42, 0.2);
+border: 1px solid rgba(26, 71, 42, 0.4);
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+
+.s-label:hover {
+background: rgba(26, 71, 42, 0.4);
 }
 
 .s-checkbox:checked + .s-label {
-background: rgba(26, 71, 42, 0.8);
+background: rgba(26, 71, 42, 0.6);
 border-color: rgba(220, 180, 80, 0.6);
-box-shadow: 0 0 10px rgba(220, 180, 80, 0.3);
 }
 
 .s-num {
-font-size: 1.2rem;
+font-size: 1.5rem;
 font-weight: 500;
 color: rgba(220, 180, 80, 0.95);
-margin-bottom: 0.3rem;
 }
 
 .s-name {
-font-size: 0.7rem;
-text-transform: uppercase;
-letter-spacing: 1px;
-opacity: 0.7;
+font-size: 0.75rem;
+opacity: 0.8;
+text-align: center;
 }
 
 /* Workshop Mode */
@@ -853,10 +858,11 @@ grid-template-columns: 1fr 1fr;
 <!-- FINALIZE VIEW -->
 <div id="finalizeView" class="view">
 <div class="finalize-overview">
-<div class="setup-header">
-<div class="setup-title">Finalize Scene</div>
-<div>
-<button class="icon-btn" onclick="backToLibrary()" style="margin-right: 0.5rem;">Back to Library</button>
+<div class="finalize-header">
+<div class="finalize-title">Finalize & Tag</div>
+<div style="display: flex; gap: 1rem;">
+<button class="icon-btn" onclick="backToCapture()">Back to Capture</button>
+<button class="icon-btn" onclick="backToLibrary()">Back to Library</button>
 </div>
 </div>
 
@@ -869,62 +875,83 @@ grid-template-columns: 1fr 1fr;
 <div class="stat-value" id="sTaggedCount">0</div>
 <div class="stat-label">S's Tagged</div>
 </div>
+<div class="stat-box">
+<div class="stat-value">Ready</div>
+<div class="stat-label">Status</div>
 </div>
+</div>
+</div>
+
+<div id="finalizeContent" class="finalize-content"></div>
 
 <div class="btn-group">
-<button class="btn btn-primary" onclick="exportScene()">Export Script</button>
-<button class="btn btn-secondary" onclick="backToCapture()">Back to Capture</button>
+<button class="btn btn-primary" onclick="exportScene()">Export Training Script</button>
 </div>
-</div>
-
-<div id="finalizeContent"></div>
 </div>
 
 <!-- WORKSHOP VIEW -->
 <div id="workshopView" class="view">
 <div class="workshop-container">
-<div class="setup-header">
-<div class="setup-title">Workshop / Talkback</div>
+<div class="finalize-header">
+<div class="finalize-title">Workshop Mode</div>
 <button class="icon-btn" onclick="backToLibrary()">Back to Library</button>
 </div>
 
-<p style="opacity: 0.7; margin-bottom: 2rem;">Upload exported scenes or external scenes from film/TV to analyze and discuss.</p>
+<p style="opacity: 0.8; margin-bottom: 2rem; line-height: 1.6;">
+Upload exported scenes to use during training sessions. Add discussion notes, teaching points, and analysis.
+</p>
 
 <div class="upload-zone" onclick="document.getElementById('fileUpload').click()">
 <div class="upload-text">Click to Upload Scene</div>
-<div class="upload-hint">Exported scripts, screenplay excerpts, or analysis documents</div>
-<input type="file" id="fileUpload" class="hidden" accept=".txt,.pdf,.doc,.docx" onchange="handleFileUpload(event)">
+<div class="upload-hint">Drag and drop or click to select</div>
+<input type="file" id="fileUpload" accept=".txt" onchange="handleFileUpload(event)" style="display: none;">
 </div>
 
-<div class="workshop-list" id="workshopList"></div>
+<div id="workshopList" class="workshop-list"></div>
 </div>
 </div>
 
 </div>
 
 <script>
+// HTML Escape utility function - CRITICAL for preventing XSS and syntax errors
+function escapeHtml(unsafe) {
+if (!unsafe) return '';
+return unsafe
+.toString()
+.replace(/&/g, "&amp;")
+.replace(/</g, "&lt;")
+.replace(/>/g, "&gt;")
+.replace(/"/g, "&quot;")
+.replace(/'/g, "&#039;");
+}
+
 // Data Structure
 let appData = {
 scenes: [],
-currentSceneId: null,
-workshopItems: []
+workshopItems: [],
+currentSceneId: null
 };
 
-// Initialize
-function init() {
-loadData();
-renderSceneLibrary();
-}
-
-// Save/Load Data
+// Storage
 function saveData() {
+try {
 localStorage.setItem('sceneBuilderData', JSON.stringify(appData));
+} catch (e) {
+console.error('Error saving data:', e);
+alert('Error saving data. Your changes may not be preserved.');
+}
 }
 
 function loadData() {
+try {
 const saved = localStorage.getItem('sceneBuilderData');
 if (saved) {
 appData = JSON.parse(saved);
+}
+} catch (e) {
+console.error('Error loading data:', e);
+alert('Error loading saved data. Starting fresh.');
 }
 }
 
@@ -939,10 +966,16 @@ showView('libraryView');
 renderSceneLibrary();
 }
 
+// Initialize
+function init() {
+loadData();
+renderSceneLibrary();
+}
+
 // Scene Library
 function renderSceneLibrary() {
 const grid = document.getElementById('sceneGrid');
-if (appData.scenes.length === 0) {
+if (!appData.scenes || appData.scenes.length === 0) {
 grid.innerHTML = '<div class="empty-state">No scenes yet. Create your first scene to get started.</div>';
 return;
 }
@@ -950,7 +983,7 @@ return;
 grid.innerHTML = appData.scenes.map(scene => `
 <div class="scene-card" onclick="openScene('${scene.id}')">
 <div class="scene-info">
-<div class="scene-title-card">${scene.title || 'Untitled Scene'}</div>
+<div class="scene-title-card">${escapeHtml(scene.title) || 'Untitled Scene'}</div>
 <div class="scene-meta">
 <span>${new Date(scene.created).toLocaleDateString()}</span>
 <span>${scene.beats ? scene.beats.length : 0} beats</span>
@@ -1034,10 +1067,10 @@ return;
 list.innerHTML = scene.characters.map((char, index) => `
 <div class="character-item">
 <div class="character-details">
-<div class="character-name">${char.name || 'Unnamed'}</div>
-<div class="character-info">${char.role || 'No role defined'}</div>
-${char.motivation ? '<div class="character-info">Wants: ' + char.motivation + '</div>' : ''}
-${char.emotional ? '<div class="character-info">State: ' + char.emotional + '</div>' : ''}
+<div class="character-name">${escapeHtml(char.name) || 'Unnamed'}</div>
+<div class="character-info">${escapeHtml(char.role) || 'No role defined'}</div>
+${char.motivation ? '<div class="character-info">Wants: ' + escapeHtml(char.motivation) + '</div>' : ''}
+${char.emotional ? '<div class="character-info">State: ' + escapeHtml(char.emotional) + '</div>' : ''}
 </div>
 <div class="character-actions">
 <button type="button" class="icon-btn" onclick="editCharacter(${index})">Edit</button>
@@ -1098,8 +1131,6 @@ saveData();
 renderCharacterList();
 }
 
-
-
 function saveSetup() {
 const scene = getCurrentScene();
 scene.title = document.getElementById('sceneTitle').value;
@@ -1110,7 +1141,7 @@ scene.timeOfDay = document.getElementById('timeOfDay').value;
 scene.context = document.getElementById('sceneContext').value;
 scene.modified = new Date().toISOString();
 saveData();
-alert('Scene setup saved!');
+alert('Progress saved!');
 }
 
 function completeSetup() {
@@ -1125,28 +1156,36 @@ loadCaptureView();
 // Capture Mode
 function loadCaptureView() {
 const scene = getCurrentScene();
-const select = document.getElementById('beatCharacter');
-const chars = scene.characters || [];
-
-select.innerHTML = '<option value="">Select character...</option>' +
-chars.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+populateCharacterSelect();
 renderBeatsList();
 updateBeatCount();
+document.getElementById('beatDialogue').focus();
+}
+
+function populateCharacterSelect() {
+const scene = getCurrentScene();
+const select = document.getElementById('beatCharacter');
+select.innerHTML = '<option value="">Select character...</option>';
+if (scene.characters) {
+scene.characters.forEach(char => {
+select.innerHTML += `<option value="${escapeHtml(char.name)}">${escapeHtml(char.name)}</option>`;
+});
+}
 }
 
 function saveBeat() {
-const scene = getCurrentScene();
 const title = document.getElementById('beatTitle').value.trim();
 const character = document.getElementById('beatCharacter').value;
 const dialogue = document.getElementById('beatDialogue').value.trim();
 const action = document.getElementById('beatAction').value.trim();
 const attitude = document.getElementById('beatAttitude').value.trim();
 
-if (!dialogue && !action) {
-alert('Please enter either dialogue or action.');
+if (!title && !dialogue && !action) {
+alert('Enter at least a beat title, dialogue, or action.');
 return;
 }
 
+const scene = getCurrentScene();
 const beat = {
 id: Date.now().toString(),
 title: title || 'Untitled Beat',
@@ -1188,14 +1227,14 @@ return;
 list.innerHTML = scene.beats.map((beat, index) => `
 <div class="beat-item">
 <div class="beat-header">
-<span class="beat-number">Beat ${index + 1}: ${beat.title}</span>
+<span class="beat-number">Beat ${index + 1}: ${escapeHtml(beat.title)}</span>
 <button class="icon-btn" onclick="deleteBeat('${beat.id}')">Delete</button>
 </div>
 <div class="beat-content-preview">
-${beat.character ? `<div class="beat-character">${beat.character}</div>` : ''}
-${beat.dialogue ? `<div class="beat-dialogue">"${beat.dialogue}"</div>` : ''}
-${beat.action ? `<div class="beat-action">${beat.action}</div>` : ''}
-${beat.attitude ? `<div class="beat-action">Energy: ${beat.attitude}</div>` : ''}
+${beat.character ? `<div class="beat-character">${escapeHtml(beat.character)}</div>` : ''}
+${beat.dialogue ? `<div class="beat-dialogue">"${escapeHtml(beat.dialogue)}"</div>` : ''}
+${beat.action ? `<div class="beat-action">${escapeHtml(beat.action)}</div>` : ''}
+${beat.attitude ? `<div class="beat-action">Energy: ${escapeHtml(beat.attitude)}</div>` : ''}
 </div>
 </div>
 `).join('');
@@ -1260,37 +1299,45 @@ content.innerHTML = '<div class="empty-state">No beats to finalize.</div>';
 return;
 }
 
-content.innerHTML = scene.beats.map((beat, index) => `
+content.innerHTML = scene.beats.map((beat, index) => {
+const titleAttr = escapeHtml(beat.title);
+const charAttr = escapeHtml(beat.character || '');
+const dialogueText = escapeHtml(beat.dialogue || '');
+const actionText = escapeHtml(beat.action || '');
+const attitudeAttr = escapeHtml(beat.attitude || '');
+const noteText = escapeHtml(beat.teachingNote || '');
+
+return `
 <div class="beat-editor">
 <div class="beat-editor-header">
-<div class="beat-title-edit">Beat ${index + 1}: ${beat.title}</div>
+<div class="beat-title-edit">Beat ${index + 1}: ${titleAttr}</div>
 <button class="icon-btn" onclick="deleteBeat('${beat.id}')">Delete</button>
 </div>
 
 <div class="form-row">
 <div class="form-field">
 <label>Beat Title</label>
-<input type="text" value="${beat.title}" onchange="updateBeat('${beat.id}', 'title', this.value)">
+<input type="text" value="${titleAttr}" onchange="updateBeatField('${beat.id}', 'title', this.value)">
 </div>
 <div class="form-field">
 <label>Character</label>
-<input type="text" value="${beat.character || ''}" onchange="updateBeat('${beat.id}', 'character', this.value)">
+<input type="text" value="${charAttr}" onchange="updateBeatField('${beat.id}', 'character', this.value)">
 </div>
 </div>
 
 <div class="form-field">
 <label>Dialogue (What They Say)</label>
-<textarea onchange="updateBeat('${beat.id}', 'dialogue', this.value)">${beat.dialogue || ''}</textarea>
+<textarea onchange="updateBeatField('${beat.id}', 'dialogue', this.value)">${dialogueText}</textarea>
 </div>
 
 <div class="form-field">
 <label>Action (What They Do / How They Say It)</label>
-<textarea onchange="updateBeat('${beat.id}', 'action', this.value)">${beat.action || ''}</textarea>
+<textarea onchange="updateBeatField('${beat.id}', 'action', this.value)">${actionText}</textarea>
 </div>
 
 <div class="form-field">
 <label>Energy / Attitude</label>
-<input type="text" value="${beat.attitude || ''}" onchange="updateBeat('${beat.id}', 'attitude', this.value)">
+<input type="text" value="${attitudeAttr}" onchange="updateBeatField('${beat.id}', 'attitude', this.value)">
 </div>
 
 <div class="form-field">
@@ -1314,13 +1361,14 @@ return `
 
 <div class="form-field">
 <label>Teaching Note</label>
-<textarea placeholder="What's the lesson here? Why this S works or doesn't work..." onchange="updateBeat('${beat.id}', 'teachingNote', this.value)">${beat.teachingNote || ''}</textarea>
+<textarea placeholder="What's the lesson here? Why this S works or doesn't work..." onchange="updateBeatField('${beat.id}', 'teachingNote', this.value)">${noteText}</textarea>
 </div>
 </div>
-`).join('');
+`;
+}).join('');
 }
 
-function updateBeat(id, field, value) {
+function updateBeatField(id, field, value) {
 const scene = getCurrentScene();
 const beat = scene.beats.find(b => b.id === id);
 if (beat) {
@@ -1378,9 +1426,7 @@ ${scene.characters && scene.characters.length > 0 ? scene.characters.map(c => `
 ${c.name}${c.role ? ' (' + c.role + ')' : ''}
 ${c.motivation ? '  Wants: ' + c.motivation : ''}
 ${c.emotional ? '  State: ' + c.emotional : ''}
-`.trim()).join('
-
-') : 'No characters defined'}
+`.trim()).join('\n\n') : 'No characters defined'}
 
 ================================================================================
 THE WRONG VERSION (Without the 5 S's)
@@ -1462,14 +1508,14 @@ return;
 list.innerHTML = appData.workshopItems.map(item => `
 <div class="workshop-item">
 <div class="workshop-header">
-<div class="workshop-scene-title">${item.filename}</div>
+<div class="workshop-scene-title">${escapeHtml(item.filename)}</div>
 <button class="icon-btn delete" onclick="deleteWorkshopItem('${item.id}')">Delete</button>
 </div>
 <div style="opacity: 0.6; font-size: 0.85rem; margin-bottom: 1rem;">
 Uploaded ${new Date(item.uploaded).toLocaleDateString()}
 </div>
 <div class="workshop-notes">
-<textarea class="notes-textarea" placeholder="Discussion notes, analysis, teaching points..." onchange="updateWorkshopNotes('${item.id}', this.value)">${item.notes || ''}</textarea>
+<textarea class="notes-textarea" placeholder="Discussion notes, analysis, teaching points..." onchange="updateWorkshopNotes('${item.id}', this.value)">${escapeHtml(item.notes || '')}</textarea>
 </div>
 </div>
 `).join('');
