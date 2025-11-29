@@ -690,6 +690,7 @@
 
         // Intelligence State
         const intelligence = {
+            newsletters: [],
             stories: [],
             topics: new Map(),
             entities: new Map(),
@@ -699,23 +700,146 @@
             }
         };
 
-        // JSON file paths
-        const dataFiles = [
-            'dailies-archive-batch-1.json',
-            'dailies-archive-batch-2.json',
-            'dailies-archive-batch-3.json',
-            'dailies-archive-batch-4.json',
-            'netflix-amc-cold-war-enhanced.json',
-            'kodak-moment-of-truth.json'
-        ];
+        // ═══════════════════════════════════════════════════════════════════
+        // DATA TRANSFORMERS — The Universal Translators
+        // ═══════════════════════════════════════════════════════════════════
+        
+        function transformBatch4Newsletter(newsletter) {
+            // Transform batch-4 format (with mainStories + sections object) into canonical format
+            const stories = [];
+            
+            // Handle mainStories array
+            if (newsletter.mainStories && Array.isArray(newsletter.mainStories)) {
+                newsletter.mainStories.forEach(story => {
+                    stories.push({
+                        section: story.category || 'Feature',
+                        headline: story.headline,
+                        body: story.summary || '',
+                        topics: story.keyPoints || [],
+                        entities: []
+                    });
+                });
+            }
+            
+            // Handle sections object (business, development, etc.)
+            if (newsletter.sections && typeof newsletter.sections === 'object') {
+                // Business section
+                if (newsletter.sections.business && Array.isArray(newsletter.sections.business)) {
+                    newsletter.sections.business.forEach(item => {
+                        stories.push({
+                            section: 'Business',
+                            headline: item,
+                            body: item,
+                            topics: [],
+                            entities: []
+                        });
+                    });
+                }
+                
+                // Development section - film
+                if (newsletter.sections.development?.film && Array.isArray(newsletter.sections.development.film)) {
+                    newsletter.sections.development.film.forEach(item => {
+                        stories.push({
+                            section: 'Development',
+                            headline: item,
+                            body: item,
+                            topics: ['film', 'development'],
+                            entities: []
+                        });
+                    });
+                }
+                
+                // Development section - tv
+                if (newsletter.sections.development?.tv && Array.isArray(newsletter.sections.development.tv)) {
+                    newsletter.sections.development.tv.forEach(item => {
+                        stories.push({
+                            section: 'Development',
+                            headline: item,
+                            body: item,
+                            topics: ['television', 'development'],
+                            entities: []
+                        });
+                    });
+                }
+            }
+            
+            return {
+                date: newsletter.publishDate || newsletter.date,
+                subject: newsletter.title || newsletter.subject,
+                url: newsletter.url,
+                stories: stories
+            };
+        }
+        
+        function transformDeepDiveToNewsletter(data) {
+            // Transform deep-dive format (with sections array) into newsletter format
+            const stories = [];
+            
+            if (data.sections && Array.isArray(data.sections)) {
+                data.sections.forEach(section => {
+                    // Handle closeup/wideshot sections with title/summary
+                    if (section.title && (section.summary || section.context)) {
+                        const body = section.summary || '';
+                        const headline = section.title;
+                        
+                        stories.push({
+                            section: section.type || 'Feature',
+                            headline: headline,
+                            body: body,
+                            topics: data.tags || [], // Use top-level tags
+                            entities: []
+                        });
+                    }
+                    
+                    // Handle sections with nested stories array
+                    if (section.stories && Array.isArray(section.stories)) {
+                        section.stories.forEach(story => {
+                            const body = story.summary || story.details?.context || '';
+                            const headline = story.headline || story.title || 'Untitled';
+                            
+                            stories.push({
+                                section: section.type || story.type || 'Feature',
+                                headline: headline,
+                                body: body,
+                                topics: story.topics || data.tags || [],
+                                entities: story.entities || []
+                            });
+                        });
+                    }
+                });
+            }
+            
+            return {
+                date: data.date,
+                subject: data.title,
+                url: data.url,
+                stories: stories,
+                tags: data.tags || [],
+                key_insights: data.key_insights || []
+            };
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // DATA LOADING — The Universal Gathering
+        // ═══════════════════════════════════════════════════════════════════
 
         // Initialize the application
         async function initialize() {
             updateLoadingProgress(10);
             
             // Load all data files
-            await loadAllData();
+            const success = await loadAllData();
+            
+            if (!success) {
+                console.error('Failed to load data');
+                return;
+            }
+            
             updateLoadingProgress(40);
+            
+            // Flatten newsletters to stories
+            flattenStories();
+            updateLoadingProgress(50);
             
             // Process intelligence
             processIntelligence();
@@ -737,54 +861,98 @@
 
         // Load all JSON data files
         async function loadAllData() {
-            const promises = dataFiles.map(file => 
-                fetch(file)
-                    .then(res => res.json())
-                    .catch(err => {
-                        console.warn(`Failed to load ${file}:`, err);
-                        return null;
-                    })
-            );
-
-            const results = await Promise.all(promises);
+            const dataFiles = [
+                './data/dailies-archive-batch-1.json',
+                './data/dailies-archive-batch-2.json',
+                './data/dailies-archive-batch-3.json',
+                './data/dailies-archive-batch-4.json',
+                './data/netflix-amc-cold-war-enhanced.json',
+                './data/kodak-moment-of-truth.json'
+            ];
             
-            results.forEach((data, index) => {
-                if (data) {
-                    processDataFile(data);
+            try {
+                console.log('📬 Beginning data load sequence...');
+                
+                // Load all files sequentially
+                for (let i = 0; i < dataFiles.length; i++) {
+                    const file = dataFiles[i];
+                    console.log(`\n📖 Loading: ${file}`);
+                    
+                    const response = await fetch(file);
+                    if (!response.ok) {
+                        throw new Error(`Failed to load ${file}: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log(`✓ Loaded ${file}`);
+                    
+                    // Detect and handle format
+                    if (data.newsletters && Array.isArray(data.newsletters)) {
+                        // Check if this is batch-4 format (has mainStories instead of stories)
+                        if (data.newsletters.length > 0 && data.newsletters[0].mainStories) {
+                            console.log(`  → Batch-4 format: ${data.newsletters.length} newsletters (mainStories structure)`);
+                            // Transform each batch-4 newsletter to canonical format
+                            const transformedNewsletters = data.newsletters.map(n => transformBatch4Newsletter(n));
+                            intelligence.newsletters.push(...transformedNewsletters);
+                            console.log(`  → Transformed ${transformedNewsletters.length} newsletters`);
+                            
+                        } else {
+                            // Format 1: Standard batch with newsletters array
+                            console.log(`  → Standard batch format: ${data.newsletters.length} newsletters`);
+                            intelligence.newsletters.push(...data.newsletters);
+                        }
+                        
+                    } else if (data.sections && Array.isArray(data.sections)) {
+                        // Format 2: Deep-dive with sections array
+                        console.log(`  → Deep-dive format: "${data.title}"`);
+                        const transformed = transformDeepDiveToNewsletter(data);
+                        console.log(`  → Transformed to newsletter with ${transformed.stories.length} stories`);
+                        intelligence.newsletters.push(transformed);
+                        
+                    } else if (data.date && data.stories && Array.isArray(data.stories)) {
+                        // Format 3: Single newsletter object
+                        console.log(`  → Newsletter format: "${data.subject}"`);
+                        intelligence.newsletters.push(data);
+                        
+                    } else {
+                        console.warn(`⚠ Unknown format in ${file}:`, Object.keys(data));
+                    }
+                    
+                    updateLoadingProgress((i + 1) / dataFiles.length * 35);
                 }
-            });
+                
+                console.log(`\n📊 Total newsletters: ${intelligence.newsletters.length}`);
+                return true;
+                
+            } catch (error) {
+                console.error('\n💥 Error loading data:', error);
+                alert(`Error loading intelligence archive:\n\n${error.message}\n\nCheck the browser console (F12) for details.`);
+                return false;
+            }
         }
 
-        // Process individual data file
-        function processDataFile(data) {
-            // Handle different JSON structures
-            if (data.newsletters) {
-                // Batch format (1-4)
-                data.newsletters.forEach(newsletter => {
-                    newsletter.stories.forEach(story => {
-                        intelligence.stories.push({
-                            title: newsletter.title,
-                            date: newsletter.date,
-                            url: newsletter.url,
-                            headline: story.headline,
-                            body: story.body,
-                            tags: story.tags || [],
-                            type: 'batch'
-                        });
+        // Flatten newsletters into individual stories
+        function flattenStories() {
+            intelligence.newsletters.forEach((newsletter, idx) => {
+                if (!newsletter.stories || !Array.isArray(newsletter.stories)) {
+                    console.error(`⚠ Newsletter ${idx} missing stories:`, newsletter);
+                    return;
+                }
+                
+                newsletter.stories.forEach(story => {
+                    intelligence.stories.push({
+                        ...story,
+                        newsletterId: newsletter.date,
+                        newsletterDate: newsletter.date,
+                        newsletterSubject: newsletter.subject,
+                        newsletterUrl: newsletter.url,
+                        newsletterTags: newsletter.tags || [],
+                        newsletterInsights: newsletter.key_insights || []
                     });
                 });
-            } else if (data.sections) {
-                // Enhanced format (Netflix-AMC, Kodak)
-                intelligence.stories.push({
-                    title: data.title,
-                    date: data.date,
-                    url: data.url,
-                    sections: data.sections,
-                    tags: data.tags || [],
-                    key_insights: data.key_insights || [],
-                    type: 'enhanced'
-                });
-            }
+            });
+            
+            console.log(`📚 Total stories: ${intelligence.stories.length}`);
         }
 
         // Process intelligence: extract trends and entities
@@ -794,11 +962,37 @@
             const previousCutoff = new Date(now - (intelligence.timeRanges.current + intelligence.timeRanges.previous) * 24 * 60 * 60 * 1000);
 
             intelligence.stories.forEach(story => {
-                const storyDate = new Date(story.date);
+                const storyDate = new Date(story.newsletterDate);
                 
-                // Process tags as topics
-                if (story.tags && story.tags.length > 0) {
-                    story.tags.forEach(tag => {
+                // Process story topics
+                if (story.topics && story.topics.length > 0) {
+                    story.topics.forEach(topic => {
+                        const normalizedTag = topic.toLowerCase().trim();
+                        
+                        if (!intelligence.topics.has(normalizedTag)) {
+                            intelligence.topics.set(normalizedTag, {
+                                name: topic,
+                                currentCount: 0,
+                                previousCount: 0,
+                                stories: [],
+                                entities: new Set()
+                            });
+                        }
+
+                        const topicData = intelligence.topics.get(normalizedTag);
+                        topicData.stories.push(story);
+
+                        if (storyDate >= currentCutoff) {
+                            topicData.currentCount++;
+                        } else if (storyDate >= previousCutoff) {
+                            topicData.previousCount++;
+                        }
+                    });
+                }
+
+                // Process newsletter-level tags (from enhanced JSONs)
+                if (story.newsletterTags && story.newsletterTags.length > 0) {
+                    story.newsletterTags.forEach(tag => {
                         const normalizedTag = tag.toLowerCase().trim();
                         
                         if (!intelligence.topics.has(normalizedTag)) {
@@ -811,21 +1005,24 @@
                             });
                         }
 
-                        const topic = intelligence.topics.get(normalizedTag);
-                        topic.stories.push(story);
+                        const topicData = intelligence.topics.get(normalizedTag);
+                        if (!topicData.stories.includes(story)) {
+                            topicData.stories.push(story);
+                        }
 
                         if (storyDate >= currentCutoff) {
-                            topic.currentCount++;
+                            topicData.currentCount++;
                         } else if (storyDate >= previousCutoff) {
-                            topic.previousCount++;
+                            topicData.previousCount++;
                         }
+                        
+                        // Track entities in this topic
+                        extractEntitiesFromTags(story, topicData);
                     });
                 }
 
-                // Extract entities from enhanced stories
-                if (story.type === 'enhanced' && story.sections) {
-                    extractEntities(story);
-                }
+                // Extract entities from story
+                extractEntities(story);
             });
 
             // Calculate trend directions
@@ -850,31 +1047,52 @@
                     topic.trendValue = '━';
                 }
             });
+            
+            console.log(`🔥 Trending topics: ${intelligence.topics.size}`);
+            console.log(`👥 Entities tracked: ${intelligence.entities.size}`);
         }
 
-        // Extract entities from story sections
+        // Extract entities from story
         function extractEntities(story) {
-            // Extract from tags
-            if (story.tags) {
-                story.tags.forEach(tag => {
-                    // Check if tag looks like an entity (capitalized, company/person name)
-                    if (/^[A-Z]/.test(tag) && tag.length < 30) {
+            // Extract from story entities array
+            if (story.entities && story.entities.length > 0) {
+                story.entities.forEach(entity => {
+                    trackEntity(entity, story);
+                });
+            }
+            
+            // Extract from newsletter tags (capitalized = likely entities)
+            if (story.newsletterTags) {
+                story.newsletterTags.forEach(tag => {
+                    if (/^[A-Z]/.test(tag) && tag.length < 30 && tag.length > 2) {
                         trackEntity(tag, story);
                     }
                 });
             }
 
-            // Extract from key insights
-            if (story.key_insights) {
-                story.key_insights.forEach(insight => {
-                    // Simple entity extraction from insights
-                    const words = insight.split(' ');
-                    words.forEach(word => {
-                        // Match capitalized words that might be entities
-                        if (/^[A-Z][a-z]+$/.test(word) && word.length > 3) {
-                            trackEntity(word, story);
-                        }
-                    });
+            // Extract from newsletter insights
+            if (story.newsletterInsights && story.newsletterInsights.length > 0) {
+                story.newsletterInsights.forEach(insight => {
+                    // Extract capitalized multi-word phrases (likely company/brand names)
+                    const matches = insight.match(/\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b/g);
+                    if (matches) {
+                        matches.forEach(match => {
+                            if (match.length > 3 && match.length < 30) {
+                                trackEntity(match, story);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        // Extract entities from tags and associate with topic
+        function extractEntitiesFromTags(story, topicData) {
+            if (story.newsletterTags) {
+                story.newsletterTags.forEach(tag => {
+                    if (/^[A-Z]/.test(tag) && tag.length < 30) {
+                        topicData.entities.add(tag);
+                    }
                 });
             }
         }
@@ -892,8 +1110,12 @@
             }
 
             const entity = intelligence.entities.get(normalized);
-            entity.count++;
-            entity.stories.push(story);
+            
+            // Only count each story once per entity
+            if (!entity.stories.includes(story)) {
+                entity.count++;
+                entity.stories.push(story);
+            }
         }
 
         // Render the dashboard
@@ -985,19 +1207,28 @@
             }
 
             // Sort by date, newest first
-            const sortedStories = [...stories].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const sortedStories = [...stories].sort((a, b) => 
+                new Date(b.newsletterDate) - new Date(a.newsletterDate)
+            );
 
             storyGrid.innerHTML = sortedStories.map(story => {
-                const displayTags = story.tags.slice(0, 4);
+                // Combine story topics and newsletter tags
+                const allTags = [...new Set([
+                    ...(story.topics || []),
+                    ...(story.newsletterTags || [])
+                ])];
+                
+                const displayTags = allTags.slice(0, 4);
                 
                 return `
                     <article class="story-card fade-in">
-                        <div class="story-date">${formatDate(story.date)}</div>
-                        <h3 class="story-title">${story.title}</h3>
+                        <div class="story-date">${formatDate(story.newsletterDate)}</div>
+                        <h3 class="story-title">${story.newsletterSubject || 'Untitled'}</h3>
+                        ${story.headline ? `<p style="font-size: 0.9rem; color: var(--stone-dim); margin-top: var(--space-xs);">${story.headline}</p>` : ''}
                         ${displayTags.length > 0 ? `
                             <div class="story-tags">
                                 ${displayTags.map(tag => `<span class="story-tag">${tag}</span>`).join('')}
-                                ${story.tags.length > 4 ? `<span class="story-tag">+${story.tags.length - 4} more</span>` : ''}
+                                ${allTags.length > 4 ? `<span class="story-tag">+${allTags.length - 4} more</span>` : ''}
                             </div>
                         ` : ''}
                     </article>
@@ -1038,10 +1269,20 @@
 
             const normalizedQuery = query.toLowerCase();
             const filtered = intelligence.stories.filter(story => {
-                return story.title.toLowerCase().includes(normalizedQuery) ||
-                       story.tags.some(tag => tag.toLowerCase().includes(normalizedQuery)) ||
-                       (story.headline && story.headline.toLowerCase().includes(normalizedQuery)) ||
-                       (story.body && story.body.toLowerCase().includes(normalizedQuery));
+                return (
+                    // Search newsletter subject
+                    (story.newsletterSubject && story.newsletterSubject.toLowerCase().includes(normalizedQuery)) ||
+                    // Search story headline
+                    (story.headline && story.headline.toLowerCase().includes(normalizedQuery)) ||
+                    // Search story body
+                    (story.body && story.body.toLowerCase().includes(normalizedQuery)) ||
+                    // Search story topics
+                    (story.topics && story.topics.some(topic => topic.toLowerCase().includes(normalizedQuery))) ||
+                    // Search newsletter tags
+                    (story.newsletterTags && story.newsletterTags.some(tag => tag.toLowerCase().includes(normalizedQuery))) ||
+                    // Search entities
+                    (story.entities && story.entities.some(entity => entity.toLowerCase().includes(normalizedQuery)))
+                );
             });
 
             renderStoryGrid(filtered);
