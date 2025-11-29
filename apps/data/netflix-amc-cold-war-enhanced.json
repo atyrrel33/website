@@ -1,0 +1,440 @@
+{
+  "title": "Netflix-AMC Cold War",
+  "date": "2025-10-17",
+  "url": "https://newsletter.readthedailies.com/p/netflix-amc-cold-war",
+  "sections": [
+    {
+      "type": "intro",
+      "content": "While Hollywood wrestles with AI making its way into filmmaking, Kevin Hart just decided to turn it into a game show. His company Hartbeat is teaming with Luma AI for 'Prompt Side Story'—it's basically a live competition at LA Tech Week where five comedy teams battle to create AI-generated films in real-time. This weekend, they'll type prompts while an audience watches, competing for cash and spots on Hartbeat's LOL Network."
+    },
+    {
+      "type": "top_streamed",
+      "title": "This week's top-streamed originals",
+      "film": {
+        "Netflix": "The Woman in Cabin 10",
+        "HBO Max": "Salem's Lot",
+        "Disney+": "Hocus Pocus 2",
+        "Prime Video": "John Candy: I LIke Me",
+        "Paramount+": "Vicious",
+        "Hulu": "The Man in My Basement",
+        "Apple TV": "The Lost Bus",
+        "Peacock": "Praise This"
+      },
+      "tv": {
+        "Netflix": "Monster: The Ed Gein Story",
+        "HBO Max": "Peacemaker",
+        "Disney+": "Marvel Zombies",
+        "Prime Video": "Gen V",
+        "Paramount+": "Tulsa King",
+        "Hulu": "Only Murders in the Building",
+        "Apple TV": "The Last Frontier",
+        "Peacock": "Days of Our Lives"
+      },
+      "highlights": [
+        {
+          "title": "The Woman in Cabin 10",
+          "platform": "Netflix",
+          "metric": "Pulled in 5.4M views domestically in its opening weekend (21.2M globally), which landed it the top movie spot for the week. Running about half of what 'Glass Onion' did with its 10.7M domestic opening weekend."
+        },
+        {
+          "title": "Boots",
+          "platform": "Netflix",
+          "metric": "Clocked 2M US views and 12.1M hours streamed in its first week. Not bad for what seems like a smaller Netflix release."
+        },
+        {
+          "title": "The Last Frontier",
+          "platform": "Apple TV",
+          "metric": "Came in at 1.3M season views in the US across its first two episodes. Just below 'Chief of War's' 1.7M first weekend, which has since climbed to 3.9M views total."
+        }
+      ]
+    },
+    {
+      "type": "closeup",
+      "title": "AMC and Netflix have decided to work together",
+      "summary": "Netflix's 'KPop Demon Hunters' is back in theaters for Halloween weekend, and this time AMC's actually playing it. The world's biggest theater chain will show the animated hit at 400 locations from Oct. 31-Nov. 2, joining Regal and Cinemark who are bringing it back after their successful September run.",
+      "context": {
+        "performance": "The film has been crushing it: With 541.8M hours streamed, it's officially Netflix's most-watched movie ever. It also pulled in $19.2M at the box office in September despite being free to stream at home (and that was without AMC's participation).",
+        "cold_war_background": "While there's no personal beef here, the two companies have fundamentally different motivations that have kept them from working together. AMC sat out September's 'KPop Demon Hunters' theatrical release in part because CEO Adam Aron has spent years fighting for 45-day theatrical windows with major studios.",
+        "aron_quote": "How do I say to Disney, or Warner Bros., or Sony, 'Yeah, but for you it's 45 days?'",
+        "netflix_perspective": "On the other side, Netflix's Ted Sarandos basically thinks theaters are 'an outmoded idea, for most people.' This divide has led to some painful near-misses: Aron spent hours trying to get Scorsese's 'The Irishman' into AMC theaters—no dice. Even the Duffer Brothers couldn't convince Netflix to give the upcoming 'Stranger Things' finale a theatrical release.",
+        "fundamental_tension": "Bottom line: Aron wants to protect the long-term health of theatrical exhibition; Netflix wants streaming supremacy."
+      },
+      "what_changed": "In a year with historically low output from major studios, Netflix spotted opportunity on weekends with low competition from the majors. It worked in September, and Halloween weekend seems to be another gap.",
+      "outlook": "Adam Aron personally tweeted to confirm the collaboration, noting that both companies are 'intrigued by the mutually beneficial opportunities' and that 'discussions are underway' for future partnerships between Netflix and AMC."
+    },
+    {
+      "type": "wideshot",
+      "title": "Experiences, Apple TV & Peacock, and K-dramas",
+      "stories": [
+        {
+          "headline": "The creator economy and Hollywood are chasing the same IRL dream",
+          "summary": "Night, the agency behind mega-creators like Kai Cenat and Hasan Piker, is acquiring Experiential Supply Co., the marketing firm that creates viral stunts and experiences around movie launches. Remember those actual horse-riding apes that showed up in San Francisco for 'Planet of the Apes'? That was them.",
+          "details": {
+            "goal": "Their goal is to merge Night's viral expertise with Experiential's real-world spectacles to create marketing moments that dominate both streets and screens.",
+            "timing": "The timing makes sense: Hollywood's two hottest growth topics right now are creators and experiences. Netflix is building Netflix House locations, Lionsgate opened a 'John Wick' experience in Vegas, and now creators want their slice of the IRL action too."
+          },
+          "enhanced_context": {
+            "night_background": {
+              "company": "Night is one of the most powerful behind-the-scenes companies in the creator ecosystem, representing creators and creator-led brands",
+              "notable_clients": [
+                "Kai Cenat",
+                "Hasan Piker",
+                "Kalogeras Sisters"
+              ]
+            },
+            "experiential_supply_co": {
+              "expertise": "Marketing firm specializing in creating experiential and immersive experiences for entertainment properties",
+              "notable_campaigns": [
+                {
+                  "project": "Kingdom of the Planet of the Apes",
+                  "execution": "Horse-riding apes appeared in San Francisco ahead of premiere"
+                },
+                {
+                  "project": "Jurassic World Rebirth",
+                  "execution": "Life-size dinosaur took over Manhattan"
+                },
+                {
+                  "project": "Pixar's Elemental",
+                  "execution": "Interactive elemental-themed experiences"
+                },
+                {
+                  "project": "Lilo & Stitch",
+                  "execution": "Robot character experiences"
+                },
+                {
+                  "project": "Fantastic Four",
+                  "execution": "Pop-up timed to Disney events"
+                }
+              ]
+            },
+            "strategic_rationale": {
+              "night_ceo_quote": "As consumer attention shifts more and more towards digital media, we believe that experiential marketing is one of the few traditional marketing channels that brands can still use to create unique and memorable moments that actually reach consumers. Marketing leaders tell us that in today's media landscape it's important that those experiential investments also translate into digital success and drive earned media virality online.",
+              "experiential_founder_quote": "Through the years we've been able to achieve really special organic engagements and virality with our experiences and marketing stunts. With Night leading the pace in the creator and digital space we felt there was a silver bullet offering to have this all under one roof that couldn't be ignored.",
+              "combined_value": "The acquisition represents the convergence of two major entertainment growth areas: creator economy and experiential marketing"
+            },
+            "industry_trend_analysis": {
+              "paradox": "Ironically, as people spend more and more time on their phones and TV screens, experiential entertainment becomes a more appealing proposition",
+              "growth_drivers": [
+                "Consumer desire for authentic, memorable real-world experiences",
+                "Need for marketing that breaks through digital noise",
+                "Social media amplification of physical experiences",
+                "Creator influence extending beyond digital platforms"
+              ],
+              "market_opportunity": "Entertainment brands seeking growth outside traditional film and TV are focusing on two key areas: the creator economy and experiential entertainment"
+            }
+          }
+        },
+        {
+          "headline": "Even Apple is giving up on the go-it-alone streaming strategy",
+          "summary": "Starting Monday, Apple TV is bundling with NBC's Peacock, with one subscription unlocking both services for $14.99, or $19.99 without ads.",
+          "details": {
+            "structure": "The content will stay on separate apps, but it's still a notable shift for Apple, which has historically protected its premium brand and kept its subscriber numbers secret, while NBC's Peacock has publicly struggled to gain traction and hasn't yet become profitable.",
+            "trend": "The partnership is the latest sign of streaming's inevitable re-bundling. Disney already bundles with Warner Bros. Discovery's Max, and now even Apple needs a dance partner to share the massive costs of competing against Netflix and Amazon."
+          }
+        },
+        {
+          "headline": "HBO Max just entered the K-drama chat",
+          "summary": "Warner Bros. Discovery is teaming up with CJ ENM, the Korean studio behind Oscar-winner 'Parasite.' They'll co-produce original K-dramas and create a hub for TVING (CJ's streaming service) inside HBO Max across 17 Asia-Pacific markets starting in 2026.",
+          "details": {
+            "content": "The deal also brings hundreds of hours of existing CJ and TVING shows to HBO Max.",
+            "context": "This comes as Korean studios hunt for new revenue amid a brutal prolonged theatrical downturn (their box office is still down about 40% from pre-pandemic levels).",
+            "strategy": "Warner Bros. wants 150M subscribers and 100+ territories by the end of 2026, and this deal helps by letting them drop a local streamer right into HBO Max instead of competing against it or building from scratch in the market."
+          }
+        }
+      ]
+    },
+    {
+      "type": "development",
+      "title": "Last Looks - Film Development",
+      "items": [
+        {
+          "project": "London Ghost Tour",
+          "detail": "Miramax has acquired Terry Rossio's pitch in a seven-figure deal, with Josh Cooley set to direct."
+        },
+        {
+          "project": "Lizard Music",
+          "detail": "Amazon MGM has acquired, starring Dwayne Johnson with Benny Safdie writing and directing."
+        },
+        {
+          "project": "Atropia",
+          "detail": "Vertical has acquired North American rights to Luca Guadagnino-produced Sundance winner, with a theatrical release set for December."
+        },
+        {
+          "project": "The Jetsons",
+          "detail": "Jim Carrey is in talks to star in a live-action movie, with Colin Trevorrow set to direct for Warner Bros."
+        },
+        {
+          "project": "Untitled Daniels film",
+          "detail": "The Daniels have set their next Universal film for Nov. 19, 2027, marking their first feature since 'Everything Everywhere All at Once.'"
+        },
+        {
+          "project": "The Christophers",
+          "detail": "NEON has acquired worldwide rights to Steven Soderbergh's film, starring Michaela Coel and Ian McKellen."
+        },
+        {
+          "project": "Mimics",
+          "detail": "Panoramic Pictures has acquired Kristoffer Polaha's directorial debut, set for theatrical release on February 6, 2026."
+        },
+        {
+          "project": "In Love",
+          "detail": "George Clooney and Annette Bening will star in Paul Weitz's film adaptation of Amy Bloom's memoir."
+        },
+        {
+          "project": "Basic",
+          "detail": "Ashley Park, Leighton Meester and Taylor John Smith star in the indie comedy film, directed by Chelsea Devantez."
+        }
+      ]
+    },
+    {
+      "type": "development",
+      "title": "Last Looks - TV Development",
+      "items": [
+        {
+          "project": "Bosch: Start of Watch",
+          "detail": "MGM+ has ordered prequel series starring Cameron Monaghan and Omari Hardwick."
+        },
+        {
+          "project": "Marines",
+          "detail": "Netflix has ordered four-part docuseries from Amblin and Lucky8 TV, offering unprecedented access to the U.S. Marine Corps."
+        },
+        {
+          "project": "Last Night Was a Movie",
+          "detail": "FX is developing comedy series from sketch group Almost Friday and producers BoulderLight Pictures."
+        },
+        {
+          "project": "Half Man",
+          "detail": "Richard Gadd's new drama has sold to Stan in Australia and Crave in Canada as global demand builds ahead of its 2026 debut."
+        },
+        {
+          "project": "It Gets Worse",
+          "detail": "A24 and Channel 4 have begun filming comedy series, starring Leo Reich with Lena Dunham and Amelia Dimoldenberg joining."
+        },
+        {
+          "project": "Pop Culture Jeopardy!",
+          "detail": "Netflix has picked up for a second season, moving the game show from Prime Video ahead of its 2026 debut."
+        }
+      ]
+    },
+    {
+      "type": "development",
+      "title": "Last Looks - Business",
+      "items": [
+        {
+          "project": "Canal+ acquisition",
+          "detail": "Has acquired a 34% stake in French cinema chain UGC."
+        },
+        {
+          "project": "Paramount-Walter Hamada deal",
+          "detail": "Paramount Pictures has renewed its multi-year deal with producer Walter Hamada to continue developing horror films under 18Hz Productions."
+        },
+        {
+          "project": "Paramount leadership",
+          "detail": "Has hired Josh Goldstine as president of worldwide marketing and distribution following its merger with Skydance."
+        }
+      ]
+    },
+    {
+      "type": "release_radar",
+      "title": "This weekend's new releases",
+      "theatrical": [
+        {
+          "title": "After the Hunt",
+          "description": "(Expands wide) Psychological thriller starring Julia Roberts and Ayo Edebiri, directed by Luca Guadagnino."
+        },
+        {
+          "title": "Good Fortune",
+          "description": "Aziz Ansari's directorial debut, with Keanu Reeves and Seth Rogen."
+        },
+        {
+          "title": "Black Phone 2",
+          "description": "Blumhouse horror sequel with Ethan Hawke."
+        }
+      ],
+      "streaming": [
+        {
+          "title": "The Diplomat",
+          "platform": "Netflix",
+          "description": "S3 of the political thriller starring Keri Russell and Allison Janney."
+        },
+        {
+          "title": "Murdaugh: Death in the Family",
+          "platform": "Hulu",
+          "description": "True crime drama miniseries starring Jason Clarke and Patricia Arquette."
+        },
+        {
+          "title": "Loot",
+          "platform": "Apple TV",
+          "description": "S3 of the comedy series starring Maya Rudolph."
+        }
+      ]
+    },
+    {
+      "type": "box_office_preview",
+      "content": "'Black Phone 2' is tracking for a $20-25M debut this weekend, with potential to reach $30M if its strong reviews (74% RT) translate to audience enthusiasm. Blumhouse needs this win—they haven't had a film open above $12M since 'Five Nights at Freddy's' two years ago. Meanwhile, 'Good Fortune' is looking at a modest $8-12M opening."
+    }
+  ],
+  "research_context": {
+    "experiential_marketing_trend": {
+      "overview": "The entertainment industry is experiencing a major shift toward experiential marketing and immersive real-world experiences as a response to digital saturation and the need for authentic fan engagement.",
+      "market_size": "Experiential marketing sector growing to $57 billion by 2027, outpacing overall advertising and marketing spending",
+      "key_statistics": {
+        "investment_trend": "51% of companies plan to increase their experiential investments from 2024 to 2026",
+        "netflix_track_record": "Netflix has launched over 50 experiences in 25+ cities, reaching 10 million fans in 300 cities worldwide",
+        "squid_game_success": "'Squid Game: The Experience' drew half a million visitors in multiple cities by summer 2025"
+      },
+      "major_initiatives": [
+        {
+          "company": "Netflix",
+          "project": "Netflix House",
+          "details": {
+            "concept": "Permanent experiential entertainment venues combining immersive experiences, themed dining, retail, and regularly updated content",
+            "locations": [
+              {
+                "site": "King of Prussia Mall, Pennsylvania",
+                "size": "100,000+ square feet",
+                "status": "Opened November 2025",
+                "features": [
+                  "Immersive experiences based on Wednesday and One Piece",
+                  "9-hole tech-driven mini golf",
+                  "VR experiences",
+                  "Netflix Bites restaurant with show-themed dishes",
+                  "Retail shop",
+                  "Theater for screenings and special events"
+                ]
+              },
+              {
+                "site": "Galleria Dallas, Texas",
+                "size": "100,000+ square feet",
+                "status": "Opening December 2025"
+              },
+              {
+                "site": "BLVD Las Vegas",
+                "status": "Planned for 2027"
+              }
+            ],
+            "strategy": "Repurposing former department store spaces into story-driven experiences that blend architecture, technology, and design",
+            "business_model": "Revenue from tickets ($39+ per experience), food, retail, and exclusive merchandise",
+            "cmo_vision": "Fandom coming to life - fresh experiences dropping regularly, always a new reason to come back"
+          }
+        },
+        {
+          "company": "Lionsgate",
+          "project": "John Wick Experience",
+          "details": {
+            "location": "AREA15, Las Vegas",
+            "size": "12,000 square feet",
+            "status": "Opened March 2025",
+            "features": [
+              "Mission-based interactive gameplay",
+              "Dozen+ themed cinematic rooms",
+              "Live actor interactions",
+              "Two themed bars (Continental-style)",
+              "Retail shop",
+              "Choreographed action sequences"
+            ],
+            "creative_collaboration": "Developed with franchise director Chad Stahelski and 87Eleven Entertainment from design to stunt work",
+            "price_range": "$64-$114",
+            "franchise_expansion": "Part of Lionsgate's fourth Las Vegas attraction, joining Saw Escape, Blair Witch Escape, and Hunger Games Exhibition"
+          }
+        },
+        {
+          "company": "HBO/Warner Bros.",
+          "projects": [
+            {
+              "name": "Game of Thrones Experience",
+              "launched": "SXSW 2019",
+              "evolution": "Toured globally, culminating in official studio tour in Northern Ireland (2022)"
+            },
+            {
+              "name": "Beetlejuice Beetlejuice Afterlife Experience",
+              "launched": "2024",
+              "concept": "Immersive afterlife-themed experiences including beauty appointments and horoscope readings"
+            }
+          ]
+        }
+      ],
+      "theoretical_framework": {
+        "experience_economy": "Drawing on Pine and Gilmore's Experience Economy model, successful immersive experiences move beyond passive entertainment to active participation where customers affect the performance",
+        "phygital_integration": "Blending digital and physical realms to create 'phygital' experiences that deepen brand connections",
+        "consumer_culture_theory": "Experiences leverage fantasy, identity, and performance to create temporary escape from structured life while building lasting emotional connections"
+      },
+      "success_factors": [
+        "Regularly updated content to encourage repeat visits",
+        "Multi-sensory engagement (visual, tactile, gustatory)",
+        "Social media photo opportunities for organic viral spread",
+        "Authentic world-building that honors source material",
+        "Interactive elements allowing visitors to influence outcomes",
+        "Premium positioning while maintaining accessibility"
+      ],
+      "business_implications": {
+        "revenue_diversification": "New revenue streams beyond traditional content delivery",
+        "brand_extension": "Physical touchpoints that extend viewer engagement beyond screens",
+        "competitive_positioning": "Differentiation in crowded streaming market",
+        "data_collection": "Direct consumer insights and behavioral data",
+        "merchandising_opportunities": "Exclusive physical products tied to experiences"
+      },
+      "industry_convergence": {
+        "creator_economy_meets_hollywood": "Night's acquisition of Experiential Supply Co. represents the merger of digital creator expertise with traditional Hollywood experiential marketing",
+        "streets_to_screens_strategy": "Creating marketing moments that dominate both physical spaces and digital feeds",
+        "viral_amplification": "Physical experiences designed specifically to generate social media content and earned media"
+      }
+    },
+    "streaming_bundling_trend": {
+      "overview": "The streaming industry is reversing its unbundling strategy, with major platforms partnering to share costs and combine subscriber bases",
+      "recent_partnerships": [
+        {
+          "partners": "Apple TV + Peacock",
+          "price": "$14.99 (with ads) / $19.99 (ad-free)",
+          "significance": "Major shift for Apple, which historically protected premium brand and subscriber secrecy"
+        },
+        {
+          "partners": "Disney + Max",
+          "status": "Active bundle",
+          "significance": "Major studios collaborating despite competitive positioning"
+        }
+      ],
+      "drivers": [
+        "Massive content production costs",
+        "Subscriber growth plateaus",
+        "Competition from Netflix and Amazon dominance",
+        "Consumer fatigue with multiple subscriptions"
+      ]
+    },
+    "theatrical_streaming_dynamics": {
+      "netflix_amc_relationship": {
+        "historical_tension": "Fundamental conflict between Netflix's streaming-first model and AMC's commitment to theatrical windows",
+        "amc_position": "CEO Adam Aron fights for 45-day theatrical windows to protect long-term health of theatrical exhibition",
+        "netflix_position": "Ted Sarandos views theaters as 'outmoded idea' while pursuing streaming supremacy",
+        "missed_opportunities": [
+          "The Irishman (Scorsese) - rejected from AMC",
+          "Stranger Things finale - no theatrical release despite Duffer Brothers' interest"
+        ],
+        "current_collaboration": "Strategic opportunism in year with low major studio output, capitalizing on available weekend slots"
+      }
+    }
+  },
+  "tags": [
+    "Netflix",
+    "AMC",
+    "experiential marketing",
+    "Night acquisition",
+    "Experiential Supply Co",
+    "Netflix House",
+    "John Wick Experience",
+    "theatrical windows",
+    "streaming bundles",
+    "creator economy",
+    "immersive experiences",
+    "K-dramas",
+    "Apple TV",
+    "Peacock",
+    "phygital strategy"
+  ],
+  "key_insights": [
+    "The entertainment industry is experiencing a major convergence between creator economy and Hollywood through experiential marketing",
+    "Physical experiences are becoming crucial revenue diversification and brand extension strategies for digital-first companies",
+    "The paradox of digital saturation: as screen time increases, demand for authentic real-world experiences intensifies",
+    "Streaming re-bundling represents industry acknowledgment that standalone models are economically unsustainable",
+    "Netflix-AMC collaboration signals pragmatic partnerships may overcome ideological differences when market conditions align"
+  ]
+}

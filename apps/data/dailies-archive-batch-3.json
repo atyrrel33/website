@@ -1,0 +1,466 @@
+{
+  "newsletters": [
+    {
+      "date": "2025-10-13",
+      "subject": "Bid Rejected",
+      "url": "https://newsletter.readthedailies.com/p/bid-rejected",
+      "stories": [
+        {
+          "section": "Box Office Breakdown",
+          "headline": "Tron: Ares underperforms with $33.5M opening",
+          "body": "Disney's Tron reboot landed well below the $40M-$45M projections with $33.5M domestic opening and $60.5M global debut on a $180M budget, failing to connect with audiences beyond its core male demographic despite 67% of tickets coming from premium formats.",
+          "topics": ["box office", "theatrical"],
+          "entities": ["Disney", "Jared Leto"]
+        },
+        {
+          "section": "Box Office Breakdown",
+          "headline": "Demon Slayer becomes highest-grossing non-English film in U.S.",
+          "body": "The anime juggernaut just became the highest-grossing non-English film ever in the U.S., passing Crouching Tiger, Hidden Dragon's $128.1M record with $128.6M domestic total and $637M global on just a $20M budget.",
+          "topics": ["box office", "anime"],
+          "entities": ["Sony"]
+        },
+        {
+          "section": "Closeup",
+          "headline": "MIPCOM sees biggest generational shift with creators and brands",
+          "body": "MIPCOM, the world's biggest TV marketplace, is undergoing major changes as YouTube and creators take center stage. The festival created a Creator Economy Summit and transformed its Producers Hub to welcome digital creators alongside traditional producers. YouTube claimed an entire floor of the Palais for its 20th anniversary. Meanwhile, MIPCOM launched a Brand Storytelling Marketplace with Mattel, P&G, and Lego as headliners, responding to brands expanding beyond traditional advertising into financing and creating actual content. For cash-strapped studios facing streaming subscription plateaus, these partnerships are proving to be smart ways to offset production costs.",
+          "topics": ["television", "creators", "brands"],
+          "entities": ["MIPCOM", "YouTube", "Mattel"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Warner Bros. Discovery rejects Paramount's takeover bid",
+          "body": "WBD reportedly turned down Paramount Skydance's initial offer of around $20 per share, even though WBD's stock is currently trading at just $17. Paramount CEO David Ellison isn't giving up though. He's reportedly weighing his options: raise the offer, bypass the board and go directly to shareholders, or bring in Apollo Global Management for extra financing. The deal would require roughly $50B in financing plus assuming WBD's $30B in debt. Meanwhile, WBD CEO David Zaslav believes his streaming and studio assets will be worth more after completing his planned company split next year, which would separate them from declining cable networks.",
+          "topics": ["mergers", "business"],
+          "entities": ["Warner Bros Discovery", "Paramount", "David Ellison", "David Zaslav"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Duolingo launches anime series",
+          "body": "Duolingo just dropped The Final Test, a five-episode anime series produced with Titmouse, the studio behind Big Mouth and Star Trek: Lower Decks. The episodes follow the origin story of Duo, that persistent green owl. They're just 60-second episodes, but the move speaks to two big trends: anime's exploding global popularity and brands realizing that creating legitimate entertainment might be the smartest marketing play in an age when everyone skips ads.",
+          "topics": ["content", "brands", "anime"],
+          "entities": ["Duolingo", "Titmouse"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Netflix builds stop-motion training lab in Paris",
+          "body": "The streaming giant teamed up with Guillermo del Toro to create a stop-motion studio at Gobelins, France's elite animation school. They're calling it a living laboratory where animators will learn the craft and experiment with new techniques. During the Paris announcement, del Toro called stop-motion AI-proof, comparing it to the slow food movement where handmade craftsmanship beats speed. Netflix has been experimenting with AI in other areas, but with this project, they're backing del Toro's belief that some things simply can't be automated.",
+          "topics": ["animation", "production", "training"],
+          "entities": ["Netflix", "Guillermo del Toro", "Gobelins"]
+        },
+        {
+          "section": "Statistic",
+          "headline": "Old movies now drive 50% of streaming revenue",
+          "body": "During the streaming wars, platforms poured billions into original content. But new Parrot Analytics data reveals streamers are finally waking up to what actually generates ROI: Movies generated 50% of streaming revenue in 2024, up from just 27% in 2022. Licensed library titles now account for two-thirds of all movie revenue. Netflix reports that 4-year-old films they license still pull significant viewership today. Licensing an existing studio movie costs a fraction of producing a new original series but delivers higher viewer retention. Turns out subscribers basically just want to rewatch Moana on Saturday night.",
+          "topics": ["streaming", "content", "business"],
+          "entities": ["Netflix", "Parrot Analytics"]
+        }
+      ]
+    },
+    {
+      "date": "2025-10-15",
+      "subject": "Netflix 🤝 Podcasts",
+      "url": "https://newsletter.readthedailies.com/p/netflix-podcasts",
+      "stories": [
+        {
+          "section": "Closeup",
+          "headline": "Netflix enters podcast game with Spotify deal",
+          "body": "Netflix just inked a deal with Spotify to bring video podcasts to its platform, marking the streamer's official entry into a content category it can no longer afford to ignore. Subscribers will get access to shows from Spotify Studios and Bill Simmons' The Ringer, including sports heavy-hitters like The Bill Simmons Podcast and The Rewatchables, true crime favorites Serial Killers and Conspiracy Theories, and culture/lifestyle shows. It's about taking on YouTube: This year, YouTube has consistently surpassed Netflix in viewership time—Nielsen says YouTube captured 13.1% of U.S. streaming hours in August compared to Netflix's 8.7%. With 72% of podcast listeners preferring video formats and YouTube dominating that space, Netflix has recognized it needs to compete on this front. The podcasts land on Netflix in early 2026, starting in the U.S. before expanding globally.",
+          "topics": ["streaming", "podcasts", "content"],
+          "entities": ["Netflix", "Spotify", "Bill Simmons", "YouTube"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "SAG-AFTRA embraces verticals boom with new agreement",
+          "body": "The union just announced a new Verticals Agreement for microdramas under $300,000, specifically tailored to these portrait-mode productions with their tight turnarounds and mobile-first format. For underemployed entertainment workers, these verticals are proving to be a crucial lifeline. The union follows IATSE and the WGA West, which are also creating their own verticals guidelines. Meanwhile, the market is projected to hit $8B globally and traditional media companies rushing in: Fox just invested in Ukrainian verticals studio Holy Water, TelevisaUnivision is producing 40 microdramas for its ViX platform, and former ABC exec Lloyd Braun just launched MicroCo with major backing.",
+          "topics": ["labor", "content", "verticals"],
+          "entities": ["SAG-AFTRA", "Fox", "TelevisaUnivision"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Saudi Arabia invests $1B in Hollywood with Arena SNK Studios",
+          "body": "Producer Erik Feig is launching Arena SNK Studios with up to $1B from Saudi Arabia and Japan, specifically from entities controlled by Crown Prince Mohammed bin Salman and Japanese gaming company SNK. The studio will make films, TV shows, and live events, and Disney's Sean Bailey is also joining the board. While the Saudis have invested in entertainment before, this is their biggest bet on a traditional Hollywood studio yet. With streamers pulling back on spending and indie financing increasingly scarce, geopolitical funding is filling the gap.",
+          "topics": ["finance", "business", "international"],
+          "entities": ["Erik Feig", "Saudi Arabia", "SNK", "Sean Bailey"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "CNN launches creator economy initiative",
+          "body": "The network is launching CNN Creators on October 23rd from CNN's new Middle East hub in Doha, complete with a studio built like a creator house. Ex-Vice and BBC producers will host a weekly show where teams compete to produce the best news-adjacent content on topics like AI, culture, and social trends. Nearly 40% of young adults now get their news from social creators, so CNN's basically admitting the old playbook isn't working anymore. This is CNN's second big digital swing after CNN+ shut down in just 30 days back in 2022. The initiative is part of Mark Thompson's $70M transformation to shift CNN from cable to digital.",
+          "topics": ["news", "creators", "digital"],
+          "entities": ["CNN", "Mark Thompson"]
+        },
+        {
+          "section": "ICYMI",
+          "headline": "Mattel turns Magic 8 Ball into M. Night Shyamalan series",
+          "body": "Mattel is turning Magic 8 Ball into a TV series with M. Night Shyamalan directing and Brad Falchuk writing. The supernatural drama is part of Mattel's post-Barbie IP bonanza, which also includes films for Masters of the Universe, Hot Wheels with Jon M. Chu, and Polly Pocket with Lily Collins.",
+          "topics": ["television", "development"],
+          "entities": ["Mattel", "M. Night Shyamalan", "Brad Falchuk"]
+        }
+      ]
+    },
+    {
+      "date": "2025-10-10",
+      "subject": "Hot Seat to Hot Streak",
+      "url": "https://newsletter.readthedailies.com/p/hot-seat-to-hot-streak",
+      "stories": [
+        {
+          "section": "Top Streamed",
+          "headline": "Play Dirty dominates streaming charts with 7.5M U.S. views",
+          "body": "Play Dirty pulled in an impressive 7.5M U.S. views in its debut week according to Luminate. Just shy of Heads of State (9.2M views), which is Prime's biggest movie of 2025 so far, but still a big win. Play Dirty was the most-streamed movie across platforms this week. The Lost Bus hit 2.4M U.S. views over its opening weekend, a pretty strong showing for Apple and already their 5th most-watched film of the year in the U.S.",
+          "topics": ["streaming", "viewership"],
+          "entities": ["Prime Video", "Apple TV", "Mark Wahlberg"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Warner Bros. film chiefs get contract renewal after hot streak",
+          "body": "Michael De Luca and Pamela Abdy (who run the movie studio) just had their contracts renewed. Hard to believe that just months ago, everyone thought they were goners after costly flops like Joker: Folie à Deux and Mickey 17. At the time, there were reports that CEO David Zaslav was actively interviewing replacements. But their strategy of giving auteurs bigger budgets for original films turned the hot seat into a hot streak: Sinners ($366M on a $90M budget), Weapons ($266M), and A Minecraft Movie ($957M) helped the studio surpass $4B globally this year with just 11 films, a feat not achieved since 2019. They landed nine debuts at #1 and hold three of the year's top ten highest-grossing films worldwide.",
+          "topics": ["business", "theatrical", "executives"],
+          "entities": ["Warner Bros", "Michael De Luca", "Pamela Abdy", "David Zaslav"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "YouTubers launch FAST channels turning content into 24/7 TV",
+          "body": "MrBeast, Dhar Mann, and other top creators are launching FAST channels on platforms like Samsung TV Plus and Roku. These are basically 24/7 free ad-supported linear streams of their videos where viewers tune into whatever's playing, pretty much just like traditional TV. Creator content now sits right alongside BBC News and Paramount movies in the channel guide. The FAST market is exploding toward $32.5B by 2030, and these creator partnerships are benefiting both parties: Creators get revenue splits of 50-50 or higher in their favor, or lucrative licensing fees, while reaching ~115M streaming households. Platforms, meanwhile, get proven content from creators who've already mastered keeping audiences glued to screens.",
+          "topics": ["creators", "streaming", "business"],
+          "entities": ["MrBeast", "Dhar Mann", "Samsung TV Plus", "Roku"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Netflix brings video games to TV screens with phone controllers",
+          "body": "The streamer is bringing video games to TV screens for the first time, rolling out party games like Boggle Party, Pictionary, and Lego Party that subscribers can play together using their phones as controllers. Netflix has actually been offering mobile games for four years, but they've struggled to gain traction, so now they're targeting the living room instead. Players scan a QR code to turn their phones into controllers, and all the games are free with subscription. It's part of Netflix's broader shift toward increasing engagement and reducing churn now that subscriber growth has plateaued in North America.",
+          "topics": ["gaming", "streaming", "technology"],
+          "entities": ["Netflix"]
+        },
+        {
+          "section": "ICYMI",
+          "headline": "New York production space boom with 600,000 square feet added",
+          "body": "New York is in the midst of a production space boom, with two new Brooklyn studios totaling 600,000 square feet joining several other recent developments. The state recently increased tax credits to $800M annually, hoping to fill these facilities even though production spending is projected down 15% in 2025 versus 2019.",
+          "topics": ["production", "real estate", "incentives"],
+          "entities": ["New York"]
+        }
+      ]
+    },
+    {
+      "date": "2025-10-08",
+      "subject": "New Big Spender",
+      "url": "https://newsletter.readthedailies.com/p/new-buyer-alert",
+      "stories": [
+        {
+          "section": "Closeup",
+          "headline": "Row K Entertainment emerges as TIFF's biggest spender",
+          "body": "The company that just outspent everyone at TIFF didn't exist three months ago. Row K Entertainment launched in August and immediately went on a shopping spree, dropping more money at the festival than any established distributor. Their TIFF haul includes: Cliffhanger reboot with Pierce Brosnan (eight figures, biggest festival deal), Dead Man's Wire with Gus Van Sant directing Al Pacino in a true-crime thriller, Poetic License - Maude Apatow's directorial debut (acquired for $6.5M), and Charlie Harper romantic drama starring Nick Robinson and Emilia Jones. The West Hollywood distributor is backed by MassMutual and run by ex-Paramount exec Megan Colligan. They see opportunity in a massive market gap: star-driven mid-budget films that aren't sequels, superheroes, or streaming bait. Row K plans to release 10 films annually.",
+          "topics": ["distribution", "business", "festivals"],
+          "entities": ["Row K Entertainment", "MassMutual", "Megan Colligan", "TIFF"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Paramount+ wins seven-way bidding war for Discretion",
+          "body": "The streamer just won a seven-way bidding war for Discretion, a legal thriller starring Nicole Kidman and Elle Fanning. It's the first big move from new content chief Cindy Holland under the streamer's new leadership and a pretty big strategy shift for Paramount+: the streamer's finally buying from outside studios instead of only using in-house content. The A24 project moved from unpublished short story to series order in under four months. Holland sealed the deal by tapping her old Netflix relationships, outbidding former colleague Peter Friedlander who now runs TV at Amazon. The female-driven thriller is meant to balance out Taylor Sheridan's male-heavy lineup on the platform.",
+          "topics": ["streaming", "content", "development"],
+          "entities": ["Paramount+", "Cindy Holland", "Nicole Kidman", "Elle Fanning", "A24"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "SNL recruits five new cast members from TikTok and streaming",
+          "body": "Saturday Night Live kicked off S51 this past weekend with five new cast members who didn't come from the usual comedy clubs and improv theaters. Instead, they built their followings on TikTok, podcasts, and streaming platforms. Among the fresh faces are TikTok creator Veronika Slowikowska, Jeremy Culhane from Gen Z comedy platform Dropout, and stand-up Kam Patterson from the Austin comedy scene. After 50 years of scouting Second City stages and UCB classes, Lorne Michaels is now treating viral videos and podcast clips like audition tapes, further proof that the line between the creator economy and Hollywood is basically gone.",
+          "topics": ["television", "creators", "casting"],
+          "entities": ["SNL", "Lorne Michaels"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Hello Sunshine pivots from scripts to shopping",
+          "body": "Reese Witherspoon's media company is closing its unscripted TV division and promoting consumer products chief Maureen Polo to CEO. They'll still produce some scripted shows (like an upcoming Legally Blonde show), but this company founded by one of Hollywood's biggest stars now sees more growth potential in retail brands like The Home Edit than in traditional production. Four years after being acquired for $900M by Candle Media, Hello Sunshine is struggling, having delivered just 10% of expected earnings in 2023. It's not alone: LeBron's SpringHill, Kevin Hart's HartBeat, and Will Smith's Westbrook have all struggled similarly.",
+          "topics": ["business", "production", "retail"],
+          "entities": ["Hello Sunshine", "Reese Witherspoon", "Candle Media"]
+        },
+        {
+          "section": "ICYMI",
+          "headline": "Michael Mann's Heat 2 moves to Amazon MGM with $170M budget",
+          "body": "Michael Mann's Heat 2 found a new home at Amazon MGM-owned United Artists after Warner Bros. couldn't meet his $170M budget (they offered $135-140M). Jerry Bruckheimer and Scott Stuber are now producing, with Leo DiCaprio circling.",
+          "topics": ["film", "development", "studios"],
+          "entities": ["Michael Mann", "Amazon MGM", "Warner Bros", "Leonardo DiCaprio"]
+        }
+      ]
+    },
+    {
+      "date": "2025-10-06",
+      "subject": "The Ad Dollar War",
+      "url": "https://newsletter.readthedailies.com/p/the-ad-dollar-war",
+      "stories": [
+        {
+          "section": "Box Office Breakdown",
+          "headline": "Taylor Swift surprise album event tops weekend with $33M",
+          "body": "Swift announced this 89-minute album listening party just two weeks ago with an Instagram post (no trailers, no TV spots, nothing else) and still topped the weekend with $33M domestic opening, $46M global debut. It earned an A+ CinemaScore from fans who showed up for this one-weekend-only event. The overall weekend brought in $82.4M total. Without Swift's surprise album party, we're looking at just under $50M, one of the weakest weekends all year.",
+          "topics": ["box office", "theatrical", "music"],
+          "entities": ["Taylor Swift", "AMC"]
+        },
+        {
+          "section": "Closeup",
+          "headline": "Sora 2 unleashes copyright free-for-all with opt-out system",
+          "body": "Sora has unleashed a copyright free-for-all. SpongeBob is selling drugs. Cartman's reading Bible verses. Rick and Morty are teaching yoga to the Minions. Welcome to Sora, OpenAI's new AI tool that generates videos from text prompts and features copyrighted characters unless rights holders explicitly opt out. It's already the #1 free app in the App Store, beating out Google Gemini and even ChatGPT. Disney and Netflix were reportedly furiously trying to opt out. WME immediately opted out every actor, director, and creator they represent and started offering free AI-detection tools to their clients. Entertainment lawyers say studios have grounds to sue. Sora's ability to perfectly recreate protected characters implies that OpenAI trained its model on copyrighted content without permission. After a week of backlash, CEO Sam Altman wrote a late-night blog post promising rights holders more granular control over character generation and proposing that OpenAI would share revenue with studios when users generate content with their characters.",
+          "topics": ["ai", "copyright", "technology"],
+          "entities": ["OpenAI", "Sora", "Sam Altman", "Disney", "Netflix"]
+        },
+        {
+          "section": "Closeup",
+          "headline": "Fast & Furious franchise too expensive to continue",
+          "body": "Universal isn't even sure it wants to make another Fast & Furious movie. The studio told filmmakers they'll only greenlight the next sequel if they can make it for $200M. That sounds like a lot until you realize Fast X cost $340M. Despite Vin Diesel telling fans to expect an April 2027 release, there's currently no approved script (the current draft would cost $250M to produce), no official release date, most cast members don't have deals, Vin Diesel's usual $25M+ paycheck is suddenly negotiable, and some stars might get cut entirely to save money. Fast X (2023) grossed $705M worldwide—the franchise's worst showing in over a decade despite costing $340M. The international safety net is gone: Russia's market has been closed to Hollywood since the Ukraine war began, China announced it would moderately reduce Hollywood imports, and Asian audiences now prefer local productions.",
+          "topics": ["film", "franchise", "business"],
+          "entities": ["Universal", "Fast & Furious", "Vin Diesel"]
+        },
+        {
+          "section": "Statistic",
+          "headline": "Creators winning ad dollar war as traditional TV hemorrhages revenue",
+          "body": "The Interactive Advertising Bureau just dropped its September report on where ad dollars will land in 2025. Overall growth projections were trimmed from 7.3% to 5.7% thanks to tariff fears. But breaking it down reveals the real story: traditional TV is hemorrhaging ad revenue (-14.4%, worse than expected), digital video is holding steady (+7.4%), CTV is growing (+11.4%), while creator platforms are actually accelerating with social media up 14.3% and podcasts up 7.9%. Advertisers facing economic uncertainty want two things: proof of ROI and flexibility. Traditional TV offers neither. But creators win this moment completely with precise data on who watched, clicked, and bought, plus campaigns can pivot instantly.",
+          "topics": ["advertising", "business", "creators"],
+          "entities": ["IAB", "YouTube"]
+        }
+      ]
+    },
+    {
+      "date": "2025-10-03",
+      "subject": "No Middleman",
+      "url": "https://newsletter.readthedailies.com/p/no-middleman",
+      "stories": [
+        {
+          "section": "Top Streamed",
+          "headline": "Wayward tops streaming charts with 4M season views",
+          "body": "Wayward was the most-streamed show across all platforms this week, pulling in 4M season views and 23.4M hours in its first week according to Luminate. House of Guinness logged 2.3M season views and 15.4M hours in its first week. Slow Horses S5 premiere hit 2.2M views in week one, a nice bump from last season's opener (1.7M views). Ruth & Boaz was the most-streamed movie of the week across all platforms, drawing 2.3M views over its debut weekend.",
+          "topics": ["streaming", "viewership"],
+          "entities": ["Netflix", "Apple TV"]
+        },
+        {
+          "section": "Closeup",
+          "headline": "Taylor Swift bypasses distributors with direct AMC deal",
+          "body": "Hollywood gatekeepers become irrelevant when you command 560M social media followers. As Taylor Swift's 12th album drops today, she's simultaneously launching The Official Release Party of a Showgirl in theaters nationwide. Most artists need to partner with a major studio for marketing and distribution. Swift took a different path: She called AMC CEO Adam Aron directly—no middleman, no studio cut, no three-month marketing campaign. It's her second direct-to-exhibitor deal with AMC, following 2023's Eras Tour which became the highest-grossing concert film ever at $261M worldwide. Until recently, this deal would've been illegal. For 70 years, the Paramount Decrees prevented movie theaters from distributing films. Their 2020 repeal allows AMC to legally serve as Swift's distributor. Swift's film is tracking for a $35-45M opening. Pretty impressive considering she announced this thing just two weeks ago.",
+          "topics": ["theatrical", "distribution", "music"],
+          "entities": ["Taylor Swift", "AMC", "Adam Aron"]
+        },
+        {
+          "section": "Closeup",
+          "headline": "Spec scripts surge with August seeing highest monthly volume since 2017",
+          "body": "Remember that August spec script surge we reported on? The numbers had been trending up all summer: 23 specs sold across the summer months, with 9 in August alone (the highest monthly volume since March 2017). Multiple insiders say this is actually part of a shift they've been tracking for the past two years. Why we're seeing a surge: Studio frustration with packages - buyers are tired of take-it-or-leave-it packages where they're stuck with whatever director and star the agency bundled together. Plus, there's the speed factor: a finished script beats five years in development hell. Audience demand for originality - Warner Bros. proved the appetite exists, notching seven consecutive $40M+ openings this year with originals like Sinners and Weapons. Reps who wouldn't touch original scripts two years ago are now actively selling them, with several deals turning into bidding wars. We're seeing seven-figure deals without any talent attached (unthinkable in 2023).",
+          "topics": ["screenwriting", "business", "development"],
+          "entities": ["Warner Bros", "WGA"]
+        },
+        {
+          "section": "ICYMI",
+          "headline": "Bari Weiss takes over CBS News as editor-in-chief",
+          "body": "Paramount's reportedly naming her the network's first-ever editor-in-chief after buying her site The Free Press for $150M. She'll report directly to CEO David Ellison, bypassing CBS's traditional structure.",
+          "topics": ["news", "business", "executives"],
+          "entities": ["Bari Weiss", "CBS News", "Paramount", "David Ellison"]
+        }
+      ]
+    },
+    {
+      "date": "2025-10-01",
+      "subject": "Picking a Fight",
+      "url": "https://newsletter.readthedailies.com/p/picking-a-fight",
+      "stories": [
+        {
+          "section": "Closeup",
+          "headline": "OpenAI launches Sora 2 as TikTok-style social app with opt-out copyright system",
+          "body": "OpenAI just launched Sora 2, but instead of the video creation tool everyone expected, it's now a TikTok-style social app. Users can generate AI videos from text prompts, insert themselves into scenes, and scroll through feeds. Here's the surprising part: by default, the AI-generated videos can include studios' copyrighted characters and IP. Rights holders have to explicitly opt out if they don't want their stuff showing up. Studios can't even issue blanket bans for entire catalogs. Each character must be opted out individually. Good luck managing thousands of properties one by one. Racing Google: Google recently gave away its Veo 3 video generator free to YouTube users, so OpenAI's rushing Sora 2 to market, copyright concerns be damned. If you're wondering why Sora's a social platform now: Social platforms get Section 230 protection. By adding feeds and sharing, OpenAI's hoping they'll get the same legal shield.",
+          "topics": ["ai", "copyright", "technology"],
+          "entities": ["OpenAI", "Sora", "TikTok", "Google"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Trump announces 100% tariff on foreign-made movies",
+          "body": "The president posted on Truth Social Monday that he'll impose a 100% tariff on any and all movies that are made outside of the United States, saying America's losing too many productions overseas. The practical details remain murky: what defines a movie being made abroad, and how would customs enforce tariffs on streaming content or digital files? After the May announcement, Trump's Hollywood advisors Jon Voight and producer Steven Paul pitched federal tax incentives to help bring production back.",
+          "topics": ["policy", "production", "international"],
+          "entities": ["Donald Trump"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "SAG-AFTRA declares AI actress Tilly Norwood not an actor",
+          "body": "Following news that Hollywood agencies were circling the AI-generated performer for representation, the union issued a statement condemning Norwood as a computer program trained on the work of countless professional performers—without permission or compensation. SAG-AFTRA argued she has no life experience to draw from, no emotion and creates the problem of using stolen performances to put actors out of work. Major agencies are distancing themselves too, with Gersh calling Norwood frightening and WME declaring we represent humans. The union's firm stance sets the stage for contentious 2026 negotiations with studios.",
+          "topics": ["ai", "labor", "technology"],
+          "entities": ["SAG-AFTRA", "Tilly Norwood", "WME"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "YouTube TV and NBC extend carriage deal amid Peacock integration dispute",
+          "body": "The two struck a short-term extension while renegotiating their carriage deal, with a key sticking point being whether YouTube TV (now America's biggest internet TV provider) can ingest NBC's streaming service Peacock right into its app. This basically means viewers could watch exclusive shows without switching apps. NBC says this would turn Peacock into just another content supplier instead of its own streaming service, making it harder to attract paying subscribers. YouTube TV argues it's simplifying things for viewers tired of juggling multiple apps. Whatever they decide could become the standard for the entire TV industry, with Disney facing similar negotiations next month.",
+          "topics": ["streaming", "business", "carriage"],
+          "entities": ["YouTube TV", "NBC", "Peacock"]
+        }
+      ]
+    },
+    {
+      "date": "2025-09-29",
+      "subject": "Agencies Are Circling",
+      "url": "https://newsletter.readthedailies.com/p/agencies-are-circling",
+      "stories": [
+        {
+          "section": "Box Office Breakdown",
+          "headline": "One Battle After Another wins weekend with $22.4M opening",
+          "body": "Paul Thomas Anderson and Leonardo DiCaprio's action epic takes #1 with $22.4M domestic opening, $48.5M global debut on $130M budget, with premium formats (IMAX, 70mm) driving a massive 51% of domestic ticket sales. Warner Bros keeps their hot streak alive with their 8th straight $20M+ opener, though One Battle After Another needs serious legs to justify that $130M budget. For the first time in over a decade, not a single superhero movie sits in the year's top 5 highest-grossing domestic films. Demon Slayer alone has out-earned every Marvel release this year.",
+          "topics": ["box office", "theatrical"],
+          "entities": ["Warner Bros", "Paul Thomas Anderson", "Leonardo DiCaprio"]
+        },
+        {
+          "section": "Closeup",
+          "headline": "Agencies reportedly circling AI actress Tilly Norwood",
+          "body": "Hollywood agencies are reportedly circling an AI-generated actress named Tilly Norwood, according to a weekend panel at the Zurich Summit. Eline Van der Velden, an actor-turned-tech entrepreneur whose company Xicoia created the digital performer, says multiple agencies want to represent Norwood with a signing announcement coming in the next few months. Xicoia plans to scale to 40+ AI personas, work with stars wanting to appear as younger versions of themselves, and collaborate with estates to resurrect deceased performers. Van der Velden stated they want Norwood to be the next Scarlett Johansson or Natalie Portman. Backlash from actors was swift, with Melissa Barrera, Lukas Gage, Kiersey Clemons, and Nicholas Alexander Chavez among those speaking out, with some suggesting boycotts of agencies that sign AI talent. Van der Velden revealed that studios' attitudes toward AI have dramatically changed this year, from dismissing it as nothing in February to desperately wanting partnerships by May.",
+          "topics": ["ai", "talent", "technology"],
+          "entities": ["Tilly Norwood", "Xicoia", "WME"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Even A-listers join TikTok brigade for film promotion",
+          "body": "Leonardo DiCaprio is making TikToks. If even Leo—Oscar winner, Scorsese muse, yacht enthusiast—has to create content for One Battle After Another, the old junket playbook is officially dead. DiCaprio's been making Instagram Reels/TikToks with his Gen Z co-star Chase Infiniti, who's essentially become the cast's social media coordinator, leading Leo, PTA, and Benicio del Toro through trending audios and viral formats. There's footage of Anderson himself directing one of these bits. Leo's also been doing the podcast circuit, earnestly discussing his craft with the Kelce brothers, and his likeness has even landed in Fortnite. This isn't targeted marketing; it's simply the new baseline. Every major release, regardless of its audience, now requires a TikTok strategy. The algorithm doesn't care about your Oscar count.",
+          "topics": ["marketing", "social media", "creators"],
+          "entities": ["Leonardo DiCaprio", "Paul Thomas Anderson", "TikTok"]
+        }
+      ]
+    },
+    {
+      "date": "2025-09-26",
+      "subject": "AI Censorship?",
+      "url": "https://newsletter.readthedailies.com/p/ai-censorship",
+      "stories": [
+        {
+          "section": "Top Streamed",
+          "headline": "Black Rabbit opens strong with 5.6M season views",
+          "body": "Black Rabbit opened strong with 5.6M season views and 42M hours watched in its first week according to Luminate, making it the top streamed original overall this week. That's a similar debut to The Waterfront (6.8M season views / 43M hours in week one). If it maintains momentum, Black Rabbit could land in Netflix's Top 5 shows this year. Tulsa King returned for S3 with 5.2M views in its first four days, up from S2's premiere numbers of 4.3M.",
+          "topics": ["streaming", "viewership"],
+          "entities": ["Netflix", "Paramount+", "Jude Law", "Jason Bateman"]
+        },
+        {
+          "section": "Closeup",
+          "headline": "China allegedly uses AI to censor gay wedding in Together",
+          "body": "Film censorship took a dystopian turn this week. Chinese distributor Hishow allegedly used AI to turn a gay wedding straight in Neon's horror film Together, face-swapping one groom with a woman to comply with China's anti-LGBTQ+ censorship policies. After screenshots from Chinese social media exposed the alterations, Neon pulled the $15M Sundance acquisition from Chinese theaters. Hishow wasn't allowed to do this. When indie distributors like Neon sell territorial rights, the contract explicitly requires releasing the film as intended. Neon demanded Hishow cease distribution immediately. Making matters worse: Without spoiling too much, the gay couple's story is a key setup for what happens later. Changing it creates a plot hole and breaks the narrative. While it's unclear whether this was truly AI or just a shoddy editing job, the alterations here are virtually undetectable. Chinese viewers on film forums are calling it terrifying because viewers can't tell they're watching a doctored version.",
+          "topics": ["censorship", "ai", "international"],
+          "entities": ["Neon", "China", "Together"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "New York Film Festival opens with 74 feature films",
+          "body": "The 63rd edition runs through October 13 and showcases 74 feature films including Bradley Cooper's closing night premiere and Daniel Day-Lewis's return from retirement. Unlike other festivals chasing exclusives, NYFF takes a survey festival approach, curating the best titles from Cannes, Venice, and Toronto, which has made it essential for Oscar campaigns. Last year's lineup earned 40 Academy Award nominations. With major distributors like A24, Neon, and Mubi headquartered locally, the festival works as a de facto mini-market where buyers evaluate proven titles just as awards buzz starts building.",
+          "topics": ["festivals", "awards"],
+          "entities": ["NYFF", "Bradley Cooper", "Daniel Day-Lewis"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "TikTok becomes 80% American-owned with $14B deal",
+          "body": "President Trump signed an executive order yesterday approving a $14B deal that hands 80% of TikTok's U.S. operations to American investors, with Oracle, Silver Lake, and Abu Dhabi's MGX leading the group. The agreement brings ByteDance's stake down to 19.9%, just under the 20% threshold that would have triggered a U.S. ban. It's a major addition to Oracle founder Larry Ellison's growing media empire, after his family recently acquired Paramount and is now pursuing Warner Bros. Discovery. The deal still needs approval from Chinese regulators.",
+          "topics": ["technology", "mergers", "policy"],
+          "entities": ["TikTok", "Oracle", "Larry Ellison", "ByteDance"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Vince Gilligan re-ups at Sony TV in rare exclusive deal",
+          "body": "The Breaking Bad and Better Call Saul creator is staying put at the studio where he's created both hit series over the past two decades in a rare post-Peak TV exclusive deal. He calls Sony Hollywood's last independent studio, which makes sense since it's the only major TV producer not owned by a streamer or larger company. During Peak TV, top creators fled to Netflix and other streamers for massive exclusive deals, but in today's profit-focused climate, most are getting downgraded to cheaper first-look pacts. Gilligan landing another exclusive overall puts him among the few still commanding top-tier deals. His new show Pluribus with Rhea Seehorn hits Apple TV+ in November.",
+          "topics": ["television", "business", "talent"],
+          "entities": ["Vince Gilligan", "Sony TV", "Apple TV"]
+        }
+      ]
+    },
+    {
+      "date": "2025-09-24",
+      "subject": "A Ways to Go",
+      "url": "https://newsletter.readthedailies.com/p/a-ways-to-go",
+      "stories": [
+        {
+          "section": "Closeup",
+          "headline": "Lionsgate's AI deal with Runway faces reality check",
+          "body": "Lionsgate grabbed headlines last year when it announced one of Hollywood's first major AI partnerships with startup Runway, promising to use AI to create actual movies and shows. Execs talked a big game—remember when Lionsgate's Michael Burns claimed he could remake their action franchises into anime in just three hours? A year later, it's turning out to be way harder than expected. The data problem: Lionsgate's 20,000+ title library sounds massive, but it's not nearly enough to train an effective AI model. One insider said even Disney's catalog would be too small. The one-model trap: Studios are realizing no single AI model can do everything. One might nail facial expressions while another handles crowds or visual effects better. The legal mess: Who actually owns the rights when an AI trains on Keanu Reeves' face from John Wick? The U.S. Copyright Office says AI-generated content needs substantial human creative input to qualify for copyright protection.",
+          "topics": ["ai", "business", "technology"],
+          "entities": ["Lionsgate", "Runway", "Michael Burns"]
+        },
+        {
+          "section": "Closeup",
+          "headline": "Netflix strikes first-of-its-kind brand deal with AB InBev",
+          "body": "Netflix and AB InBev (the conglomerate behind Budweiser, Stella Artois, Corona, and Michelob Ultra) just struck a first-of-its-kind global marketing partnership. AB InBev brands become title sponsors of Netflix programming worldwide, beer brands will sponsor Netflix's live events push (NFL Christmas games, Women's World Cup, etc.), in-show integrations when contextually appropriate, and custom packaging featuring Netflix IP (think collectible Stranger Things six-packs). Netflix's ad tier reaches 94M users across 12 markets. AB InBev sells beer basically everywhere on Earth. Together, they can run global campaigns with local flexibility—Michelob Ultra sponsors Full Swing in America, Stella Artois pairs with The Gentlemen in Europe, Corona activates in Latin America. It's also a major win for Netflix's two-year-old ad tier, bringing in exactly the kind of premium partner they need to prove the model works.",
+          "topics": ["advertising", "streaming", "brands"],
+          "entities": ["Netflix", "AB InBev", "Budweiser"]
+        },
+        {
+          "section": "Statistic",
+          "headline": "Media companies spent record $210B on content in 2024",
+          "body": "Media companies just spent a record $210B on content in 2024, up 4% from 2023, according to new KPMG analysis. The big spenders: Comcast/NBCUniversal ($37B, flat from 2023), YouTube ($32B—huge for a platform built on user videos), Disney ($28B), Amazon ($20B), and Netflix ($17B—spending less than rivals but squeezing more value per dollar). YouTube's $32B represents ad revenue shared with millions of creators, not money spent on producing shows. Since 2020, these companies have increased spending by 10% yearly on average. But the money's moving: sports rights are soaring, scripted shows are shrinking, and creator content plus ad-supported streaming are the new growth engines. We're not hitting peak content, we're just spreading the money differently.",
+          "topics": ["business", "content", "spending"],
+          "entities": ["Comcast", "NBCUniversal", "YouTube", "Disney", "Amazon", "Netflix"]
+        }
+      ]
+    },
+    {
+      "date": "2025-09-22",
+      "subject": "Chris Nolan for President",
+      "url": "https://newsletter.readthedailies.com/p/chris-nolan-for-president",
+      "stories": [
+        {
+          "section": "Box Office Breakdown",
+          "headline": "Three new releases all miss projections in weak weekend",
+          "body": "The box office managed just $74.6M this weekend, down from last weekend's anime-fueled $147M and down 9% from 2024's $81.9M frame. Demon Slayer: Infinity Castle held onto #1 despite a 75% drop with $17.3M domestic weekend. That's typical for anime releases though, especially part one of a three-part series finale. Now the highest-grossing anime film ever, crushing Pokémon: The First Movie's unadjusted $85M from 1999 (on just a $20M budget). Universal's Him missed its $15-20M projections with $13.5M domestic opening, earning a C- CinemaScore and 27% on Rotten Tomatoes. Margot Robbie and Colin Farrell's A Big Bold Beautiful Journey flopped with $3.5M domestic opening, B- CinemaScore and 36% on Rotten Tomatoes on a $45M budget. Despite the soft weekend, year-to-date is holding at +4% ahead of 2024.",
+          "topics": ["box office", "theatrical"],
+          "entities": ["Universal", "Sony"]
+        },
+        {
+          "section": "Closeup",
+          "headline": "Paramount eyes Warner Bros. Discovery, sparking consolidation wave",
+          "body": "Last week's news that the Ellisons' Paramount is eyeing WBD has sparked rumors that Netflix and others are also evaluating the legendary studio. Confirmed: David Ellison's Paramount/Skydance is preparing a mostly cash bid for all of WBD, backed by his father Larry's Oracle fortune. Rumored: Netflix is considering a bid according to well-placed sources, though they'd likely only want the studio and streaming assets. Also sniffing around: NBCUniversal has been running the numbers, though regulatory hurdles make them a long shot. Paramount's potential edge: The Ellisons want it all, including the debt-laden cable channels everyone else avoids. While most buyers can't or won't pay for WBD's money-losing linear TV assets, the Ellisons have Larry's Oracle fortune backing them. The critics' nightmare scenario: Fewer buyers = fewer projects getting greenlit. The Netflix scenario is particularly scary for cinema purists. Imagine Batman, Harry Potter, and Barbie all trapped behind a streaming paywall.",
+          "topics": ["mergers", "business", "streaming"],
+          "entities": ["Paramount", "Warner Bros Discovery", "David Ellison", "Netflix"]
+        },
+        {
+          "section": "ICYMI",
+          "headline": "Christopher Nolan elected president of Directors Guild of America",
+          "body": "Christopher Nolan was elected president of the Directors Guild of America, calling it one of the greatest honors of my career. The Oppenheimer director marks a rare A-lister taking union leadership at their career peak, ahead of 2026 negotiations with studios next year.",
+          "topics": ["labor", "guilds", "executives"],
+          "entities": ["Christopher Nolan", "DGA"]
+        },
+        {
+          "section": "ICYMI",
+          "headline": "Taylor Swift surprise album event projected $30-50M opening",
+          "body": "Taylor Swift is delivering a surprise box office boost with a last-minute theatrical booking, as The Official Release Party of a Showgirl scored $15M in first-day presales. The album film is projected to earn $30M-$50M over its one-weekend October 3-5 run, booked directly through AMC's Adam Aron—no distributor.",
+          "topics": ["box office", "music", "theatrical"],
+          "entities": ["Taylor Swift", "AMC"]
+        }
+      ]
+    },
+    {
+      "date": "2025-09-19",
+      "subject": "Kimmel Crisis",
+      "url": "https://newsletter.readthedailies.com/p/kimmel-crisis",
+      "stories": [
+        {
+          "section": "Top Streamed",
+          "headline": "Beauty in Black tops streaming charts with strong S2 debut",
+          "body": "Beauty in Black was the most-streamed series of the week. S2 opened big with 3.1M views and 21.2M hours streamed in week one, beating S1's opening numbers (2.9M / 18.8M). The Wrong Paris was most-watched streaming movie this week with 2.7M views over its debut weekend per Luminate. The Girlfriend scored 2.2M season views and 10.8M hours streamed in week one, a strong debut for Prime, on par with The Summer I Turned Pretty S1. aka Charlie Sheen had a surprisingly large opening for the 2-episode docuseries, pulling in 6.8M season views in week one. Much stronger than Beckham's debut (3.1M), but not quite at Harry & Meghan's mega-hit level (12M).",
+          "topics": ["streaming", "viewership"],
+          "entities": ["Netflix", "Prime Video", "Tyler Perry"]
+        },
+        {
+          "section": "Closeup",
+          "headline": "ABC suspends Jimmy Kimmel Live indefinitely amid controversy",
+          "body": "ABC suspended Jimmy Kimmel Live! indefinitely on Wednesday. The move came after backlash over Kimmel's Monday night monologue about the recent shooting death of conservative activist Charlie Kirk. FCC Chairman Carr floated possible regulatory action against ABC affiliates on a podcast. Hours later: Station groups Nexstar (32 stations) and Sinclair (28 stations) announced they'd drop the show. Throughout the day: Advertisers called with concerns; a third of ABC's 200 affiliates refused to air that night's episode. By evening: ABC suspended the show entirely. The controversy has split viewers: Kimmel's defenders say he was doing satirical commentary and that pulling the show amounts to government censorship. Critics argue he misled viewers about the shooter's political leanings. Hollywood's pushing back hard: Entertainment unions and guilds blasted the suspension as everything from corporate cowardice to state censorship. Lost creator Damon Lindelof pledged to boycott Disney until Kimmel returns. Disney executives met with Kimmel yesterday to discuss the show's future. Sources say the host hasn't been fired and the plan is to eventually bring him back.",
+          "topics": ["television", "controversy", "business"],
+          "entities": ["Jimmy Kimmel", "ABC", "Disney", "FCC"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Writers Guild covers verticals as writing jobs decline",
+          "body": "As traditional Hollywood writing jobs decline, the Writers Guild clarified Wednesday that verticals (those soap opera-style shows chopped into 1-3 minute phone episodes) are covered by their MBA (Minimum Basic Agreement). This means WGA writers can't write for apps like ReelShort and DramaBox unless producers sign union agreements, though most won't since these microdramas thrive on shoestring budgets. The guild even sent a cease-and-desist to one producer, EverBrite Studios, for soliciting members on LinkedIn. With the number of working writers down to 5,228 last year (the lowest since 2013), the guild is asserting control over a fast-growing market where jobs exist but union contracts are rare.",
+          "topics": ["labor", "verticals", "content"],
+          "entities": ["WGA", "ReelShort", "DramaBox"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "YouTube gives millions of creators free AI video tools",
+          "body": "The platform unveiled its new AI-powered features at its 2025 Made on YouTube event this week, letting creators generate backgrounds, transform photos into videos, and add AI objects using Google DeepMind's Veo 3. While AI-generated content has been creeping into our feeds for a while now, this could be a tipping point. YouTube's creator economy has been steadily stealing viewership from traditional media, with the platform paying out $100B to creators between 2021 and 2024. If these creators start flooding feeds with synthetic content, it could normalize AI media for mainstream audiences who might not even realize what they're watching isn't real.",
+          "topics": ["ai", "creators", "technology"],
+          "entities": ["YouTube", "Google DeepMind"]
+        },
+        {
+          "section": "Wide Shot",
+          "headline": "Film financiers launch distribution arms to fill market gap",
+          "body": "This year's fall festivals saw new buyers emerge as companies like Black Bear and Row K Entertainment launched their own distribution arms to release movies directly. Black Bear made headlines by acquiring Christy, the Sydney Sweeney boxing film it had actually financed itself. With established buyers like A24 moving toward bigger-budget projects and many distributors having full slates, these financier-distributors are filling the gap in the $5-30M budget space that studios have largely abandoned. Row K's Christopher Woodrow called it the most exciting opportunity in his 20-year career, betting that both audiences and theater owners are hungry for more variety beyond what studios provide.",
+          "topics": ["distribution", "business", "festivals"],
+          "entities": ["Black Bear", "Row K Entertainment", "A24"]
+        }
+      ]
+    }
+  ]
+}

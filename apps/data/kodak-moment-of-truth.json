@@ -1,0 +1,211 @@
+{
+  "title": "Kodak Moment of Truth",
+  "date": "2025-08-15",
+  "url": "https://newsletter.readthedailies.com/p/kodak-moment-of-truth",
+  "sections": [
+    {
+      "type": "intro",
+      "content": "Jim Cramer's calling it: Paramount Skydance is officially a meme stock after rocketing 48% in just two days. The CNBC host explained the stock's volatility: only 30% of shares can be publicly traded, so when small investors rush in together, prices can go absolutely bananas. Add coordinated buying and some UFC deal excitement, and you've got a recipe for the kind of chaos Wall Street hasn't seen since GameStop in 2021."
+    },
+    {
+      "type": "top_streamed",
+      "title": "This week's top-streamed originals",
+      "film": {
+        "Netflix": "Happy Gilmore 2",
+        "HBO Max": "Freaky Tales",
+        "Disney+": "Encanto",
+        "Prime Video": "The Pickup",
+        "Paramount+": "Dora and the Search for Sol Dorado",
+        "Hulu": "Vacation Friends 2",
+        "Apple TV+": "Fountain of Youth",
+        "Peacock": "Marry Me"
+      },
+      "tv": {
+        "Netflix": "Wednesday",
+        "HBO Max": "And Just Like That…",
+        "Disney+": "The Proud Family: Louder and Prouder",
+        "Prime Video": "The Summer I Turned Pretty",
+        "Paramount+": "Star Trek: Strange New Worlds",
+        "Hulu": "King of the Hill",
+        "Apple TV+": "Chief of War",
+        "Peacock": "Days of Our Lives"
+      },
+      "highlights": [
+        {
+          "title": "The Pickup",
+          "platform": "Prime Video",
+          "metric": "Most-streamed movie of the week with 11M hours watched in its first seven days. 5th-most watched Prime Video movie this year."
+        },
+        {
+          "title": "Wednesday S2",
+          "platform": "Netflix",
+          "metric": "Part 1 drew 10.2M views in its first week (Part 2 arrives later), below S1's 13.6M debut. Netflix's global data shows S2 pulled in 50M views worldwide."
+        },
+        {
+          "title": "King of the Hill",
+          "platform": "Hulu",
+          "metric": "The revival opened to 4.4M views in its first week, the biggest adult animation season premiere across Hulu and Disney+ in the past five years."
+        }
+      ]
+    },
+    {
+      "type": "closeup",
+      "title": "It's a Kodak moment of truth",
+      "summary": "Digital didn't kill film, but Chapter 11 might. The 133-year-old company just warned it might not survive its current debt crisis.",
+      "details": [
+        "The iconic camera company is drowning in nearly $500M of short-term debt, plus another $200M in pension obligations.",
+        "After posting a $26M quarterly loss (down from a $26M profit this time last year), Kodak's stock nosedived 26% this week.",
+        "Kodak is Hollywood's primary film supplier for motion picture film stock after Fujifilm exited the market.",
+        "Directors like Nolan, PTA, and Tarantino have championed celluloid as high art, with studios backing expensive 70mm and IMAX film releases.",
+        "They've pivoted before: Kodak survived 2012 bankruptcy by ditching cameras and doubling down on film and commercial printing."
+      ],
+      "context": "The cruel irony: Film is experiencing its renaissance right now. 'Oppenheimer' and 'Sinners' both dominated in IMAX 70mm. And Ryan Coogler's viral Kodak collab video explaining his format choices proved audiences actually care about the medium. Processing labs have even reported increased volumes, and theaters have been reinstalling projectors to support the format.",
+      "outlook": "Despite the doom and gloom, Kodak says it's 'confident' it can figure out ways to pay off its debts. The company's trying to stay afloat by ditching its pension plan (freeing up ~$300M) and pivoting to manufacturing pharmaceuticals. But if that fails, studios might need to collectively subsidize film manufacturing."
+    },
+    {
+      "type": "closeup",
+      "title": "Paramount won't make movies for streaming",
+      "summary": "The Skydance-led studio is getting more specific about its plans. At an LA press conference this week, they revealed key parts of their strategy that break from industry convention: theatrical-only for movies, open doors for streaming TV.",
+      "movie_strategy": [
+        "No streaming films. Streaming chief Cindy Holland stated bluntly: 'Made-for-streaming movies are not a priority for me.'",
+        "Theatrical ramp-up is the goal, with Paramount aiming for a slate of 15 films ASAP, then 20 annually. Priorities include 'Top Gun 3' and new 'Star Trek' projects, plus original films like the just-acquired Timothée Chalamet-James Mangold biker heist movie 'High Side.'",
+        "Co-chair Dana Goldberg challenged reporters to name one live-action streaming film that's had real cultural impact."
+      ],
+      "streaming_strategy": [
+        "Outside producers can now pitch to Paramount+. Historically, all of Paramount+'s original series have come from its own production units (CBS, Showtime/MTV, Nickelodeon) but will now buy from third parties to get the best content.",
+        "Past relationships are paying off. The 'Stranger Things' creators, the Duffer Brothers, are reportedly considering jumping from Netflix to Paramount, reuniting with Holland who originally greenlit their hit series when she was at Netflix.",
+        "Holland's message is clear: Paramount+ wants bingeable TV shows, not forgettable streaming movies."
+      ],
+      "takeaway": "Paramount's making a contrarian bet. While rivals pour money into streaming-exclusive films, they're betting theaters create cultural moments and streamers need series to succeed."
+    },
+    {
+      "type": "quick_hits",
+      "title": "ICYMI - Quick hits",
+      "items": [
+        {
+          "headline": "Tubi is betting big on creators",
+          "detail": "Hiring TikTok exec Kudzi Chikumbu as VP of creator partnerships and expanding deals with MrBeast and other social media stars. The Fox-owned streamer's pitching itself as a 'bridge to Hollywood' for digital creators, with 5,000+ creator episodes already on the platform and more coming."
+        },
+        {
+          "headline": "California's beefed-up film tax credit is already working",
+          "detail": "Applications jumped 400% in July after the state more than doubled funding from $330M to $750M annually. The commission expects the expansion to create 4,400-5,500 new jobs annually as productions return to the state."
+        },
+        {
+          "headline": "Netflix is crushing its ad business",
+          "detail": "2025 upfront commitments more than doubling year-over-year and all NFL Christmas Day game inventory sold out. The streamer's ad tier accounts for over 50% of new sign-ups with 94M monthly active users, as Netflix expects to roughly double ad revenue in 2025."
+        },
+        {
+          "headline": "Hollywood is finding bipartisan support for federal tax breaks",
+          "detail": "Trump ambassador Jon Voight backing the CREATE Act. The bill would save Section 181 from expiring this year and extend it through 2030, giving productions instant tax breaks."
+        }
+      ]
+    },
+    {
+      "type": "development",
+      "title": "Last Looks - Film Development",
+      "items": [
+        {
+          "project": "Incidents",
+          "detail": "Searchlight won a bidding war for William Gillies' psychological thriller spec."
+        },
+        {
+          "project": "Jehanne d'Arc",
+          "detail": "Isla Johnston is in talks to play the title role in Baz Luhrmann's Warner Bros epic."
+        },
+        {
+          "project": "Jason Bourne/Treadstone",
+          "detail": "Universal has acquired all rights to Robert Ludlum's 'Jason Bourne' and 'Treadstone' book series, paving the way for new films and projects."
+        },
+        {
+          "project": "Close Personal Friends",
+          "detail": "Brie Larson, Lily Collins, Jack Quaid, and Henry Golding will star in Amazon MGM's comedy, directed by Jason Orley."
+        },
+        {
+          "project": "Untitled R-rated female ensemble comedy",
+          "detail": "Jessica Alba sold pitch to Netflix, with Madison Vanderberg adapting the screenplay."
+        }
+      ]
+    },
+    {
+      "type": "development",
+      "title": "Last Looks - TV Development",
+      "items": [
+        {
+          "project": "Count My Lies",
+          "detail": "Hulu has greenlit limited series starring Lindsay Lohan and Shailene Woodley as executive producers and co-leads."
+        },
+        {
+          "project": "Extraction",
+          "detail": "Boyd Holbrook will star opposite Omar Sy in Netflix's new 8-episode action series."
+        },
+        {
+          "project": "The Traitors",
+          "detail": "NBC has ordered a civilian version with Alan Cumming returning as host."
+        },
+        {
+          "project": "Big Mistakes",
+          "detail": "Dan Levy's Netflix comedy begins filming in New Jersey with cast including Laurie Metcalf and Rachel Sennott."
+        },
+        {
+          "project": "Last Night Was a Movie",
+          "detail": "BoulderLight Pictures is developing comedy series with sketch group Almost Friday and 'American Vandal' creators."
+        },
+        {
+          "project": "Fox Entertainment Studios deal",
+          "detail": "Bill Burr has signed a first-look deal to develop scripted and unscripted comedies via his North Hill Productions."
+        }
+      ]
+    },
+    {
+      "type": "release_radar",
+      "title": "This week's new releases",
+      "theatrical": [
+        {
+          "title": "Nobody 2",
+          "description": "Action thriller sequel with Bob Odenkirk returning as the mild-mannered assassin."
+        },
+        {
+          "title": "Highest 2 Lowest",
+          "description": "Spike Lee and Denzel Washington reunite for this neo-noir remake of Kurosawa's 'High and Low.'"
+        }
+      ],
+      "streaming": [
+        {
+          "title": "Alien: Earth",
+          "platform": "Hulu",
+          "description": "Noah Hawley's sci-fi horror series starring Sydney Chandler and Timothy Olyphant."
+        },
+        {
+          "title": "Butterfly",
+          "platform": "Prime Video",
+          "description": "Spy thriller series starring Daniel Dae Kim."
+        },
+        {
+          "title": "Night Always Comes",
+          "platform": "Netflix",
+          "description": "Crime thriller starring Vanessa Kirby."
+        },
+        {
+          "title": "Miss Governor",
+          "platform": "Netflix",
+          "description": "Tyler Perry's political sitcom returns with Part 2."
+        }
+      ]
+    },
+    {
+      "type": "box_office_preview",
+      "content": "The August doldrums are here as we're looking at the first sub-$100M weekend in months. 'Weapons' should repeat at #1 with $22-28M. 'Freakier Friday' will likely hold second in the $14-18M range, while 'Nobody 2' looks set for a $7-10M opening. Total weekend will likely land in the mid-to-high $70M range."
+    }
+  ],
+  "tags": [
+    "Kodak",
+    "Paramount",
+    "streaming strategy",
+    "film industry",
+    "box office",
+    "theatrical releases",
+    "Netflix",
+    "film tax credits",
+    "development news"
+  ]
+}
