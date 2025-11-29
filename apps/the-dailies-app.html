@@ -713,7 +713,57 @@
         };
         
         // ═══════════════════════════════════════════════════════════════
-        // DATA LOADING — The Gathering (Bulletproof Edition)
+        // DATA TRANSFORMER — The Universal Translator
+        // ═══════════════════════════════════════════════════════════════
+        
+        function transformDeepDiveToNewsletter(data) {
+            // Transform deep-dive format (with sections) into newsletter format
+            const stories = [];
+            
+            if (data.sections && Array.isArray(data.sections)) {
+                data.sections.forEach(section => {
+                    // Handle closeup/wideshot sections with title/summary
+                    if (section.title && (section.summary || section.context)) {
+                        const body = section.summary || '';
+                        const headline = section.title;
+                        
+                        stories.push({
+                            section: section.type || 'Feature',
+                            headline: headline,
+                            body: body,
+                            topics: [], // Deep-dives don't have pre-tagged topics
+                            entities: []
+                        });
+                    }
+                    
+                    // Handle sections with nested stories array
+                    if (section.stories && Array.isArray(section.stories)) {
+                        section.stories.forEach(story => {
+                            const body = story.summary || story.details?.context || '';
+                            const headline = story.headline || story.title || 'Untitled';
+                            
+                            stories.push({
+                                section: section.type || story.type || 'Feature',
+                                headline: headline,
+                                body: body,
+                                topics: story.topics || [],
+                                entities: story.entities || []
+                            });
+                        });
+                    }
+                });
+            }
+            
+            return {
+                date: data.date,
+                subject: data.title,
+                url: data.url,
+                stories: stories
+            };
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // DATA LOADING — The Universal Gathering
         // ═══════════════════════════════════════════════════════════════
         
         async function loadAllData() {
@@ -727,10 +777,12 @@
             ];
             
             try {
-                // Load files sequentially with detailed logging
+                console.log('🎬 Beginning data load sequence...');
+                
+                // Load all files sequentially
                 for (let i = 0; i < dataFiles.length; i++) {
                     const file = dataFiles[i];
-                    console.log(`📁 Loading: ${file}`);
+                    console.log(`\n📁 Loading: ${file}`);
                     
                     const response = await fetch(file);
                     if (!response.ok) {
@@ -738,32 +790,37 @@
                     }
                     
                     const data = await response.json();
-                    console.log(`✓ Loaded ${file}`, data);
+                    console.log(`✓ Loaded ${file}`);
                     
-                    // Handle multiple data formats
+                    // Detect and handle format
                     if (data.newsletters && Array.isArray(data.newsletters)) {
-                        // Format 1: Wrapped in newsletters array
-                        console.log(`  → Found ${data.newsletters.length} newsletters`);
+                        // Format 1: Batch with newsletters array
+                        console.log(`  → Batch format: ${data.newsletters.length} newsletters`);
                         DailiesApp.data.newsletters.push(...data.newsletters);
-                    } else if (data.date && data.stories) {
-                        // Format 2: Single newsletter object
-                        console.log(`  → Found single newsletter`);
+                        
+                    } else if (data.sections && Array.isArray(data.sections)) {
+                        // Format 2: Deep-dive with sections
+                        console.log(`  → Deep-dive format: "${data.title}"`);
+                        const transformed = transformDeepDiveToNewsletter(data);
+                        console.log(`  → Transformed to newsletter with ${transformed.stories.length} stories`);
+                        DailiesApp.data.newsletters.push(transformed);
+                        
+                    } else if (data.date && data.stories && Array.isArray(data.stories)) {
+                        // Format 3: Single newsletter object
+                        console.log(`  → Newsletter format: "${data.subject}"`);
                         DailiesApp.data.newsletters.push(data);
-                    } else if (Array.isArray(data)) {
-                        // Format 3: Direct array of newsletters
-                        console.log(`  → Found array of ${data.length} newsletters`);
-                        DailiesApp.data.newsletters.push(...data);
+                        
                     } else {
-                        console.warn(`⚠ Unknown format in ${file}:`, data);
+                        console.warn(`⚠ Unknown format in ${file}:`, Object.keys(data));
                     }
                     
                     updateLoadingProgress((i + 1) / dataFiles.length * 70);
                 }
                 
-                console.log(`📊 Total newsletters loaded: ${DailiesApp.data.newsletters.length}`);
+                console.log(`\n📊 Total newsletters: ${DailiesApp.data.newsletters.length}`);
                 updateLoadingProgress(85);
                 
-                // Flatten stories from all newsletters
+                // Flatten all stories
                 DailiesApp.data.newsletters.forEach((newsletter, idx) => {
                     if (!newsletter.stories || !Array.isArray(newsletter.stories)) {
                         console.error(`❌ Newsletter ${idx} missing stories:`, newsletter);
@@ -780,7 +837,7 @@
                     });
                 });
                 
-                console.log(`📚 Total stories flattened: ${DailiesApp.data.stories.length}`);
+                console.log(`📚 Total stories: ${DailiesApp.data.stories.length}`);
                 updateLoadingProgress(95);
                 
                 // Build search index
@@ -796,12 +853,12 @@
                 calculateStats();
                 
                 updateLoadingProgress(100);
-                console.log('✨ Data loading complete!');
+                console.log('✨ Data loading complete!\n');
                 
                 return true;
             } catch (error) {
-                console.error('💥 Error loading data:', error);
-                alert(`Error loading intelligence archive:\n\n${error.message}\n\nCheck the browser console for details.`);
+                console.error('\n💥 Error loading data:', error);
+                alert(`Error loading intelligence archive:\n\n${error.message}\n\nCheck the browser console (F12) for details.`);
                 return false;
             }
         }
@@ -867,6 +924,11 @@
             
             const container = document.getElementById('trending-topics');
             container.innerHTML = '';
+            
+            if (topTopics.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--stone-dim); grid-column: 1/-1;">No topics available yet</p>';
+                return;
+            }
             
             topTopics.forEach(([topic, count]) => {
                 const card = document.createElement('div');
@@ -1079,7 +1141,7 @@
         // ═══════════════════════════════════════════════════════════════
         
         async function init() {
-            console.log('🎬 Initializing The Dailies Archive...');
+            console.log('🎬 Initializing The Dailies Archive...\n');
             
             const success = await loadAllData();
             
