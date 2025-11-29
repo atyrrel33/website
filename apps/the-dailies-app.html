@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dailies Archive — Intelligence Tool for the Indie Filmmaker</title>
+    
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           THE DAILIES ARCHIVE — INTELLIGENCE INTERFACE
+           Design Philosophy: Ben-Hur grandeur meets surgical precision
+           Color Palette: Gold (#d4af37), Burgundy (#8B1538), Stone (#f5f1e8)
+        ═══════════════════════════════════════════════════════════════ */
+        
+        :root {
+            /* Color System */
+            --gold: #d4af37;
+            --gold-dim: #b8962e;
+            --burgundy: #8B1538;
+            --burgundy-dark: #6B0F2A;
+            --stone: #f5f1e8;
+            --stone-dim: #d4cfc4;
+            --charcoal: #1a1a1a;
+            --charcoal-light: #2a2a2a;
+            --black: #0a0a0a;
+            
+            /* Typography Scale */
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            
+            /* Spacing Scale */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-xxl: 4rem;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-medium: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           FOUNDATION — The Stage Upon Which All Performs
+        ═══════════════════════════════════════════════════════════════ */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, var(--black) 0%, var(--charcoal) 100%);
+            color: var(--stone);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           LOADING STATE — The Curtain Before the Show
+        ═══════════════════════════════════════════════════════════════ */
+        
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity var(--transition-slow);
+        }
+        
+        #loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: var(--space-md);
+            text-align: center;
+        }
+        
+        .loading-subtitle {
+            font-size: 0.9rem;
+            color: var(--stone-dim);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        
+        .loading-bar {
+            width: 300px;
+            height: 2px;
+            background: var(--charcoal-light);
+            margin-top: var(--space-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: var(--gold);
+            width: 0%;
+            transition: width var(--transition-medium);
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           HERO SECTION — The Opening Shot
+        ═══════════════════════════════════════════════════════════════ */
+        
+        .hero {
+            text-align: center;
+            padding: var(--space-xxl) var(--space-md) var(--space-xl);
+            border-bottom: 1px solid var(--charcoal-light);
+            background: linear-gradient(to bottom, var(--charcoal) 0%, transparent 100%);
+        }
+        
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: var(--space-sm);
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            color: var(--stone-dim);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            flex-wrap: wrap;
+            margin-top: var(--space-lg);
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--gold);
+            display: block;
+            line-height: 1;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--stone-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           SEARCH BAR — The Compass
+        ═══════════════════════════════════════════════════════════════ */
+        
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        .search-wrapper {
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: var(--space-md) var(--space-lg);
+            background: var(--charcoal-light);
+            border: 1px solid var(--charcoal-light);
+            border-radius: 2px;
+            color: var(--stone);
+            font-size: 1rem;
+            font-family: var(--font-sans);
+            transition: all var(--transition-medium);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: var(--charcoal);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+        
+        .search-input::placeholder {
+            color: var(--stone-dim);
+            opacity: 0.5;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           CONTAINER — The Frame
+        ═══════════════════════════════════════════════════════════════ */
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-xl) var(--space-md);
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           SECTION HEADERS — Act Breaks
+        ═══════════════════════════════════════════════════════════════ */
+        
+        .section-header {
+            margin-bottom: var(--space-xl);
+            text-align: center;
+        }
+        
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--burgundy);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--stone-dim);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            margin: var(--space-xxl) 0;
+            opacity: 0.3;
+        }
+        
+        .divider-line {
+            width: 100px;
+            height: 1px;
+            background: var(--gold);
+        }
+        
+        .divider-star {
+            color: var(--gold);
+            font-size: 0.75rem;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           TOPIC GRID — The Constellation
+        ═══════════════════════════════════════════════════════════════ */
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-xxl);
+        }
+        
+        .topic-card {
+            background: var(--charcoal-light);
+            border: 1px solid transparent;
+            padding: var(--space-lg);
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            text-align: center;
+        }
+        
+        .topic-card:hover {
+            border-color: var(--gold);
+            background: var(--charcoal);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+        
+        .topic-name {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: var(--space-xs);
+            letter-spacing: 0.05em;
+        }
+        
+        .topic-count {
+            font-size: 0.85rem;
+            color: var(--stone-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           STORY GRID — The Archive
+        ═══════════════════════════════════════════════════════════════ */
+        
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        .story-card {
+            background: var(--charcoal-light);
+            border: 1px solid transparent;
+            padding: var(--space-lg);
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        
+        .story-card:hover {
+            border-color: var(--gold);
+            background: var(--charcoal);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+        
+        .story-section {
+            font-size: 0.75rem;
+            color: var(--burgundy);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+        }
+        
+        .story-headline {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--stone);
+            line-height: 1.3;
+            margin: var(--space-xs) 0;
+        }
+        
+        .story-preview {
+            font-size: 0.9rem;
+            color: var(--stone-dim);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .story-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-top: auto;
+            padding-top: var(--space-sm);
+            border-top: 1px solid rgba(245, 241, 232, 0.1);
+        }
+        
+        .story-date {
+            font-size: 0.8rem;
+            color: var(--stone-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .story-tags {
+            display: flex;
+            gap: var(--space-xs);
+            flex-wrap: wrap;
+            margin-top: var(--space-sm);
+        }
+        
+        .tag {
+            font-size: 0.7rem;
+            color: var(--gold-dim);
+            background: rgba(212, 175, 55, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           STORY DETAIL VIEW — The Close-Up
+        ═══════════════════════════════════════════════════════════════ */
+        
+        .story-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-xl) var(--space-md);
+        }
+        
+        .back-button {
+            background: transparent;
+            border: 1px solid var(--gold-dim);
+            color: var(--gold);
+            padding: var(--space-sm) var(--space-lg);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            margin-bottom: var(--space-xl);
+            transition: all var(--transition-medium);
+            font-family: var(--font-sans);
+        }
+        
+        .back-button:hover {
+            background: var(--gold);
+            color: var(--black);
+            border-color: var(--gold);
+        }
+        
+        .detail-header {
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--charcoal-light);
+        }
+        
+        .detail-section {
+            font-size: 0.85rem;
+            color: var(--burgundy);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .detail-headline {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            color: var(--stone);
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+        }
+        
+        .detail-date {
+            font-size: 0.9rem;
+            color: var(--stone-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .detail-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--stone);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .detail-body p {
+            margin-bottom: var(--space-md);
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           EMPTY STATE — The Silence
+        ═══════════════════════════════════════════════════════════════ */
+        
+        .empty-state {
+            text-align: center;
+            padding: var(--space-xxl);
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--gold-dim);
+            opacity: 0.3;
+            margin-bottom: var(--space-md);
+        }
+        
+        .empty-title {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--stone-dim);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .empty-text {
+            color: var(--stone-dim);
+            opacity: 0.6;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           UTILITY CLASSES — The Toolkit
+        ═══════════════════════════════════════════════════════════════ */
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .fade-in {
+            animation: fadeIn var(--transition-slow) ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE — The Adaptation
+        ═══════════════════════════════════════════════════════════════ */
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: var(--space-xl) var(--space-md) var(--space-lg);
+            }
+            
+            .hero-stats {
+                gap: var(--space-lg);
+            }
+            
+            .topics-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: var(--space-sm);
+            }
+            
+            .stories-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+            }
+            
+            .container {
+                padding: var(--space-lg) var(--space-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- ═══════════════════════════════════════════════════════════════
+         LOADING SCREEN — The Overture
+    ═══════════════════════════════════════════════════════════════ -->
+    <div id="loading-screen">
+        <h1 class="loading-title">The Dailies</h1>
+        <p class="loading-subtitle">Loading Intelligence Archive</p>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loading-progress"></div>
+        </div>
+    </div>
+    
+    <!-- ═══════════════════════════════════════════════════════════════
+         MAIN APPLICATION — The Performance
+    ═══════════════════════════════════════════════════════════════ -->
+    <div id="app" class="hidden">
+        
+        <!-- DASHBOARD VIEW -->
+        <div id="dashboard-view">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1 class="hero-title">The Dailies Archive</h1>
+                <p class="hero-subtitle">Intelligence Tool for the Indie Filmmaker</p>
+                
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            class="search-input" 
+                            placeholder="Search stories, topics, entities..."
+                        >
+                    </div>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="total-stories">—</span>
+                        <span class="stat-label">Stories</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="total-newsletters">—</span>
+                        <span class="stat-label">Newsletters</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="date-range">—</span>
+                        <span class="stat-label">Coverage</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Trending Topics -->
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Trending Topics</h2>
+                    <p class="section-subtitle">Most discussed in the archive</p>
+                </div>
+                
+                <div class="topics-grid" id="trending-topics">
+                    <!-- Topics populated by JavaScript -->
+                </div>
+                
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <span class="divider-star">★</span>
+                    <span class="divider-line"></span>
+                </div>
+                
+                <!-- Latest Intelligence -->
+                <div class="section-header">
+                    <h2 class="section-title">Latest Intelligence</h2>
+                    <p class="section-subtitle">Recent stories from the archive</p>
+                </div>
+                
+                <div class="stories-grid" id="latest-stories">
+                    <!-- Stories populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- TOPIC VIEW -->
+        <div id="topic-view" class="hidden">
+            <div class="container">
+                <button class="back-button" id="topic-back-btn">← Back to Dashboard</button>
+                
+                <div class="section-header">
+                    <h2 class="section-title" id="topic-title">Topic</h2>
+                    <p class="section-subtitle" id="topic-count">0 stories</p>
+                </div>
+                
+                <div class="stories-grid" id="topic-stories">
+                    <!-- Stories populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- SEARCH RESULTS VIEW -->
+        <div id="search-view" class="hidden">
+            <div class="container">
+                <button class="back-button" id="search-back-btn">← Back to Dashboard</button>
+                
+                <div class="section-header">
+                    <h2 class="section-title" id="search-title">Search Results</h2>
+                    <p class="section-subtitle" id="search-count">0 results</p>
+                </div>
+                
+                <div class="stories-grid" id="search-results">
+                    <!-- Results populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- STORY DETAIL VIEW -->
+        <div id="story-view" class="hidden">
+            <div class="story-detail">
+                <button class="back-button" id="story-back-btn">← Back</button>
+                
+                <div class="detail-header">
+                    <div class="detail-section" id="detail-section">Section</div>
+                    <h1 class="detail-headline" id="detail-headline">Headline</h1>
+                    <div class="detail-date" id="detail-date">Date</div>
+                </div>
+                
+                <div class="detail-body" id="detail-body">
+                    <!-- Body populated by JavaScript -->
+                </div>
+                
+                <div class="story-tags" id="detail-tags">
+                    <!-- Tags populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- ═══════════════════════════════════════════════════════════════
+         JAVASCRIPT — The Orchestration
+    ═══════════════════════════════════════════════════════════════ -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // GLOBAL STATE — The Memory Palace
+        // ═══════════════════════════════════════════════════════════════
+        
+        const DailiesApp = {
+            data: {
+                newsletters: [],
+                stories: [],
+                index: null,
+                stats: {}
+            },
+            state: {
+                currentView: 'dashboard',
+                currentTopic: null,
+                currentStory: null,
+                searchQuery: ''
+            }
+        };
+        
+        // ═══════════════════════════════════════════════════════════════
+        // DATA LOADING — The Gathering
+        // ═══════════════════════════════════════════════════════════════
+        
+        async function loadAllData() {
+            const dataFiles = [
+                './data/dailies-archive-batch-1.json',
+                './data/dailies-archive-batch-2.json',
+                './data/dailies-archive-batch-3.json',
+                './data/dailies-archive-batch-4.json',
+                './data/netflix-amc-cold-war-enhanced.json',
+                './data/kodak-moment-of-truth.json'
+            ];
+            
+            try {
+                // Load all files in parallel
+                const responses = await Promise.all(
+                    dataFiles.map((file, index) => {
+                        updateLoadingProgress((index + 1) / dataFiles.length * 70);
+                        return fetch(file).then(r => r.json());
+                    })
+                );
+                
+                // Merge all data
+                responses.forEach(batch => {
+                    DailiesApp.data.newsletters.push(...batch.newsletters);
+                });
+                
+                updateLoadingProgress(85);
+                
+                // Flatten stories from all newsletters
+                DailiesApp.data.newsletters.forEach(newsletter => {
+                    newsletter.stories.forEach(story => {
+                        DailiesApp.data.stories.push({
+                            ...story,
+                            newsletterId: newsletter.id,
+                            newsletterDate: newsletter.date,
+                            newsletterSubject: newsletter.subject
+                        });
+                    });
+                });
+                
+                updateLoadingProgress(95);
+                
+                // Build search index
+                DailiesApp.data.index = new Fuse(DailiesApp.data.stories, {
+                    keys: ['headline', 'body', 'entities', 'topics', 'section'],
+                    threshold: 0.3,
+                    includeScore: true
+                });
+                
+                // Calculate stats
+                calculateStats();
+                
+                updateLoadingProgress(100);
+                
+                return true;
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('Error loading intelligence archive. Please check console for details.');
+                return false;
+            }
+        }
+        
+        function updateLoadingProgress(percent) {
+            document.getElementById('loading-progress').style.width = percent + '%';
+        }
+        
+        function calculateStats() {
+            const stories = DailiesApp.data.stories;
+            const newsletters = DailiesApp.data.newsletters;
+            
+            // Get date range
+            const dates = newsletters.map(n => new Date(n.date)).sort((a, b) => a - b);
+            const firstDate = dates[0];
+            const lastDate = dates[dates.length - 1];
+            
+            const monthsDiff = (lastDate.getFullYear() - firstDate.getFullYear()) * 12 
+                             + (lastDate.getMonth() - firstDate.getMonth());
+            
+            DailiesApp.data.stats = {
+                totalStories: stories.length,
+                totalNewsletters: newsletters.length,
+                dateRange: monthsDiff + (monthsDiff === 1 ? ' Month' : ' Months')
+            };
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // RENDERING — The Projection
+        // ═══════════════════════════════════════════════════════════════
+        
+        function renderDashboard() {
+            // Update stats
+            document.getElementById('total-stories').textContent = DailiesApp.data.stats.totalStories;
+            document.getElementById('total-newsletters').textContent = DailiesApp.data.stats.totalNewsletters;
+            document.getElementById('date-range').textContent = DailiesApp.data.stats.dateRange;
+            
+            // Render trending topics
+            renderTrendingTopics();
+            
+            // Render latest stories
+            renderLatestStories();
+        }
+        
+        function renderTrendingTopics() {
+            const topicsMap = new Map();
+            
+            // Count topic occurrences
+            DailiesApp.data.stories.forEach(story => {
+                if (story.topics && story.topics.length > 0) {
+                    story.topics.forEach(topic => {
+                        topicsMap.set(topic, (topicsMap.get(topic) || 0) + 1);
+                    });
+                }
+            });
+            
+            // Sort by count and take top 8
+            const topTopics = Array.from(topicsMap.entries())
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 8);
+            
+            const container = document.getElementById('trending-topics');
+            container.innerHTML = '';
+            
+            topTopics.forEach(([topic, count]) => {
+                const card = document.createElement('div');
+                card.className = 'topic-card fade-in';
+                card.innerHTML = `
+                    <h3 class="topic-name">${topic}</h3>
+                    <span class="topic-count">${count} ${count === 1 ? 'story' : 'stories'}</span>
+                `;
+                card.onclick = () => showTopicView(topic);
+                container.appendChild(card);
+            });
+        }
+        
+        function renderLatestStories() {
+            const latest = [...DailiesApp.data.stories]
+                .sort((a, b) => new Date(b.newsletterDate) - new Date(a.newsletterDate))
+                .slice(0, 10);
+            
+            const container = document.getElementById('latest-stories');
+            container.innerHTML = '';
+            
+            latest.forEach(story => {
+                container.appendChild(createStoryCard(story));
+            });
+        }
+        
+        function createStoryCard(story) {
+            const card = document.createElement('article');
+            card.className = 'story-card fade-in';
+            
+            const preview = story.body.substring(0, 150) + '...';
+            const date = formatDate(story.newsletterDate);
+            
+            card.innerHTML = `
+                <div class="story-section">${story.section || 'Story'}</div>
+                <h3 class="story-headline">${story.headline}</h3>
+                <p class="story-preview">${preview}</p>
+                <div class="story-meta">
+                    <span class="story-date">${date}</span>
+                </div>
+                ${story.topics && story.topics.length > 0 ? `
+                    <div class="story-tags">
+                        ${story.topics.slice(0, 3).map(topic => 
+                            `<span class="tag">${topic}</span>`
+                        ).join('')}
+                    </div>
+                ` : ''}
+            `;
+            
+            card.onclick = () => showStoryView(story);
+            
+            return card;
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // VIEW SWITCHING — The Cuts
+        // ═══════════════════════════════════════════════════════════════
+        
+        function showView(viewName) {
+            // Hide all views
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('topic-view').classList.add('hidden');
+            document.getElementById('search-view').classList.add('hidden');
+            document.getElementById('story-view').classList.add('hidden');
+            
+            // Show requested view
+            document.getElementById(viewName + '-view').classList.remove('hidden');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            DailiesApp.state.currentView = viewName;
+        }
+        
+        function showTopicView(topic) {
+            const stories = DailiesApp.data.stories.filter(s => 
+                s.topics && s.topics.includes(topic)
+            ).sort((a, b) => new Date(b.newsletterDate) - new Date(a.newsletterDate));
+            
+            document.getElementById('topic-title').textContent = topic;
+            document.getElementById('topic-count').textContent = 
+                `${stories.length} ${stories.length === 1 ? 'story' : 'stories'}`;
+            
+            const container = document.getElementById('topic-stories');
+            container.innerHTML = '';
+            
+            stories.forEach(story => {
+                container.appendChild(createStoryCard(story));
+            });
+            
+            DailiesApp.state.currentTopic = topic;
+            showView('topic');
+        }
+        
+        function showSearchView(query) {
+            const results = DailiesApp.data.index.search(query);
+            const stories = results.map(r => r.item);
+            
+            document.getElementById('search-title').textContent = 
+                `Search: "${query}"`;
+            document.getElementById('search-count').textContent = 
+                `${stories.length} ${stories.length === 1 ? 'result' : 'results'}`;
+            
+            const container = document.getElementById('search-results');
+            container.innerHTML = '';
+            
+            if (stories.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h3 class="empty-title">No Stories Found</h3>
+                        <p class="empty-text">Try different keywords or browse by topic</p>
+                    </div>
+                `;
+            } else {
+                stories.forEach(story => {
+                    container.appendChild(createStoryCard(story));
+                });
+            }
+            
+            DailiesApp.state.searchQuery = query;
+            showView('search');
+        }
+        
+        function showStoryView(story) {
+            document.getElementById('detail-section').textContent = story.section || 'Story';
+            document.getElementById('detail-headline').textContent = story.headline;
+            document.getElementById('detail-date').textContent = formatDate(story.newsletterDate);
+            
+            const bodyContainer = document.getElementById('detail-body');
+            bodyContainer.innerHTML = '';
+            
+            // Split body into paragraphs
+            const paragraphs = story.body.split('\n\n');
+            paragraphs.forEach(para => {
+                if (para.trim()) {
+                    const p = document.createElement('p');
+                    p.textContent = para;
+                    bodyContainer.appendChild(p);
+                }
+            });
+            
+            // Render tags
+            const tagsContainer = document.getElementById('detail-tags');
+            tagsContainer.innerHTML = '';
+            
+            if (story.topics && story.topics.length > 0) {
+                story.topics.forEach(topic => {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.textContent = topic;
+                    tag.style.cursor = 'pointer';
+                    tag.onclick = () => showTopicView(topic);
+                    tagsContainer.appendChild(tag);
+                });
+            }
+            
+            if (story.entities && story.entities.length > 0) {
+                story.entities.forEach(entity => {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.textContent = entity;
+                    tagsContainer.appendChild(tag);
+                });
+            }
+            
+            DailiesApp.state.currentStory = story;
+            showView('story');
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // EVENT HANDLERS — The Interactions
+        // ═══════════════════════════════════════════════════════════════
+        
+        function setupEventListeners() {
+            // Search input
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        showSearchView(query);
+                    }
+                }
+            });
+            
+            // Back buttons
+            document.getElementById('topic-back-btn').onclick = () => showView('dashboard');
+            document.getElementById('search-back-btn').onclick = () => showView('dashboard');
+            document.getElementById('story-back-btn').onclick = () => {
+                // Go back to previous view
+                if (DailiesApp.state.currentTopic) {
+                    showTopicView(DailiesApp.state.currentTopic);
+                } else if (DailiesApp.state.searchQuery) {
+                    showSearchView(DailiesApp.state.searchQuery);
+                } else {
+                    showView('dashboard');
+                }
+            };
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZATION — The Opening Credits
+        // ═══════════════════════════════════════════════════════════════
+        
+        async function init() {
+            const success = await loadAllData();
+            
+            if (success) {
+                // Render dashboard
+                renderDashboard();
+                
+                // Setup event listeners
+                setupEventListeners();
+                
+                // Fade out loading screen
+                setTimeout(() => {
+                    document.getElementById('loading-screen').classList.add('fade-out');
+                    setTimeout(() => {
+                        document.getElementById('loading-screen').remove();
+                        document.getElementById('app').classList.remove('hidden');
+                    }, 500);
+                }, 300);
+            }
+        }
+        
+        // Start the show
+        init();
+    </script>
+</body>
+</html>
