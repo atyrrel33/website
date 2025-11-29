@@ -713,7 +713,7 @@
         };
         
         // ═══════════════════════════════════════════════════════════════
-        // DATA LOADING — The Gathering
+        // DATA LOADING — The Gathering (Bulletproof Edition)
         // ═══════════════════════════════════════════════════════════════
         
         async function loadAllData() {
@@ -727,33 +727,60 @@
             ];
             
             try {
-                // Load all files in parallel
-                const responses = await Promise.all(
-                    dataFiles.map((file, index) => {
-                        updateLoadingProgress((index + 1) / dataFiles.length * 70);
-                        return fetch(file).then(r => r.json());
-                    })
-                );
+                // Load files sequentially with detailed logging
+                for (let i = 0; i < dataFiles.length; i++) {
+                    const file = dataFiles[i];
+                    console.log(`📁 Loading: ${file}`);
+                    
+                    const response = await fetch(file);
+                    if (!response.ok) {
+                        throw new Error(`Failed to load ${file}: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log(`✓ Loaded ${file}`, data);
+                    
+                    // Handle multiple data formats
+                    if (data.newsletters && Array.isArray(data.newsletters)) {
+                        // Format 1: Wrapped in newsletters array
+                        console.log(`  → Found ${data.newsletters.length} newsletters`);
+                        DailiesApp.data.newsletters.push(...data.newsletters);
+                    } else if (data.date && data.stories) {
+                        // Format 2: Single newsletter object
+                        console.log(`  → Found single newsletter`);
+                        DailiesApp.data.newsletters.push(data);
+                    } else if (Array.isArray(data)) {
+                        // Format 3: Direct array of newsletters
+                        console.log(`  → Found array of ${data.length} newsletters`);
+                        DailiesApp.data.newsletters.push(...data);
+                    } else {
+                        console.warn(`⚠ Unknown format in ${file}:`, data);
+                    }
+                    
+                    updateLoadingProgress((i + 1) / dataFiles.length * 70);
+                }
                 
-                // Merge all data
-                responses.forEach(batch => {
-                    DailiesApp.data.newsletters.push(...batch.newsletters);
-                });
-                
+                console.log(`📊 Total newsletters loaded: ${DailiesApp.data.newsletters.length}`);
                 updateLoadingProgress(85);
                 
                 // Flatten stories from all newsletters
-                DailiesApp.data.newsletters.forEach(newsletter => {
+                DailiesApp.data.newsletters.forEach((newsletter, idx) => {
+                    if (!newsletter.stories || !Array.isArray(newsletter.stories)) {
+                        console.error(`❌ Newsletter ${idx} missing stories:`, newsletter);
+                        return;
+                    }
+                    
                     newsletter.stories.forEach(story => {
                         DailiesApp.data.stories.push({
                             ...story,
-                            newsletterId: newsletter.id,
+                            newsletterId: newsletter.date,
                             newsletterDate: newsletter.date,
                             newsletterSubject: newsletter.subject
                         });
                     });
                 });
                 
+                console.log(`📚 Total stories flattened: ${DailiesApp.data.stories.length}`);
                 updateLoadingProgress(95);
                 
                 // Build search index
@@ -763,15 +790,18 @@
                     includeScore: true
                 });
                 
+                console.log('🔍 Search index built');
+                
                 // Calculate stats
                 calculateStats();
                 
                 updateLoadingProgress(100);
+                console.log('✨ Data loading complete!');
                 
                 return true;
             } catch (error) {
-                console.error('Error loading data:', error);
-                alert('Error loading intelligence archive. Please check console for details.');
+                console.error('💥 Error loading data:', error);
+                alert(`Error loading intelligence archive:\n\n${error.message}\n\nCheck the browser console for details.`);
                 return false;
             }
         }
@@ -797,6 +827,8 @@
                 totalNewsletters: newsletters.length,
                 dateRange: monthsDiff + (monthsDiff === 1 ? ' Month' : ' Months')
             };
+            
+            console.log('📈 Stats:', DailiesApp.data.stats);
         }
         
         // ═══════════════════════════════════════════════════════════════
@@ -1047,6 +1079,8 @@
         // ═══════════════════════════════════════════════════════════════
         
         async function init() {
+            console.log('🎬 Initializing The Dailies Archive...');
+            
             const success = await loadAllData();
             
             if (success) {
@@ -1062,8 +1096,11 @@
                     setTimeout(() => {
                         document.getElementById('loading-screen').remove();
                         document.getElementById('app').classList.remove('hidden');
+                        console.log('✨ The show has begun!');
                     }, 500);
                 }, 300);
+            } else {
+                console.error('❌ Initialization failed');
             }
         }
         
