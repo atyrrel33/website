@@ -1,0 +1,924 @@
+{
+  "batch": 4,
+  "title": "The Dailies Archive - Batch 4",
+  "dateRange": "September 2025",
+  "totalNewsletters": 12,
+  "newsletters": [
+    {
+      "id": "ellison-taking-tiktok",
+      "title": "Ellison Taking TikTok?",
+      "url": "https://newsletter.readthedailies.com/p/ellison-taking-tiktok",
+      "publishDate": "September 16, 2025",
+      "dayOfWeek": "Wednesday",
+      "mainStories": [
+        {
+          "headline": "Oracle + TikTok + Paramount + WBD = ?",
+          "category": "Business",
+          "summary": "TikTok's getting a U.S. owner with Oracle leading the charge. Oracle, along with Silver Lake, Andreessen Horowitz, and other investors would take an 80% stake in a new U.S. TikTok entity. Larry Ellison controls 77.5% of National Amusements (owns Paramount) and his son David is preparing a mostly-cash bid for Warner Bros. Discovery.",
+          "keyPoints": [
+            "Oracle shares got a bump from the TikTok news",
+            "Larry Ellison is building a vertically integrated media empire: cloud infrastructure (Oracle), social distribution (TikTok), content creation (Paramount + potentially WBD)",
+            "TikTok brings 136M U.S. users, with Gen Z spending 3+ hours daily on the platform",
+            "Both TikTok and potential Warner deal would need regulatory approval"
+          ]
+        },
+        {
+          "headline": "Disney, Universal, WBD sue Chinese AI startup MiniMax",
+          "category": "Legal",
+          "summary": "Disney, Universal, and Warner Bros. are suing $3B Chinese startup MiniMax for letting users create videos with Spider-Man, Darth Vader, and other protected characters through its Hailuo AI app. The studios call it an attack on America's creative community and $260B entertainment industry.",
+          "keyPoints": [
+            "MiniMax is marketed as a 'Hollywood studio in your pocket'",
+            "The startup is pursuing an IPO while allegedly ignoring copyright law",
+            "Chinese companies are moving ahead with AI while Hollywood debates guardrails"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": null,
+        "streaming": null,
+        "business": [
+          "Trump proposes ending quarterly earnings reports for U.S. companies, suggesting six-month reporting instead",
+          "Movie theaters dropped $1.5B on renovations as part of $2.2B pledge through 2027",
+          "Domestic box office sits at $6.22B for 2025, up 4.5% from last year but down 8.8% from 2023"
+        ],
+        "development": {
+          "film": [
+            "Greenwich and Kanopy acquired U.S. rights to 'Reading Lolita in Tehran'",
+            "Row K Entertainment acquired 'Charlie Harper' starring Nick Robinson and Emilia Jones",
+            "Universal pushed 'Other Mommy' to October 9, 2026",
+            "Sarah Levy, Phillipa Soo, Adam Pally star in 'Run'",
+            "Tyrese Gibson and Deon Taylor reteaming for 'Don't Open the Door'"
+          ],
+          "tv": [
+            "Stanley Tucci joining NBC's 2026 Winter Olympics coverage",
+            "'The Morning Show' renewed for S5 at Apple TV+",
+            "'Tulsa King' renewed for S4 at Paramount+"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "Robert Redford passed away peacefully at 89 in his Utah mountain home"
+      ],
+      "industryData": {
+        "emmysViewership": "7.4M viewers, up 8% from last year and most-watched since 2021"
+      }
+    },
+    {
+      "id": "underdogs-win",
+      "title": "Underdogs Win",
+      "url": "https://newsletter.readthedailies.com/p/underdogs-win",
+      "publishDate": "September 15, 2025",
+      "dayOfWeek": "Monday",
+      "mainStories": [
+        {
+          "headline": "77th Emmy Awards - Underdogs triumph",
+          "category": "Awards",
+          "summary": "First-time host Nate Bargatze presided over one of the most surprising Emmy nights in years, with underdogs beating heavy favorites across major categories. 'The Studio' broke records with 12 total awards, while 'Adolescence' swept Limited Series.",
+          "keyPoints": [
+            "'The Studio' ended with 12 total awards, breaking 'The Bear's single-season record",
+            "'Adolescence' swept Limited Series with 6 awards",
+            "'The Pitt' beat 'Severance' for Outstanding Drama despite 'Severance' having 27 nominations",
+            "Owen Cooper (15) became youngest male Emmy winner ever",
+            "'The Bear' went home empty-handed despite multiple nominations"
+          ]
+        },
+        {
+          "headline": "Sean Astin elected SAG-AFTRA president",
+          "category": "Unions",
+          "summary": "The 'Lord of the Rings' star won with 79% of the vote, taking over from Fran Drescher as the 160,000-member union prepares for 2026 negotiations with studios. Only 17% of members cast ballots, down from 26% when Drescher won in 2021.",
+          "keyPoints": [
+            "Astin won with 79% of vote",
+            "Only 17% voter turnout vs 26% in 2021",
+            "Union leaning toward collaboration over confrontation",
+            "High-stakes 2026 negotiations upcoming"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": [
+          {
+            "film": "Demon Slayer: Infinity Castle",
+            "opening": "$70M domestic, $386.3M global",
+            "achievement": "Best opening ever for anime, beating Pok\u00e9mon's $31M record from 1999. 6th biggest September opening of all time."
+          },
+          {
+            "film": "The Conjuring: Last Rites",
+            "weekend": "$26.1M (-69%)",
+            "total": "$131.1M domestic, $332.9M global",
+            "note": "Second-highest grossing Conjuring film domestically"
+          },
+          {
+            "film": "Downton Abbey: The Grand Finale",
+            "opening": "$18.1M domestic, $30.4M global",
+            "note": "Couldn't match original's $31M opening from 2019"
+          }
+        ],
+        "streaming": null,
+        "business": [
+          "SAG-AFTRA's 'Robin Hood fund' finally launching after two-year wait",
+          "Fund distributes streaming revenue to performers beyond A-listers",
+          "First time background actors, stand-ins, stunt riggers receive backend payments"
+        ],
+        "development": {
+          "film": [
+            "Nintendo and Illumination set 'The Super Mario Galaxy Movie' for April 3, 2026",
+            "Lin Shaye and Amelia Eve star in next 'Insidious' movie for 2026",
+            "Netflix picked up 'South Pole Santa' with Colin Jost producing"
+          ],
+          "tv": [
+            "A24 closing in on 'Texas Chain Saw Massacre' film and TV rights",
+            "Ego Nwodim exiting 'SNL' after seven seasons",
+            "Netflix renewed 'The Hunting Wives' for S2"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "Nate Bargatze pledged $100K to charity but deducted $1K for every second winners went over 45-second speech limit"
+      ],
+      "industryData": {
+        "weekendBoxOffice": "$147.9M, up 36.7% from same weekend last year",
+        "animeMarket": "On track to hit $60B by 2030"
+      }
+    },
+    {
+      "id": "paramount-wbd",
+      "title": "Paramount + WBD",
+      "url": "https://newsletter.readthedailies.com/p/paramount-wbd",
+      "publishDate": "September 12, 2025",
+      "dayOfWeek": "Friday",
+      "mainStories": [
+        {
+          "headline": "Paramount wants Warner Bros. next",
+          "category": "M&A",
+          "summary": "The Ellison family is preparing a majority-cash bid for Warner Bros. Discovery. The news sent WBD shares soaring 29%. Paramount wants the whole package despite WBD planning to split cable networks from streaming and studios by April 2026.",
+          "keyPoints": [
+            "Would create $57B+ media giant (WBD's $39.8B + Paramount's $17.95B market caps)",
+            "Combined streaming could rival Netflix and Disney",
+            "Would unite DC Comics, Star Trek, Mission: Impossible, Harry Potter, Game of Thrones",
+            "Senator Elizabeth Warren called for deal to be blocked",
+            "Critics worry about creative impact - fewer studios mean fewer buyers"
+          ]
+        },
+        {
+          "headline": "Production assistants on 'The Pitt' make Hollywood history",
+          "category": "Labor",
+          "summary": "Support staffers on HBO Max's medical drama unanimously voted to unionize with LiUNA Local 724, reportedly becoming the first PAs on a major TV show to organize. They can now negotiate for health insurance, wage increases, and basic protections.",
+          "keyPoints": [
+            "First PAs on major TV show to unionize",
+            "Production slowdowns have made PA jobs scarce",
+            "Many assistant directors stepping down to entry-level roles to find work",
+            "Union leaders call it 'only the beginning'"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": null,
+        "streaming": [
+          {
+            "service": "Netflix",
+            "topFilm": "Unknown Number: The High School Catfish",
+            "topShow": "Wednesday"
+          },
+          {
+            "service": "HBO Max",
+            "topFilm": "Friendship",
+            "topShow": "Task"
+          },
+          {
+            "service": "Peacock",
+            "newRelease": "The Paper - 9M hours streamed in week one (~1.9M season views)"
+          },
+          {
+            "service": "Apple TV+",
+            "newRelease": "Highest 2 Lowest - 2.3M weekend views"
+          }
+        ],
+        "business": [
+          "New pharma ad rules could turn 30-second spots into 4-minute infomercials",
+          "Pharma spends $5B+ annually on TV ads",
+          "Netflix's 10-year exclusive holds expiring: 'House of Cards' loses exclusivity next year",
+          "'Orange Is the New Black' follows in 2029, 'Ozark' in 2032"
+        ],
+        "development": {
+          "film": [
+            "Michelle Buteau and Zooey Deschanel star in 'Heather of the Valley'",
+            "Idris Elba to direct and star in Apple TV+'s 'This Is How It Goes'",
+            "Legendary paid seven figures for 'Alchemised' movie rights (began as Harry Potter fan fiction)"
+          ],
+          "tv": [
+            "ABC developing 'All's Fine' from David E. Kelley and Chrissy Teigen",
+            "Francesca Sloane to write 'Big Little Lies' S3",
+            "'Foundation' renewed for S4 at Apple TV+"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "Senator Elizabeth Warren called Paramount-WBD deal a 'dangerous concentration of power'"
+      ],
+      "industryData": {}
+    },
+    {
+      "id": "2m-a-day",
+      "title": "$2M-a-day",
+      "url": "https://newsletter.readthedailies.com/p/2m-a-day",
+      "publishDate": "September 10, 2025",
+      "dayOfWeek": "Wednesday",
+      "mainStories": [
+        {
+          "headline": "The Sphere is a $2M-a-day movie theater",
+          "category": "Exhibition",
+          "summary": "The Sphere's 'Wizard of Oz' draws 15,000 people daily at ~$200 a ticket, generating ~$2M per day. Films generate 2x more revenue than concerts ($400M vs $200M this year), with The Sphere keeping 70% profit margins on movies.",
+          "keyPoints": [
+            "'Wizard of Oz' likely to hit $1B in sales from single location",
+            "4M tickets already sold for 'Postcards From Earth'",
+            "MSG owner James Dolan sank $2.3B into building Sphere, $100M more for AI adaptation of 'Oz'",
+            "Warner Bros. gets pure profit from licensing while Sphere covered all costs",
+            "Spheres planned for Abu Dhabi and beyond",
+            "Dolan talking to studios about 'Harry Potter' and 'Star Wars'"
+          ]
+        },
+        {
+          "headline": "OpenAI's making a movie",
+          "category": "AI/Technology",
+          "summary": "OpenAI is backing 'Critterz,' an animated feature aiming for theaters next year. The project attempts 9 months and under $30M instead of typical 3 years and $100M+ for animated films, using GPT-5 and image generation models.",
+          "keyPoints": [
+            "30-person team vs typical hundreds of animation professionals",
+            "Writers from 'Paddington in Peru' team writing script",
+            "Human voice actors being cast",
+            "Team hopes to debut at Cannes 2026",
+            "No distribution partner yet",
+            "This is what guilds warned about during 2023 strikes"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": null,
+        "streaming": null,
+        "business": [
+          "James Wan might exit 'Conjuring' franchise over money - wants 25-50% cut vs WB refusing",
+          "Paramount hired ombudsman for CBS News after $16M Trump settlement",
+          "YouTube's NFL game hit 17.3M viewers but competitors questioned Nielsen measurement methods",
+          "Lachlan Murdoch cemented control of family empire after siblings cashed out for $3.3B"
+        ],
+        "development": {
+          "film": [
+            "David F. Sandberg directing Amazon MGM's 'Amityville Horror' reimagining",
+            "Benny Safdie and Dwayne Johnson reunite for 'Lizard Music'",
+            "Cate Blanchett starring in 'Sweetsick' at Searchlight",
+            "Lionsgate developing 'The Last Witch Hunter' sequel with Vin Diesel"
+          ],
+          "tv": [
+            "ESPN acquired 'Origin: The Story of the Basketball Africa League'",
+            "James Corden and Ruth Jones star in Apple TV+ comedy-drama 'The Choir'",
+            "Charlie Brooker making untitled four-part Netflix detective thriller"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "Coppola pulled 'Megalopolis' VOD release to release 'weirder' cut in theaters this Christmas"
+      ],
+      "industryData": {
+        "sphereRevenue": "Films: $400M, Concerts: $200M in 2025",
+        "sphereProfitMargin": "70% on movies"
+      }
+    },
+    {
+      "id": "wbs-hot-streak",
+      "title": "WB's Hot Streak \ud83d\udd25",
+      "url": "https://newsletter.readthedailies.com/p/wbs-hot-streak",
+      "publishDate": "September 8, 2025",
+      "dayOfWeek": "Monday",
+      "mainStories": [
+        {
+          "headline": "Warner Bros. makes it 7 straight",
+          "category": "Box Office",
+          "summary": "'The Conjuring: Last Rites' turned a $55M budget into an $83M domestic opening and $187M globally. Third-biggest domestic horror opening ever and biggest horror opening overseas ever with $104M international.",
+          "keyPoints": [
+            "Warner Bros. has seven straight $40M+ openings this year - no other studio has managed this",
+            "Conjuring universe has crossed $2.5B worldwide on combined budget of just $263M",
+            "Horror represents 15% of all ticket sales this year as third-biggest genre",
+            "Overall box office hit $124M this weekend, up from $65M last weekend"
+          ]
+        },
+        {
+          "headline": "TIFF hits midpoint - marketplace evolves",
+          "category": "Festivals/Markets",
+          "summary": "Toronto International Film Festival is testing unofficial market ahead of first official content market next year (backed by $23M CAD government funding). Fewer splashy packages, more finished films with campaign-ready materials.",
+          "keyPoints": [
+            "Focus Features in talks to acquire 'Obsession' for $15M+",
+            "Black Bear announced they will distribute Sydney Sweeney's 'Christy' in November",
+            "Streamers have slashed Pay-1 and Pay-2 licensing fees",
+            "Two well-capitalized newcomers (Black Bear, Row K) actively buying"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": [
+          {
+            "film": "The Conjuring: Last Rites",
+            "opening": "$83M domestic, $187M global",
+            "budget": "$55M",
+            "achievement": "Third-biggest domestic horror opening ever, biggest horror opening overseas ever ($104M)"
+          },
+          {
+            "film": "Hamilton",
+            "opening": "$10M from 1,825 theaters",
+            "note": "Five-year-old filmed stage show at ~$5,500 per screen"
+          },
+          {
+            "film": "Weapons",
+            "weekend": "$5.37M (-49%)",
+            "total": "$143M domestic, $252M global"
+          }
+        ],
+        "streaming": null,
+        "business": [
+          "Entertainment industry shed 7,600 jobs in August",
+          "Total employment dropped to 401,000",
+          "Authors won largest copyright payout ever: Anthropic settled for $1.5B",
+          "NFL claims Nielsen undercounting audiences by tens of millions"
+        ],
+        "development": {
+          "film": [
+            "Tiffany Haddish and Isla Fisher star in 'Double Crossed'",
+            "Paramount acquired James Vanderbilt's untitled techno-thriller",
+            "Djimon Hounsou joined 'Highlander' remake with Henry Cavill",
+            "Snoop Dogg and Eli Roth teaming on 'Don't Go In That House, Bitch!'"
+          ],
+          "tv": [
+            "Piers Morgan returning to U.K. TV on Paramount's Channel 5"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "Amazon-backed Showrunner attempting to resurrect Orson Welles' lost 'The Magnificent Ambersons' footage using AI"
+      ],
+      "industryData": {
+        "conjuringFranchise": "$2.5B worldwide on $263M combined budget",
+        "horrorMarketShare": "15% of all ticket sales in 2025",
+        "augustJobLosses": "7,600 jobs lost in movies/music sector"
+      }
+    },
+    {
+      "id": "gamer-ceo",
+      "title": "Gamer CEO",
+      "url": "https://newsletter.readthedailies.com/p/gamer-ceo",
+      "publishDate": "September 5, 2025",
+      "dayOfWeek": "Friday",
+      "mainStories": [
+        {
+          "headline": "A gamer CEO just greenlit Call of Duty",
+          "category": "Development",
+          "summary": "Paramount and Activision struck a deal to bring Call of Duty to the big screen. The franchise has sold 500M copies across 23 mainline titles and topped US sales charts for 16 straight years. CEO David Ellison actually plays COD and promises 'Top Gun: Maverick'-level commitment.",
+          "keyPoints": [
+            "First major IP play since Skydance merger",
+            "Activision tried in 2015 and 2018 but projects never materialized",
+            "Recent video game successes: Super Mario Bros. ($1.3B), Sonic franchise ($1B), Minecraft ($950M)",
+            "Gen Alpha wants to go to theaters but cares about digital-first properties and video games",
+            "Joins 'Street Fighter,' 'Metal Gear Solid,' 'Elden Ring' in development"
+          ]
+        },
+        {
+          "headline": "CBS News potentially buying The Free Press",
+          "category": "Business/M&A",
+          "summary": "Paramount CEO David Ellison reportedly close to buying Bari Weiss's The Free Press for $100-200M and giving her a major role at CBS News. Bold bet to reinvent struggling news division with personality-driven approach.",
+          "keyPoints": [
+            "Weiss left NYT in 2020 over ideological clashes",
+            "Built The Free Press on Substack into major platform",
+            "Would challenge traditional network news conventions",
+            "Major changes expected for former Walter Cronkite network"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": null,
+        "streaming": [
+          {
+            "service": "Netflix",
+            "newRelease": "The Thursday Murder Club - 15.6M hours, 7.9M views in debut weekend"
+          },
+          {
+            "service": "Netflix",
+            "newRelease": "Unknown Number: The High School Catfish - 3.2M views opening weekend"
+          },
+          {
+            "service": "Netflix",
+            "topShow": "My Life with the Walter Boys - 13.3M hours debut weekend, most-streamed show"
+          },
+          {
+            "service": "Prime Video",
+            "newRelease": "The Terminal List: Dark Wolf - 3.9M views in first 5 days (softer than original's 6.6M)"
+          }
+        ],
+        "business": [
+          "Warner Bros. Discovery joined Disney and Universal in suing Midjourney for copyright infringement",
+          "TikTok teamed with Fandango for direct in-app movie ticket purchasing",
+          "TIFF kicked off with official market launching next year",
+          "Paramount and Legendary closed three-year global distribution deal starting with 'Street Fighter'"
+        ],
+        "development": {
+          "film": [
+            "Emily Blunt to star in and produce 'Walk the Blue Fields'",
+            "Sam Raimi and Roy Lee producing Lionsgate remake of 'Magic' (1978)",
+            "Alan Ritchson starring as Navy SEAL Mike Thornton for Amazon MGM",
+            "James Gunn revealed 'Superman' follow-up 'Man of Tomorrow' for July 9, 2027"
+          ],
+          "tv": [
+            "Peacock renewed 'The Paper' for S2 before S1 premiere",
+            "John C. McGinley reprising Dr. Cox in ABC's 'Scrubs' reboot",
+            "Sophie Turner confirmed as Lara Croft in Prime Video's 'Tomb Raider' series"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "Seth Rogen doing 'undercover reconnaissance' at Venice Film Festival for 'The Studio' S2"
+      ],
+      "industryData": {
+        "callOfDutySales": "500M copies across 23 mainline titles, topped US charts for 16 straight years",
+        "tikTokMovieDiscovery": "Half of US users discover new movies on platform, 36% inspired to take action"
+      }
+    },
+    {
+      "id": "thats-summer",
+      "title": "That's Summer",
+      "url": "https://newsletter.readthedailies.com/p/thats-summer",
+      "publishDate": "September 2, 2025",
+      "dayOfWeek": "Tuesday",
+      "mainStories": [
+        {
+          "headline": "Summer 2025 box office wraps at $3.67B",
+          "category": "Box Office",
+          "summary": "Summer 2025 was essentially flat with summer 2024's $3.68B, down 10% from 2023's 'Barbenheimer'-fueled $4.09B. The $4B milestone has only been hit once in past 5 years. Despite this, attendance increased by 1M to 275M admissions.",
+          "keyPoints": [
+            "May started strong (up 76% vs May 2024) but lost momentum",
+            "11 films hit $100M (up from 9 last year) - more evenly distributed",
+            "International box office revenue dropped significantly - ratio flipped to 50-70% domestic",
+            "Only 3 of 2025's top 10 films earned 60%+ overseas vs 8 in 2019",
+            "Local content dominating in international markets",
+            "China announced plan to 'moderately reduce' U.S. releases"
+          ]
+        },
+        {
+          "headline": "Gen Alpha actually prefers movie theaters",
+          "category": "Exhibition/Research",
+          "summary": "NRG study shows 59% of Gen Alpha (kids 12 and under) prefer big screen over couch, compared to just 45% of Millennials. This generation sees theaters as escape from screen-saturated lives.",
+          "keyPoints": [
+            "55% prefer going with large friend groups vs 31% of Millennials",
+            "Over 60% want to see new movies on opening weekend",
+            "68% say spending time with friends/family is major reason",
+            "54% interested in 3D/VR experiences",
+            "Top franchises: Roblox, Minecraft, Fortnite - social gaming platforms",
+            "Netflix putting 'KPop Demon Hunters' in theaters for $20M two-day gross"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": [
+          {
+            "film": "Weapons",
+            "weekend": "$10.2M 3-day / $12.4M 4-day (-34%)",
+            "total": "$134.6M domestic, $234.6M global"
+          },
+          {
+            "film": "Jaws (50th Anniversary)",
+            "opening": "$8.1M 3-day / $9.8M 4-day",
+            "note": "$283.4M lifetime domestic, $491M lifetime global"
+          },
+          {
+            "film": "Caught Stealing",
+            "opening": "$7.8M 3-day / $9.5M 4-day, $15M global",
+            "note": "B CinemaScore despite 84% RT"
+          }
+        ],
+        "streaming": null,
+        "business": [
+          "Labor Day weekend: $63.6M 3-day / $83M 4-day, down 25% from last year",
+          "Warner Bros. moved 'Mortal Kombat II' from October to May 2026",
+          "YTD box office through August: $5.88B (up 5% year-over-year)"
+        ],
+        "development": {
+          "film": [
+            "Channing Tatum, Oscar Isaac, Zazie Beetz star in 'Kockroach'",
+            "Disney scrapped Questlove's 'The Aristocats' live-action remake",
+            "Amazon MGM picked up Morgan Neville's Paul McCartney doc 'Man on the Run'"
+          ],
+          "tv": [
+            "Warwick Davis reprising Professor Flitwick in HBO's 'Harry Potter' series (2027)",
+            "Prime Video canceled 'Motorheads' after S1",
+            "Prime Video ordered 'The Chosen Adventures' animated series"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "Lionsgate swapped seats with treadmills for 'The Long Walk' screening"
+      ],
+      "industryData": {
+        "summer2025BoxOffice": "$3.67B (flat with 2024's $3.68B)",
+        "summer2025Attendance": "275M admissions (up 1M from 2024)",
+        "genAlphaTheaterPreference": "59% prefer theaters vs 45% of Millennials"
+      }
+    },
+    {
+      "id": "hail-mary",
+      "title": "Hail Mary",
+      "url": "https://newsletter.readthedailies.com/p/hail-mary",
+      "publishDate": "August 29, 2025",
+      "dayOfWeek": "Friday",
+      "mainStories": [
+        {
+          "headline": "NBC using NFL as lifeline for late-night TV",
+          "category": "Business/TV",
+          "summary": "NBC is piggybacking Jimmy Fallon onto 'Sunday Night Football' broadcasts this fall, airing special episodes after four NFL games to leverage the 21.6M viewers. CBS canceled Colbert's 'Late Show' due to financial losses, and NBC acknowledges both Fallon and Meyers face eroding viewership and shrinking ad revenue.",
+          "keyPoints": [
+            "Targeting high-profile games including two Chiefs matchups (Travis Kelce/Taylor Swift engagement)",
+            "Last year's post-SNF 'Tonight Show' scored Fallon's best ratings of season",
+            "Both Fallon and Meyers locked in through 2028",
+            "NBC building Fallon's brand beyond late-night",
+            "'Password' renewed for S3 after reaching 32M viewers",
+            "Launching 'On Brand with Jimmy Fallon' this fall"
+          ]
+        },
+        {
+          "headline": "California awards $256M in tax credits",
+          "category": "Production Incentives",
+          "summary": "The state awarded $255.7M to 22 TV productions including 'The Studio,' 'Presumed Innocent,' and 'NCIS: Origins' in first round since expanding incentive program from $330M to $750M. Applications jumped nearly 400% compared to last year.",
+          "keyPoints": [
+            "Program opened to half-hour shows for first time",
+            "Untitled Dan Fogelman Hulu drama scored biggest allocation at $42.8M",
+            "Should generate ~$1.1B in economic activity",
+            "Create work for 6,500 cast and crew members across state"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": null,
+        "streaming": [
+          {
+            "title": "KPop Demon Hunters",
+            "service": "Netflix",
+            "note": "Top-streamed film of week"
+          },
+          {
+            "title": "The Twisted Tale of Amanda Knox",
+            "service": "Hulu",
+            "performance": "Episode 1 opened to 793K views (half of 'Paradise's' 1.4M)"
+          },
+          {
+            "title": "The Map That Leads To You",
+            "service": "Prime Video",
+            "performance": "2.5M views in first full week"
+          },
+          {
+            "title": "Peacemaker S2",
+            "service": "HBO Max",
+            "performance": "Episode 1: 2.5M views in first weekend (more than double S1's 1.2M)"
+          }
+        ],
+        "business": [
+          "Hollywood copyright lawsuits surging after federal appeals courts tell judges not to dismiss cases too quickly",
+          "'Taskmaster' skipping US networks, releasing S20 in full on YouTube",
+          "Warner Bros. named Brad Singer as CFO ahead of 2026 post-split launch",
+          "Peacock launching on Prime Video Channels at $16.99/month"
+        ],
+        "development": {
+          "film": [
+            "Todd Haynes' 'De Noche' revived with Pedro Pascal circling to star",
+            "Lucasfilm set cast for 'Star Wars: Starfighter' - Amy Adams, Aaron Pierre join Ryan Gosling",
+            "Anna Kendrick and Seth Rogen in talks for comedy 'Babies'",
+            "John Cho and Alexandra Daddario star in horror-thriller 'Inground'"
+          ],
+          "tv": [
+            "John Malkovich joined Apple TV+ 'Bad Monkey' as S2 series regular",
+            "HBO won bidding war for 'The Fort Bragg Cartel'",
+            "Hilary Duff stars in Hulu's comedy 'Pretty Ugly'",
+            "Elizabeth Banks starring as Karen Read in Prime Video limited series"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "James Dolan digitally inserted himself and David Zaslav as background characters in Sphere's 'Wizard of Oz'"
+      ],
+      "industryData": {
+        "veniceFilmFestival": "Kicked off August 28, 2025"
+      }
+    },
+    {
+      "id": "fall-festival-season",
+      "title": "Fall Festival Season is Here",
+      "url": "https://newsletter.readthedailies.com/p/fall-festival-season-is-here",
+      "publishDate": "August 27, 2025",
+      "dayOfWeek": "Wednesday",
+      "mainStories": [
+        {
+          "headline": "Venice kicks off fall festival season",
+          "category": "Festivals",
+          "summary": "The 82nd Venice Film Festival kicks off the industry's most crucial period for positioning Oscar contenders. Venice programs exclusively world premieres that travel the entire festival circuit. After Cannes dominated last season (31 Oscar noms vs Venice's 17), Venice is poised for comeback with stronger lineup.",
+          "keyPoints": [
+            "Netflix back with 3 major titles after sitting out 2024: del Toro's 'Frankenstein,' Bigelow's 'A House of Dynamite,' Baumbach's 'Jay Kelly'",
+            "'The Smashing Machine' - Dwayne Johnson's dramatic Venice debut",
+            "Julia Roberts' Lido debut in 'After the Hunt'",
+            "No official marketplace like Cannes or Berlin - deals happen quietly in hotel suites",
+            "Many anticipated titles skip Venice for Telluride/TIFF"
+          ]
+        },
+        {
+          "headline": "Your entire digital library is a rental in disguise",
+          "category": "Legal/Consumer Rights",
+          "summary": "Amazon facing class action lawsuit over Prime Video's 'Buy' buttons - customers actually just get revocable licenses. California's Assembly Bill 2426 (effective this year) prohibits advertising digital goods as 'purchases' unless buyers get unrestricted ownership.",
+          "keyPoints": [
+            "Amazon and Apple both defended similar allegations in 2020",
+            "Amazon buries license disclosure in tiny print at bottom of confirmation pages",
+            "Christopher Nolan and Guillermo del Toro have championed physical media ownership",
+            "Lawsuit seeks all profits from fake 'purchases' plus extra damages"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": null,
+        "streaming": null,
+        "business": [
+          "Netflix won bidding war for Nic Pizzolatto/Matthew McConaughey/Cole Hauser series",
+          "Anthropic settled with authors who accused AI company of illegally downloading 7M books",
+          "YouTube topped TV viewership for 6th straight month - 13.4% of all U.S. TV watching",
+          "Fox channels could disappear from YouTube TV (deadlocked over fees)"
+        ],
+        "development": {
+          "film": [
+            "Universal developing 'Knight Rider' movie with 'Cobra Kai' creators",
+            "Sony and Netflix in talks for 'KPop Demon Hunters 2' sequel",
+            "The Forge acquired Kristen Stewart's directorial debut 'The Chronology of Water'",
+            "Emma Roberts starring in rom-com murder mystery 'A Murder Uncorked'"
+          ],
+          "tv": [
+            "Annette Bening starring in 'Yellowstone' spinoff 'The Dutton Ranch'",
+            "Netflix renewed 'Trainwreck' documentary franchise for S2",
+            "Hulu ordered Alex Gibney doc on Luigi Mangione",
+            "Prime Video developing 'Dorothy' - contemporary Wizard of Oz series"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "Vulture launched Movies Fantasy League - draft movies instead of players, score points through Oscar night"
+      ],
+      "industryData": {
+        "youTubeViewership": "13.4% of all U.S. TV watching in July 2025",
+        "streamingOverall": "47.3% of TV use"
+      }
+    },
+    {
+      "id": "spec-boom",
+      "title": "Spec Boom?",
+      "url": "https://newsletter.readthedailies.com/p/spec-boom",
+      "publishDate": "August 25, 2025",
+      "dayOfWeek": "Monday",
+      "mainStories": [
+        {
+          "headline": "Netflix gets first box office win",
+          "category": "Box Office",
+          "summary": "'KPop Demon Hunters Sing-Along' earned $18M+ from just 1,700 theaters over two days for Netflix's first-ever #1 box office win. Already the streamer's second-most-watched title with 210M+ views. Families paid premium prices to rewatch what they'd already seen at home.",
+          "keyPoints": [
+            "Packed houses full of kids singing along",
+            "Billboard-charting songs",
+            "Calculated experiment with proven winner that required zero marketing spend",
+            "Sing-along version hit Netflix same day",
+            "A24's 'Ne Zha 2' tanked with just $1.5M on 2,200+ screens despite Michelle Yeoh voice"
+          ]
+        },
+        {
+          "headline": "Spec script market suddenly hot again",
+          "category": "Development",
+          "summary": "8 spec deals closed in August 2025 alone - highest monthly total since March 2017. Spec market hit rock bottom with just 11 deals in all of 2023. During '90s golden era, Hollywood averaged 12-13 deals per month. 2025 has 19 total deals so far.",
+          "keyPoints": [
+            "'With The 8th Pick' - Kobe Bryant NBA draft drama to Warner Bros.",
+            "'Bald Eagles' - seven figures preemptive deal at Paramount",
+            "'The Pirate' - Amazon MGM with Jason Momoa attached",
+            "'Incidents' - 11-studio bidding war, Searchlight won",
+            "'The Survival List' - Lionsgate with Blake Lively attached",
+            "TV pilot market has dried up, pushing writers toward features"
+          ]
+        },
+        {
+          "headline": "Netflix posts AI dos and don'ts",
+          "category": "Technology/AI",
+          "summary": "Netflix published AI guidelines for production partners with five core rules. CEO Ted Sarandos highlighted 'The Eternaut' used AI to create building collapse sequence 10x faster than traditional VFX, keeping show within budget.",
+          "keyPoints": [
+            "Don't copy others' copyrighted work",
+            "Protect Netflix content from AI training",
+            "Use secure enterprise-approved AI platforms",
+            "Final output needs approval",
+            "Respect union rules - can't replace actors/crew without consent",
+            "Netflix caught flak for using AI-generated photos in 'What Jennifer Did' documentary"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": [
+          {
+            "film": "KPop Demon Hunters Sing-Along",
+            "opening": "$18M+ 2-day from 1,700 theaters",
+            "note": "Netflix's first #1 box office win"
+          },
+          {
+            "film": "Weapons",
+            "weekend": "$15.6M (-36%)",
+            "total": "$115.9M domestic, $199.4M global"
+          },
+          {
+            "film": "Freakier Friday",
+            "weekend": "$9.2M (-36%)",
+            "total": "$70.5M domestic, $113M global"
+          }
+        ],
+        "streaming": null,
+        "business": [
+          "Fed Chair Powell hinted at September rate cuts - media stocks jumped",
+          "Paramount cutting 2,500-3,000 jobs in November seeking $2B+ cost savings",
+          "Jeffrey Katzenberg joins Kimbal Musk's Nova Sky Stories as investor/board member"
+        ],
+        "development": {
+          "film": [
+            "Tommy Dorfman developing 'Detransition, Baby' feature",
+            "Vera Farmiga starring opposite Mark Wahlberg in Apple film",
+            "Will Ferrell, America Ferrera, Natalie Portman voice Neon's 'Arco'",
+            "Paramount acquired Trevor Noah's 'The Island' pitch"
+          ],
+          "tv": [
+            "ABC developing legal drama 'The Advocate'",
+            "Paramount pulled plug on 'Dexter: Original Sin' S2 despite earlier renewal",
+            "MGM+ renewed Stephen King's 'The Institute' for S2"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "IFC upgraded 'Good Boy' dog POV horror to wide release after 2,000% search spike for 'does the dog die'"
+      ],
+      "industryData": {
+        "specScriptDeals": "8 in August 2025 (highest since March 2017), 19 total in 2025 so far vs 11 in all of 2023",
+        "weekendBoxOffice": "$77M, down 13% from same weekend last year"
+      }
+    },
+    {
+      "id": "embracing-the-scroll",
+      "title": "Embracing the Scroll",
+      "url": "https://newsletter.readthedailies.com/p/embracing-the-scroll",
+      "publishDate": "August 22, 2025",
+      "dayOfWeek": "Friday",
+      "mainStories": [
+        {
+          "headline": "ESPN and Fox embrace the scroll",
+          "category": "Streaming/Technology",
+          "summary": "ESPN and Fox launched separate streaming apps (same day) - first time full cable content available outside cable. Both pack in TikTok-style vertical video feeds. Apps chase 65M 'cord-never' households.",
+          "keyPoints": [
+            "ESPN: $29.99/month, Fox: $19.99/month",
+            "Joint bundle for $39.99 starting October",
+            "Current cable subscribers get apps free",
+            "ESPN hired social media stars like Katie Feeney and Omar Raja as full-time talent",
+            "ESPN syncs phone to TV game for stats, fantasy updates, betting lines",
+            "ESPN's cable subscribers dropped from 100M (2011) to 61M today"
+          ]
+        },
+        {
+          "headline": "Talent reps using AI to negotiate deals",
+          "category": "Business/Technology",
+          "summary": "Hollywood agents using AI tools like ChatGPT and Grok to quantify social media buzz and prove how much clients drive viewership. Priyanka Chopra Jonas's team used AI to show she generated 50-60% of online conversation for 'Heads of State' despite being third-billed.",
+          "keyPoints": [
+            "Pre-streaming era had clear box office/Nielsen ratings",
+            "Streamers keep viewership data mostly to themselves",
+            "Social metrics now give agents concrete leverage in negotiations"
+          ]
+        },
+        {
+          "headline": "Disney ditching franchises to lure Gen Z men",
+          "category": "Strategy",
+          "summary": "Despite dominating box office, Disney faces threat: superhero movies and franchise reboots aren't capturing males aged 13-28. Disney actively seeking pitches for original concepts (globe-trotting adventures, treasure hunts) instead of relying on IP library.",
+          "keyPoints": [
+            "Gaming-obsessed generation didn't grow up on Disney classics",
+            "Doesn't respond to franchises like millennials do",
+            "Big shift for company that built empire on recycling beloved properties"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": null,
+        "streaming": [
+          {
+            "title": "Night Always Comes",
+            "service": "Netflix",
+            "performance": "2.3M US views opening weekend, most-streamed original movie of week"
+          },
+          {
+            "title": "Butterfly",
+            "service": "Prime Video",
+            "performance": "2.1M season views, 10.4M hours in first week"
+          },
+          {
+            "title": "Fit for TV",
+            "service": "Netflix",
+            "performance": "3.2M views, 6.8M hours watched opening weekend"
+          }
+        ],
+        "business": [
+          "Patrick Somerville inks overall TV deal with Amazon MGM",
+          "Hallmark cuts 30 jobs including VP of Production",
+          "Lifetime lays off most unscripted team, pivots to TV movies",
+          "NBCUniversal nears $600M deal for MLB games on NBC/Peacock"
+        ],
+        "development": {
+          "film": [
+            "Paramount bought Brandon Cohen's 'Bald Eagles' spec for seven figures",
+            "Phil Lord/Christopher Miller producing Universal 'Archie' adaptation",
+            "Blake Lively starring/producing Lionsgate's 'The Survival List'",
+            "New Regency lands erotic thriller spec 'Fixation'"
+          ],
+          "tv": [
+            "Andrew Haigh writing/directing Keith Haring TV series",
+            "Dominic West and Sienna Miller lead Sky/HBO legal thriller 'War'",
+            "Nicolas Cage in talks for 'True Detective' S5 in New York"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "Netflix launching 'Your Zodiac Watchlist' - your sign determines what they think you want to watch"
+      ],
+      "industryData": {
+        "cordNeverHouseholds": "65M households who've never had cable"
+      }
+    },
+    {
+      "id": "new-name-who-dis",
+      "title": "New Name, Who Dis?",
+      "url": "https://newsletter.readthedailies.com/p/new-name-who-dis",
+      "publishDate": "August 20, 2025",
+      "dayOfWeek": "Wednesday",
+      "mainStories": [
+        {
+          "headline": "MSNBC becomes MS NOW",
+          "category": "Business/Rebranding",
+          "summary": "MSNBC getting new name and losing peacock as part of NBCUniversal's spinoff of cable properties into new company called Versant. MS NOW stands for 'My Source News Opinion World.' Rebrand aims to end brand confusion between MSNBC's progressive opinion journalism and NBC News's neutral editorial tone.",
+          "keyPoints": [
+            "Peacock logo stays with NBCUniversal, forcing all spun-off channels to rebrand",
+            "MSNBC on hiring spree - poached NBC's Jacob Soboroff and Vaughn Hillyard",
+            "Other Versant channels get minor tweaks",
+            "Internet mocked clunky rebrand - sounds like MS fundraiser or Windows OS",
+            "Full transition by year's end when Versant launches"
+          ]
+        },
+        {
+          "headline": "Marvel leaving Georgia for UK era",
+          "category": "Production",
+          "summary": "Marvel ditching Georgia after a decade. 'The Fantastic Four: First Steps' was studio's first UK production, next two 'Avengers' films and 'Spider-Man' following. Georgia production spending dropped 50% in past three years.",
+          "keyPoints": [
+            "After making 22+ projects in Atlanta",
+            "UK has similar tax credits (~30%) but way cheaper labor",
+            "British crews don't need employer-covered health insurance",
+            "In 2024, big-budget US productions down 29% from 2022",
+            "UK saw 16% growth in same period",
+            "Trilith Studios near Atlanta now sits largely empty"
+          ]
+        },
+        {
+          "headline": "Mark Rober lands Netflix deal",
+          "category": "Streaming/Creators",
+          "summary": "Netflix partnered with YouTube creator/former NASA engineer Mark Rober to develop family-friendly competition series premiering 2026. Will blend science education with entertainment, tapping into his 70M YouTube subscribers. Netflix will also license some existing YouTube episodes.",
+          "keyPoints": [
+            "Kimmelot (Jimmy Kimmel's banner) producing",
+            "Latest in growing creator-to-streamer pipeline",
+            "Platforms betting on YouTube stars who bring built-in fans"
+          ]
+        }
+      ],
+      "sections": {
+        "boxOffice": null,
+        "streaming": null,
+        "business": [
+          "Paramount wants to be Legendary's new distributor (excluding China)",
+          "Deal would help Paramount hit 15-20 films/year goal",
+          "Nexstar buying rival Tegna for $6.2B - 265-station network covering 80% of U.S. households",
+          "California handed out first batch of TV tax credits since $750M boost"
+        ],
+        "development": {
+          "film": [
+            "Zack Snyder directing passion project 'The Last Photograph'",
+            "Kevin Costner and Jake Gyllenhaal star in Amazon MGM's 'Honeymoon with Harry'",
+            "Jeffrey Wright and Octavia Spencer headline 'Death of a Salesman'",
+            "Greig Fraser shooting Sam Mendes' four Beatles films"
+          ],
+          "tv": [
+            "Mandy Moore reuniting with Dan Fogelman for Hulu NFL drama",
+            "Ben Stiller won't direct 'Severance' S3 - focusing on war film",
+            "Apple picked up pickleball comedy 'The Dink' with Jake Johnson/Ben Stiller",
+            "Netflix renewed crime drama 'Dept. Q' for S2"
+          ]
+        }
+      },
+      "notableQuotes": [
+        "Google searches for 'does the dog die' exploded 2,000% after 'Good Boy' dog POV horror trailer"
+      ],
+      "industryData": {
+        "georgiaProductionDrop": "50% in past three years",
+        "usBigBudgetProductions2024": "Down 29% from 2022",
+        "ukProduction2024": "Up 16% same period"
+      }
+    }
+  ]
+}
