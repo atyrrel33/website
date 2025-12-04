@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joseph | An App for Dreamers</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <style>
+        /* ============================================
+           ROOT VARIABLES & SACRED COLOR PALETTE
+        ============================================ */
+        :root {
+            /* Deep night sky gradients */
+            --night-void: #0a0d14;
+            --night-deep: #0f1922;
+            --night-mid: #1a2634;
+            --night-soft: #2d3f54;
+            
+            /* Sacred gold spectrum */
+            --gold-bright: #e2c990;
+            --gold-primary: #c9a961;
+            --gold-warm: #b8954d;
+            --gold-dim: #8b7355;
+            --gold-shadow: #5c4a35;
+            
+            /* Blood and earth */
+            --burgundy-deep: #722f37;
+            --burgundy-warm: #8b3a3a;
+            --crimson-faded: #4a2020;
+            
+            /* Ancient materials */
+            --papyrus-light: #f5f0e6;
+            --papyrus-aged: #e8e0d0;
+            --ink-eternal: #1a1a1a;
+            --sand-whisper: rgba(201, 169, 97, 0.03);
+            
+            /* Ethereal effects */
+            --glow-gold: rgba(201, 169, 97, 0.4);
+            --glow-star: rgba(255, 255, 255, 0.8);
+            --shadow-deep: rgba(0, 0, 0, 0.7);
+        }
+
+        /* ============================================
+           GLOBAL RESET & BASE
+        ============================================ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'EB Garamond', Georgia, serif;
+            background: var(--night-void);
+            color: var(--papyrus-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Hide default scrollbar for immersion */
+        body::-webkit-scrollbar {
+            width: 6px;
+        }
+        body::-webkit-scrollbar-track {
+            background: var(--night-void);
+        }
+        body::-webkit-scrollbar-thumb {
+            background: var(--gold-dim);
+            border-radius: 3px;
+        }
+
+        /* ============================================
+           CUSTOM CURSOR - THE DREAMER'S QUILL
+        ============================================ */
+        .cursor-main {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease, background 0.3s ease;
+            box-shadow: 
+                0 0 10px var(--glow-gold),
+                0 0 20px var(--glow-gold),
+                0 0 30px rgba(201, 169, 97, 0.2);
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--gold-dim);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease-out, border-color 0.3s ease, width 0.3s ease, height 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .cursor-main.hovering {
+            transform: translate(-50%, -50%) scale(2);
+            background: var(--gold-bright);
+        }
+
+        .cursor-trail.hovering {
+            width: 50px;
+            height: 50px;
+            border-color: var(--gold-primary);
+        }
+
+        /* ============================================
+           LOADING SCREEN - THE VEIL
+        ============================================ */
+        .loading-veil {
+            position: fixed;
+            inset: 0;
+            background: var(--night-void);
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .loading-symbol {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--gold-dim);
+            border-top-color: var(--gold-primary);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loading-text {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            opacity: 0.7;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ============================================
+           MAIN CONTAINER
+        ============================================ */
+        .landing-container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px 20px;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        /* ============================================
+           CANVAS LAYERS - STARS & DUST
+        ============================================ */
+        #stars-canvas,
+        #dust-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #stars-canvas {
+            z-index: 1;
+        }
+
+        #dust-canvas {
+            z-index: 2;
+            opacity: 0.6;
+        }
+
+        /* ============================================
+           TEXTURED BACKGROUND LAYERS
+        ============================================ */
+        .bg-gradient {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 60% at 50% 0%, var(--night-mid) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 20% 100%, var(--crimson-faded) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 30% at 80% 80%, rgba(45, 63, 84, 0.5) 0%, transparent 50%),
+                linear-gradient(180deg, var(--night-deep) 0%, var(--night-void) 100%);
+            z-index: 0;
+        }
+
+        .bg-texture {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .bg-vignette {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 40%, var(--night-void) 100%);
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        /* Papyrus texture overlay */
+        .bg-papyrus {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5f0e6' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
+            opacity: 0.015;
+            z-index: 3;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        /* ============================================
+           CONTENT WRAPPER
+        ============================================ */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            max-width: 800px;
+            gap: 50px;
+        }
+
+        /* ============================================
+           DECORATIVE ELEMENTS
+        ============================================ */
+        .ornament-top,
+        .ornament-bottom {
+            position: relative;
+            width: 200px;
+            height: 30px;
+            opacity: 0;
+        }
+
+        .ornament-top svg,
+        .ornament-bottom svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: var(--gold-dim);
+            stroke-width: 1;
+        }
+
+        .ornament-bottom {
+            transform: rotate(180deg);
+        }
+
+        /* ============================================
+           MAIN TITLE - JOSEPH
+        ============================================ */
+        .title-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(4rem, 15vw, 10rem);
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: transparent;
+            background: linear-gradient(
+                180deg,
+                var(--gold-bright) 0%,
+                var(--gold-primary) 30%,
+                var(--gold-warm) 60%,
+                var(--gold-dim) 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 
+                0 0 60px rgba(201, 169, 97, 0.3),
+                0 0 120px rgba(201, 169, 97, 0.1);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Gold foil shimmer effect */
+        .main-title::before {
+            content: 'JOSEPH';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 45%,
+                rgba(255, 255, 255, 0.6) 50%,
+                rgba(255, 255, 255, 0.4) 55%,
+                transparent 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% 100%;
+            animation: shimmer 4s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 200% 0; }
+            50% { background-position: -200% 0; }
+        }
+
+        /* Tagline */
+        .tagline {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            font-style: italic;
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: lowercase;
+            color: var(--gold-dim);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* ============================================
+           EPIGRAPH - THE SACRED VERSE
+        ============================================ */
+        .epigraph-container {
+            max-width: 650px;
+            padding: 40px;
+            position: relative;
+            opacity: 0;
+        }
+
+        .epigraph-container::before,
+        .epigraph-container::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-color: var(--gold-dim);
+            border-style: solid;
+            opacity: 0.4;
+        }
+
+        .epigraph-container::before {
+            top: 0;
+            left: 0;
+            border-width: 1px 0 0 1px;
+        }
+
+        .epigraph-container::after {
+            bottom: 0;
+            right: 0;
+            border-width: 0 1px 1px 0;
+        }
+
+        .epigraph-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.9;
+            color: var(--papyrus-aged);
+            margin-bottom: 20px;
+        }
+
+        .epigraph-quote .char {
+            opacity: 0;
+            display: inline-block;
+        }
+
+        .epigraph-reference {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            color: var(--gold-dim);
+            opacity: 0;
+        }
+
+        /* ============================================
+           ENTER PORTAL BUTTON
+        ============================================ */
+        .portal-container {
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .portal-button {
+            position: relative;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold-primary);
+            background: transparent;
+            border: 1px solid var(--gold-dim);
+            padding: 22px 55px;
+            cursor: none;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .portal-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--gold-dim) 0%, var(--gold-shadow) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .portal-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, var(--gold-primary) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            opacity: 0.3;
+        }
+
+        .portal-button:hover {
+            border-color: var(--gold-primary);
+            color: var(--papyrus-light);
+            box-shadow: 
+                0 0 30px rgba(201, 169, 97, 0.2),
+                inset 0 0 30px rgba(201, 169, 97, 0.1);
+        }
+
+        .portal-button:hover::before {
+            opacity: 0.2;
+        }
+
+        .portal-button:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .portal-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ripple effect container */
+        .portal-ripples {
+            position: absolute;
+            inset: -50px;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .ripple {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid var(--gold-dim);
+            border-radius: 50%;
+            opacity: 0;
+            animation: ripple-expand 3s ease-out infinite;
+        }
+
+        .ripple:nth-child(1) { animation-delay: 0s; }
+        .ripple:nth-child(2) { animation-delay: 1s; }
+        .ripple:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes ripple-expand {
+            0% {
+                width: 60px;
+                height: 60px;
+                opacity: 0.6;
+            }
+            100% {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+            }
+        }
+
+        /* ============================================
+           AUDIO CONTROLS
+        ============================================ */
+        .audio-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .audio-toggle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(26, 38, 52, 0.8);
+            border: 1px solid var(--gold-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .audio-toggle:hover {
+            border-color: var(--gold-primary);
+            background: rgba(26, 38, 52, 0.95);
+            box-shadow: 0 0 20px rgba(201, 169, 97, 0.2);
+        }
+
+        .audio-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--gold-primary);
+            transition: fill 0.3s ease;
+        }
+
+        .audio-toggle.muted svg {
+            fill: var(--gold-dim);
+        }
+
+        /* Audio bars animation */
+        .audio-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 16px;
+        }
+
+        .audio-bar {
+            width: 3px;
+            background: var(--gold-primary);
+            border-radius: 1px;
+            transition: height 0.2s ease;
+        }
+
+        .audio-toggle:not(.muted) .audio-bar {
+            animation: audio-pulse 1.2s ease-in-out infinite;
+        }
+
+        .audio-bar:nth-child(1) { height: 6px; animation-delay: 0s; }
+        .audio-bar:nth-child(2) { height: 12px; animation-delay: 0.2s; }
+        .audio-bar:nth-child(3) { height: 8px; animation-delay: 0.4s; }
+        .audio-bar:nth-child(4) { height: 14px; animation-delay: 0.1s; }
+
+        @keyframes audio-pulse {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1); }
+        }
+
+        .audio-toggle.muted .audio-bar {
+            animation: none;
+            height: 4px !important;
+        }
+
+        /* Upload music hint */
+        .audio-upload-hint {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            z-index: 100;
+            font-family: 'EB Garamond', serif;
+            font-size: 0.8rem;
+            font-style: italic;
+            color: var(--gold-dim);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            text-align: right;
+            max-width: 180px;
+        }
+
+        .audio-controls:hover + .audio-upload-hint,
+        .audio-upload-hint:hover {
+            opacity: 0.7;
+            transform: translateY(0);
+        }
+
+        /* File upload styling */
+        .audio-upload-label {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(26, 38, 52, 0.6);
+            border: 1px dashed var(--gold-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            transition: all 0.3s ease;
+        }
+
+        .audio-upload-label:hover {
+            border-style: solid;
+            border-color: var(--gold-primary);
+            background: rgba(26, 38, 52, 0.9);
+        }
+
+        .audio-upload-label svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--gold-dim);
+            transition: fill 0.3s ease;
+        }
+
+        .audio-upload-label:hover svg {
+            fill: var(--gold-primary);
+        }
+
+        .audio-upload-input {
+            display: none;
+        }
+
+        /* ============================================
+           SCROLL INDICATOR
+        ============================================ */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+        }
+
+        .scroll-text {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold-dim), transparent);
+            animation: scroll-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scroll-pulse {
+            0%, 100% { transform: scaleY(0.6); opacity: 0.5; }
+            50% { transform: scaleY(1); opacity: 1; }
+        }
+
+        /* ============================================
+           RESPONSIVE ADJUSTMENTS
+        ============================================ */
+        @media (max-width: 768px) {
+            .main-title {
+                letter-spacing: 0.15em;
+            }
+
+            .tagline {
+                letter-spacing: 0.2em;
+            }
+
+            .epigraph-container {
+                padding: 30px 20px;
+            }
+
+            .epigraph-container::before,
+            .epigraph-container::after {
+                width: 40px;
+                height: 40px;
+            }
+
+            .portal-button {
+                padding: 18px 40px;
+                font-size: 0.8rem;
+                letter-spacing: 0.3em;
+            }
+
+            .audio-controls {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .audio-toggle,
+            .audio-upload-label {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-wrapper {
+                gap: 35px;
+            }
+
+            .ornament-top,
+            .ornament-bottom {
+                width: 150px;
+            }
+        }
+
+        /* Enable cursor on touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            body {
+                cursor: auto;
+            }
+            .cursor-main,
+            .cursor-trail {
+                display: none;
+            }
+            .portal-button,
+            .audio-toggle,
+            .audio-upload-label {
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Veil -->
+    <div class="loading-veil" id="loadingVeil">
+        <div class="loading-symbol"></div>
+        <div class="loading-text">Preparing the Story</div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-main" id="cursorMain"></div>
+    <div class="cursor-trail" id="cursorTrail"></div>
+
+    <!-- Background Layers -->
+    <div class="bg-gradient"></div>
+    <canvas id="stars-canvas"></canvas>
+    <canvas id="dust-canvas"></canvas>
+    <div class="bg-texture"></div>
+    <div class="bg-papyrus"></div>
+    <div class="bg-vignette"></div>
+
+    <!-- Main Container -->
+    <main class="landing-container" id="landingContainer">
+        <div class="content-wrapper">
+            
+            <!-- Top Ornament -->
+            <div class="ornament-top">
+                <svg viewBox="0 0 200 30" preserveAspectRatio="xMidYMid meet">
+                    <path d="M0 15 L30 15 M40 15 Q50 5 60 15 T80 15 M90 15 L100 8 L100 22 L100 15 L110 15 M120 15 Q130 25 140 15 T160 15 M170 15 L200 15" stroke-linecap="round"/>
+                    <circle cx="100" cy="15" r="3" fill="currentColor" stroke="none"/>
+                </svg>
+            </div>
+
+            <!-- Title Section -->
+            <div class="title-section">
+                <h1 class="main-title">Joseph</h1>
+                <p class="tagline">an app for dreamers</p>
+            </div>
+
+            <!-- Epigraph -->
+            <blockquote class="epigraph-container">
+                <p class="epigraph-quote" id="epigraphQuote">
+                    "You meant evil against me, but God meant it for good, to bring it about that many people should be kept alive."
+                </p>
+                <cite class="epigraph-reference">— Genesis 50:20</cite>
+            </blockquote>
+
+            <!-- Portal Button -->
+            <div class="portal-container">
+                <button class="portal-button" id="portalButton">
+                    <span>Enter the Story</span>
+                    <div class="portal-ripples">
+                        <div class="ripple"></div>
+                        <div class="ripple"></div>
+                        <div class="ripple"></div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Bottom Ornament -->
+            <div class="ornament-bottom">
+                <svg viewBox="0 0 200 30" preserveAspectRatio="xMidYMid meet">
+                    <path d="M0 15 L30 15 M40 15 Q50 5 60 15 T80 15 M90 15 L100 8 L100 22 L100 15 L110 15 M120 15 Q130 25 140 15 T160 15 M170 15 L200 15" stroke-linecap="round"/>
+                    <circle cx="100" cy="15" r="3" fill="currentColor" stroke="none"/>
+                </svg>
+            </div>
+
+        </div>
+
+        <!-- Scroll Indicator (for future sections) -->
+        <!-- <div class="scroll-indicator">
+            <span class="scroll-text">Scroll</span>
+            <div class="scroll-line"></div>
+        </div> -->
+    </main>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <label class="audio-upload-label" title="Upload your own ambient music">
+            <input type="file" class="audio-upload-input" id="audioUpload" accept="audio/*">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+            </svg>
+        </label>
+        <button class="audio-toggle muted" id="audioToggle" title="Toggle ambient music">
+            <div class="audio-bars">
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+            </div>
+        </button>
+    </div>
+    <div class="audio-upload-hint">Upload ambient music to enhance your experience</div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="backgroundAudio" loop></audio>
+
+    <script>
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            initCursor();
+            initStars();
+            initDust();
+            initAudio();
+            
+            // Start entrance sequence after brief delay
+            setTimeout(startEntranceSequence, 800);
+        });
+
+        // ============================================
+        // CUSTOM CURSOR
+        // ============================================
+        function initCursor() {
+            const cursorMain = document.getElementById('cursorMain');
+            const cursorTrail = document.getElementById('cursorTrail');
+            const interactiveElements = document.querySelectorAll('button, a, label, [data-cursor-hover]');
+
+            let mouseX = 0, mouseY = 0;
+            let trailX = 0, trailY = 0;
+
+            // Update cursor position
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                cursorMain.style.left = mouseX + 'px';
+                cursorMain.style.top = mouseY + 'px';
+            });
+
+            // Smooth trail follow
+            function animateTrail() {
+                trailX += (mouseX - trailX) * 0.15;
+                trailY += (mouseY - trailY) * 0.15;
+                
+                cursorTrail.style.left = trailX + 'px';
+                cursorTrail.style.top = trailY + 'px';
+                
+                requestAnimationFrame(animateTrail);
+            }
+            animateTrail();
+
+            // Hover states
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorMain.classList.add('hovering');
+                    cursorTrail.classList.add('hovering');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorMain.classList.remove('hovering');
+                    cursorTrail.classList.remove('hovering');
+                });
+            });
+
+            // Hide cursor when leaving window
+            document.addEventListener('mouseleave', () => {
+                cursorMain.style.opacity = '0';
+                cursorTrail.style.opacity = '0';
+            });
+            document.addEventListener('mouseenter', () => {
+                cursorMain.style.opacity = '1';
+                cursorTrail.style.opacity = '0.6';
+            });
+        }
+
+        // ============================================
+        // STARS CANVAS - Joseph's Dreams
+        // ============================================
+        function initStars() {
+            const canvas = document.getElementById('stars-canvas');
+            const ctx = canvas.getContext('2d');
+            let stars = [];
+            let shootingStars = [];
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                createStars();
+            }
+
+            function createStars() {
+                stars = [];
+                const numStars = Math.floor((canvas.width * canvas.height) / 8000);
+                
+                for (let i = 0; i < numStars; i++) {
+                    stars.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 1.2 + 0.3,
+                        opacity: Math.random() * 0.7 + 0.3,
+                        twinkleSpeed: Math.random() * 0.02 + 0.005,
+                        twinklePhase: Math.random() * Math.PI * 2
+                    });
+                }
+            }
+
+            function createShootingStar() {
+                if (Math.random() > 0.995 && shootingStars.length < 2) {
+                    shootingStars.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height * 0.3,
+                        length: Math.random() * 80 + 40,
+                        speed: Math.random() * 8 + 4,
+                        angle: Math.PI / 4 + (Math.random() - 0.5) * 0.3,
+                        opacity: 1,
+                        life: 1
+                    });
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw regular stars
+                stars.forEach(star => {
+                    star.twinklePhase += star.twinkleSpeed;
+                    const twinkle = 0.5 + Math.sin(star.twinklePhase) * 0.5;
+                    const currentOpacity = star.opacity * twinkle;
+                    
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${currentOpacity})`;
+                    ctx.fill();
+                    
+                    // Add subtle glow to brighter stars
+                    if (star.radius > 0.8) {
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, star.radius * 3, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(201, 169, 97, ${currentOpacity * 0.1})`;
+                        ctx.fill();
+                    }
+                });
+
+                // Create and animate shooting stars
+                createShootingStar();
+                
+                shootingStars = shootingStars.filter(star => {
+                    star.x += Math.cos(star.angle) * star.speed;
+                    star.y += Math.sin(star.angle) * star.speed;
+                    star.life -= 0.02;
+                    star.opacity = star.life;
+                    
+                    if (star.life > 0) {
+                        const gradient = ctx.createLinearGradient(
+                            star.x, star.y,
+                            star.x - Math.cos(star.angle) * star.length,
+                            star.y - Math.sin(star.angle) * star.length
+                        );
+                        gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity})`);
+                        gradient.addColorStop(0.3, `rgba(201, 169, 97, ${star.opacity * 0.5})`);
+                        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                        
+                        ctx.beginPath();
+                        ctx.moveTo(star.x, star.y);
+                        ctx.lineTo(
+                            star.x - Math.cos(star.angle) * star.length,
+                            star.y - Math.sin(star.angle) * star.length
+                        );
+                        ctx.strokeStyle = gradient;
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                        
+                        return true;
+                    }
+                    return false;
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            animate();
+        }
+
+        // ============================================
+        // DUST PARTICLES - Ancient Atmosphere
+        // ============================================
+        function initDust() {
+            const canvas = document.getElementById('dust-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                createParticles();
+            }
+
+            function createParticles() {
+                particles = [];
+                const numParticles = Math.floor((canvas.width * canvas.height) / 20000);
+                
+                for (let i = 0; i < numParticles; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 1.5 + 0.5,
+                        opacity: Math.random() * 0.3 + 0.1,
+                        speedX: (Math.random() - 0.5) * 0.3,
+                        speedY: (Math.random() - 0.5) * 0.2 - 0.1,
+                        wobble: Math.random() * Math.PI * 2,
+                        wobbleSpeed: Math.random() * 0.02 + 0.01
+                    });
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach(p => {
+                    p.wobble += p.wobbleSpeed;
+                    p.x += p.speedX + Math.sin(p.wobble) * 0.3;
+                    p.y += p.speedY;
+                    
+                    // Wrap around screen
+                    if (p.x < -10) p.x = canvas.width + 10;
+                    if (p.x > canvas.width + 10) p.x = -10;
+                    if (p.y < -10) p.y = canvas.height + 10;
+                    if (p.y > canvas.height + 10) p.y = -10;
+                    
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(201, 169, 97, ${p.opacity})`;
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            animate();
+        }
+
+        // ============================================
+        // AUDIO SYSTEM
+        // ============================================
+        function initAudio() {
+            const audioToggle = document.getElementById('audioToggle');
+            const audioUpload = document.getElementById('audioUpload');
+            const backgroundAudio = document.getElementById('backgroundAudio');
+            
+            let audioLoaded = false;
+
+            // Handle file upload
+            audioUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const url = URL.createObjectURL(file);
+                    backgroundAudio.src = url;
+                    backgroundAudio.load();
+                    audioLoaded = true;
+                    
+                    // Auto-play on load
+                    backgroundAudio.play().then(() => {
+                        audioToggle.classList.remove('muted');
+                    }).catch(() => {
+                        // Autoplay blocked, user will need to click
+                        audioToggle.classList.add('muted');
+                    });
+                }
+            });
+
+            // Toggle play/pause
+            audioToggle.addEventListener('click', () => {
+                if (!audioLoaded) {
+                    // Shake the upload button to hint
+                    const uploadLabel = document.querySelector('.audio-upload-label');
+                    uploadLabel.style.animation = 'none';
+                    uploadLabel.offsetHeight; // Trigger reflow
+                    uploadLabel.style.animation = 'shake 0.5s ease';
+                    return;
+                }
+                
+                if (backgroundAudio.paused) {
+                    backgroundAudio.play();
+                    audioToggle.classList.remove('muted');
+                } else {
+                    backgroundAudio.pause();
+                    audioToggle.classList.add('muted');
+                }
+            });
+
+            // Add shake animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    20%, 60% { transform: translateX(-5px); }
+                    40%, 80% { transform: translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // ============================================
+        // ENTRANCE SEQUENCE
+        // ============================================
+        function startEntranceSequence() {
+            const loadingVeil = document.getElementById('loadingVeil');
+            const landingContainer = document.getElementById('landingContainer');
+            const mainTitle = document.querySelector('.main-title');
+            const tagline = document.querySelector('.tagline');
+            const ornamentTop = document.querySelector('.ornament-top');
+            const ornamentBottom = document.querySelector('.ornament-bottom');
+            const epigraphContainer = document.querySelector('.epigraph-container');
+            const epigraphQuote = document.getElementById('epigraphQuote');
+            const epigraphReference = document.querySelector('.epigraph-reference');
+            const portalContainer = document.querySelector('.portal-container');
+
+            // Prepare text for character-by-character reveal
+            const quoteText = epigraphQuote.textContent;
+            epigraphQuote.innerHTML = quoteText.split('').map(char => 
+                char === ' ' ? ' ' : `<span class="char">${char}</span>`
+            ).join('');
+            const chars = epigraphQuote.querySelectorAll('.char');
+
+            // Create timeline
+            const tl = gsap.timeline({
+                defaults: { ease: 'power3.out' }
+            });
+
+            // Fade out loading veil
+            tl.to(loadingVeil, {
+                opacity: 0,
+                duration: 1,
+                onComplete: () => loadingVeil.style.display = 'none'
+            });
+
+            // Fade in container
+            tl.to(landingContainer, {
+                opacity: 1,
+                duration: 0.5
+            }, '-=0.5');
+
+            // Animate ornament top
+            tl.to(ornamentTop, {
+                opacity: 0.6,
+                duration: 1.2
+            }, '-=0.3');
+
+            // Animate main title
+            tl.to(mainTitle, {
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                ease: 'power4.out'
+            }, '-=0.8');
+
+            // Animate tagline
+            tl.to(tagline, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+            }, '-=0.8');
+
+            // Fade in epigraph container
+            tl.to(epigraphContainer, {
+                opacity: 1,
+                duration: 0.8
+            }, '-=0.3');
+
+            // Character by character reveal for quote
+            tl.to(chars, {
+                opacity: 1,
+                duration: 0.03,
+                stagger: 0.025,
+                ease: 'none'
+            }, '-=0.2');
+
+            // Fade in reference
+            tl.to(epigraphReference, {
+                opacity: 1,
+                duration: 0.8
+            }, '-=0.3');
+
+            // Animate portal button
+            tl.to(portalContainer, {
+                opacity: 1,
+                y: 0,
+                duration: 1
+            }, '-=0.5');
+
+            // Animate ornament bottom
+            tl.to(ornamentBottom, {
+                opacity: 0.6,
+                duration: 1.2
+            }, '-=0.8');
+        }
+
+        // ============================================
+        // PORTAL BUTTON INTERACTION
+        // ============================================
+        document.getElementById('portalButton').addEventListener('click', () => {
+            // Create flash effect
+            const flash = document.createElement('div');
+            flash.style.cssText = `
+                position: fixed;
+                inset: 0;
+                background: radial-gradient(circle at center, rgba(201, 169, 97, 0.3) 0%, transparent 70%);
+                z-index: 1000;
+                pointer-events: none;
+            `;
+            document.body.appendChild(flash);
+
+            gsap.fromTo(flash, 
+                { opacity: 0 },
+                { 
+                    opacity: 1, 
+                    duration: 0.3,
+                    onComplete: () => {
+                        gsap.to(flash, {
+                            opacity: 0,
+                            duration: 0.5,
+                            delay: 0.2,
+                            onComplete: () => flash.remove()
+                        });
+                    }
+                }
+            );
+
+            // Here you would typically navigate to the main app
+            // For now, we'll just log
+            console.log('Entering the story...');
+            
+            // Uncomment below to navigate to app.html when ready:
+            // setTimeout(() => window.location.href = 'app.html', 800);
+        });
+    </script>
+</body>
+</html>
