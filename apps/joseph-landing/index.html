@@ -18,39 +18,34 @@
            ROOT VARIABLES & SACRED COLOR PALETTE
         ============================================ */
         :root {
-            /* Deep night sky gradients */
             --night-void: #0a0d14;
             --night-deep: #0f1922;
             --night-mid: #1a2634;
             --night-soft: #2d3f54;
             
-            /* Sacred gold spectrum */
             --gold-bright: #e2c990;
             --gold-primary: #c9a961;
             --gold-warm: #b8954d;
             --gold-dim: #8b7355;
             --gold-shadow: #5c4a35;
             
-            /* Blood and earth */
+            --burgundy-bright: #a64d5a;
+            --burgundy-primary: #8b3a4a;
             --burgundy-deep: #722f37;
             --burgundy-warm: #8b3a3a;
+            --burgundy-glow: rgba(138, 58, 74, 0.6);
             --crimson-faded: #4a2020;
             
-            /* Ancient materials */
             --papyrus-light: #f5f0e6;
             --papyrus-aged: #e8e0d0;
             --ink-eternal: #1a1a1a;
             --sand-whisper: rgba(201, 169, 97, 0.03);
             
-            /* Ethereal effects */
             --glow-gold: rgba(201, 169, 97, 0.4);
             --glow-star: rgba(255, 255, 255, 0.8);
             --shadow-deep: rgba(0, 0, 0, 0.7);
         }
 
-        /* ============================================
-           GLOBAL RESET & BASE
-        ============================================ */
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -73,7 +68,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Hide default scrollbar for immersion */
         body::-webkit-scrollbar {
             width: 6px;
         }
@@ -85,52 +79,81 @@
             border-radius: 3px;
         }
 
-        /* ============================================
-           CUSTOM CURSOR - THE DREAMER'S QUILL
-        ============================================ */
-        .cursor-main {
+        /* CUSTOM CURSOR - BURGUNDY EMBER */
+        .cursor-ember {
             position: fixed;
-            width: 8px;
-            height: 8px;
-            background: var(--gold-primary);
-            border-radius: 50%;
+            width: 12px;
+            height: 12px;
             pointer-events: none;
             z-index: 10000;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s ease, background 0.3s ease;
-            box-shadow: 
-                0 0 10px var(--glow-gold),
-                0 0 20px var(--glow-gold),
-                0 0 30px rgba(201, 169, 97, 0.2);
+            transition: transform 0.15s ease;
+        }
+
+        .cursor-ember::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, var(--burgundy-bright) 0%, var(--burgundy-deep) 60%, transparent 100%);
+            border-radius: 50%;
+            animation: ember-pulse 2s ease-in-out infinite;
+        }
+
+        .cursor-ember::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, var(--burgundy-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: ember-glow 2s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes ember-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        @keyframes ember-glow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
         }
 
         .cursor-trail {
             position: fixed;
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--gold-dim);
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--burgundy-deep);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: transform 0.15s ease-out, border-color 0.3s ease, width 0.3s ease, height 0.3s ease;
-            opacity: 0.6;
+            transition: transform 0.2s ease-out, border-color 0.3s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+            opacity: 0.4;
+            box-shadow: 0 0 15px var(--burgundy-glow);
         }
 
-        .cursor-main.hovering {
-            transform: translate(-50%, -50%) scale(2);
-            background: var(--gold-bright);
+        .cursor-ember.hovering {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        .cursor-ember.hovering::after {
+            width: 50px;
+            height: 50px;
         }
 
         .cursor-trail.hovering {
-            width: 50px;
-            height: 50px;
-            border-color: var(--gold-primary);
+            width: 60px;
+            height: 60px;
+            border-color: var(--burgundy-primary);
+            opacity: 0.6;
         }
 
-        /* ============================================
-           LOADING SCREEN - THE VEIL
-        ============================================ */
+        /* LOADING SCREEN */
         .loading-veil {
             position: fixed;
             inset: 0;
@@ -146,10 +169,26 @@
         .loading-symbol {
             width: 60px;
             height: 60px;
-            border: 2px solid var(--gold-dim);
-            border-top-color: var(--gold-primary);
+            position: relative;
+        }
+
+        .loading-symbol::before,
+        .loading-symbol::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 2px solid transparent;
             border-radius: 50%;
+        }
+
+        .loading-symbol::before {
+            border-top-color: var(--gold-primary);
             animation: spin 1.5s linear infinite;
+        }
+
+        .loading-symbol::after {
+            border-bottom-color: var(--burgundy-primary);
+            animation: spin 2s linear infinite reverse;
         }
 
         .loading-text {
@@ -165,9 +204,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ============================================
-           MAIN CONTAINER
-        ============================================ */
+        /* MAIN CONTAINER */
         .landing-container {
             position: relative;
             min-height: 100vh;
@@ -180,31 +217,22 @@
             overflow: hidden;
         }
 
-        /* ============================================
-           CANVAS LAYERS - STARS & DUST
-        ============================================ */
+        /* CANVAS LAYERS */
         #stars-canvas,
-        #dust-canvas {
+        #dust-canvas,
+        #dreams-canvas {
             position: fixed;
             inset: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 0;
         }
 
-        #stars-canvas {
-            z-index: 1;
-        }
+        #stars-canvas { z-index: 1; }
+        #dust-canvas { z-index: 2; opacity: 0.5; }
+        #dreams-canvas { z-index: 3; opacity: 0.4; }
 
-        #dust-canvas {
-            z-index: 2;
-            opacity: 0.6;
-        }
-
-        /* ============================================
-           TEXTURED BACKGROUND LAYERS
-        ============================================ */
+        /* BACKGROUND LAYERS */
         .bg-gradient {
             position: fixed;
             inset: 0;
@@ -221,7 +249,7 @@
             inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             opacity: 0.04;
-            z-index: 3;
+            z-index: 4;
             pointer-events: none;
         }
 
@@ -229,24 +257,50 @@
             position: fixed;
             inset: 0;
             background: radial-gradient(ellipse at center, transparent 0%, transparent 40%, var(--night-void) 100%);
-            z-index: 4;
+            z-index: 5;
             pointer-events: none;
         }
 
-        /* Papyrus texture overlay */
         .bg-papyrus {
             position: fixed;
             inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5f0e6' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
             opacity: 0.015;
-            z-index: 3;
+            z-index: 4;
             pointer-events: none;
             mix-blend-mode: overlay;
         }
 
-        /* ============================================
-           CONTENT WRAPPER
-        ============================================ */
+        /* FLOATING DREAM ORBS */
+        .dream-orbs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .dream-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: float-dream linear infinite;
+        }
+
+        @keyframes float-dream {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* CONTENT WRAPPER */
         .content-wrapper {
             position: relative;
             z-index: 10;
@@ -259,9 +313,7 @@
             gap: 50px;
         }
 
-        /* ============================================
-           DECORATIVE ELEMENTS
-        ============================================ */
+        /* ORNAMENTS */
         .ornament-top,
         .ornament-bottom {
             position: relative;
@@ -283,14 +335,31 @@
             transform: rotate(180deg);
         }
 
-        /* ============================================
-           MAIN TITLE - JOSEPH
-        ============================================ */
+        /* TITLE SECTION */
         .title-section {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
+            position: relative;
+        }
+
+        .title-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 200px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse, rgba(201, 169, 97, 0.08) 0%, transparent 70%);
+            animation: title-breathe 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes title-breathe {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
         }
 
         .main-title {
@@ -317,7 +386,6 @@
             transform: translateY(30px);
         }
 
-        /* Gold foil shimmer effect */
         .main-title::before {
             content: 'JOSEPH';
             position: absolute;
@@ -343,7 +411,6 @@
             50% { background-position: -200% 0; }
         }
 
-        /* Tagline */
         .tagline {
             font-family: 'EB Garamond', serif;
             font-size: clamp(1rem, 3vw, 1.4rem);
@@ -354,11 +421,16 @@
             color: var(--gold-dim);
             opacity: 0;
             transform: translateY(20px);
+            animation: tagline-glow 3s ease-in-out infinite;
+            animation-play-state: paused;
         }
 
-        /* ============================================
-           EPIGRAPH - THE SACRED VERSE
-        ============================================ */
+        @keyframes tagline-glow {
+            0%, 100% { text-shadow: 0 0 10px transparent; }
+            50% { text-shadow: 0 0 20px rgba(201, 169, 97, 0.3); }
+        }
+
+        /* EPIGRAPH */
         .epigraph-container {
             max-width: 650px;
             padding: 40px;
@@ -375,6 +447,7 @@
             border-color: var(--gold-dim);
             border-style: solid;
             opacity: 0.4;
+            transition: opacity 0.5s ease, width 0.5s ease, height 0.5s ease;
         }
 
         .epigraph-container::before {
@@ -387,6 +460,13 @@
             bottom: 0;
             right: 0;
             border-width: 0 1px 1px 0;
+        }
+
+        .epigraph-container:hover::before,
+        .epigraph-container:hover::after {
+            opacity: 0.7;
+            width: 80px;
+            height: 80px;
         }
 
         .epigraph-quote {
@@ -402,6 +482,16 @@
         .epigraph-quote .char {
             opacity: 0;
             display: inline-block;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .epigraph-quote .char.revealed {
+            animation: char-glow 0.5s ease forwards;
+        }
+
+        @keyframes char-glow {
+            0% { opacity: 0; text-shadow: 0 0 10px var(--gold-primary); }
+            100% { opacity: 1; text-shadow: none; }
         }
 
         .epigraph-reference {
@@ -412,9 +502,7 @@
             opacity: 0;
         }
 
-        /* ============================================
-           ENTER PORTAL BUTTON
-        ============================================ */
+        /* PORTAL BUTTON */
         .portal-container {
             position: relative;
             opacity: 0;
@@ -480,7 +568,6 @@
             z-index: 1;
         }
 
-        /* Ripple effect container */
         .portal-ripples {
             position: absolute;
             inset: -50px;
@@ -516,9 +603,7 @@
             }
         }
 
-        /* ============================================
-           AUDIO CONTROLS
-        ============================================ */
+        /* AUDIO CONTROLS */
         .audio-controls {
             position: fixed;
             bottom: 30px;
@@ -526,32 +611,42 @@
             z-index: 100;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            background: rgba(15, 25, 34, 0.85);
+            padding: 12px 18px;
+            border-radius: 30px;
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .audio-controls:hover {
+            border-color: rgba(139, 115, 85, 0.6);
+            box-shadow: 0 0 25px rgba(201, 169, 97, 0.1);
         }
 
         .audio-toggle {
-            width: 50px;
-            height: 50px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(26, 38, 52, 0.8);
+            background: transparent;
             border: 1px solid var(--gold-dim);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: none;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            flex-shrink: 0;
         }
 
         .audio-toggle:hover {
             border-color: var(--gold-primary);
-            background: rgba(26, 38, 52, 0.95);
-            box-shadow: 0 0 20px rgba(201, 169, 97, 0.2);
+            background: rgba(201, 169, 97, 0.1);
         }
 
         .audio-toggle svg {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             fill: var(--gold-primary);
             transition: fill 0.3s ease;
         }
@@ -560,137 +655,57 @@
             fill: var(--gold-dim);
         }
 
-        /* Audio bars animation */
-        .audio-bars {
-            display: flex;
-            align-items: flex-end;
-            gap: 2px;
-            height: 16px;
-        }
-
-        .audio-bar {
-            width: 3px;
-            background: var(--gold-primary);
-            border-radius: 1px;
-            transition: height 0.2s ease;
-        }
-
-        .audio-toggle:not(.muted) .audio-bar {
-            animation: audio-pulse 1.2s ease-in-out infinite;
-        }
-
-        .audio-bar:nth-child(1) { height: 6px; animation-delay: 0s; }
-        .audio-bar:nth-child(2) { height: 12px; animation-delay: 0.2s; }
-        .audio-bar:nth-child(3) { height: 8px; animation-delay: 0.4s; }
-        .audio-bar:nth-child(4) { height: 14px; animation-delay: 0.1s; }
-
-        @keyframes audio-pulse {
-            0%, 100% { transform: scaleY(0.5); }
-            50% { transform: scaleY(1); }
-        }
-
-        .audio-toggle.muted .audio-bar {
-            animation: none;
-            height: 4px !important;
-        }
-
-        /* Upload music hint */
-        .audio-upload-hint {
-            position: fixed;
-            bottom: 90px;
-            right: 30px;
-            z-index: 100;
-            font-family: 'EB Garamond', serif;
-            font-size: 0.8rem;
-            font-style: italic;
-            color: var(--gold-dim);
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-            text-align: right;
-            max-width: 180px;
-        }
-
-        .audio-controls:hover + .audio-upload-hint,
-        .audio-upload-hint:hover {
-            opacity: 0.7;
-            transform: translateY(0);
-        }
-
-        /* File upload styling */
-        .audio-upload-label {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(26, 38, 52, 0.6);
-            border: 1px dashed var(--gold-dim);
+        .volume-slider-container {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
+            width: 100px;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 4px;
+            background: var(--night-soft);
+            border-radius: 2px;
+            outline: none;
             cursor: none;
-            transition: all 0.3s ease;
         }
 
-        .audio-upload-label:hover {
-            border-style: solid;
-            border-color: var(--gold-primary);
-            background: rgba(26, 38, 52, 0.9);
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            cursor: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .audio-upload-label svg {
-            width: 18px;
-            height: 18px;
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px var(--glow-gold);
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            border: none;
+            cursor: none;
+        }
+
+        .volume-icon {
+            width: 14px;
+            height: 14px;
             fill: var(--gold-dim);
-            transition: fill 0.3s ease;
+            flex-shrink: 0;
         }
 
-        .audio-upload-label:hover svg {
-            fill: var(--gold-primary);
-        }
-
-        .audio-upload-input {
-            display: none;
-        }
-
-        /* ============================================
-           SCROLL INDICATOR
-        ============================================ */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            opacity: 0;
-        }
-
-        .scroll-text {
-            font-family: 'Cinzel', serif;
-            font-size: 0.7rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--gold-dim);
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--gold-dim), transparent);
-            animation: scroll-pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes scroll-pulse {
-            0%, 100% { transform: scaleY(0.6); opacity: 0.5; }
-            50% { transform: scaleY(1); opacity: 1; }
-        }
-
-        /* ============================================
-           RESPONSIVE ADJUSTMENTS
-        ============================================ */
+        /* RESPONSIVE */
         @media (max-width: 768px) {
             .main-title {
                 letter-spacing: 0.15em;
@@ -719,12 +734,11 @@
             .audio-controls {
                 bottom: 20px;
                 right: 20px;
+                padding: 10px 14px;
             }
 
-            .audio-toggle,
-            .audio-upload-label {
-                width: 44px;
-                height: 44px;
+            .volume-slider-container {
+                width: 70px;
             }
         }
 
@@ -737,20 +751,24 @@
             .ornament-bottom {
                 width: 150px;
             }
+
+            .audio-controls {
+                right: 50%;
+                transform: translateX(50%);
+            }
         }
 
-        /* Enable cursor on touch devices */
         @media (hover: none) and (pointer: coarse) {
             body {
                 cursor: auto;
             }
-            .cursor-main,
+            .cursor-ember,
             .cursor-trail {
                 display: none;
             }
             .portal-button,
             .audio-toggle,
-            .audio-upload-label {
+            .volume-slider {
                 cursor: pointer;
             }
         }
@@ -763,14 +781,16 @@
         <div class="loading-text">Preparing the Story</div>
     </div>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-main" id="cursorMain"></div>
+    <!-- Custom Cursor - Burgundy Ember -->
+    <div class="cursor-ember" id="cursorEmber"></div>
     <div class="cursor-trail" id="cursorTrail"></div>
 
     <!-- Background Layers -->
     <div class="bg-gradient"></div>
     <canvas id="stars-canvas"></canvas>
     <canvas id="dust-canvas"></canvas>
+    <canvas id="dreams-canvas"></canvas>
+    <div class="dream-orbs" id="dreamOrbs"></div>
     <div class="bg-texture"></div>
     <div class="bg-papyrus"></div>
     <div class="bg-vignette"></div>
@@ -822,108 +842,96 @@
             </div>
 
         </div>
-
-        <!-- Scroll Indicator (for future sections) -->
-        <!-- <div class="scroll-indicator">
-            <span class="scroll-text">Scroll</span>
-            <div class="scroll-line"></div>
-        </div> -->
     </main>
 
     <!-- Audio Controls -->
     <div class="audio-controls">
-        <label class="audio-upload-label" title="Upload your own ambient music">
-            <input type="file" class="audio-upload-input" id="audioUpload" accept="audio/*">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+        <button class="audio-toggle" id="audioToggle" title="Mute/Unmute">
+            <svg id="speakerIcon" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
             </svg>
-        </label>
-        <button class="audio-toggle muted" id="audioToggle" title="Toggle ambient music">
-            <div class="audio-bars">
-                <div class="audio-bar"></div>
-                <div class="audio-bar"></div>
-                <div class="audio-bar"></div>
-                <div class="audio-bar"></div>
-            </div>
         </button>
+        <div class="volume-slider-container">
+            <svg class="volume-icon" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+            </svg>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="40">
+        </div>
     </div>
-    <div class="audio-upload-hint">Upload ambient music to enhance your experience</div>
 
-    <!-- Hidden Audio Element -->
-    <audio id="backgroundAudio" loop></audio>
+    <!-- 
+        =====================================================
+        MUSIC SETUP INSTRUCTIONS:
+        =====================================================
+        1. Rename your music file to: ambient-music.mp3
+        2. Place it in the SAME FOLDER as this HTML file
+        3. Upload BOTH files to your GitHub repository
+        
+        The music will automatically play when the page loads!
+        =====================================================
+    -->
+    <audio id="backgroundAudio" loop preload="auto">
+        <source src="ambient-music.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        // ============================================
-        // INITIALIZATION
-        // ============================================
         document.addEventListener('DOMContentLoaded', () => {
             initCursor();
             initStars();
             initDust();
+            initDreams();
+            createDreamOrbs();
             initAudio();
-            
-            // Start entrance sequence after brief delay
             setTimeout(startEntranceSequence, 800);
         });
 
-        // ============================================
         // CUSTOM CURSOR
-        // ============================================
         function initCursor() {
-            const cursorMain = document.getElementById('cursorMain');
+            const cursorEmber = document.getElementById('cursorEmber');
             const cursorTrail = document.getElementById('cursorTrail');
-            const interactiveElements = document.querySelectorAll('button, a, label, [data-cursor-hover]');
+            const interactiveElements = document.querySelectorAll('button, a, label, input, [data-cursor-hover]');
 
             let mouseX = 0, mouseY = 0;
             let trailX = 0, trailY = 0;
 
-            // Update cursor position
             document.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
-                
-                cursorMain.style.left = mouseX + 'px';
-                cursorMain.style.top = mouseY + 'px';
+                cursorEmber.style.left = mouseX + 'px';
+                cursorEmber.style.top = mouseY + 'px';
             });
 
-            // Smooth trail follow
             function animateTrail() {
-                trailX += (mouseX - trailX) * 0.15;
-                trailY += (mouseY - trailY) * 0.15;
-                
+                trailX += (mouseX - trailX) * 0.12;
+                trailY += (mouseY - trailY) * 0.12;
                 cursorTrail.style.left = trailX + 'px';
                 cursorTrail.style.top = trailY + 'px';
-                
                 requestAnimationFrame(animateTrail);
             }
             animateTrail();
 
-            // Hover states
             interactiveElements.forEach(el => {
                 el.addEventListener('mouseenter', () => {
-                    cursorMain.classList.add('hovering');
+                    cursorEmber.classList.add('hovering');
                     cursorTrail.classList.add('hovering');
                 });
                 el.addEventListener('mouseleave', () => {
-                    cursorMain.classList.remove('hovering');
+                    cursorEmber.classList.remove('hovering');
                     cursorTrail.classList.remove('hovering');
                 });
             });
 
-            // Hide cursor when leaving window
             document.addEventListener('mouseleave', () => {
-                cursorMain.style.opacity = '0';
+                cursorEmber.style.opacity = '0';
                 cursorTrail.style.opacity = '0';
             });
             document.addEventListener('mouseenter', () => {
-                cursorMain.style.opacity = '1';
-                cursorTrail.style.opacity = '0.6';
+                cursorEmber.style.opacity = '1';
+                cursorTrail.style.opacity = '0.4';
             });
         }
 
-        // ============================================
-        // STARS CANVAS - Joseph's Dreams
-        // ============================================
+        // ENHANCED STARS WITH MORE SHOOTING STARS
         function initStars() {
             const canvas = document.getElementById('stars-canvas');
             const ctx = canvas.getContext('2d');
@@ -938,30 +946,33 @@
 
             function createStars() {
                 stars = [];
-                const numStars = Math.floor((canvas.width * canvas.height) / 8000);
+                const numStars = Math.floor((canvas.width * canvas.height) / 6000);
                 
                 for (let i = 0; i < numStars; i++) {
                     stars.push({
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
-                        radius: Math.random() * 1.2 + 0.3,
-                        opacity: Math.random() * 0.7 + 0.3,
-                        twinkleSpeed: Math.random() * 0.02 + 0.005,
-                        twinklePhase: Math.random() * Math.PI * 2
+                        radius: Math.random() * 1.5 + 0.2,
+                        opacity: Math.random() * 0.8 + 0.2,
+                        twinkleSpeed: Math.random() * 0.03 + 0.005,
+                        twinklePhase: Math.random() * Math.PI * 2,
+                        isPulsing: Math.random() > 0.9,
+                        pulsePhase: Math.random() * Math.PI * 2
                     });
                 }
             }
 
             function createShootingStar() {
-                if (Math.random() > 0.995 && shootingStars.length < 2) {
+                if (Math.random() > 0.985 && shootingStars.length < 4) {
                     shootingStars.push({
                         x: Math.random() * canvas.width,
-                        y: Math.random() * canvas.height * 0.3,
-                        length: Math.random() * 80 + 40,
-                        speed: Math.random() * 8 + 4,
-                        angle: Math.PI / 4 + (Math.random() - 0.5) * 0.3,
+                        y: Math.random() * canvas.height * 0.5,
+                        length: Math.random() * 100 + 50,
+                        speed: Math.random() * 10 + 5,
+                        angle: Math.PI / 4 + (Math.random() - 0.5) * 0.4,
                         opacity: 1,
-                        life: 1
+                        life: 1,
+                        isGolden: Math.random() > 0.6
                     });
                 }
             }
@@ -969,33 +980,36 @@
             function animate() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // Draw regular stars
                 stars.forEach(star => {
                     star.twinklePhase += star.twinkleSpeed;
-                    const twinkle = 0.5 + Math.sin(star.twinklePhase) * 0.5;
+                    let twinkle = 0.5 + Math.sin(star.twinklePhase) * 0.5;
+                    
+                    if (star.isPulsing) {
+                        star.pulsePhase += 0.02;
+                        twinkle *= (0.5 + Math.sin(star.pulsePhase) * 0.5);
+                    }
+                    
                     const currentOpacity = star.opacity * twinkle;
                     
                     ctx.beginPath();
                     ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 255, 255, ${currentOpacity})`;
+                    ctx.fillStyle = 'rgba(255, 255, 255, ' + currentOpacity + ')';
                     ctx.fill();
                     
-                    // Add subtle glow to brighter stars
-                    if (star.radius > 0.8) {
+                    if (star.radius > 1 || star.isPulsing) {
                         ctx.beginPath();
-                        ctx.arc(star.x, star.y, star.radius * 3, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(201, 169, 97, ${currentOpacity * 0.1})`;
+                        ctx.arc(star.x, star.y, star.radius * 4, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(201, 169, 97, ' + (currentOpacity * 0.15) + ')';
                         ctx.fill();
                     }
                 });
 
-                // Create and animate shooting stars
                 createShootingStar();
                 
                 shootingStars = shootingStars.filter(star => {
                     star.x += Math.cos(star.angle) * star.speed;
                     star.y += Math.sin(star.angle) * star.speed;
-                    star.life -= 0.02;
+                    star.life -= 0.015;
                     star.opacity = star.life;
                     
                     if (star.life > 0) {
@@ -1004,9 +1018,17 @@
                             star.x - Math.cos(star.angle) * star.length,
                             star.y - Math.sin(star.angle) * star.length
                         );
-                        gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity})`);
-                        gradient.addColorStop(0.3, `rgba(201, 169, 97, ${star.opacity * 0.5})`);
-                        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                        
+                        if (star.isGolden) {
+                            gradient.addColorStop(0, 'rgba(255, 255, 255, ' + star.opacity + ')');
+                            gradient.addColorStop(0.2, 'rgba(226, 201, 144, ' + (star.opacity * 0.8) + ')');
+                            gradient.addColorStop(0.5, 'rgba(201, 169, 97, ' + (star.opacity * 0.4) + ')');
+                            gradient.addColorStop(1, 'rgba(201, 169, 97, 0)');
+                        } else {
+                            gradient.addColorStop(0, 'rgba(255, 255, 255, ' + star.opacity + ')');
+                            gradient.addColorStop(0.3, 'rgba(200, 200, 255, ' + (star.opacity * 0.5) + ')');
+                            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                        }
                         
                         ctx.beginPath();
                         ctx.moveTo(star.x, star.y);
@@ -1015,8 +1037,13 @@
                             star.y - Math.sin(star.angle) * star.length
                         );
                         ctx.strokeStyle = gradient;
-                        ctx.lineWidth = 2;
+                        ctx.lineWidth = star.isGolden ? 2.5 : 1.5;
                         ctx.stroke();
+                        
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, 3, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255, 255, 255, ' + (star.opacity * 0.8) + ')';
+                        ctx.fill();
                         
                         return true;
                     }
@@ -1031,9 +1058,7 @@
             animate();
         }
 
-        // ============================================
-        // DUST PARTICLES - Ancient Atmosphere
-        // ============================================
+        // DUST PARTICLES
         function initDust() {
             const canvas = document.getElementById('dust-canvas');
             const ctx = canvas.getContext('2d');
@@ -1047,18 +1072,19 @@
 
             function createParticles() {
                 particles = [];
-                const numParticles = Math.floor((canvas.width * canvas.height) / 20000);
+                const numParticles = Math.floor((canvas.width * canvas.height) / 15000);
                 
                 for (let i = 0; i < numParticles; i++) {
                     particles.push({
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
-                        radius: Math.random() * 1.5 + 0.5,
-                        opacity: Math.random() * 0.3 + 0.1,
-                        speedX: (Math.random() - 0.5) * 0.3,
-                        speedY: (Math.random() - 0.5) * 0.2 - 0.1,
+                        radius: Math.random() * 2 + 0.5,
+                        opacity: Math.random() * 0.4 + 0.1,
+                        speedX: (Math.random() - 0.5) * 0.4,
+                        speedY: (Math.random() - 0.5) * 0.2 - 0.15,
                         wobble: Math.random() * Math.PI * 2,
-                        wobbleSpeed: Math.random() * 0.02 + 0.01
+                        wobbleSpeed: Math.random() * 0.02 + 0.008,
+                        wobbleAmount: Math.random() * 0.5 + 0.2
                     });
                 }
             }
@@ -1068,10 +1094,9 @@
                 
                 particles.forEach(p => {
                     p.wobble += p.wobbleSpeed;
-                    p.x += p.speedX + Math.sin(p.wobble) * 0.3;
+                    p.x += p.speedX + Math.sin(p.wobble) * p.wobbleAmount;
                     p.y += p.speedY;
                     
-                    // Wrap around screen
                     if (p.x < -10) p.x = canvas.width + 10;
                     if (p.x > canvas.width + 10) p.x = -10;
                     if (p.y < -10) p.y = canvas.height + 10;
@@ -1079,7 +1104,7 @@
                     
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(201, 169, 97, ${p.opacity})`;
+                    ctx.fillStyle = 'rgba(201, 169, 97, ' + p.opacity + ')';
                     ctx.fill();
                 });
 
@@ -1091,70 +1116,161 @@
             animate();
         }
 
-        // ============================================
-        // AUDIO SYSTEM
-        // ============================================
-        function initAudio() {
-            const audioToggle = document.getElementById('audioToggle');
-            const audioUpload = document.getElementById('audioUpload');
-            const backgroundAudio = document.getElementById('backgroundAudio');
-            
-            let audioLoaded = false;
+        // ETHEREAL WISPS
+        function initDreams() {
+            const canvas = document.getElementById('dreams-canvas');
+            const ctx = canvas.getContext('2d');
+            let wisps = [];
 
-            // Handle file upload
-            audioUpload.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const url = URL.createObjectURL(file);
-                    backgroundAudio.src = url;
-                    backgroundAudio.load();
-                    audioLoaded = true;
-                    
-                    // Auto-play on load
-                    backgroundAudio.play().then(() => {
-                        audioToggle.classList.remove('muted');
-                    }).catch(() => {
-                        // Autoplay blocked, user will need to click
-                        audioToggle.classList.add('muted');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                createWisps();
+            }
+
+            function createWisps() {
+                wisps = [];
+                const numWisps = 8;
+                
+                for (let i = 0; i < numWisps; i++) {
+                    wisps.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 100 + 50,
+                        opacity: Math.random() * 0.03 + 0.01,
+                        speedX: (Math.random() - 0.5) * 0.3,
+                        speedY: (Math.random() - 0.5) * 0.2,
+                        pulse: Math.random() * Math.PI * 2,
+                        pulseSpeed: Math.random() * 0.01 + 0.005,
+                        isGolden: Math.random() > 0.5
                     });
                 }
-            });
+            }
 
-            // Toggle play/pause
-            audioToggle.addEventListener('click', () => {
-                if (!audioLoaded) {
-                    // Shake the upload button to hint
-                    const uploadLabel = document.querySelector('.audio-upload-label');
-                    uploadLabel.style.animation = 'none';
-                    uploadLabel.offsetHeight; // Trigger reflow
-                    uploadLabel.style.animation = 'shake 0.5s ease';
-                    return;
-                }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                if (backgroundAudio.paused) {
-                    backgroundAudio.play();
-                    audioToggle.classList.remove('muted');
-                } else {
-                    backgroundAudio.pause();
-                    audioToggle.classList.add('muted');
-                }
-            });
+                wisps.forEach(w => {
+                    w.pulse += w.pulseSpeed;
+                    w.x += w.speedX;
+                    w.y += w.speedY;
+                    
+                    if (w.x < -w.radius || w.x > canvas.width + w.radius) w.speedX *= -1;
+                    if (w.y < -w.radius || w.y > canvas.height + w.radius) w.speedY *= -1;
+                    
+                    const currentRadius = w.radius * (0.8 + Math.sin(w.pulse) * 0.2);
+                    const currentOpacity = w.opacity * (0.7 + Math.sin(w.pulse) * 0.3);
+                    
+                    const gradient = ctx.createRadialGradient(w.x, w.y, 0, w.x, w.y, currentRadius);
+                    
+                    if (w.isGolden) {
+                        gradient.addColorStop(0, 'rgba(201, 169, 97, ' + currentOpacity + ')');
+                        gradient.addColorStop(0.5, 'rgba(201, 169, 97, ' + (currentOpacity * 0.3) + ')');
+                        gradient.addColorStop(1, 'rgba(201, 169, 97, 0)');
+                    } else {
+                        gradient.addColorStop(0, 'rgba(139, 58, 74, ' + currentOpacity + ')');
+                        gradient.addColorStop(0.5, 'rgba(139, 58, 74, ' + (currentOpacity * 0.3) + ')');
+                        gradient.addColorStop(1, 'rgba(139, 58, 74, 0)');
+                    }
+                    
+                    ctx.beginPath();
+                    ctx.arc(w.x, w.y, currentRadius, 0, Math.PI * 2);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                });
 
-            // Add shake animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes shake {
-                    0%, 100% { transform: translateX(0); }
-                    20%, 60% { transform: translateX(-5px); }
-                    40%, 80% { transform: translateX(5px); }
-                }
-            `;
-            document.head.appendChild(style);
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            animate();
         }
 
-        // ============================================
+        // CSS DREAM ORBS
+        function createDreamOrbs() {
+            const container = document.getElementById('dreamOrbs');
+            const numOrbs = 20;
+            
+            for (let i = 0; i < numOrbs; i++) {
+                const orb = document.createElement('div');
+                orb.className = 'dream-orb';
+                
+                const size = Math.random() * 4 + 2;
+                const isGolden = Math.random() > 0.4;
+                const duration = Math.random() * 20 + 15;
+                const delay = Math.random() * 20;
+                
+                orb.style.cssText = 
+                    'left: ' + (Math.random() * 100) + '%;' +
+                    'width: ' + size + 'px;' +
+                    'height: ' + size + 'px;' +
+                    'background: ' + (isGolden ? 
+                        'radial-gradient(circle, rgba(201, 169, 97, 0.6), rgba(201, 169, 97, 0))' : 
+                        'radial-gradient(circle, rgba(139, 58, 74, 0.5), rgba(139, 58, 74, 0))') + ';' +
+                    'animation-duration: ' + duration + 's;' +
+                    'animation-delay: ' + delay + 's;';
+                
+                container.appendChild(orb);
+            }
+        }
+
+        // AUDIO SYSTEM
+        function initAudio() {
+            const audio = document.getElementById('backgroundAudio');
+            const audioToggle = document.getElementById('audioToggle');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const speakerIcon = document.getElementById('speakerIcon');
+            
+            audio.volume = volumeSlider.value / 100;
+            
+            const mutedIcon = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+            const unmutedIcon = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+            
+            function attemptAutoPlay() {
+                audio.play().then(() => {
+                    audioToggle.classList.remove('muted');
+                    speakerIcon.innerHTML = unmutedIcon;
+                }).catch(() => {
+                    audioToggle.classList.add('muted');
+                    speakerIcon.innerHTML = mutedIcon;
+                    
+                    document.addEventListener('click', function startAudio() {
+                        audio.play().then(() => {
+                            audioToggle.classList.remove('muted');
+                            speakerIcon.innerHTML = unmutedIcon;
+                        });
+                        document.removeEventListener('click', startAudio);
+                    }, { once: true });
+                });
+            }
+            
+            attemptAutoPlay();
+            
+            audioToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (audio.paused) {
+                    audio.play();
+                    audioToggle.classList.remove('muted');
+                    speakerIcon.innerHTML = unmutedIcon;
+                } else {
+                    audio.pause();
+                    audioToggle.classList.add('muted');
+                    speakerIcon.innerHTML = mutedIcon;
+                }
+            });
+            
+            volumeSlider.addEventListener('input', () => {
+                audio.volume = volumeSlider.value / 100;
+                if (volumeSlider.value == 0) {
+                    speakerIcon.innerHTML = mutedIcon;
+                } else if (!audio.paused) {
+                    speakerIcon.innerHTML = unmutedIcon;
+                }
+            });
+        }
+
         // ENTRANCE SEQUENCE
-        // ============================================
         function startEntranceSequence() {
             const loadingVeil = document.getElementById('loadingVeil');
             const landingContainer = document.getElementById('landingContainer');
@@ -1167,99 +1283,50 @@
             const epigraphReference = document.querySelector('.epigraph-reference');
             const portalContainer = document.querySelector('.portal-container');
 
-            // Prepare text for character-by-character reveal
             const quoteText = epigraphQuote.textContent;
             epigraphQuote.innerHTML = quoteText.split('').map(char => 
-                char === ' ' ? ' ' : `<span class="char">${char}</span>`
+                char === ' ' ? ' ' : '<span class="char">' + char + '</span>'
             ).join('');
             const chars = epigraphQuote.querySelectorAll('.char');
 
-            // Create timeline
-            const tl = gsap.timeline({
-                defaults: { ease: 'power3.out' }
-            });
+            const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-            // Fade out loading veil
             tl.to(loadingVeil, {
                 opacity: 0,
                 duration: 1,
                 onComplete: () => loadingVeil.style.display = 'none'
             });
 
-            // Fade in container
-            tl.to(landingContainer, {
-                opacity: 1,
-                duration: 0.5
-            }, '-=0.5');
-
-            // Animate ornament top
-            tl.to(ornamentTop, {
-                opacity: 0.6,
-                duration: 1.2
-            }, '-=0.3');
-
-            // Animate main title
-            tl.to(mainTitle, {
-                opacity: 1,
-                y: 0,
-                duration: 1.5,
-                ease: 'power4.out'
-            }, '-=0.8');
-
-            // Animate tagline
+            tl.to(landingContainer, { opacity: 1, duration: 0.5 }, '-=0.5');
+            tl.to(ornamentTop, { opacity: 0.6, duration: 1.2 }, '-=0.3');
+            tl.to(mainTitle, { opacity: 1, y: 0, duration: 1.5, ease: 'power4.out' }, '-=0.8');
             tl.to(tagline, {
                 opacity: 1,
                 y: 0,
                 duration: 1,
+                onComplete: () => { tagline.style.animationPlayState = 'running'; }
             }, '-=0.8');
-
-            // Fade in epigraph container
-            tl.to(epigraphContainer, {
-                opacity: 1,
-                duration: 0.8
-            }, '-=0.3');
-
-            // Character by character reveal for quote
+            tl.to(epigraphContainer, { opacity: 1, duration: 0.8 }, '-=0.3');
             tl.to(chars, {
                 opacity: 1,
                 duration: 0.03,
                 stagger: 0.025,
-                ease: 'none'
+                ease: 'none',
+                onStart: function() {
+                    chars.forEach((char, i) => {
+                        setTimeout(() => { char.classList.add('revealed'); }, i * 25);
+                    });
+                }
             }, '-=0.2');
-
-            // Fade in reference
-            tl.to(epigraphReference, {
-                opacity: 1,
-                duration: 0.8
-            }, '-=0.3');
-
-            // Animate portal button
-            tl.to(portalContainer, {
-                opacity: 1,
-                y: 0,
-                duration: 1
-            }, '-=0.5');
-
-            // Animate ornament bottom
-            tl.to(ornamentBottom, {
-                opacity: 0.6,
-                duration: 1.2
-            }, '-=0.8');
+            tl.to(epigraphReference, { opacity: 1, duration: 0.8 }, '-=0.3');
+            tl.to(portalContainer, { opacity: 1, y: 0, duration: 1 }, '-=0.5');
+            tl.to(ornamentBottom, { opacity: 0.6, duration: 1.2 }, '-=0.8');
         }
 
-        // ============================================
-        // PORTAL BUTTON INTERACTION
-        // ============================================
+        // PORTAL BUTTON
         document.getElementById('portalButton').addEventListener('click', () => {
-            // Create flash effect
             const flash = document.createElement('div');
-            flash.style.cssText = `
-                position: fixed;
-                inset: 0;
-                background: radial-gradient(circle at center, rgba(201, 169, 97, 0.3) 0%, transparent 70%);
-                z-index: 1000;
-                pointer-events: none;
-            `;
+            flash.style.cssText = 'position: fixed; inset: 0; background: radial-gradient(circle at center, rgba(201, 169, 97, 0.4) 0%, transparent 70%); z-index: 1000; pointer-events: none;';
             document.body.appendChild(flash);
 
             gsap.fromTo(flash, 
@@ -1277,13 +1344,7 @@
                     }
                 }
             );
-
-            // Here you would typically navigate to the main app
-            // For now, we'll just log
             console.log('Entering the story...');
-            
-            // Uncomment below to navigate to app.html when ready:
-            // setTimeout(() => window.location.href = 'app.html', 800);
         });
     </script>
 </body>
