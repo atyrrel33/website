@@ -571,7 +571,7 @@ z-index: 1;
 
 /* Training Access - Subtle Side Door */
 .training-access-section {
-padding: 3rem 2rem 6rem;
+padding: 3rem 2rem;
 display: flex;
 justify-content: center;
 }
@@ -665,6 +665,34 @@ flex-shrink: 0;
 .training-access:hover .access-arrow {
 opacity: 0.8;
 transform: translateX(4px);
+}
+
+.apps-portal-link {
+position: fixed;
+bottom: 30px;
+right: 30px;
+padding: 10px 24px;
+font-family: 'Jost', sans-serif;
+font-size: 0.85rem;
+letter-spacing: 2px;
+color: rgba(220, 180, 80, 0.7);
+text-transform: uppercase;
+background: rgba(13, 25, 18, 0.6);
+border: 1px solid rgba(26, 71, 42, 0.3);
+border-radius: 8px;
+backdrop-filter: blur(10px);
+text-decoration: none;
+transition: all 0.3s ease;
+z-index: 100;
+opacity: 0;
+}
+
+.apps-portal-link:hover {
+color: rgba(220, 180, 80, 1);
+border-color: rgba(220, 180, 80, 0.5);
+background: rgba(13, 25, 18, 0.8);
+box-shadow: 0 4px 15px rgba(220, 180, 80, 0.2);
+transform: translateY(-2px);
 }
 
 .reach-out-btn {
@@ -888,7 +916,7 @@ line-height: 1.6;
 }
 
 .training-access-section {
-padding: 2rem 1rem 5rem;
+padding: 2rem 1rem;
 }
 
 .training-access {
@@ -968,7 +996,7 @@ Transformative programs in conflict resolution and crisis response that create l
 <div class="hybrid-badge">Coming Soon</div>
 <h3 class="hybrid-title">The Bridge</h3>
 <p class="hybrid-description">
-A cinematic work that lives at the intersection of narrative fiction and documentary truth. Uniting Stories and Solutions to explore conflict resolution through both imagined and real human experience.
+A cinematic work that lives at the intersection of narrative fiction and documentary truth&mdash;uniting Stories and Solutions to explore conflict resolution through both imagined and real human experience.
 </p>
 </div>
 </section>
@@ -976,18 +1004,20 @@ A cinematic work that lives at the intersection of narrative fiction and documen
 <!-- Discrete Training Access -->
 <section class="training-access-section">
 <div class="training-access" onclick="window.location.href='/training/closing-time-login.html'">
-<div class="access-indicator"></div>
+<div class="access-indicator">&#128274;</div>
 <div class="access-content">
 <h4 class="access-title">Training Portal</h4>
-		<p class="access-description">Private interactive training apps for 5 S's mastery</p>
+<p class="access-description">Private workspace for scene building & the 5 S's framework</p>
 </div>
-<div class="access-arrow"></div>
+<div class="access-arrow">&rarr;</div>
 </div>
 </section>
 
 <button class="reach-out-btn" onclick="window.location.href='mailto:info@tyrrel.org'">
 Reach Out
 </button>
+
+<a href="/apps/" class="apps-portal-link">Apps</a>
 </div>
 
 <script>
@@ -1126,7 +1156,7 @@ rgba(8, 20, 12, 0.95) 60%)`;
             }, 1000);
 
             // Hover states for cursor and halo
-            const hoverElements = document.querySelectorAll('.portal, .reach-out-btn, .logo, .hybrid-project');
+            const hoverElements = document.querySelectorAll('.portal, .reach-out-btn, .logo, .hybrid-project, .apps-portal-link');
             hoverElements.forEach(element => {
                 element.addEventListener('mouseenter', () => {
                     cursor.classList.add('hover-state');
@@ -1274,7 +1304,12 @@ rgba(8, 20, 12, 0.95) 60%)`;
                 opacity: 1,
                 duration: 1,
                 delay: 0.4
-            }, "-=0.5");
+            }, "-=0.5")
+            .to(".apps-portal-link", {
+                opacity: 1,
+                duration: 0.8,
+                delay: 0.2
+            }, "-=0.6");
 
         // Subtle floating animation for center icon (desktop only)
         if (isDesktop) {
