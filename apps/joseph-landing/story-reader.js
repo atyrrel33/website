@@ -9,6 +9,7 @@ class StoryReader {
         this.currentChapter = null;
         this.currentAuthor = 'trevor'; // Default to Trevor
         this.init();
+        this.annotationSystem = null; // Will be initialized after DOM ready
     }
 
     async init() {
@@ -23,6 +24,10 @@ class StoryReader {
             if (chapter) {
                 this.openChapter(chapter);
             }
+            // Initialize annotation system once story is loaded
+        if (typeof AnnotationSystem !== 'undefined') {
+            this.annotationSystem = new AnnotationSystem(this);
+            console.log('✍️ Annotation system connected');
         }
     }
 
@@ -310,16 +315,14 @@ class StoryReader {
     }
 
     prepareAnnotationWorkspace() {
-        const workspace = document.getElementById('annotationWorkspace');
-        // For Sprint 1, just show empty state
-        // Sprint 2 will add the actual annotation functionality
-        workspace.innerHTML = `
-            <div class="annotation-empty-state">
-                <div class="empty-icon">✏️</div>
-                <p>Click any plot point on the left to add your first note</p>
-                <small>Notes appear handwritten and stay anchored to their plot points</small>
-            </div>
-        `;
+            const workspace = document.getElementById('annotationWorkspace');
+            workspace.innerHTML = `
+                <div class="annotation-empty-state">
+                    <div class="empty-icon">✍️</div>
+                    <p>Click any plot point on the left to add your first note</p>
+                    <small>Notes appear handwritten and stay anchored to their plot points</small>
+                </div>
+            `;
     }
 
     attachPlotPointHandlers() {
@@ -331,18 +334,16 @@ class StoryReader {
             });
         });
     }
-
     handlePlotPointClick(plotId, element) {
-        // Highlight selected plot point
-        document.querySelectorAll('.plot-point').forEach(p => p.classList.remove('selected'));
-        element.classList.add('selected');
-
-        console.log(`📝 Plot point clicked: ${plotId}`);
-        console.log(`Current author: ${this.currentAuthor}`);
-        
-        // This is where Sprint 2 will add the annotation interface
-        // For now, just log it
-        this.showPlaceholderMessage('Annotation system coming in Sprint 2!');
+            // Delegate to annotation system if available
+            if (this.annotationSystem) {
+                this.annotationSystem.handlePlotPointClick(plotId, element);
+            } else {
+                // Fallback if annotation system not loaded
+                document.querySelectorAll('.plot-point').forEach(p => p.classList.remove('selected'));
+                element.classList.add('selected');
+                this.showPlaceholderMessage('Loading annotation system...');
+            }
     }
 
     showPlaceholderMessage(message) {
@@ -404,22 +405,27 @@ class StoryReader {
     // HELPER FUNCTIONS FOR NOTE CHECKING
     // These will be expanded in Sprint 2
     // ============================================
-
+    
     chapterHasNotes(chapterId) {
-        // This will check localStorage in Sprint 2
-        // For now, return false
-        return false;
-    }
-
-    getChapterNoteCount(chapterId) {
-        // This will count notes from localStorage in Sprint 2
-        return 0;
-    }
-
-    plotPointHasNote(plotPointId) {
-        // This will check localStorage in Sprint 2
-        return false;
-    }
+            if (this.annotationSystem) {
+                return this.annotationSystem.chapterHasNotes(chapterId);
+            }
+            return false;
+        }
+    
+        getChapterNoteCount(chapterId) {
+            if (this.annotationSystem) {
+                return this.annotationSystem.getChapterNoteCount(chapterId);
+            }
+            return 0;
+        }
+    
+        plotPointHasNote(plotPointId) {
+            if (this.annotationSystem) {
+                return this.annotationSystem.plotPointHasNote(plotPointId);
+            }
+            return false;
+        }
 
     showError(message) {
         const grid = document.getElementById('chapterGrid');
