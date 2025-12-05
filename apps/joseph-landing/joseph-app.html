@@ -383,14 +383,7 @@
             transition: all 0.3s var(--ease-smooth);
             overflow: hidden;
         }
-        /* Ensure nav items are always visible */
-        .nav-tab-title {
-            color: #e8e0d0 !important;
-        }
-        
-        .nav-section-title {
-            color: #c9a961 !important;
-        }
+
         .nav-tab::before {
             content: '';
             position: absolute;
@@ -460,11 +453,19 @@
         .nav-tab.active .nav-tab-icon svg {
             stroke: var(--gold-primary);
         }
+
+        .nav-tab-content {
+            flex: 1;
+            min-width: 0;
+            position: relative;
+            z-index: 1;
+        }
+
         .nav-tab-title {
             font-family: 'Cormorant Garamond', serif;
             font-size: 0.95rem;
             font-weight: 500;
-            color: #e8e0d0;
+            color: var(--papyrus-aged);
             letter-spacing: 0.05em;
             transition: color 0.3s ease;
         }
@@ -478,8 +479,8 @@
             font-family: 'EB Garamond', serif;
             font-size: 0.7rem;
             font-style: italic;
-            color: #c9a961;
-            opacity: 0.85;
+            color: var(--gold-dim);
+            opacity: 0.6;
             margin-top: 2px;
         }
 
@@ -1775,11 +1776,21 @@
         function startEntranceSequence() {
             const loadingVeil = document.getElementById('loadingVeil');
             const appContainer = document.getElementById('appContainer');
-
+        
             // Simulate loading (would be replaced with actual data loading)
             setTimeout(() => {
-                const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
+                const tl = gsap.timeline({ 
+                    defaults: { ease: 'power3.out' },
+                    onComplete: () => {
+                        // CRITICAL: Clear all inline styles after animation completes
+                        gsap.set('.nav-tab', { clearProps: 'all' });
+                        gsap.set('.sidebar-header', { clearProps: 'all' });
+                        gsap.set('.sidebar-footer', { clearProps: 'all' });
+                        gsap.set('.content-header', { clearProps: 'all' });
+                        gsap.set('.tab-panel.active', { clearProps: 'all' });
+                    }
+                });
+        
                 tl.to(loadingVeil, {
                     opacity: 0,
                     duration: 0.8,
@@ -1787,54 +1798,54 @@
                         loadingVeil.style.display = 'none';
                     }
                 });
-
+        
                 tl.to(appContainer, {
                     opacity: 1,
                     duration: 0.6
                 }, '-=0.3');
-
-                // Animate sidebar elements
-                tl.from('.sidebar-header', {
-                    opacity: 0,
-                    x: -20,
+        
+                // Animate sidebar elements - TO visible, not FROM invisible
+                tl.to('.sidebar-header', {
+                    opacity: 1,
+                    x: 0,
                     duration: 0.5
                 }, '-=0.2');
-
-                tl.from('.nav-tab', {
-                    opacity: 0,
-                    x: -15,
+        
+                tl.to('.nav-tab', {
+                    opacity: 1,
+                    x: 0,
                     duration: 0.4,
                     stagger: 0.08
                 }, '-=0.3');
-
-                tl.from('.sidebar-footer', {
-                    opacity: 0,
-                    y: 20,
+        
+                tl.to('.sidebar-footer', {
+                    opacity: 1,
+                    y: 0,
                     duration: 0.5
                 }, '-=0.2');
-
+        
                 // Animate main content
-                tl.from('.content-header', {
-                    opacity: 0,
-                    y: -20,
+                tl.to('.content-header', {
+                    opacity: 1,
+                    y: 0,
                     duration: 0.5
                 }, '-=0.4');
-
-                tl.from('.tab-panel.active', {
-                    opacity: 0,
-                    y: 30,
+        
+                tl.to('.tab-panel.active', {
+                    opacity: 1,
+                    y: 0,
                     duration: 0.6
                 }, '-=0.3');
 
-                // Animate progress bar
-                tl.to('#progressFill', {
-                    width: '0%',
-                    duration: 1,
-                    ease: 'power2.inOut'
-                }, '-=0.3');
+        // Animate progress bar
+        tl.to('#progressFill', {
+            width: '0%',
+            duration: 1,
+            ease: 'power2.inOut'
+        }, '-=0.3');
 
-            }, 800);
-        }
+    }, 800);
+}
 
         // Progress Tracking (placeholder - would be connected to actual data)
         function updateProgress(percent) {
@@ -1885,4 +1896,3 @@
     <script src="story-reader.js"></script>
 </body>
 </html>
-
