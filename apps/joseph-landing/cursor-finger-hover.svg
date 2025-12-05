@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 28 36">
+  <!-- Large outer glow -->
+  <circle cx="8" cy="8" r="12" fill="#c9a961" opacity="0.15"/>
+  <!-- Medium glow -->
+  <circle cx="8" cy="8" r="8" fill="#e2c990" opacity="0.3"/>
+  <!-- Inner glow -->
+  <circle cx="8" cy="8" r="5" fill="#e2c990" opacity="0.5"/>
+  
+  <!-- The pointing finger - simplified for better rendering -->
+  <path d="M 6 4 L 6 20 L 5 24 L 4 26 L 3 28 Q 2 30, 3.5 30.5 Q 5 31, 6 29 L 7 26 L 8 24 L 8 20 L 9 20 L 10 20 L 10 18 L 10 14 L 9 14 L 9 10 L 10 10 L 11 10 L 11 6 Q 11 4, 12 4 Q 13 4, 13 6 L 13 12 L 14 12 L 14 4 Q 14 2, 15 2 Q 16 2, 16 4 L 16 12 L 17 12 L 17 6 Q 17 4, 18 4 Q 19 4, 19 6 L 19 14 L 18 16 L 10 16 L 9 16 L 8 16 L 7 16" 
+        fill="#e2c990" 
+        stroke="#ffdb9a" 
+        stroke-width="1.2"
+        stroke-linejoin="round"/>
+  
+  <!-- Bright tip highlight -->
+  <ellipse cx="11" cy="4" rx="2" ry="2.5" fill="#fff9f0" opacity="0.8"/>
+</svg>

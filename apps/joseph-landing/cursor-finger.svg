@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Outer glow rings -->
+  <circle cx="10" cy="6" r="14" fill="#c9a961" opacity="0.12"/>
+  <circle cx="10" cy="6" r="10" fill="#c9a961" opacity="0.25"/>
+  <circle cx="10" cy="6" r="6" fill="#e2c990" opacity="0.4"/>
+  
+  <!-- The pointing finger with filter -->
+  <g filter="url(#glow)">
+    <!-- Finger outline -->
+    <path d="M 8 2 L 8 16 L 7 18 L 6 20 Q 5 22, 4 24 L 3 28 Q 2 30, 3 31 Q 4 32, 5 31 L 6 29 L 7 26 Q 8 24, 8 22 L 8 20 L 9 20 Q 10 20, 10 19 L 10 16 L 10 14 Q 10 13, 9 13 L 8 13 L 8 10 L 9 10 Q 10 10, 10 9 L 10 6 Q 10 4, 11 4 Q 12 4, 12 6 L 12 10 L 12 12 L 13 12 L 13 8 L 13 4 Q 13 2, 14 2 Q 15 2, 15 4 L 15 12 L 16 12 L 16 6 Q 16 4, 17 4 Q 18 4, 18 6 L 18 14 Q 18 15, 17 15 L 16 15 L 16 16 L 15 16 L 14 16 L 13 16 L 12 16 L 11 16 L 10 16" 
+          fill="#e2c990" 
+          stroke="#ffdb9a" 
+          stroke-width="1.5"/>
+    
+    <!-- Highlight on finger tip -->
+    <circle cx="10" cy="4" r="3" fill="#fff5e6" opacity="0.6"/>
+  </g>
+</svg>
