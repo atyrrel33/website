@@ -4,19 +4,7 @@
    ============================================ */
 
 /* ============================================
-   IMPROVED CURSOR - Glowing Reading Finger
-   As the finger of God wrote upon tablets...
-   ============================================ */
-.tab-panel#panel-story,
-.tab-panel#panel-story * {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2" fill="%23c9a961" opacity="0.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="%23c9a961" stroke-width="1" opacity="0.3"/><path d="M12 3 L12 7 M12 17 L12 21 M3 12 L7 12 M17 12 L21 12" stroke="%23c9a961" stroke-width="1" opacity="0.2"/></svg>'), auto;
-}
-
-.tab-panel#panel-story button,
-.tab-panel#panel-story a,
-.tab-panel#panel-story .plot-point {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="%23e2c990"/><circle cx="12" cy="12" r="6" fill="none" stroke="%23e2c990" stroke-width="1.5" opacity="0.4"/><path d="M12 2 L12 6 M12 18 L12 22 M2 12 L6 12 M18 12 L22 12" stroke="%23e2c990" stroke-width="1.5" opacity="0.3"/></svg>'), pointer;
-}
+   
 
 /* ============================================
    ANNOTATION WORKSPACE
