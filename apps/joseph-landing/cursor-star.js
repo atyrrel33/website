@@ -1,7 +1,7 @@
 // ============================================
 // SHOOTING STAR CURSOR SYSTEM
 // "The stars will fall from heaven" - Matthew 24:29
-// A celestial phenomenon trailing stardust
+// A celestial phenomenon trailing stardust please
 // ============================================
 
 (function() {
