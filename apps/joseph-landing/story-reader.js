@@ -28,7 +28,7 @@ class StoryReader {
 
     async loadStoryData() {
         try {
-            const response = await fetch('./data/story.json');
+           const response = await fetch('story.json');
             if (!response.ok) {
                 throw new Error('Failed to load story data');
             }
@@ -42,7 +42,7 @@ class StoryReader {
 
     renderChapterNavigator() {
         const grid = document.getElementById('chapterGrid');
-        if (!grid || !this.storyData) return;
+        if (!grid || !this.storyData || !this.storyData.chapters) return;
 
         grid.innerHTML = '';
 
