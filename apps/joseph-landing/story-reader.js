@@ -24,7 +24,9 @@ class StoryReader {
             if (chapter) {
                 this.openChapter(chapter);
             }
-            // Initialize annotation system once story is loaded
+        }
+        
+        // Initialize annotation system once story is loaded
         if (typeof AnnotationSystem !== 'undefined') {
             this.annotationSystem = new AnnotationSystem(this);
             console.log('✍️ Annotation system connected');
