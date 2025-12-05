@@ -1,0 +1,61 @@
+/* ============================================
+   DREAMY ORB CURSOR - THE GUIDING STAR
+   "Your word is a lamp to my feet and a light to my path" - Psalm 119:105
+   Simple, ethereal, visible
+   ============================================ */
+
+/* Hide default cursor in story section */
+.tab-panel#panel-story,
+.tab-panel#panel-story * {
+    cursor: none !important;
+}
+
+/* The Orb - A luminous presence that follows */
+.tab-panel#panel-story {
+    position: relative;
+}
+
+.tab-panel#panel-story::before {
+    content: '';
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center,
+        rgba(226, 201, 144, 0.9) 0%,
+        rgba(201, 169, 97, 0.7) 30%,
+        rgba(201, 169, 97, 0.4) 60%,
+        transparent 100%
+    );
+    box-shadow: 
+        0 0 10px rgba(226, 201, 144, 0.8),
+        0 0 20px rgba(201, 169, 97, 0.5),
+        0 0 30px rgba(201, 169, 97, 0.3);
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: screen;
+    animation: orbPulse 2s ease-in-out infinite;
+    transform: translate(-50%, -50%);
+}
+
+/* Gentle pulsing like a breathing star */
+@keyframes orbPulse {
+    0%, 100% {
+        opacity: 0.85;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+}
+
+/* Enhanced glow on interactive elements */
+.tab-panel#panel-story button:hover,
+.tab-panel#panel-story a:hover,
+.tab-panel#panel-story .plot-point:hover {
+    box-shadow: 0 0 12px rgba(226, 201, 144, 0.4);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Note: Actual cursor tracking requires JavaScript - see implementation below */
