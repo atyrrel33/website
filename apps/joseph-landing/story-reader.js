@@ -2,6 +2,7 @@
 // THE STORY READER - PHASE 2 SPRINT 1
 // Scripture made accessible through sacred interface
 // ============================================
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
 
 class StoryReader {
     constructor() {
