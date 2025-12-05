@@ -29,23 +29,23 @@
     will-change: transform;
 }
 
-/* The core star - a bright elongated streak */
+/* The core star - a circular celestial point */
 .star-core {
     position: absolute;
-    width: 12px;
-    height: 3px;
-    background: linear-gradient(90deg, 
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 251, 235, 0.9) 20%,
-        rgba(226, 201, 144, 1) 50%,
-        rgba(255, 251, 235, 0.9) 80%,
-        rgba(255, 255, 255, 0) 100%
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle at center,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 251, 235, 0.95) 30%,
+        rgba(226, 201, 144, 0.8) 70%,
+        transparent 100%
     );
-    border-radius: 50% / 100%;
-    transform: translateX(-50%) translateY(-50%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
     box-shadow: 
-        0 0 4px rgba(226, 201, 144, 0.8),
-        0 0 8px rgba(255, 251, 235, 0.5);
+        0 0 8px rgba(255, 255, 255, 0.9),
+        0 0 16px rgba(226, 201, 144, 0.7),
+        0 0 24px rgba(201, 169, 97, 0.4);
 }
 
 /* Particle trail - stardust left behind */
@@ -72,28 +72,57 @@
 /* Dreamy residue - longer-lasting glow trail */
 .star-residue {
     position: fixed;
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     background: radial-gradient(circle at center,
-        rgba(226, 201, 144, 0.6) 0%,
-        rgba(201, 169, 97, 0.3) 50%,
+        rgba(226, 201, 144, 0.7) 0%,
+        rgba(201, 169, 97, 0.4) 50%,
         transparent 100%
     );
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
     mix-blend-mode: screen;
-    animation: residueFade 1.2s ease-out forwards;
+    animation: residueFade 1.5s ease-out forwards;
 }
 
 @keyframes residueFade {
     0% {
-        opacity: 0.9;
+        opacity: 1;
         transform: scale(1);
     }
     100% {
         opacity: 0;
-        transform: scale(0.5) translateY(12px);
+        transform: scale(0.3) translateY(15px);
+    }
+}
+
+/* Path illumination - soft glow that lights the way */
+.star-path-glow {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at center,
+        rgba(226, 201, 144, 0.15) 0%,
+        rgba(201, 169, 97, 0.08) 50%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    mix-blend-mode: screen;
+    animation: pathGlowFade 2s ease-out forwards;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes pathGlowFade {
+    0% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
     }
 }
 
