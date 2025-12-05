@@ -1,0 +1,3002 @@
+{
+  "title": "The Story of Joseph",
+  "subtitle": "Genesis 37-50",
+  "description": "A Plot Point Analysis for Modern Adaptation",
+  "parts": [
+    {
+      "partNumber": 1,
+      "partTitle": "Betrayal and Descent into Egypt",
+      "chapters": [
+        {
+          "chapterNumber": 37,
+          "chapterTitle": "Joseph's Dreams and Brothers' Hatred",
+          "sections": [
+            {
+              "sectionTitle": "Joseph's Dreams",
+              "verseRange": "Genesis 37:1-11",
+              "plotPoints": [
+                {
+                  "id": "37-1",
+                  "text": "Jacob settles in Canaan (the Promised Land) where his father Isaac had lived",
+                  "themes": ["family", "inheritance", "promise"]
+                },
+                {
+                  "id": "37-2",
+                  "text": "Joseph, age 17, works as shepherd with his half-brothers (sons of Bilhah and Zilpah)",
+                  "themes": ["youth", "family dynamics"],
+                  "keyDetail": "Joseph is 17 years old"
+                },
+                {
+                  "id": "37-3",
+                  "text": "Joseph brings his father a bad report about his brothers' behavior",
+                  "themes": ["integrity", "tension", "conflict"]
+                },
+                {
+                  "id": "37-4",
+                  "text": "Israel (Jacob) loves Joseph more than all his other sons because Joseph was born in his old age",
+                  "themes": ["favoritism", "love", "family dynamics"]
+                },
+                {
+                  "id": "37-5",
+                  "text": "Jacob makes Joseph a special long-sleeved robe (coat of many colors)",
+                  "themes": ["favoritism", "identity", "honor"],
+                  "keyDetail": "The famous coat of many colors"
+                },
+                {
+                  "id": "37-6",
+                  "text": "Brothers hate Joseph because of their father's favoritism - they cannot speak peaceably to him",
+                  "themes": ["hatred", "jealousy", "division"]
+                },
+                {
+                  "id": "37-7",
+                  "text": "Joseph dreams that his sheaf of grain rises up while his brothers' sheaves bow down to it",
+                  "themes": ["dreams", "prophecy", "authority"],
+                  "keyDetail": "First dream - sheaves bowing"
+                },
+                {
+                  "id": "37-8",
+                  "text": "Brothers hate him even more for his dream and his words",
+                  "themes": ["hatred", "intensifying conflict"]
+                },
+                {
+                  "id": "37-9",
+                  "text": "Joseph has a second dream: the sun, moon, and eleven stars bow down to him",
+                  "themes": ["dreams", "prophecy", "authority"],
+                  "keyDetail": "Second dream - celestial bodies bowing"
+                },
+                {
+                  "id": "37-10",
+                  "text": "Joseph tells his father and brothers - even Jacob rebukes him, asking if the family will bow to him",
+                  "themes": ["family reaction", "prophecy"]
+                },
+                {
+                  "id": "37-11",
+                  "text": "Brothers are jealous, but Jacob keeps the matter in mind",
+                  "themes": ["jealousy", "contemplation"]
+                }
+              ]
+            },
+            {
+              "sectionTitle": "The Conspiracy and Betrayal",
+              "verseRange": "Genesis 37:12-36",
+              "plotPoints": [
+                {
+                  "id": "37-12",
+                  "text": "Brothers go to Shechem to pasture their father's flocks",
+                  "themes": ["journey", "separation"]
+                },
+                {
+                  "id": "37-13",
+                  "text": "Israel sends Joseph from the Valley of Hebron to check on his brothers and the flocks",
+                  "themes": ["obedience", "mission"]
+                },
+                {
+                  "id": "37-14",
+                  "text": "Joseph wanders in the field near Shechem - a man finds him and tells him the brothers went to Dothan",
+                  "themes": ["seeking", "journey", "providence"]
+                },
+                {
+                  "id": "37-15",
+                  "text": "Brothers see Joseph from a distance before he reaches them",
+                  "themes": ["anticipation", "plotting"]
+                },
+                {
+                  "id": "37-16",
+                  "text": "Brothers conspire to kill Joseph, calling him 'that dreamer'",
+                  "themes": ["conspiracy", "mockery", "murder plot"],
+                  "keyDetail": "They call him 'that dreamer'"
+                },
+                {
+                  "id": "37-17",
+                  "text": "They plan to throw him in a pit and claim a wild animal devoured him",
+                  "themes": ["deception", "murder plot"]
+                },
+                {
+                  "id": "37-18",
+                  "text": "Reuben (the firstborn) intervenes to save Joseph - suggests throwing him in the pit but not killing him directly",
+                  "themes": ["intervention", "mercy", "partial righteousness"]
+                },
+                {
+                  "id": "37-19",
+                  "text": "Reuben secretly plans to rescue Joseph and return him to their father",
+                  "themes": ["secret plan", "good intentions"]
+                },
+                {
+                  "id": "37-20",
+                  "text": "Brothers strip Joseph of his special robe when he arrives",
+                  "themes": ["humiliation", "stripping of identity"],
+                  "keyDetail": "The coat is taken - loss of favored status"
+                },
+                {
+                  "id": "37-21",
+                  "text": "They throw him into an empty pit (cistern) with no water in it",
+                  "themes": ["pit", "descent", "abandonment"],
+                  "keyDetail": "The pit - first descent"
+                },
+                {
+                  "id": "37-22",
+                  "text": "Brothers sit down to eat bread while Joseph is in the pit",
+                  "themes": ["callousness", "indifference to suffering"]
+                },
+                {
+                  "id": "37-23",
+                  "text": "They see a caravan of Ishmaelites coming from Gilead with camels carrying spices, balm, and resin to Egypt",
+                  "themes": ["providence", "trade", "Egypt"]
+                },
+                {
+                  "id": "37-24",
+                  "text": "Judah suggests selling Joseph to the Ishmaelites rather than killing him - 'he is our brother, our own flesh'",
+                  "themes": ["compromise", "profit from betrayal", "Judah's role"],
+                  "keyDetail": "Judah proposes the sale"
+                },
+                {
+                  "id": "37-25",
+                  "text": "Brothers agree to Judah's plan",
+                  "themes": ["agreement in evil"]
+                },
+                {
+                  "id": "37-26",
+                  "text": "Midianite traders pass by and pull Joseph from the pit",
+                  "themes": ["rescue from pit", "transition"]
+                },
+                {
+                  "id": "37-27",
+                  "text": "They sell Joseph to the Ishmaelites for twenty pieces of silver",
+                  "themes": ["betrayal", "price of betrayal", "slavery"],
+                  "keyDetail": "Twenty pieces of silver - the price of betrayal"
+                },
+                {
+                  "id": "37-28",
+                  "text": "The Ishmaelites take Joseph to Egypt",
+                  "themes": ["Egypt", "exile", "descent"],
+                  "keyDetail": "Joseph enters Egypt"
+                },
+                {
+                  "id": "37-29",
+                  "text": "Reuben returns to the pit and discovers Joseph is gone - he tears his clothes in distress",
+                  "themes": ["grief", "failed rescue"]
+                },
+                {
+                  "id": "37-30",
+                  "text": "Brothers slaughter a goat and dip Joseph's robe in the blood",
+                  "themes": ["deception", "blood", "covering sin"]
+                },
+                {
+                  "id": "37-31",
+                  "text": "They bring the bloodied robe to their father, saying 'We found this - is it your son's robe?'",
+                  "themes": ["deception", "cruel presentation"]
+                },
+                {
+                  "id": "37-32",
+                  "text": "Jacob recognizes it and concludes a wild animal has devoured Joseph",
+                  "themes": ["false conclusion", "grief"]
+                },
+                {
+                  "id": "37-33",
+                  "text": "Jacob tears his clothes, puts on sackcloth, and mourns for his son many days",
+                  "themes": ["grief", "mourning", "suffering"]
+                },
+                {
+                  "id": "37-34",
+                  "text": "All his sons and daughters try to comfort him, but he refuses comfort",
+                  "themes": ["inconsolable grief", "hypocrisy of comforters"]
+                },
+                {
+                  "id": "37-35",
+                  "text": "Jacob says he will go down to Sheol (the grave) mourning for his son",
+                  "themes": ["despair", "death wish"]
+                },
+                {
+                  "id": "37-36",
+                  "text": "Meanwhile, the Midianites sell Joseph in Egypt to Potiphar, Pharaoh's officer and captain of the guard",
+                  "themes": ["new chapter", "Potiphar", "divine providence"],
+                  "keyDetail": "Joseph sold to Potiphar"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapterNumber": 38,
+          "chapterTitle": "Interlude - Judah and Tamar",
+          "note": "This chapter interrupts Joseph's narrative to tell Judah's story",
+          "sections": [
+            {
+              "sectionTitle": "Judah's Family",
+              "verseRange": "Genesis 38:1-30",
+              "plotPoints": [
+                {
+                  "id": "38-1",
+                  "text": "Judah leaves his brothers and visits an Adullamite friend named Hirah",
+                  "themes": ["separation", "worldly friendship"]
+                },
+                {
+                  "id": "38-2",
+                  "text": "Judah marries a Canaanite woman (daughter of Shua)",
+                  "themes": ["intermarriage", "compromise"]
+                },
+                {
+                  "id": "38-3",
+                  "text": "She bears three sons: Er, Onan, and Shelah",
+                  "themes": ["family", "sons"]
+                },
+                {
+                  "id": "38-4",
+                  "text": "Judah arranges marriage between Er (his firstborn) and Tamar",
+                  "themes": ["marriage", "Tamar enters"]
+                },
+                {
+                  "id": "38-5",
+                  "text": "Er is wicked in the LORD's sight - the LORD puts him to death",
+                  "themes": ["divine judgment", "wickedness"]
+                },
+                {
+                  "id": "38-6",
+                  "text": "Judah tells Onan to perform levirate marriage duty with Tamar to raise offspring for his brother",
+                  "themes": ["levirate marriage", "duty"]
+                },
+                {
+                  "id": "38-7",
+                  "text": "Onan refuses to provide offspring - he 'wastes his seed' - displeasing to the LORD",
+                  "themes": ["disobedience", "selfishness"]
+                },
+                {
+                  "id": "38-8",
+                  "text": "The LORD puts Onan to death as well",
+                  "themes": ["divine judgment"]
+                },
+                {
+                  "id": "38-9",
+                  "text": "Judah tells Tamar to remain a widow in her father's house until Shelah grows up",
+                  "themes": ["waiting", "promise"]
+                },
+                {
+                  "id": "38-10",
+                  "text": "Judah fears Shelah will die like his brothers, so he doesn't follow through",
+                  "themes": ["broken promise", "fear", "injustice"]
+                },
+                {
+                  "id": "38-11",
+                  "text": "Time passes - Judah's wife dies, he mourns, then goes to Timnah for sheep shearing",
+                  "themes": ["time passage", "death", "transition"]
+                },
+                {
+                  "id": "38-12",
+                  "text": "Tamar learns Judah is going to Timnah and realizes Shelah is grown but not given to her",
+                  "themes": ["realization", "injustice recognized"]
+                },
+                {
+                  "id": "38-13",
+                  "text": "Tamar removes her widow's clothes, covers herself with a veil, and sits at Enaim entrance",
+                  "themes": ["disguise", "bold action", "justice seeking"]
+                },
+                {
+                  "id": "38-14",
+                  "text": "Judah sees her, thinks she is a prostitute (her face is covered), and propositions her",
+                  "themes": ["deception", "moral failure"]
+                },
+                {
+                  "id": "38-15",
+                  "text": "Tamar asks what he will give - he promises a young goat from his flock",
+                  "themes": ["negotiation", "payment"]
+                },
+                {
+                  "id": "38-16",
+                  "text": "She demands a pledge until he sends it: his seal, cord, and staff",
+                  "themes": ["pledge", "identity markers"],
+                  "keyDetail": "Seal, cord, and staff - Judah's identity"
+                },
+                {
+                  "id": "38-17",
+                  "text": "Judah gives her the items and sleeps with her - she becomes pregnant",
+                  "themes": ["intimacy", "conception"]
+                },
+                {
+                  "id": "38-18",
+                  "text": "Tamar removes the veil and returns to her widow's clothes",
+                  "themes": ["return to identity", "concealment"]
+                },
+                {
+                  "id": "38-19",
+                  "text": "Judah sends his friend Hirah with a goat to retrieve his pledge - cannot find the woman",
+                  "themes": ["search", "mystery"]
+                },
+                {
+                  "id": "38-20",
+                  "text": "Local men say there has been no cult prostitute at Enaim",
+                  "themes": ["investigation", "confusion"]
+                },
+                {
+                  "id": "38-21",
+                  "text": "Three months later, Judah is told 'Tamar your daughter-in-law has prostituted herself and is pregnant'",
+                  "themes": ["revelation", "scandal"]
+                },
+                {
+                  "id": "38-22",
+                  "text": "Judah orders her brought out and burned to death",
+                  "themes": ["harsh judgment", "hypocrisy"]
+                },
+                {
+                  "id": "38-23",
+                  "text": "As she is brought out, Tamar sends Judah his seal, cord, and staff with message: 'I am pregnant by the man who owns these'",
+                  "themes": ["evidence", "confrontation", "truth revealed"]
+                },
+                {
+                  "id": "38-24",
+                  "text": "Judah recognizes them and declares 'She is more righteous than I, since I did not give her to Shelah'",
+                  "themes": ["repentance", "acknowledgment", "righteousness"],
+                  "keyDetail": "Judah's admission of wrongdoing"
+                },
+                {
+                  "id": "38-25",
+                  "text": "Judah does not sleep with her again",
+                  "themes": ["proper boundaries"]
+                },
+                {
+                  "id": "38-26",
+                  "text": "Tamar gives birth to twins - Perez and Zerah (ancestors in the line of King David and Jesus)",
+                  "themes": ["birth", "messianic line", "redemption"],
+                  "keyDetail": "Ancestors of David and Jesus"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapterNumber": 39,
+          "chapterTitle": "Joseph in Potiphar's House and Prison",
+          "sections": [
+            {
+              "sectionTitle": "Success in Potiphar's House",
+              "verseRange": "Genesis 39:1-6",
+              "plotPoints": [
+                {
+                  "id": "39-1",
+                  "text": "Joseph is taken to Egypt - Potiphar (Pharaoh's officer, captain of guard, an Egyptian) buys him from Ishmaelites",
+                  "themes": ["Egypt", "slavery", "new beginning"]
+                },
+                {
+                  "id": "39-2",
+                  "text": "The LORD is with Joseph - he becomes successful",
+                  "themes": ["divine presence", "success", "blessing"],
+                  "keyDetail": "First 'LORD is with Joseph' statement"
+                },
+                {
+                  "id": "39-3",
+                  "text": "Joseph lives in his Egyptian master's house",
+                  "themes": ["household", "proximity to master"]
+                },
+                {
+                  "id": "39-4",
+                  "text": "Potiphar sees that the LORD is with Joseph and makes everything successful",
+                  "themes": ["recognition", "divine blessing observed"]
+                },
+                {
+                  "id": "39-5",
+                  "text": "Joseph finds favor and becomes Potiphar's personal attendant",
+                  "themes": ["favor", "promotion", "trust"]
+                },
+                {
+                  "id": "39-6",
+                  "text": "Potiphar puts Joseph in charge of his household and everything he owns",
+                  "themes": ["authority", "stewardship"],
+                  "keyDetail": "Joseph given authority over household"
+                },
+                {
+                  "id": "39-7",
+                  "text": "The LORD blesses Potiphar's house because of Joseph - blessing on everything in house and field",
+                  "themes": ["blessing", "divine favor", "influence"]
+                },
+                {
+                  "id": "39-8",
+                  "text": "Potiphar leaves everything in Joseph's care - concerns himself with nothing except the food he eats",
+                  "themes": ["complete trust", "delegation"]
+                },
+                {
+                  "id": "39-9",
+                  "text": "Joseph is well-built and handsome",
+                  "themes": ["physical appearance"],
+                  "keyDetail": "Joseph's appearance noted - sets up next section"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "False Accusation",
+              "verseRange": "Genesis 39:7-20",
+              "plotPoints": [
+                {
+                  "id": "39-10",
+                  "text": "After some time, Potiphar's wife takes notice of Joseph",
+                  "themes": ["temptation begins", "notice"]
+                },
+                {
+                  "id": "39-11",
+                  "text": "She says 'Sleep with me'",
+                  "themes": ["direct temptation", "sexual proposition"]
+                },
+                {
+                  "id": "39-12",
+                  "text": "Joseph refuses - says his master trusts him with everything except her (his wife)",
+                  "themes": ["integrity", "refusal", "honor"],
+                  "keyDetail": "Joseph's first refusal"
+                },
+                {
+                  "id": "39-13",
+                  "text": "Joseph declares this would be a great evil and sin against God",
+                  "themes": ["sin against God", "theological understanding", "righteousness"]
+                },
+                {
+                  "id": "39-14",
+                  "text": "She speaks to Joseph day after day - he refuses and avoids being near her",
+                  "themes": ["persistent temptation", "consistent refusal", "wisdom in avoidance"]
+                },
+                {
+                  "id": "39-15",
+                  "text": "One day Joseph goes into the house to do his work - no household servants are inside",
+                  "themes": ["isolation", "vulnerable situation"]
+                },
+                {
+                  "id": "39-16",
+                  "text": "She grabs him by his garment saying 'Sleep with me'",
+                  "themes": ["physical assault", "force"]
+                },
+                {
+                  "id": "39-17",
+                  "text": "Joseph leaves his garment in her hand and flees outside",
+                  "themes": ["fleeing temptation", "garment left behind", "righteousness"],
+                  "keyDetail": "Second garment taken - this time in righteousness"
+                },
+                {
+                  "id": "39-18",
+                  "text": "Seeing he left his garment and fled, she calls household servants",
+                  "themes": ["false accusation begins", "witnesses summoned"]
+                },
+                {
+                  "id": "39-19",
+                  "text": "She tells them: 'The Hebrew man your master brought came to make a fool of me, but I screamed and he fled, leaving his garment'",
+                  "themes": ["false accusation", "racial othering ('Hebrew man')", "deception"],
+                  "keyDetail": "Calls him 'Hebrew man' - outsider status"
+                },
+                {
+                  "id": "39-20",
+                  "text": "She keeps Joseph's garment until Potiphar comes home",
+                  "themes": ["evidence maintained", "planning"]
+                },
+                {
+                  "id": "39-21",
+                  "text": "She tells Potiphar the same story",
+                  "themes": ["repeated lie", "accusation to husband"]
+                },
+                {
+                  "id": "39-22",
+                  "text": "Potiphar becomes furious when he hears his wife's story",
+                  "themes": ["anger", "betrayal felt"]
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Imprisonment",
+              "verseRange": "Genesis 39:20-23",
+              "plotPoints": [
+                {
+                  "id": "39-23",
+                  "text": "Potiphar takes Joseph and puts him in prison where the king's prisoners are confined",
+                  "themes": ["imprisonment", "injustice", "second descent"],
+                  "keyDetail": "Second pit - the prison"
+                },
+                {
+                  "id": "39-24",
+                  "text": "But the LORD is with Joseph in prison - shows him faithful love",
+                  "themes": ["divine presence in suffering", "faithful love", "hope"],
+                  "keyDetail": "Second 'LORD is with Joseph' statement"
+                },
+                {
+                  "id": "39-25",
+                  "text": "Joseph finds favor with the prison warden",
+                  "themes": ["favor", "pattern repeating"]
+                },
+                {
+                  "id": "39-26",
+                  "text": "Warden puts all prisoners under Joseph's authority",
+                  "themes": ["authority restored", "leadership"]
+                },
+                {
+                  "id": "39-27",
+                  "text": "Joseph manages everything done there",
+                  "themes": ["stewardship", "capability"]
+                },
+                {
+                  "id": "39-28",
+                  "text": "Warden does not check on anything under Joseph's authority because the LORD is with him",
+                  "themes": ["complete trust", "divine presence"]
+                },
+                {
+                  "id": "39-29",
+                  "text": "The LORD makes everything Joseph does successful",
+                  "themes": ["success in adversity", "divine blessing"],
+                  "keyDetail": "Success even in prison"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "partNumber": 2,
+      "partTitle": "Rise to Power in Egypt",
+      "chapters": [
+        {
+          "chapterNumber": 40,
+          "chapterTitle": "The Cupbearer and Baker's Dreams",
+          "sections": [
+            {
+              "sectionTitle": "Two Offenders in Prison",
+              "verseRange": "Genesis 40:1-8",
+              "plotPoints": [
+                {
+                  "id": "40-1",
+                  "text": "After these events, Pharaoh's cupbearer and baker offend the king of Egypt",
+                  "themes": ["royal court", "offense"]
+                },
+                {
+                  "id": "40-2",
+                  "text": "Pharaoh is angry with both officials",
+                  "themes": ["royal anger"]
+                },
+                {
+                  "id": "40-3",
+                  "text": "He puts them in custody in the house of the captain of the guard (same prison as Joseph)",
+                  "themes": ["imprisonment", "providence"]
+                },
+                {
+                  "id": "40-4",
+                  "text": "Captain of guard assigns Joseph to them - he serves them",
+                  "themes": ["service", "connection", "opportunity"]
+                },
+                {
+                  "id": "40-5",
+                  "text": "They are in custody for some time",
+                  "themes": ["waiting period"]
+                },
+                {
+                  "id": "40-6",
+                  "text": "Both men dream on the same night - each dream with its own meaning",
+                  "themes": ["dreams", "divine messages"]
+                },
+                {
+                  "id": "40-7",
+                  "text": "Joseph comes to them in the morning and sees they look troubled",
+                  "themes": ["observation", "compassion"]
+                },
+                {
+                  "id": "40-8",
+                  "text": "They tell him: 'We had dreams but there is no one to interpret them'",
+                  "themes": ["need for interpretation", "lack"]
+                },
+                {
+                  "id": "40-9",
+                  "text": "Joseph replies: 'Don't interpretations belong to God? Tell me your dreams'",
+                  "themes": ["God as source", "humility", "readiness to help"],
+                  "keyDetail": "Joseph credits God for interpretation"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "The Cupbearer's Dream",
+              "verseRange": "Genesis 40:9-15",
+              "plotPoints": [
+                {
+                  "id": "40-10",
+                  "text": "The cupbearer describes his dream: a vine with three branches that budded, blossomed, and produced ripe grapes",
+                  "themes": ["dream symbols", "vine", "three"]
+                },
+                {
+                  "id": "40-11",
+                  "text": "He held Pharaoh's cup, took the grapes, squeezed them into the cup, and placed it in Pharaoh's hand",
+                  "themes": ["service", "restoration to duty"]
+                },
+                {
+                  "id": "40-12",
+                  "text": "Joseph interprets: 'The three branches are three days'",
+                  "themes": ["interpretation", "time specified"]
+                },
+                {
+                  "id": "40-13",
+                  "text": "'In three days Pharaoh will lift up your head and restore you to your position as cupbearer'",
+                  "themes": ["restoration", "good news", "specific timeline"]
+                },
+                {
+                  "id": "40-14",
+                  "text": "Joseph makes a request: 'When things go well for you, remember me and show kindness - mention me to Pharaoh and get me out of this prison'",
+                  "themes": ["hope for release", "request for help", "human need"]
+                },
+                {
+                  "id": "40-15",
+                  "text": "Joseph explains: 'I was kidnapped from the land of the Hebrews, and even here I have done nothing to deserve being put in this dungeon'",
+                  "themes": ["injustice stated", "innocence claimed", "Hebrew identity"]
+                }
+              ]
+            },
+            {
+              "sectionTitle": "The Baker's Dream",
+              "verseRange": "Genesis 40:16-19",
+              "plotPoints": [
+                {
+                  "id": "40-16",
+                  "text": "When the baker sees the favorable interpretation, he tells his dream: 'I had three baskets of white bread on my head'",
+                  "themes": ["hope for similar outcome", "three baskets"]
+                },
+                {
+                  "id": "40-17",
+                  "text": "The top basket had all kinds of baked goods for Pharaoh, but birds were eating them",
+                  "themes": ["loss", "birds as omen"]
+                },
+                {
+                  "id": "40-18",
+                  "text": "Joseph interprets: 'The three baskets are three days'",
+                  "themes": ["same timeframe", "parallel structure"]
+                },
+                {
+                  "id": "40-19",
+                  "text": "'In three days Pharaoh will lift up your head - from you - and hang you on a pole, and the birds will eat your flesh'",
+                  "themes": ["death sentence", "execution", "tragic end"],
+                  "keyDetail": "Contrast: 'lift up' means death for baker"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Dreams Fulfilled",
+              "verseRange": "Genesis 40:20-23",
+              "plotPoints": [
+                {
+                  "id": "40-20",
+                  "text": "On the third day, Pharaoh's birthday, he gives a feast for all his officials",
+                  "themes": ["fulfillment begins", "royal celebration"]
+                },
+                {
+                  "id": "40-21",
+                  "text": "He lifts up the head of the cupbearer and the baker among his officials",
+                  "themes": ["dual meaning of 'lift up head'"]
+                },
+                {
+                  "id": "40-22",
+                  "text": "He restores the cupbearer to his position - he again places the cup in Pharaoh's hand",
+                  "themes": ["restoration", "prophecy fulfilled"]
+                },
+                {
+                  "id": "40-23",
+                  "text": "But he hangs the baker - just as Joseph had interpreted to them",
+                  "themes": ["execution", "prophecy fulfilled", "accuracy confirmed"]
+                },
+                {
+                  "id": "40-24",
+                  "text": "Yet the cupbearer does not remember Joseph - he forgets him",
+                  "themes": ["forgotten", "disappointment", "abandonment", "test of patience"],
+                  "keyDetail": "Joseph remains forgotten - beginning of two-year wait"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapterNumber": 41,
+          "chapterTitle": "Pharaoh's Dreams and Joseph's Exaltation",
+          "sections": [
+            {
+              "sectionTitle": "Pharaoh's Dreams",
+              "verseRange": "Genesis 41:1-8",
+              "plotPoints": [
+                {
+                  "id": "41-1",
+                  "text": "After two full years, Pharaoh has a dream: He is standing by the Nile",
+                  "themes": ["time passage", "dream", "Nile"],
+                  "keyDetail": "Two years pass - Joseph is about 28 now"
+                },
+                {
+                  "id": "41-2",
+                  "text": "Seven healthy, well-fed cows come up from the Nile and graze in the reed grass",
+                  "themes": ["seven", "abundance", "health"]
+                },
+                {
+                  "id": "41-3",
+                  "text": "Seven other cows, ugly and thin, come up from the Nile and stand beside them",
+                  "themes": ["seven", "scarcity", "contrast"]
+                },
+                {
+                  "id": "41-4",
+                  "text": "The ugly, thin cows eat the healthy, well-fed cows",
+                  "themes": ["consumption", "reversal", "disturbing image"]
+                },
+                {
+                  "id": "41-5",
+                  "text": "Then Pharaoh wakes up. He falls asleep again and has a second dream",
+                  "themes": ["double dream", "emphasis"]
+                },
+                {
+                  "id": "41-6",
+                  "text": "Seven heads of grain, healthy and good, are growing on a single stalk",
+                  "themes": ["seven", "grain", "abundance"]
+                },
+                {
+                  "id": "41-7",
+                  "text": "Seven thin heads of grain, scorched by the east wind, sprout after them",
+                  "themes": ["seven", "famine symbol", "east wind"]
+                },
+                {
+                  "id": "41-8",
+                  "text": "The thin heads of grain swallow up the seven healthy, full heads",
+                  "themes": ["consumption", "loss"]
+                },
+                {
+                  "id": "41-9",
+                  "text": "Pharaoh wakes up troubled - it was a dream",
+                  "themes": ["anxiety", "need for meaning"]
+                },
+                {
+                  "id": "41-10",
+                  "text": "In the morning his spirit is troubled, so he summons all the magicians and wise men of Egypt",
+                  "themes": ["seeking interpretation", "royal resources"]
+                },
+                {
+                  "id": "41-11",
+                  "text": "Pharaoh tells them his dreams, but no one can interpret them",
+                  "themes": ["failure of wisdom", "inability", "opportunity for God's man"],
+                  "keyDetail": "Egyptian wisdom fails"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Joseph Remembered",
+              "verseRange": "Genesis 41:9-16",
+              "plotPoints": [
+                {
+                  "id": "41-12",
+                  "text": "The chief cupbearer speaks to Pharaoh: 'Today I remember my faults'",
+                  "themes": ["memory returns", "confession", "divine timing"]
+                },
+                {
+                  "id": "41-13",
+                  "text": "He recalls when Pharaoh was angry with his servants and imprisoned him and the baker",
+                  "themes": ["recollection", "past events"]
+                },
+                {
+                  "id": "41-14",
+                  "text": "He describes how they both dreamed and a young Hebrew, servant to the captain of the guard, interpreted their dreams",
+                  "themes": ["testimony", "Joseph identified", "Hebrew"],
+                  "keyDetail": "Joseph identified as 'young Hebrew'"
+                },
+                {
+                  "id": "41-15",
+                  "text": "'It turned out just as he interpreted to us - I was restored and the other was hanged'",
+                  "themes": ["accuracy confirmed", "credibility established"]
+                },
+                {
+                  "id": "41-16",
+                  "text": "Pharaoh sends for Joseph, and they quickly bring him from the dungeon",
+                  "themes": ["sudden elevation", "urgency", "divine timing"],
+                  "keyDetail": "Joseph brought from dungeon"
+                },
+                {
+                  "id": "41-17",
+                  "text": "He shaves himself, changes his clothes, and goes to Pharaoh",
+                  "themes": ["preparation", "transformation", "cultural adaptation"]
+                },
+                {
+                  "id": "41-18",
+                  "text": "Pharaoh says to Joseph: 'I have had a dream and no one can interpret it. I have heard you can interpret dreams'",
+                  "themes": ["royal acknowledgment", "reputation", "opportunity"]
+                },
+                {
+                  "id": "41-19",
+                  "text": "Joseph answers: 'I cannot do it, but God will give Pharaoh a favorable answer'",
+                  "themes": ["humility", "God's glory", "faith"],
+                  "keyDetail": "Joseph credits God, not himself"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Joseph's Interpretation",
+              "verseRange": "Genesis 41:17-36",
+              "plotPoints": [
+                {
+                  "id": "41-20",
+                  "text": "Pharaoh recounts both dreams to Joseph",
+                  "themes": ["repetition of dreams"]
+                },
+                {
+                  "id": "41-21",
+                  "text": "Joseph tells Pharaoh: 'Pharaoh's dreams mean the same thing. God has revealed to Pharaoh what he is about to do'",
+                  "themes": ["unified meaning", "divine revelation", "future revealed"]
+                },
+                {
+                  "id": "41-22",
+                  "text": "'The seven good cows are seven years, and the seven good heads are seven years - it is one dream'",
+                  "themes": ["interpretation", "time period", "unity"]
+                },
+                {
+                  "id": "41-23",
+                  "text": "'The seven thin and ugly cows that came up after them are seven years, and the seven worthless heads scorched by the east wind are seven years of famine'",
+                  "themes": ["interpretation", "famine predicted"]
+                },
+                {
+                  "id": "41-24",
+                  "text": "'It is just as I told Pharaoh: God has shown Pharaoh what he is about to do'",
+                  "themes": ["emphasis", "divine origin"]
+                },
+                {
+                  "id": "41-25",
+                  "text": "'Seven years of great abundance are coming throughout the land of Egypt'",
+                  "themes": ["abundance", "blessing", "prosperity"],
+                  "keyDetail": "Seven years of plenty coming"
+                },
+                {
+                  "id": "41-26",
+                  "text": "'But seven years of famine will follow them - all the abundance in Egypt will be forgotten, and the famine will ravage the land'",
+                  "themes": ["famine", "loss", "devastation"],
+                  "keyDetail": "Seven years of famine following"
+                },
+                {
+                  "id": "41-27",
+                  "text": "'The abundance will not be remembered because the famine that follows will be so severe'",
+                  "themes": ["severity", "complete loss"]
+                },
+                {
+                  "id": "41-28",
+                  "text": "'The dream came to Pharaoh twice because the matter has been determined by God, and God will carry it out soon'",
+                  "themes": ["double dream meaning", "divine certainty", "imminent fulfillment"],
+                  "keyDetail": "Double dream = certainty and soon fulfillment"
+                },
+                {
+                  "id": "41-29",
+                  "text": "Joseph advises: 'Let Pharaoh look for a discerning and wise man and put him in charge of the land of Egypt'",
+                  "themes": ["wisdom", "counsel", "leadership needed"]
+                },
+                {
+                  "id": "41-30",
+                  "text": "'Let Pharaoh appoint commissioners over the land to take a fifth of the harvest of Egypt during the seven years of abundance'",
+                  "themes": ["administrative structure", "preparation", "wisdom"],
+                  "keyDetail": "20% tax during abundance"
+                },
+                {
+                  "id": "41-31",
+                  "text": "'They should collect all the food of these good years and store up grain under Pharaoh's authority, to be kept in the cities for food'",
+                  "themes": ["storage", "preservation", "planning"]
+                },
+                {
+                  "id": "41-32",
+                  "text": "'This food should be held in reserve for the country, to be used during the seven years of famine that will come upon Egypt, so that the country may not be ruined by the famine'",
+                  "themes": ["preparation", "salvation through planning"],
+                  "keyDetail": "Joseph proposes salvation plan"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Joseph Made Second-in-Command",
+              "verseRange": "Genesis 41:37-57",
+              "plotPoints": [
+                {
+                  "id": "41-33",
+                  "text": "The plan seems good to Pharaoh and all his officials",
+                  "themes": ["acceptance", "wisdom recognized"]
+                },
+                {
+                  "id": "41-34",
+                  "text": "Pharaoh asks his officials: 'Can we find anyone like this man, one in whom is the Spirit of God?'",
+                  "themes": ["recognition of God's Spirit", "uniqueness"],
+                  "keyDetail": "Pharaoh recognizes God's Spirit in Joseph"
+                },
+                {
+                  "id": "41-35",
+                  "text": "Pharaoh says to Joseph: 'Since God has made all this known to you, there is no one so discerning and wise as you'",
+                  "themes": ["acknowledgment", "wisdom recognized"]
+                },
+                {
+                  "id": "41-36",
+                  "text": "'You shall be in charge of my palace, and all my people are to submit to your orders. Only with respect to the throne will I be greater than you'",
+                  "themes": ["authority given", "second-in-command", "exaltation"],
+                  "keyDetail": "Joseph made second only to Pharaoh"
+                },
+                {
+                  "id": "41-37",
+                  "text": "Pharaoh says: 'I hereby put you in charge of the whole land of Egypt'",
+                  "themes": ["total authority", "national leadership"]
+                },
+                {
+                  "id": "41-38",
+                  "text": "Pharaoh removes his signet ring and puts it on Joseph's finger",
+                  "themes": ["authority transfer", "seal of power"],
+                  "keyDetail": "Signet ring = full authority"
+                },
+                {
+                  "id": "41-39",
+                  "text": "He dresses Joseph in robes of fine linen and puts a gold chain around his neck",
+                  "themes": ["royal garments", "honor", "third garment"],
+                  "keyDetail": "Third garment - this one of honor"
+                },
+                {
+                  "id": "41-40",
+                  "text": "He has Joseph ride in a chariot as his second-in-command, and people shout 'Bow down!' before him",
+                  "themes": ["public recognition", "honor", "dreams fulfilled"],
+                  "keyDetail": "People bowing - first dream fulfilled"
+                },
+                {
+                  "id": "41-41",
+                  "text": "Pharaoh declares: 'I am Pharaoh, but without your word no one will lift hand or foot in all Egypt'",
+                  "themes": ["total authority confirmed", "power"]
+                },
+                {
+                  "id": "41-42",
+                  "text": "Pharaoh gives Joseph the name Zaphenath-paneah",
+                  "themes": ["Egyptian name", "new identity"],
+                  "keyDetail": "Egyptian name meaning 'God speaks and lives'"
+                },
+                {
+                  "id": "41-43",
+                  "text": "Pharaoh gives him Asenath daughter of Potiphera, priest of On, to be his wife",
+                  "themes": ["marriage", "Egyptian integration", "family"]
+                },
+                {
+                  "id": "41-44",
+                  "text": "Joseph was thirty years old when he entered Pharaoh's service",
+                  "themes": ["age milestone"],
+                  "keyDetail": "Joseph is 30 - 13 years since pit"
+                },
+                {
+                  "id": "41-45",
+                  "text": "Joseph goes out from Pharaoh's presence and travels throughout Egypt",
+                  "themes": ["active leadership", "inspection", "administration"]
+                },
+                {
+                  "id": "41-46",
+                  "text": "During the seven years of abundance the land produces plentifully",
+                  "themes": ["fulfillment of prophecy", "abundance"]
+                },
+                {
+                  "id": "41-47",
+                  "text": "Joseph collects all the food produced during those seven years in Egypt and stores it in the cities",
+                  "themes": ["diligence", "preparation", "faithfulness"]
+                },
+                {
+                  "id": "41-48",
+                  "text": "He stores up grain like sand of the sea - so much that he stops measuring because it is beyond measure",
+                  "themes": ["abundance", "immeasurable blessing"]
+                },
+                {
+                  "id": "41-49",
+                  "text": "Before the years of famine, two sons are born to Joseph and Asenath",
+                  "themes": ["family", "blessing", "sons"]
+                },
+                {
+                  "id": "41-50",
+                  "text": "Joseph names the firstborn Manasseh: 'God has made me forget all my trouble and all my father's household'",
+                  "themes": ["forgetting pain", "moving forward", "healing"],
+                  "keyDetail": "Manasseh = 'causing to forget'"
+                },
+                {
+                  "id": "41-51",
+                  "text": "The second son he names Ephraim: 'God has made me fruitful in the land of my suffering'",
+                  "themes": ["fruitfulness", "redemption of suffering", "blessing"],
+                  "keyDetail": "Ephraim = 'fruitful' - fruitful in suffering"
+                },
+                {
+                  "id": "41-52",
+                  "text": "The seven years of abundance in Egypt come to an end",
+                  "themes": ["transition", "prophecy fulfilled"]
+                },
+                {
+                  "id": "41-53",
+                  "text": "The seven years of famine begin, just as Joseph said",
+                  "themes": ["prophecy fulfilled", "accuracy confirmed"]
+                },
+                {
+                  "id": "41-54",
+                  "text": "There is famine in all lands, but in Egypt there is food",
+                  "themes": ["contrast", "Egypt's unique position", "Joseph's wisdom vindicated"]
+                },
+                {
+                  "id": "41-55",
+                  "text": "When all Egypt begins to feel the famine, the people cry to Pharaoh for food",
+                  "themes": ["need", "desperation"]
+                },
+                {
+                  "id": "41-56",
+                  "text": "Pharaoh tells all the Egyptians: 'Go to Joseph and do what he tells you'",
+                  "themes": ["authority acknowledged", "trust in Joseph"],
+                  "keyDetail": "All Egypt directed to Joseph"
+                },
+                {
+                  "id": "41-57",
+                  "text": "Joseph opens all the storehouses and sells grain to the Egyptians",
+                  "themes": ["provision", "salvation through preparation"]
+                },
+                {
+                  "id": "41-58",
+                  "text": "And all the world comes to Egypt to buy grain from Joseph, because the famine is severe everywhere",
+                  "themes": ["international impact", "Joseph as world savior"],
+                  "keyDetail": "All nations come to Joseph for survival"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "partNumber": 3,
+      "partTitle": "Reconciliation with Brothers",
+      "chapters": [
+        {
+          "chapterNumber": 42,
+          "chapterTitle": "First Journey to Egypt",
+          "sections": [
+            {
+              "sectionTitle": "Brothers Sent to Egypt",
+              "verseRange": "Genesis 42:1-5",
+              "plotPoints": [
+                {
+                  "id": "42-1",
+                  "text": "Jacob learns there is grain in Egypt and asks his sons: 'Why do you sit here looking at one another?'",
+                  "themes": ["inaction", "need", "initiative"]
+                },
+                {
+                  "id": "42-2",
+                  "text": "'I have heard there is grain in Egypt. Go down there and buy some for us, so we may live and not die'",
+                  "themes": ["survival", "desperation", "command"]
+                },
+                {
+                  "id": "42-3",
+                  "text": "Ten of Joseph's brothers go down to buy grain from Egypt",
+                  "themes": ["obedience", "journey", "ten brothers"]
+                },
+                {
+                  "id": "42-4",
+                  "text": "But Jacob does not send Benjamin, Joseph's brother, with the others because he fears harm might come to him",
+                  "themes": ["protection", "favoritism continues", "fear"],
+                  "keyDetail": "Benjamin kept back - Jacob's lingering fear"
+                },
+                {
+                  "id": "42-5",
+                  "text": "Israel's sons are among those who go to buy grain, for there is famine in the land of Canaan also",
+                  "themes": ["widespread famine", "shared suffering"]
+                }
+              ]
+            },
+            {
+              "sectionTitle": "The Brothers Meet Joseph",
+              "verseRange": "Genesis 42:6-17",
+              "plotPoints": [
+                {
+                  "id": "42-6",
+                  "text": "Joseph is governor of the land - the one who sells grain to all its people",
+                  "themes": ["Joseph's position", "authority"]
+                },
+                {
+                  "id": "42-7",
+                  "text": "When Joseph's brothers arrive, they bow down to him with their faces to the ground",
+                  "themes": ["bowing", "dreams fulfilled", "irony"],
+                  "keyDetail": "Brothers bow - first dream fulfilled exactly"
+                },
+                {
+                  "id": "42-8",
+                  "text": "Joseph recognizes his brothers, but they do not recognize him",
+                  "themes": ["recognition", "concealment", "transformation"],
+                  "keyDetail": "Joseph knows them, they don't know him"
+                },
+                {
+                  "id": "42-9",
+                  "text": "Joseph remembers his dreams about them and says: 'You are spies! You have come to see where our land is vulnerable'",
+                  "themes": ["accusation", "testing", "dreams remembered"],
+                  "keyDetail": "Joseph remembers his dreams in this moment"
+                },
+                {
+                  "id": "42-10",
+                  "text": "They answer: 'No, my lord! Your servants have come to buy food'",
+                  "themes": ["defense", "calling him lord"]
+                },
+                {
+                  "id": "42-11",
+                  "text": "'We are all sons of one man. Your servants are honest men, not spies'",
+                  "themes": ["family claim", "honesty claimed"]
+                },
+                {
+                  "id": "42-12",
+                  "text": "Joseph insists: 'No! You have come to see where our land is vulnerable'",
+                  "themes": ["repeated accusation", "pressure"]
+                },
+                {
+                  "id": "42-13",
+                  "text": "They reply: 'Your servants are twelve brothers, sons of one man in Canaan. The youngest is now with our father, and one is no more'",
+                  "themes": ["family revealed", "Joseph mentioned", "Benjamin mentioned"],
+                  "keyDetail": "'One is no more' - they admit their crime indirectly"
+                },
+                {
+                  "id": "42-14",
+                  "text": "Joseph says: 'It is just as I said - you are spies!'",
+                  "themes": ["insistence", "testing continues"]
+                },
+                {
+                  "id": "42-15",
+                  "text": "'This is how you will be tested: As surely as Pharaoh lives, you will not leave unless your youngest brother comes here'",
+                  "themes": ["test announced", "Benjamin required"],
+                  "keyDetail": "Joseph demands to see Benjamin"
+                },
+                {
+                  "id": "42-16",
+                  "text": "'Send one of you to get your brother while the rest are kept in prison, so your words may be tested'",
+                  "themes": ["test structure", "imprisonment threat"]
+                },
+                {
+                  "id": "42-17",
+                  "text": "He puts them all in custody for three days",
+                  "themes": ["imprisonment", "three days", "experiencing Joseph's suffering"],
+                  "keyDetail": "Brothers experience prison - taste of Joseph's suffering"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "The Brothers' Guilt Emerges",
+              "verseRange": "Genesis 42:18-28",
+              "plotPoints": [
+                {
+                  "id": "42-18",
+                  "text": "On the third day, Joseph says: 'Do this and you will live, for I fear God'",
+                  "themes": ["fear of God", "mercy", "hope"],
+                  "keyDetail": "Joseph reveals his fear of God"
+                },
+                {
+                  "id": "42-19",
+                  "text": "'If you are honest, let one brother remain here in prison while the rest go and take grain back for your starving households'",
+                  "themes": ["modified plan", "mercy shown"]
+                },
+                {
+                  "id": "42-20",
+                  "text": "'But you must bring your youngest brother to me so your words can be verified and you may not die'",
+                  "themes": ["Benjamin required", "verification"]
+                },
+                {
+                  "id": "42-21",
+                  "text": "They agree to this",
+                  "themes": ["acceptance"]
+                },
+                {
+                  "id": "42-22",
+                  "text": "They say to one another: 'Surely we are being punished for our brother. We saw his anguish when he pleaded with us, but we would not listen - that's why this distress has come on us'",
+                  "themes": ["guilt emerges", "confession", "recognition of justice"],
+                  "keyDetail": "Brothers confess - Joseph pleaded with them"
+                },
+                {
+                  "id": "42-23",
+                  "text": "Reuben replies: 'Didn't I tell you not to sin against the boy? But you wouldn't listen! Now we must account for his blood'",
+                  "themes": ["Reuben's defense", "blood guilt", "accountability"]
+                },
+                {
+                  "id": "42-24",
+                  "text": "They do not realize Joseph understands them, since he is using an interpreter",
+                  "themes": ["concealment", "overhearing"],
+                  "keyDetail": "Joseph understands everything they say"
+                },
+                {
+                  "id": "42-25",
+                  "text": "Joseph turns away from them and weeps",
+                  "themes": ["emotion", "hidden tears", "compassion"],
+                  "keyDetail": "First time Joseph weeps hearing their confession"
+                },
+                {
+                  "id": "42-26",
+                  "text": "Then he turns back and speaks to them again, and has Simeon taken and bound before their eyes",
+                  "themes": ["Simeon bound", "hostage taken"],
+                  "keyDetail": "Simeon chosen (perhaps most aggressive against Joseph?)"
+                },
+                {
+                  "id": "42-27",
+                  "text": "Joseph orders his servants to fill the brothers' bags with grain, return each man's silver to his sack, and give them provisions for the journey",
+                  "themes": ["secret generosity", "silver returned", "provision"]
+                },
+                {
+                  "id": "42-28",
+                  "text": "They load the grain on their donkeys and depart",
+                  "themes": ["departure", "journey home"]
+                },
+                {
+                  "id": "42-29",
+                  "text": "At the place where they stop for the night, one opens his sack to feed his donkey and sees his silver in the top of the sack",
+                  "themes": ["discovery", "surprise"]
+                },
+                {
+                  "id": "42-30",
+                  "text": "He says to his brothers: 'My silver has been returned! Here it is in my sack!'",
+                  "themes": ["alarm", "confusion"]
+                },
+                {
+                  "id": "42-31",
+                  "text": "Their hearts sink and they turn trembling to one another: 'What is this that God has done to us?'",
+                  "themes": ["fear", "God's hand recognized", "guilt"],
+                  "keyDetail": "They recognize God's involvement"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Reporting to Jacob",
+              "verseRange": "Genesis 42:29-38",
+              "plotPoints": [
+                {
+                  "id": "42-32",
+                  "text": "When they return to Jacob in Canaan, they tell him all that happened",
+                  "themes": ["report", "confession to father"]
+                },
+                {
+                  "id": "42-33",
+                  "text": "'The man who is lord over the land spoke harshly to us and treated us as spies'",
+                  "themes": ["description of treatment"]
+                },
+                {
+                  "id": "42-34",
+                  "text": "'We told him we are honest men, not spies - twelve brothers, sons of one father. One is no more, and the youngest is now with our father in Canaan'",
+                  "themes": ["family explanation"]
+                },
+                {
+                  "id": "42-35",
+                  "text": "'The man said to bring our youngest brother to prove we are honest, then we could have Simeon back and trade freely in the land'",
+                  "themes": ["condition explained"]
+                },
+                {
+                  "id": "42-36",
+                  "text": "As they empty their sacks, each man's pouch of silver is in his sack",
+                  "themes": ["discovery", "all silver returned"]
+                },
+                {
+                  "id": "42-37",
+                  "text": "When they and their father see the pouches of silver, they are afraid",
+                  "themes": ["fear", "confusion"]
+                },
+                {
+                  "id": "42-38",
+                  "text": "Jacob says: 'You have deprived me of my children. Joseph is no more and Simeon is no more, and now you want to take Benjamin. Everything is against me!'",
+                  "themes": ["grief", "despair", "loss"],
+                  "keyDetail": "Jacob's cry of loss - 'Everything is against me!'"
+                },
+                {
+                  "id": "42-39",
+                  "text": "Reuben says: 'You may put both my sons to death if I do not bring Benjamin back to you. Entrust him to my care and I will bring him back'",
+                  "themes": ["desperate pledge", "responsibility offered"]
+                },
+                {
+                  "id": "42-40",
+                  "text": "But Jacob replies: 'My son will not go down there with you. His brother is dead and he is the only one left. If harm comes to him on the journey, you will bring my gray head down to Sheol in sorrow'",
+                  "themes": ["refusal", "protection of Benjamin", "grief for Joseph"],
+                  "keyDetail": "Jacob refuses - still mourning Joseph"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapterNumber": 43,
+          "chapterTitle": "The Brothers' Second Journey with Benjamin",
+          "sections": [
+            {
+              "sectionTitle": "Famine Forces Return",
+              "verseRange": "Genesis 43:1-14",
+              "plotPoints": [
+                {
+                  "id": "43-1",
+                  "text": "The famine in the land is severe",
+                  "themes": ["famine", "desperation", "need"]
+                },
+                {
+                  "id": "43-2",
+                  "text": "When they finish eating the grain from Egypt, Jacob tells them 'Go back and buy us some food'",
+                  "themes": ["survival", "command"]
+                },
+                {
+                  "id": "43-3",
+                  "text": "Judah reminds him: 'The man specifically warned us: You will not see me again unless your brother is with you'",
+                  "themes": ["warning remembered", "Judah speaks", "condition"]
+                },
+                {
+                  "id": "43-4",
+                  "text": "'If you will send Benjamin, we will go buy food. But if not, we will not go, for the man said we cannot see him without our brother'",
+                  "themes": ["ultimatum", "Benjamin required"]
+                },
+                {
+                  "id": "43-5",
+                  "text": "Israel asks 'Why did you cause me this trouble by telling the man you had another brother?'",
+                  "themes": ["blame", "frustration"]
+                },
+                {
+                  "id": "43-6",
+                  "text": "They explain 'The man kept asking about us and our family: Is your father still alive? Do you have another brother?'",
+                  "themes": ["defense", "explanation"]
+                },
+                {
+                  "id": "43-7",
+                  "text": "'We answered him accordingly. How could we know he would say Bring your brother here?'",
+                  "themes": ["innocence claimed", "unforeseen consequence"]
+                },
+                {
+                  "id": "43-8",
+                  "text": "Judah says to Israel 'Send the boy with me. We will go at once so that we may live and not die - we, you, and our dependents'",
+                  "themes": ["Judah's leadership", "urgency", "survival"],
+                  "keyDetail": "Judah emerges as leader and spokesman"
+                },
+                {
+                  "id": "43-9",
+                  "text": "'I will be responsible for him. You can hold me personally accountable. If I do not bring him back, I will be guilty before you forever'",
+                  "themes": ["responsibility", "guarantee", "Judah's transformation"],
+                  "keyDetail": "Judah's pledge - complete opposite of his past"
+                },
+                {
+                  "id": "43-10",
+                  "text": "'If we had not delayed, we could have come back twice by now'",
+                  "themes": ["urgency", "time wasted"]
+                },
+                {
+                  "id": "43-11",
+                  "text": "Israel agrees and instructs them to take gifts: some of the best products - balm, honey, aromatic gum, resin, pistachios, almonds",
+                  "themes": ["gifts", "appeasement", "best offerings"]
+                },
+                {
+                  "id": "43-12",
+                  "text": "'Take twice as much silver - return the silver found in your bags, perhaps it was a mistake'",
+                  "themes": ["honesty", "integrity", "restitution"]
+                },
+                {
+                  "id": "43-13",
+                  "text": "'Take your brother and go back to the man at once'",
+                  "themes": ["surrender", "decision made"]
+                },
+                {
+                  "id": "43-14",
+                  "text": "Israel prays: 'May God Almighty grant you compassion before the man so he releases your other brother and Benjamin to you'",
+                  "themes": ["prayer", "hope", "surrender to God"]
+                },
+                {
+                  "id": "43-15",
+                  "text": "'As for me, if I am bereaved, I am bereaved'",
+                  "themes": ["acceptance", "surrender", "faith"],
+                  "keyDetail": "Jacob's ultimate surrender to God's will"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Meeting Joseph Again",
+              "verseRange": "Genesis 43:15-25",
+              "plotPoints": [
+                {
+                  "id": "43-16",
+                  "text": "The men take the gifts, double the amount of silver, and Benjamin",
+                  "themes": ["obedience", "preparation"]
+                },
+                {
+                  "id": "43-17",
+                  "text": "They make their way down to Egypt and stand before Joseph",
+                  "themes": ["journey", "arrival", "confrontation"]
+                },
+                {
+                  "id": "43-18",
+                  "text": "When Joseph sees Benjamin with them, he tells his steward 'Take the men to my house, slaughter an animal and prepare it, for they will eat with me at noon'",
+                  "themes": ["Benjamin seen", "feast prepared", "honor"],
+                  "keyDetail": "Joseph sees Benjamin and immediately plans feast"
+                },
+                {
+                  "id": "43-19",
+                  "text": "The steward does as Joseph says and brings them to Joseph's house",
+                  "themes": ["obedience", "honor given"]
+                },
+                {
+                  "id": "43-20",
+                  "text": "The men are afraid because they are taken to Joseph's house",
+                  "themes": ["fear", "misunderstanding"]
+                },
+                {
+                  "id": "43-21",
+                  "text": "They think 'We have been brought here because of the silver returned in our bags. He intends to attack us, seize us, and make us slaves'",
+                  "themes": ["fear", "guilt", "assumption of punishment"]
+                },
+                {
+                  "id": "43-22",
+                  "text": "They approach Joseph's steward and speak to him at the doorway",
+                  "themes": ["confession", "honesty"]
+                },
+                {
+                  "id": "43-23",
+                  "text": "They explain they came before to buy food, and when they opened their bags, each man's silver was there",
+                  "themes": ["honesty", "confession"]
+                },
+                {
+                  "id": "43-24",
+                  "text": "'We have brought it back with us and additional silver to buy food. We don't know who put the silver in our bags'",
+                  "themes": ["integrity", "innocence claimed"]
+                },
+                {
+                  "id": "43-25",
+                  "text": "The steward says 'Everything is all right. Don't be afraid. Your God and the God of your father has put treasure in your bags. I received your silver'",
+                  "themes": ["reassurance", "God credited", "grace"],
+                  "keyDetail": "Steward credits their God - Joseph's influence"
+                },
+                {
+                  "id": "43-26",
+                  "text": "The steward brings Simeon out to them",
+                  "themes": ["release", "reunion", "relief"]
+                },
+                {
+                  "id": "43-27",
+                  "text": "He brings the men into Joseph's house, gives them water to wash their feet, and feeds their donkeys",
+                  "themes": ["hospitality", "honor", "care"]
+                },
+                {
+                  "id": "43-28",
+                  "text": "They prepare their gift for Joseph's arrival at noon, since they hear they will eat there",
+                  "themes": ["preparation", "honor"]
+                }
+              ]
+            },
+            {
+              "sectionTitle": "The Feast",
+              "verseRange": "Genesis 43:26-34",
+              "plotPoints": [
+                {
+                  "id": "43-29",
+                  "text": "Joseph comes home - they bring him the gift and bow to the ground before him",
+                  "themes": ["bowing", "gift giving", "honor"],
+                  "keyDetail": "Brothers bow again - repeated fulfillment"
+                },
+                {
+                  "id": "43-30",
+                  "text": "He asks how they are and 'Is your elderly father you told me about well? Is he still alive?'",
+                  "themes": ["concern for father", "questions"]
+                },
+                {
+                  "id": "43-31",
+                  "text": "They answer 'Your servant our father is well. He is still alive' and bow down to honor him",
+                  "themes": ["report", "bowing again", "respect"]
+                },
+                {
+                  "id": "43-32",
+                  "text": "Joseph looks up and sees Benjamin, his mother's son",
+                  "themes": ["recognition", "full brother", "emotion"],
+                  "keyDetail": "Benjamin specifically identified as 'his mother's son'"
+                },
+                {
+                  "id": "43-33",
+                  "text": "He asks 'Is this your youngest brother you told me about?' and says 'May God be gracious to you, my son'",
+                  "themes": ["blessing", "affection", "emotion"]
+                },
+                {
+                  "id": "43-34",
+                  "text": "Joseph hurries out because he is overcome with emotion for his brother",
+                  "themes": ["emotion", "love", "self-control tested"],
+                  "keyDetail": "Second time Joseph weeps"
+                },
+                {
+                  "id": "43-35",
+                  "text": "He goes to a private room and weeps",
+                  "themes": ["weeping", "hidden emotion", "love for brother"]
+                },
+                {
+                  "id": "43-36",
+                  "text": "He washes his face, regains control, and comes out saying 'Serve the meal'",
+                  "themes": ["self-control", "composure", "purpose"]
+                },
+                {
+                  "id": "43-37",
+                  "text": "They serve him by himself, the brothers by themselves, and the Egyptians eating with him by themselves",
+                  "themes": ["separation", "cultural division", "hierarchy"]
+                },
+                {
+                  "id": "43-38",
+                  "text": "(Egyptians cannot eat with Hebrews - it is detestable to them)",
+                  "themes": ["cultural barrier", "prejudice", "division"],
+                  "keyDetail": "Cultural context - separation of peoples"
+                },
+                {
+                  "id": "43-39",
+                  "text": "The brothers are seated before Joseph in order from firstborn to youngest",
+                  "themes": ["supernatural knowledge", "order", "wonder"]
+                },
+                {
+                  "id": "43-40",
+                  "text": "They look at each other in astonishment",
+                  "themes": ["amazement", "confusion", "wonder"],
+                  "keyDetail": "How could he know their birth order?"
+                },
+                {
+                  "id": "43-41",
+                  "text": "Portions are served from Joseph's table - Benjamin's portion is five times larger than anyone else's",
+                  "themes": ["favoritism", "testing", "generosity"],
+                  "keyDetail": "Benjamin given five times more - testing brothers' jealousy"
+                },
+                {
+                  "id": "43-42",
+                  "text": "They eat and drink freely with Joseph",
+                  "themes": ["fellowship", "celebration", "joy"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapterNumber": 44,
+          "chapterTitle": "The Final Test - Joseph's Silver Cup",
+          "sections": [
+            {
+              "sectionTitle": "The Planted Cup",
+              "verseRange": "Genesis 44:1-13",
+              "plotPoints": [
+                {
+                  "id": "44-1",
+                  "text": "Joseph commands his steward: 'Fill the men's bags with as much food as they can carry'",
+                  "themes": ["generosity", "preparation for test"]
+                },
+                {
+                  "id": "44-2",
+                  "text": "'Put each one's silver at the top of his bag'",
+                  "themes": ["gift", "grace"]
+                },
+                {
+                  "id": "44-3",
+                  "text": "'Put my cup, the silver one, at the top of the youngest one's bag along with his grain silver'",
+                  "themes": ["test", "Benjamin targeted", "setup"],
+                  "keyDetail": "The silver cup - Joseph's personal item planted"
+                },
+                {
+                  "id": "44-4",
+                  "text": "The steward does as Joseph tells him",
+                  "themes": ["obedience", "execution of plan"]
+                },
+                {
+                  "id": "44-5",
+                  "text": "At morning light, the men are sent off with their donkeys",
+                  "themes": ["departure", "innocence", "freedom brief"]
+                },
+                {
+                  "id": "44-6",
+                  "text": "They have not gone far from the city when Joseph tells his steward: 'Get up and pursue those men'",
+                  "themes": ["pursuit", "plan unfolds"]
+                },
+                {
+                  "id": "44-7",
+                  "text": "'When you overtake them, say: Why have you repaid evil for good? Isn't this the cup my master drinks from and uses for divination? What you have done is wrong'",
+                  "themes": ["accusation", "divination mentioned", "ingratitude charged"]
+                },
+                {
+                  "id": "44-8",
+                  "text": "The steward overtakes them and repeats these words",
+                  "themes": ["confrontation", "accusation delivered"]
+                },
+                {
+                  "id": "44-9",
+                  "text": "Brothers respond 'Why does my lord say these things? Your servants could not possibly do such a thing'",
+                  "themes": ["denial", "innocence claimed", "shock"]
+                },
+                {
+                  "id": "44-10",
+                  "text": "'We even brought back the silver from our bags - why would we steal silver or gold from your master's house?'",
+                  "themes": ["logic", "defense", "integrity referenced"]
+                },
+                {
+                  "id": "44-11",
+                  "text": "'If it is found with one of your servants, he must die, and the rest of us will become my lord's slaves'",
+                  "themes": ["overconfidence", "severe oath", "unaware"],
+                  "keyDetail": "Brothers make death oath - echoes Jacob's rash oath"
+                },
+                {
+                  "id": "44-12",
+                  "text": "Steward says 'Let it be as you say, but only the one with whom it is found will be my slave. The rest will be blameless'",
+                  "themes": ["mercy in judgment", "modified terms"]
+                },
+                {
+                  "id": "44-13",
+                  "text": "Each man quickly lowers his sack to the ground and opens it",
+                  "themes": ["confidence", "openness", "innocence"]
+                },
+                {
+                  "id": "44-14",
+                  "text": "The steward searches, beginning with the oldest and ending with the youngest",
+                  "themes": ["suspense", "systematic search", "tension building"],
+                  "keyDetail": "Order builds suspense - Benjamin searched last"
+                },
+                {
+                  "id": "44-15",
+                  "text": "The cup is found in Benjamin's sack",
+                  "themes": ["discovery", "catastrophe", "test moment"],
+                  "keyDetail": "The cup found - moment of crisis"
+                },
+                {
+                  "id": "44-16",
+                  "text": "They tear their clothes in grief",
+                  "themes": ["grief", "despair", "ritual mourning"]
+                },
+                {
+                  "id": "44-17",
+                  "text": "Each man loads his donkey and they return to the city",
+                  "themes": ["solidarity", "return together", "loyalty"],
+                  "keyDetail": "All return - they don't abandon Benjamin"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Judah's Plea",
+              "verseRange": "Genesis 44:14-34",
+              "plotPoints": [
+                {
+                  "id": "44-18",
+                  "text": "Judah and his brothers enter Joseph's house while he is still there",
+                  "themes": ["confrontation", "together"]
+                },
+                {
+                  "id": "44-19",
+                  "text": "They fall to the ground before him",
+                  "themes": ["bowing", "submission", "desperation"]
+                },
+                {
+                  "id": "44-20",
+                  "text": "Joseph asks 'What is this you have done? Didn't you know a man like me could uncover the truth by divination?'",
+                  "themes": ["accusation", "supernatural claim", "authority"]
+                },
+                {
+                  "id": "44-21",
+                  "text": "Judah replies 'What can we say to my lord? How can we plead? How can we justify ourselves?'",
+                  "themes": ["helplessness", "no defense", "surrender"],
+                  "keyDetail": "Judah speaks for all - leadership role"
+                },
+                {
+                  "id": "44-22",
+                  "text": "'God has exposed your servants' iniquity. We are now my lord's slaves - both we and the one in whose possession the cup was found'",
+                  "themes": ["confession", "divine justice recognized", "collective guilt"],
+                  "keyDetail": "Judah recognizes God's hand - their past sin exposed"
+                },
+                {
+                  "id": "44-23",
+                  "text": "Joseph says 'I would never do such a thing. The man in whose possession the cup was found will be my slave. The rest of you can go in peace to your father'",
+                  "themes": ["test intensified", "Benjamin alone", "choice offered"],
+                  "keyDetail": "Final test - will they abandon Benjamin?"
+                },
+                {
+                  "id": "44-24",
+                  "text": "Judah approaches Joseph and says 'My lord, please let your servant speak personally to you. Do not be angry with your servant'",
+                  "themes": ["courage", "approach", "respectful boldness"]
+                },
+                {
+                  "id": "44-25",
+                  "text": "Judah recounts how Joseph asked if they had a father or brother",
+                  "themes": ["recounting", "story retold"]
+                },
+                {
+                  "id": "44-26",
+                  "text": "They told him about their father, an old man, and a younger brother, child of his old age",
+                  "themes": ["family described"]
+                },
+                {
+                  "id": "44-27",
+                  "text": "'That brother's full brother is dead. He alone is left of his mother's sons, and his father loves him'",
+                  "themes": ["Joseph mentioned", "favoritism acknowledged", "loss"],
+                  "keyDetail": "'Full brother is dead' - speaking of Joseph to Joseph"
+                },
+                {
+                  "id": "44-28",
+                  "text": "Joseph told them to bring the brother so he could see him",
+                  "themes": ["requirement recalled"]
+                },
+                {
+                  "id": "44-29",
+                  "text": "They explained the boy cannot leave his father - if he does, his father will die",
+                  "themes": ["father's attachment", "danger"]
+                },
+                {
+                  "id": "44-30",
+                  "text": "But Joseph insisted they would not see him again unless the youngest brother came",
+                  "themes": ["insistence", "condition"]
+                },
+                {
+                  "id": "44-31",
+                  "text": "When they returned to their father, they reported Joseph's words",
+                  "themes": ["report home"]
+                },
+                {
+                  "id": "44-32",
+                  "text": "Their father told them to go buy more food",
+                  "themes": ["necessity"]
+                },
+                {
+                  "id": "44-33",
+                  "text": "They said they couldn't go unless Benjamin went with them",
+                  "themes": ["condition repeated"]
+                },
+                {
+                  "id": "44-34",
+                  "text": "Their father reminded them his wife bore him two sons",
+                  "themes": ["Rachel's sons", "special status"]
+                },
+                {
+                  "id": "44-35",
+                  "text": "'One left me, and I said he must have been torn to pieces. I have never seen him again'",
+                  "themes": ["Joseph mourned", "loss", "grief"],
+                  "keyDetail": "Jacob still believes Joseph was torn by beasts"
+                },
+                {
+                  "id": "44-36",
+                  "text": "'If you take this one from me too and anything happens to him, you will bring my gray hairs down to Sheol in sorrow'",
+                  "themes": ["threat to life", "father's love", "desperation"]
+                },
+                {
+                  "id": "44-37",
+                  "text": "Judah explains he became surety for the boy - 'If I do not bring him back, I will be guilty before my father forever'",
+                  "themes": ["oath recalled", "responsibility", "honor"]
+                },
+                {
+                  "id": "44-38",
+                  "text": "'Now please let your servant remain here as my lord's slave instead of the boy'",
+                  "themes": ["substitution", "sacrifice", "love"],
+                  "keyDetail": "Judah offers himself - complete transformation"
+                },
+                {
+                  "id": "44-39",
+                  "text": "'Let him go back with his brothers'",
+                  "themes": ["release requested", "self-sacrifice"]
+                },
+                {
+                  "id": "44-40",
+                  "text": "'For how can I go back to my father without the boy? I could not bear to see the grief that would overwhelm my father'",
+                  "themes": ["father's grief", "empathy", "transformation complete"],
+                  "keyDetail": "Judah's climactic plea - he has truly changed"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapterNumber": 45,
+          "chapterTitle": "Joseph Reveals Himself",
+          "sections": [
+            {
+              "sectionTitle": "The Revelation",
+              "verseRange": "Genesis 45:1-15",
+              "plotPoints": [
+                {
+                  "id": "45-1",
+                  "text": "Joseph can no longer control himself before all his attendants",
+                  "themes": ["emotion overwhelming", "breaking point", "climax"],
+                  "keyDetail": "Joseph reaches his emotional limit"
+                },
+                {
+                  "id": "45-2",
+                  "text": "He calls out 'Send everyone away from me!'",
+                  "themes": ["privacy needed", "intimate moment", "vulnerability"]
+                },
+                {
+                  "id": "45-3",
+                  "text": "No one is with Joseph when he reveals himself to his brothers",
+                  "themes": ["privacy", "family moment", "protection of brothers"],
+                  "keyDetail": "Joseph protects his brothers' dignity - sends Egyptians away"
+                },
+                {
+                  "id": "45-4",
+                  "text": "He weeps so loudly that the Egyptians hear it, and Pharaoh's household hears about it",
+                  "themes": ["weeping", "emotion released", "years of pain"],
+                  "keyDetail": "Third and most intense weeping"
+                },
+                {
+                  "id": "45-5",
+                  "text": "Joseph says to his brothers 'I am Joseph! Is my father still living?'",
+                  "themes": ["revelation", "identity revealed", "concern for father"],
+                  "keyDetail": "The moment - 'I am Joseph!'"
+                },
+                {
+                  "id": "45-6",
+                  "text": "His brothers cannot answer him because they are terrified in his presence",
+                  "themes": ["terror", "recognition", "fear of judgment"],
+                  "keyDetail": "Brothers terrified - they recognize him and remember their crime"
+                },
+                {
+                  "id": "45-7",
+                  "text": "Joseph says 'Please, come near me' - they come near",
+                  "themes": ["invitation", "grace", "overcoming fear"]
+                },
+                {
+                  "id": "45-8",
+                  "text": "He says 'I am Joseph, your brother, the one you sold into Egypt'",
+                  "themes": ["identity confirmed", "crime stated", "clarity"],
+                  "keyDetail": "Joseph states the truth plainly - 'you sold'"
+                },
+                {
+                  "id": "45-9",
+                  "text": "'And now don't be grieved or angry with yourselves for selling me here'",
+                  "themes": ["forgiveness", "grace", "release from guilt"],
+                  "keyDetail": "Immediate forgiveness offered"
+                },
+                {
+                  "id": "45-10",
+                  "text": "'Because God sent me ahead of you to preserve life'",
+                  "themes": ["divine purpose", "providence", "redemption"],
+                  "keyDetail": "Joseph's theology - God sent me"
+                },
+                {
+                  "id": "45-11",
+                  "text": "'For the famine has been in the land these two years, and there will be five more years without plowing or harvesting'",
+                  "themes": ["situation explained", "future revealed"]
+                },
+                {
+                  "id": "45-12",
+                  "text": "'God sent me ahead of you to establish you as a remnant within the land and to keep you alive by a great deliverance'",
+                  "themes": ["remnant", "salvation", "divine purpose"],
+                  "keyDetail": "Remnant theology - preserving the covenant line"
+                },
+                {
+                  "id": "45-13",
+                  "text": "'Therefore it was not you who sent me here, but God'",
+                  "themes": ["divine sovereignty", "forgiveness theology", "grace"],
+                  "keyDetail": "Joseph's famous statement - God's sovereignty over evil"
+                },
+                {
+                  "id": "45-14",
+                  "text": "'He has made me a father to Pharaoh, lord of his entire household, and ruler over all the land of Egypt'",
+                  "themes": ["position explained", "authority", "vindication"]
+                },
+                {
+                  "id": "45-15",
+                  "text": "Joseph throws his arms around Benjamin and weeps, and Benjamin weeps on his shoulder",
+                  "themes": ["reunion", "full brothers", "emotion", "love"],
+                  "keyDetail": "Embraces Benjamin - his full brother"
+                },
+                {
+                  "id": "45-16",
+                  "text": "Joseph kisses each of his brothers and weeps over them",
+                  "themes": ["reconciliation", "love", "forgiveness expressed"],
+                  "keyDetail": "Joseph kisses all his brothers - complete reconciliation"
+                },
+                {
+                  "id": "45-17",
+                  "text": "After this, his brothers talk with him",
+                  "themes": ["conversation restored", "relationship healing", "barrier broken"],
+                  "keyDetail": "They can finally speak - barrier of guilt removed"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Instructions to Bring Jacob",
+              "verseRange": "Genesis 45:9-13",
+              "plotPoints": [
+                {
+                  "id": "45-18",
+                  "text": "'Return quickly to my father and say: This is what your son Joseph says - God has made me lord of all Egypt'",
+                  "themes": ["message for father", "urgency", "authority"]
+                },
+                {
+                  "id": "45-19",
+                  "text": "'Come down to me without delay'",
+                  "themes": ["urgency", "invitation", "eagerness"]
+                },
+                {
+                  "id": "45-20",
+                  "text": "'You can settle in the land of Goshen and be near me - you, your children and grandchildren, your flocks, herds, and all you have'",
+                  "themes": ["provision", "proximity", "family unity"],
+                  "keyDetail": "Goshen offered - fertile land"
+                },
+                {
+                  "id": "45-21",
+                  "text": "'There I will sustain you, for there will be five more years of famine. Otherwise you, your household, and everything you have will become destitute'",
+                  "themes": ["provision", "salvation", "care"]
+                },
+                {
+                  "id": "45-22",
+                  "text": "'Look! Your eyes and my brother Benjamin's eyes can see that it is I, Joseph, who am speaking to you'",
+                  "themes": ["proof", "witness", "verification"]
+                },
+                {
+                  "id": "45-23",
+                  "text": "'Tell my father about all my glory in Egypt and about all you have seen. And bring my father here quickly'",
+                  "themes": ["glory", "honor", "urgency"]
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Pharaoh's Invitation",
+              "verseRange": "Genesis 45:16-24",
+              "plotPoints": [
+                {
+                  "id": "45-24",
+                  "text": "When the news reaches Pharaoh's palace that Joseph's brothers have come, Pharaoh and his servants are pleased",
+                  "themes": ["news spreads", "favor", "blessing"],
+                  "keyDetail": "Pharaoh pleased - Joseph's honor extends to family"
+                },
+                {
+                  "id": "45-25",
+                  "text": "Pharaoh tells Joseph 'Say to your brothers: Load your animals and go on back to the land of Canaan'",
+                  "themes": ["royal command", "assistance"]
+                },
+                {
+                  "id": "45-26",
+                  "text": "'Get your father and your families and come back to me. I will give you the best of the land of Egypt, and you can eat from the richness of the land'",
+                  "themes": ["generous offer", "best land", "provision"],
+                  "keyDetail": "Pharaoh offers the best land"
+                },
+                {
+                  "id": "45-27",
+                  "text": "'You are also commanded to tell them: Take wagons from the land of Egypt for your dependents and your wives and bring your father here'",
+                  "themes": ["wagons provided", "transport", "honor"]
+                },
+                {
+                  "id": "45-28",
+                  "text": "'Do not be concerned about your belongings, for the best of all the land of Egypt is yours'",
+                  "themes": ["abundance", "generosity", "provision"]
+                },
+                {
+                  "id": "45-29",
+                  "text": "The sons of Israel do this",
+                  "themes": ["obedience", "action"]
+                },
+                {
+                  "id": "45-30",
+                  "text": "Joseph gives them wagons as Pharaoh commanded, and supplies for the journey",
+                  "themes": ["provision", "care", "generosity"]
+                },
+                {
+                  "id": "45-31",
+                  "text": "He gives each of them changes of clothes, but to Benjamin he gives 300 pieces of silver and five changes of clothes",
+                  "themes": ["gifts", "Benjamin favored", "generosity"],
+                  "keyDetail": "Benjamin receives special portion - no jealousy from brothers"
+                },
+                {
+                  "id": "45-32",
+                  "text": "He sends his father ten donkeys carrying Egypt's best products and ten female donkeys loaded with grain, food, and provisions",
+                  "themes": ["generous provision", "honor to father", "abundance"]
+                },
+                {
+                  "id": "45-33",
+                  "text": "Joseph sends his brothers off and says to them 'Don't argue on the way'",
+                  "themes": ["warning", "peace", "wisdom"],
+                  "keyDetail": "Joseph knows his brothers - warns against blame and arguing"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Jacob Learns Joseph Lives",
+              "verseRange": "Genesis 45:25-28",
+              "plotPoints": [
+                {
+                  "id": "45-34",
+                  "text": "They go up from Egypt and come to their father Jacob in Canaan",
+                  "themes": ["journey home", "return"]
+                },
+                {
+                  "id": "45-35",
+                  "text": "They tell him 'Joseph is still alive, and he is ruler over all the land of Egypt'",
+                  "themes": ["announcement", "incredible news", "revelation"],
+                  "keyDetail": "The message delivered - Joseph lives!"
+                },
+                {
+                  "id": "45-36",
+                  "text": "Jacob is stunned - he does not believe them",
+                  "themes": ["disbelief", "shock", "too good to be true"],
+                  "keyDetail": "Jacob's initial disbelief - years of grief"
+                },
+                {
+                  "id": "45-37",
+                  "text": "They tell him everything Joseph said to them",
+                  "themes": ["full report", "testimony", "details"]
+                },
+                {
+                  "id": "45-38",
+                  "text": "When Jacob sees the wagons Joseph sent to transport him, his spirit revives",
+                  "themes": ["revival", "hope restored", "evidence"],
+                  "keyDetail": "Wagons = proof - Jacob's spirit revives"
+                },
+                {
+                  "id": "45-39",
+                  "text": "Israel says 'Enough! My son Joseph is still alive. I will go to see him before I die'",
+                  "themes": ["acceptance", "joy", "determination", "hope"],
+                  "keyDetail": "Jacob's response - 'Enough!' - he believes and will go"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "partNumber": 4,
+      "partTitle": "Settlement in Egypt and Final Days",
+      "chapters": [
+        {
+          "chapterNumber": 46,
+          "chapterTitle": "Jacob's Journey to Egypt",
+          "sections": [
+            {
+              "sectionTitle": "God's Vision at Beersheba",
+              "verseRange": "Genesis 46:1-7",
+              "plotPoints": [
+                {
+                  "id": "46-1",
+                  "text": "Israel sets out with all his possessions",
+                  "themes": ["journey", "obedience", "new chapter"]
+                },
+                {
+                  "id": "46-2",
+                  "text": "When he reaches Beersheba, he offers sacrifices to the God of his father Isaac",
+                  "themes": ["worship", "seeking God", "sacred pause"],
+                  "keyDetail": "Jacob stops to worship before entering Egypt"
+                },
+                {
+                  "id": "46-3",
+                  "text": "That night God speaks to Israel in a vision: 'Jacob, Jacob!'",
+                  "themes": ["divine vision", "God speaks", "confirmation"]
+                },
+                {
+                  "id": "46-4",
+                  "text": "Jacob answers 'Here I am'",
+                  "themes": ["response", "availability", "faith"]
+                },
+                {
+                  "id": "46-5",
+                  "text": "God says 'I am God, the God of your father. Do not be afraid to go down to Egypt'",
+                  "themes": ["divine identity", "fear addressed", "permission given"],
+                  "keyDetail": "God tells Jacob not to fear Egypt"
+                },
+                {
+                  "id": "46-6",
+                  "text": "'For I will make you into a great nation there'",
+                  "themes": ["promise", "multiplication", "purpose in Egypt"],
+                  "keyDetail": "Egypt is where Israel becomes a nation"
+                },
+                {
+                  "id": "46-7",
+                  "text": "'I will go down with you to Egypt, and I will also bring you back'",
+                  "themes": ["divine presence", "promise of return", "exodus foreshadowed"],
+                  "keyDetail": "God promises to bring them back - foreshadows Exodus"
+                },
+                {
+                  "id": "46-8",
+                  "text": "'Joseph will close your eyes'",
+                  "themes": ["death promise", "Joseph's presence", "comfort"],
+                  "keyDetail": "Jacob will die with Joseph present"
+                },
+                {
+                  "id": "46-9",
+                  "text": "Jacob leaves Beersheba - his sons transport him in the wagons Pharaoh sent",
+                  "themes": ["journey continues", "royal provision"]
+                },
+                {
+                  "id": "46-10",
+                  "text": "They take their livestock and possessions acquired in Canaan",
+                  "themes": ["full relocation", "all possessions"]
+                },
+                {
+                  "id": "46-11",
+                  "text": "Jacob brings all his offspring to Egypt",
+                  "themes": ["complete family", "migration"]
+                },
+                {
+                  "id": "46-12",
+                  "text": "[Detailed genealogy follows - 70 people total go to Egypt]",
+                  "themes": ["genealogy", "counting", "70 souls"],
+                  "keyDetail": "70 people enter Egypt - symbolic number"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Reunion in Goshen",
+              "verseRange": "Genesis 46:28-34",
+              "plotPoints": [
+                {
+                  "id": "46-13",
+                  "text": "Jacob sends Judah ahead to Joseph to prepare the way before him to Goshen",
+                  "themes": ["Judah's role", "preparation", "leadership"],
+                  "keyDetail": "Judah sent ahead - his leadership role continues"
+                },
+                {
+                  "id": "46-14",
+                  "text": "When they arrive in Goshen, Joseph hitches his chariot and goes to meet his father Israel",
+                  "themes": ["eagerness", "honor", "reunion"]
+                },
+                {
+                  "id": "46-15",
+                  "text": "Joseph presents himself to him, throws his arms around him, and weeps for a long time",
+                  "themes": ["reunion", "emotion", "embrace", "weeping"],
+                  "keyDetail": "Joseph weeps on his father's neck - their reunion"
+                },
+                {
+                  "id": "46-16",
+                  "text": "Israel says to Joseph 'At last I can die, now that I have seen your face and know you are still alive'",
+                  "themes": ["fulfillment", "readiness to die", "joy complete"],
+                  "keyDetail": "Jacob's life goal achieved - seeing Joseph alive"
+                },
+                {
+                  "id": "46-17",
+                  "text": "Joseph tells his brothers and father's family 'I will go up and inform Pharaoh'",
+                  "themes": ["protocol", "announcement", "preparation"]
+                },
+                {
+                  "id": "46-18",
+                  "text": "'I will tell him: My brothers and my father's family, who were in Canaan, have come to me'",
+                  "themes": ["report", "family acknowledged"]
+                },
+                {
+                  "id": "46-19",
+                  "text": "'The men are shepherds; they also raise livestock. They have brought their flocks and herds and all that they have'",
+                  "themes": ["occupation", "complete migration"]
+                },
+                {
+                  "id": "46-20",
+                  "text": "Joseph instructs them: 'When Pharaoh addresses you and asks What is your occupation?'",
+                  "themes": ["preparation", "coaching", "wisdom"]
+                },
+                {
+                  "id": "46-21",
+                  "text": "'You are to say: Your servants, both we and our fathers, have raised livestock from our youth until now'",
+                  "themes": ["instruction", "honesty", "heritage"]
+                },
+                {
+                  "id": "46-22",
+                  "text": "'Then you will be allowed to settle in the land of Goshen, since all shepherds are detestable to Egyptians'",
+                  "themes": ["cultural separation", "strategy", "protection"],
+                  "keyDetail": "Shepherds detestable to Egyptians - ensures separation in Goshen"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapterNumber": 47,
+          "chapterTitle": "Settlement in Goshen and Joseph's Administration",
+          "sections": [
+            {
+              "sectionTitle": "Meeting with Pharaoh",
+              "verseRange": "Genesis 47:1-12",
+              "plotPoints": [
+                {
+                  "id": "47-1",
+                  "text": "Joseph goes and tells Pharaoh 'My father and my brothers have come from Canaan with their sheep and cattle and all they own, and now they are in Goshen'",
+                  "themes": ["announcement", "report to king"]
+                },
+                {
+                  "id": "47-2",
+                  "text": "He takes five of his brothers and presents them to Pharaoh",
+                  "themes": ["presentation", "five chosen", "honor"]
+                },
+                {
+                  "id": "47-3",
+                  "text": "Pharaoh asks them 'What is your occupation?'",
+                  "themes": ["inquiry", "interest"]
+                },
+                {
+                  "id": "47-4",
+                  "text": "They answer 'Your servants, both we and our fathers, are shepherds'",
+                  "themes": ["honesty", "occupation declared", "heritage"]
+                },
+                {
+                  "id": "47-5",
+                  "text": "'We have come to stay in the land for a while because there is no pasture for your servants' sheep, since the famine is severe in Canaan'",
+                  "themes": ["explanation", "temporary intent stated", "need"]
+                },
+                {
+                  "id": "47-6",
+                  "text": "'Now please let your servants settle in the land of Goshen'",
+                  "themes": ["request", "Goshen specified"]
+                },
+                {
+                  "id": "47-7",
+                  "text": "Pharaoh says to Joseph 'Your father and brothers have come to you'",
+                  "themes": ["acknowledgment", "honor to Joseph"]
+                },
+                {
+                  "id": "47-8",
+                  "text": "'The land of Egypt is before you; settle your father and brothers in the best part of the land'",
+                  "themes": ["generosity", "best land offered", "honor"],
+                  "keyDetail": "Pharaoh offers the best land"
+                },
+                {
+                  "id": "47-9",
+                  "text": "'Let them live in the land of Goshen. If you know of any capable men among them, put them in charge of my livestock'",
+                  "themes": ["employment offer", "trust", "opportunity"]
+                },
+                {
+                  "id": "47-10",
+                  "text": "Joseph brings his father Jacob and presents him to Pharaoh",
+                  "themes": ["presentation", "honor", "meeting of generations"]
+                },
+                {
+                  "id": "47-11",
+                  "text": "Jacob blesses Pharaoh",
+                  "themes": ["blessing", "spiritual authority", "honor"],
+                  "keyDetail": "Jacob blesses Pharaoh - the lesser blessed by the greater"
+                },
+                {
+                  "id": "47-12",
+                  "text": "Pharaoh asks Jacob 'How many years have you lived?'",
+                  "themes": ["inquiry", "interest", "age"]
+                },
+                {
+                  "id": "47-13",
+                  "text": "Jacob says 'My pilgrimage has lasted 130 years'",
+                  "themes": ["age revealed", "pilgrimage language", "sojourner"],
+                  "keyDetail": "Jacob is 130 years old"
+                },
+                {
+                  "id": "47-14",
+                  "text": "'My years have been few and hard, not reaching the years my fathers lived during their pilgrimages'",
+                  "themes": ["hardship acknowledged", "comparison to fathers", "difficulty"],
+                  "keyDetail": "Jacob reflects on his difficult life"
+                },
+                {
+                  "id": "47-15",
+                  "text": "Jacob blesses Pharaoh again and departs from his presence",
+                  "themes": ["blessing", "departure", "spiritual authority"]
+                },
+                {
+                  "id": "47-16",
+                  "text": "Joseph settles his father and brothers in Egypt and gives them property in the best part of the land (Rameses)",
+                  "themes": ["settlement", "property given", "best land"],
+                  "keyDetail": "Settled in Rameses/Goshen"
+                },
+                {
+                  "id": "47-17",
+                  "text": "Joseph provides his father, brothers, and all his father's family with food for their dependents",
+                  "themes": ["provision", "care", "faithfulness"]
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Joseph's Administration During Famine",
+              "verseRange": "Genesis 47:13-26",
+              "plotPoints": [
+                {
+                  "id": "47-18",
+                  "text": "There is no food in all the land - the famine is very severe",
+                  "themes": ["famine", "severity", "crisis"]
+                },
+                {
+                  "id": "47-19",
+                  "text": "Egypt and Canaan are exhausted by the famine",
+                  "themes": ["exhaustion", "widespread suffering"]
+                },
+                {
+                  "id": "47-20",
+                  "text": "Joseph collects all the silver in Egypt and Canaan in exchange for grain",
+                  "themes": ["economic policy", "exchange", "administration"]
+                },
+                {
+                  "id": "47-21",
+                  "text": "Joseph brings the silver to Pharaoh's palace",
+                  "themes": ["stewardship", "faithfulness to Pharaoh"]
+                },
+                {
+                  "id": "47-22",
+                  "text": "When the silver runs out, all the Egyptians come to Joseph saying 'Give us food. Why should we die here in front of you? The silver is gone'",
+                  "themes": ["desperation", "need", "crisis"]
+                },
+                {
+                  "id": "47-23",
+                  "text": "Joseph says 'Give me your livestock. Since the silver is gone, I will give you food in exchange for your livestock'",
+                  "themes": ["exchange", "economic policy", "survival"]
+                },
+                {
+                  "id": "47-24",
+                  "text": "They bring their livestock to Joseph - he gives them food in exchange for horses, sheep, goats, cattle, and donkeys",
+                  "themes": ["exchange", "livestock traded"]
+                },
+                {
+                  "id": "47-25",
+                  "text": "He provides them with food that year in exchange for all their livestock",
+                  "themes": ["provision", "year sustained"]
+                },
+                {
+                  "id": "47-26",
+                  "text": "When that year is over, they come the next year saying 'We cannot hide from our lord that the silver is gone and all our livestock belongs to you'",
+                  "themes": ["honesty", "complete need", "nothing left"]
+                },
+                {
+                  "id": "47-27",
+                  "text": "'There is nothing left for our lord except our bodies and our land'",
+                  "themes": ["total dependence", "last resort"]
+                },
+                {
+                  "id": "47-28",
+                  "text": "'Why should we die here in front of you - both us and our land? Buy us and our land in exchange for food'",
+                  "themes": ["voluntary servitude", "survival", "exchange offered"]
+                },
+                {
+                  "id": "47-29",
+                  "text": "'Then we with our land will become Pharaoh's slaves. Give us seed so we can live and not die, and so the land won't become desolate'",
+                  "themes": ["servitude", "seed requested", "future hope"]
+                },
+                {
+                  "id": "47-30",
+                  "text": "Joseph buys all the land of Egypt for Pharaoh",
+                  "themes": ["centralization", "economic policy", "land purchase"]
+                },
+                {
+                  "id": "47-31",
+                  "text": "Every Egyptian sells his field because the famine is so severe",
+                  "themes": ["universal impact", "severity"]
+                },
+                {
+                  "id": "47-32",
+                  "text": "The land becomes Pharaoh's",
+                  "themes": ["consolidation", "royal ownership"]
+                },
+                {
+                  "id": "47-33",
+                  "text": "Joseph moves the people to the cities from one end of Egypt to the other",
+                  "themes": ["reorganization", "centralization", "population movement"]
+                },
+                {
+                  "id": "47-34",
+                  "text": "The only land Joseph doesn't buy is the priests' land - they receive rations from Pharaoh and live off what he gives them",
+                  "themes": ["exception", "priests protected", "religious provision"]
+                },
+                {
+                  "id": "47-35",
+                  "text": "Joseph says to the people 'Understand today that I have acquired you and your land for Pharaoh'",
+                  "themes": ["clarity", "ownership declared"]
+                },
+                {
+                  "id": "47-36",
+                  "text": "'Here is seed for you. Sow it in the land'",
+                  "themes": ["seed provided", "hope", "future"]
+                },
+                {
+                  "id": "47-37",
+                  "text": "'At harvest, give a fifth to Pharaoh, and four-fifths will be yours for seed and food'",
+                  "themes": ["tax policy", "20% tax", "sustainable system"],
+                  "keyDetail": "20% tax established - generous by ancient standards"
+                },
+                {
+                  "id": "47-38",
+                  "text": "They say 'You have saved our lives. We have found favor with you, our lord. We will be Pharaoh's slaves'",
+                  "themes": ["gratitude", "salvation acknowledged", "acceptance"]
+                },
+                {
+                  "id": "47-39",
+                  "text": "Joseph makes it a law still in effect today: a fifth of the produce belongs to Pharaoh (except the priests' land)",
+                  "themes": ["law established", "lasting policy", "exception noted"],
+                  "keyDetail": "Law lasting to Moses' time"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Jacob's Final Request",
+              "verseRange": "Genesis 47:27-31",
+              "plotPoints": [
+                {
+                  "id": "47-40",
+                  "text": "Israel settles in the land of Goshen - they acquire property, are fruitful, and multiply greatly",
+                  "themes": ["settlement", "fruitfulness", "multiplication", "blessing"],
+                  "keyDetail": "Israel multiplies in Goshen - beginning of becoming a nation"
+                },
+                {
+                  "id": "47-41",
+                  "text": "Jacob lives in Egypt seventeen years - his life span is 147 years",
+                  "themes": ["time passage", "age", "life span"],
+                  "keyDetail": "17 years in Egypt - same length as Joseph's youth with him"
+                },
+                {
+                  "id": "47-42",
+                  "text": "When the time approaches for Israel to die, he calls his son Joseph",
+                  "themes": ["approaching death", "final request", "summons"]
+                },
+                {
+                  "id": "47-43",
+                  "text": "He says 'If I have found favor with you, put your hand under my thigh and promise me you will deal kindly and faithfully with me'",
+                  "themes": ["oath", "solemnity", "ancient custom"],
+                  "keyDetail": "Hand under thigh - ancient oath gesture"
+                },
+                {
+                  "id": "47-44",
+                  "text": "'Do not bury me in Egypt'",
+                  "themes": ["burial request", "not Egypt", "promise land"],
+                  "keyDetail": "Jacob wants burial in Promised Land"
+                },
+                {
+                  "id": "47-45",
+                  "text": "'When I rest with my fathers, carry me away from Egypt and bury me in their burial place'",
+                  "themes": ["burial with fathers", "family tomb", "promise land"]
+                },
+                {
+                  "id": "47-46",
+                  "text": "Joseph answers 'I will do what you have asked'",
+                  "themes": ["agreement", "promise"]
+                },
+                {
+                  "id": "47-47",
+                  "text": "Jacob says 'Swear to me,' and Joseph swears to him",
+                  "themes": ["oath taken", "solemn promise"]
+                },
+                {
+                  "id": "47-48",
+                  "text": "Israel bows at the head of his bed",
+                  "themes": ["worship", "gratitude", "peace"],
+                  "keyDetail": "Jacob worships - peace knowing promise secured"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapterNumber": 48,
+          "chapterTitle": "Jacob Blesses Joseph's Sons",
+          "sections": [
+            {
+              "sectionTitle": "Jacob Adopts Ephraim and Manasseh",
+              "verseRange": "Genesis 48:1-7",
+              "plotPoints": [
+                {
+                  "id": "48-1",
+                  "text": "After these events, Joseph is told 'Your father is ill'",
+                  "themes": ["illness", "final days", "summons"]
+                },
+                {
+                  "id": "48-2",
+                  "text": "Joseph takes his two sons Manasseh and Ephraim with him",
+                  "themes": ["sons brought", "blessing sought", "generation"]
+                },
+                {
+                  "id": "48-3",
+                  "text": "Jacob is told 'Your son Joseph has come to you'",
+                  "themes": ["announcement", "Joseph's arrival"]
+                },
+                {
+                  "id": "48-4",
+                  "text": "Israel summons his strength and sits up in bed",
+                  "themes": ["effort", "dignity", "importance of moment"]
+                },
+                {
+                  "id": "48-5",
+                  "text": "Jacob tells Joseph 'God Almighty appeared to me at Luz in Canaan and blessed me'",
+                  "themes": ["recounting", "divine encounter", "Bethel remembered"]
+                },
+                {
+                  "id": "48-6",
+                  "text": "'He said I will make you fruitful and numerous; I will make many nations from you, and will give this land to your future offspring as an eternal possession'",
+                  "themes": ["covenant", "promise", "land", "multiplication"]
+                },
+                {
+                  "id": "48-7",
+                  "text": "Jacob says 'Your two sons born to you in Egypt before I came are now mine - Ephraim and Manasseh belong to me just as Reuben and Simeon do'",
+                  "themes": ["adoption", "elevation", "tribal status"],
+                  "keyDetail": "Joseph's sons adopted as Jacob's - become tribes of Israel"
+                },
+                {
+                  "id": "48-8",
+                  "text": "'Children born to you after them will be yours and listed under their brothers' names'",
+                  "themes": ["inheritance", "tribal organization"]
+                },
+                {
+                  "id": "48-9",
+                  "text": "Jacob recalls Rachel's death: 'When I was returning from Paddan, Rachel died near me in Canaan on the way. I buried her there'",
+                  "themes": ["memory", "grief", "Rachel remembered"],
+                  "keyDetail": "Jacob still grieves Rachel - speaks of her burial"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "The Crossed Blessing",
+              "verseRange": "Genesis 48:8-22",
+              "plotPoints": [
+                {
+                  "id": "48-10",
+                  "text": "Israel sees Joseph's sons and asks 'Who are these?'",
+                  "themes": ["weak eyes", "age", "inquiry"]
+                },
+                {
+                  "id": "48-11",
+                  "text": "Joseph says 'They are my sons God has given me here'",
+                  "themes": ["introduction", "God's gift", "sons identified"]
+                },
+                {
+                  "id": "48-12",
+                  "text": "Israel says 'Bring them to me so I can bless them'",
+                  "themes": ["blessing", "invitation", "patriarchal authority"]
+                },
+                {
+                  "id": "48-13",
+                  "text": "Israel's eyes are weak from old age - he can hardly see",
+                  "themes": ["age", "blindness", "limitation"],
+                  "keyDetail": "Jacob nearly blind like Isaac was"
+                },
+                {
+                  "id": "48-14",
+                  "text": "Joseph brings them close - Israel kisses and embraces them",
+                  "themes": ["affection", "embrace", "love"]
+                },
+                {
+                  "id": "48-15",
+                  "text": "Israel says to Joseph 'I never expected to see your face again, but now God has even let me see your offspring'",
+                  "themes": ["gratitude", "God's goodness", "unexpected blessing"],
+                  "keyDetail": "Jacob's gratitude - beyond hope to see Joseph's sons"
+                },
+                {
+                  "id": "48-16",
+                  "text": "Joseph takes them from Israel's knees and bows with his face to the ground",
+                  "themes": ["respect", "honor", "positioning for blessing"]
+                },
+                {
+                  "id": "48-17",
+                  "text": "Joseph positions them so Ephraim is on his left (toward Israel's right) and Manasseh on his right (toward Israel's left)",
+                  "themes": ["positioning", "traditional order", "firstborn priority"],
+                  "keyDetail": "Joseph positions Manasseh (firstborn) toward right hand"
+                },
+                {
+                  "id": "48-18",
+                  "text": "Israel stretches out his right hand and puts it on Ephraim's head (though he is younger)",
+                  "themes": ["crossed hands", "reversal", "prophetic act"],
+                  "keyDetail": "Jacob crosses his hands - deliberate reversal"
+                },
+                {
+                  "id": "48-19",
+                  "text": "Israel puts his left hand on Manasseh's head, crossing his hands intentionally",
+                  "themes": ["intentional", "crossing", "purpose"],
+                  "keyDetail": "Intentional crossing - not accidental"
+                },
+                {
+                  "id": "48-20",
+                  "text": "He blesses Joseph: 'May the God before whom my fathers Abraham and Isaac walked, the God who has been my shepherd all my life, the angel who has redeemed me from all harm - may he bless these boys'",
+                  "themes": ["blessing", "God as shepherd", "redemption", "generational faith"],
+                  "keyDetail": "Beautiful blessing - God as shepherd and redeemer"
+                },
+                {
+                  "id": "48-21",
+                  "text": "'May they be called by my name and the names of my fathers Abraham and Isaac, and may they grow to be numerous within the land'",
+                  "themes": ["name", "multiplication", "covenant continuity"]
+                },
+                {
+                  "id": "48-22",
+                  "text": "Joseph sees his father placing his right hand on Ephraim's head and is displeased",
+                  "themes": ["displeasure", "correction attempted", "tradition expected"]
+                },
+                {
+                  "id": "48-23",
+                  "text": "Joseph takes his father's hand to move it from Ephraim's head to Manasseh's",
+                  "themes": ["intervention", "correction", "proper order sought"]
+                },
+                {
+                  "id": "48-24",
+                  "text": "Joseph says 'Not that way, my father! This one is the firstborn. Put your right hand on his head'",
+                  "themes": ["protest", "tradition", "birthright"]
+                },
+                {
+                  "id": "48-25",
+                  "text": "But his father refuses: 'I know, my son, I know. He too will become a people and he too will be great'",
+                  "themes": ["refusal", "knowledge", "prophetic insight"],
+                  "keyDetail": "Jacob knows what he's doing - prophetic purpose"
+                },
+                {
+                  "id": "48-26",
+                  "text": "'Nevertheless, his younger brother will be greater than he, and his offspring will become a populous nation'",
+                  "themes": ["reversal", "younger greater", "prophecy"],
+                  "keyDetail": "Ephraim will be greater - pattern continues"
+                },
+                {
+                  "id": "48-27",
+                  "text": "He blesses them that day with the words: 'The nation Israel will invoke blessings by you, saying, May God make you like Ephraim and Manasseh'",
+                  "themes": ["blessing formula", "legacy", "standard blessing"],
+                  "keyDetail": "This becomes the blessing formula for children"
+                },
+                {
+                  "id": "48-28",
+                  "text": "He puts Ephraim before Manasseh",
+                  "themes": ["order established", "younger first", "reversal confirmed"]
+                },
+                {
+                  "id": "48-29",
+                  "text": "Israel says to Joseph 'I am about to die, but God will be with you and will bring you back to the land of your fathers'",
+                  "themes": ["death approaching", "God's presence", "return promised"],
+                  "keyDetail": "Promise of return to Canaan"
+                },
+                {
+                  "id": "48-30",
+                  "text": "'I am giving you one portion more than your brothers - the portion I took from the Amorites with my sword and bow'",
+                  "themes": ["extra portion", "double blessing", "Joseph honored"],
+                  "keyDetail": "Joseph receives double portion through his two sons"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapterNumber": 49,
+          "chapterTitle": "Jacob's Prophetic Blessings",
+          "sections": [
+            {
+              "sectionTitle": "The Twelve Blessings",
+              "verseRange": "Genesis 49:1-28",
+              "plotPoints": [
+                {
+                  "id": "49-1",
+                  "text": "Jacob calls his sons together: 'Gather around so I can tell you what will happen to you in the days to come'",
+                  "themes": ["prophecy", "gathering", "future revealed"],
+                  "keyDetail": "Prophetic blessings for end times"
+                },
+                {
+                  "id": "49-2",
+                  "text": "Reuben: Firstborn but unstable, will not excel (because of his sin with Bilhah)",
+                  "themes": ["firstborn", "loss of blessing", "instability", "sin's consequence"],
+                  "keyDetail": "Reuben loses firstborn privilege due to sin"
+                },
+                {
+                  "id": "49-3",
+                  "text": "Simeon and Levi: Instruments of violence, will be scattered in Israel (because of Shechem massacre)",
+                  "themes": ["violence", "scattering", "judgment"],
+                  "keyDetail": "Simeon and Levi judged for Shechem massacre"
+                },
+                {
+                  "id": "49-4",
+                  "text": "Judah: A lion's cub; the scepter will not depart from Judah until Shiloh comes (Messianic prophecy)",
+                  "themes": ["kingship", "Messiah", "lion", "scepter", "Shiloh"],
+                  "keyDetail": "Messianic prophecy - scepter and Shiloh (Messiah)"
+                },
+                {
+                  "id": "49-5",
+                  "text": "Zebulun: Will live by the seashore and be a harbor for ships",
+                  "themes": ["seashore", "trade", "geography"]
+                },
+                {
+                  "id": "49-6",
+                  "text": "Issachar: A strong donkey, will submit to forced labor",
+                  "themes": ["strength", "labor", "service"]
+                },
+                {
+                  "id": "49-7",
+                  "text": "Dan: Will judge his people, will be a snake by the road",
+                  "themes": ["judgment", "serpent", "danger"]
+                },
+                {
+                  "id": "49-8",
+                  "text": "Gad: Will be attacked by raiders but will attack their heels",
+                  "themes": ["attack", "defense", "warfare"]
+                },
+                {
+                  "id": "49-9",
+                  "text": "Asher: His food will be rich, will provide royal delicacies",
+                  "themes": ["abundance", "richness", "provision"]
+                },
+                {
+                  "id": "49-10",
+                  "text": "Naphtali: A doe set free, bears beautiful fawns",
+                  "themes": ["freedom", "beauty", "eloquence"]
+                },
+                {
+                  "id": "49-11",
+                  "text": "Joseph: A fruitful vine near a spring; archers attacked him but his bow remained steady",
+                  "themes": ["fruitfulness", "attack survived", "strength", "blessing"],
+                  "keyDetail": "Joseph's blessing - attacked but prevailed"
+                },
+                {
+                  "id": "49-12",
+                  "text": "Joseph receives extensive blessings: blessings of heaven, deep springs, breast and womb",
+                  "themes": ["abundant blessing", "heaven and earth", "fruitfulness"],
+                  "keyDetail": "Joseph receives most extensive blessing"
+                },
+                {
+                  "id": "49-13",
+                  "text": "Joseph's blessings surpass the blessings of the ancient mountains - they will rest on the head of the prince among his brothers",
+                  "themes": ["supreme blessing", "prince among brothers", "exalted"],
+                  "keyDetail": "Joseph called 'prince among his brothers'"
+                },
+                {
+                  "id": "49-14",
+                  "text": "Benjamin: A ravenous wolf; in the morning devours prey, in the evening divides plunder",
+                  "themes": ["warrior", "wolf", "fierce", "victory"]
+                },
+                {
+                  "id": "49-15",
+                  "text": "These are the twelve tribes of Israel, and this is what their father said when he blessed them",
+                  "themes": ["twelve tribes", "completion", "blessing"]
+                },
+                {
+                  "id": "49-16",
+                  "text": "He blessed them, each according to his appropriate blessing",
+                  "themes": ["individual blessing", "appropriate", "customized"],
+                  "keyDetail": "Each receives appropriate blessing"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Jacob's Final Instructions",
+              "verseRange": "Genesis 49:29-33",
+              "plotPoints": [
+                {
+                  "id": "49-17",
+                  "text": "Jacob commands them: 'I am about to be gathered to my people'",
+                  "themes": ["death approaching", "gathered to people", "reunion"]
+                },
+                {
+                  "id": "49-18",
+                  "text": "'Bury me with my fathers in the cave in the field of Ephron the Hittite'",
+                  "themes": ["burial command", "family tomb", "specific location"]
+                },
+                {
+                  "id": "49-19",
+                  "text": "'The cave in the field of Machpelah near Mamre in Canaan, which Abraham purchased as burial property'",
+                  "themes": ["Machpelah", "Abraham's purchase", "promised land"],
+                  "keyDetail": "Cave of Machpelah - family burial place"
+                },
+                {
+                  "id": "49-20",
+                  "text": "'Abraham and Sarah are buried there, Isaac and Rebekah are buried there, and I buried Leah there'",
+                  "themes": ["generations", "family tomb", "Leah mentioned"],
+                  "keyDetail": "Four generations buried there - Leah his wife"
+                },
+                {
+                  "id": "49-21",
+                  "text": "When Jacob finishes instructing his sons, he draws his feet into the bed",
+                  "themes": ["completion", "finality", "composure"]
+                },
+                {
+                  "id": "49-22",
+                  "text": "He takes his last breath and is gathered to his people",
+                  "themes": ["death", "gathered", "peaceful end"],
+                  "keyDetail": "Jacob dies peacefully after blessing sons"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapterNumber": 50,
+          "chapterTitle": "Jacob's Burial and Joseph's Death",
+          "sections": [
+            {
+              "sectionTitle": "Jacob's Death and Burial",
+              "verseRange": "Genesis 50:1-14",
+              "plotPoints": [
+                {
+                  "id": "50-1",
+                  "text": "Joseph throws himself on his father, weeps over him, and kisses him",
+                  "themes": ["grief", "love", "mourning"],
+                  "keyDetail": "Joseph's grief for his father"
+                },
+                {
+                  "id": "50-2",
+                  "text": "Joseph commands his servants who are physicians to embalm his father",
+                  "themes": ["embalming", "Egyptian practice", "preservation"]
+                },
+                {
+                  "id": "50-3",
+                  "text": "They embalm Israel - it takes forty days (the time required for embalming)",
+                  "themes": ["forty days", "process", "Egyptian custom"],
+                  "keyDetail": "Forty days for embalming - Egyptian practice"
+                },
+                {
+                  "id": "50-4",
+                  "text": "The Egyptians mourn for him seventy days",
+                  "themes": ["mourning", "seventy days", "honor"],
+                  "keyDetail": "Seventy days mourning - near royal honors"
+                },
+                {
+                  "id": "50-5",
+                  "text": "When the days of mourning pass, Joseph speaks to Pharaoh's household",
+                  "themes": ["request", "protocol", "respect"]
+                },
+                {
+                  "id": "50-6",
+                  "text": "'If I have found favor with you, tell Pharaoh that my father made me take an oath: I am about to die. You must bury me in the tomb I made for myself in Canaan'",
+                  "themes": ["oath", "burial request", "indirect communication"]
+                },
+                {
+                  "id": "50-7",
+                  "text": "'Now let me go and bury my father. Then I will return'",
+                  "themes": ["permission sought", "return promised", "respect"]
+                },
+                {
+                  "id": "50-8",
+                  "text": "Pharaoh says 'Go and bury your father in keeping with your oath'",
+                  "themes": ["permission granted", "oath honored", "respect"]
+                },
+                {
+                  "id": "50-9",
+                  "text": "Joseph goes to bury his father - all Pharaoh's servants, the elders of his household, and all the elders of Egypt go with him",
+                  "themes": ["procession", "honor", "Egyptian participation"],
+                  "keyDetail": "Egyptian officials accompany - great honor"
+                },
+                {
+                  "id": "50-10",
+                  "text": "Joseph's entire family, his brothers, and his father's family accompany him",
+                  "themes": ["family unity", "complete family", "honor"]
+                },
+                {
+                  "id": "50-11",
+                  "text": "Only their dependents, flocks, and herds are left in Goshen",
+                  "themes": ["complete journey", "adult participation"]
+                },
+                {
+                  "id": "50-12",
+                  "text": "Horses and chariots go with him - it is a very impressive procession",
+                  "themes": ["impressive", "honor", "royal procession"],
+                  "keyDetail": "Massive funeral procession with chariots"
+                },
+                {
+                  "id": "50-13",
+                  "text": "They reach the threshing floor of Atad beyond the Jordan",
+                  "themes": ["journey", "location", "border"]
+                },
+                {
+                  "id": "50-14",
+                  "text": "They hold a very solemn ceremony and Joseph mourns seven days for his father",
+                  "themes": ["seven days", "mourning", "ceremony"],
+                  "keyDetail": "Seven-day mourning at Atad"
+                },
+                {
+                  "id": "50-15",
+                  "text": "The Canaanite inhabitants see the mourning and say 'This is a solemn mourning by the Egyptians'",
+                  "themes": ["observation", "recognition", "impression"]
+                },
+                {
+                  "id": "50-16",
+                  "text": "Therefore the place is named Abel-mizraim (mourning of Egypt)",
+                  "themes": ["naming", "memorial", "legacy"],
+                  "keyDetail": "Place named for Egyptian mourning"
+                },
+                {
+                  "id": "50-17",
+                  "text": "Jacob's sons do for him what he commanded",
+                  "themes": ["obedience", "faithfulness", "completion"]
+                },
+                {
+                  "id": "50-18",
+                  "text": "They carry him to Canaan and bury him in the cave of Machpelah",
+                  "themes": ["burial", "promised land", "completion of oath"]
+                },
+                {
+                  "id": "50-19",
+                  "text": "Abraham had purchased the cave as burial property from Ephron the Hittite",
+                  "themes": ["purchased property", "legal ownership", "generations"]
+                },
+                {
+                  "id": "50-20",
+                  "text": "After burying his father, Joseph returns to Egypt with his brothers and all who went with him",
+                  "themes": ["return", "promise kept", "back to Egypt"]
+                }
+              ]
+            },
+            {
+              "sectionTitle": "The Brothers' Fear and Joseph's Forgiveness",
+              "verseRange": "Genesis 50:15-21",
+              "plotPoints": [
+                {
+                  "id": "50-21",
+                  "text": "When Joseph's brothers see their father is dead, they say 'If Joseph holds a grudge against us, he will certainly pay us back for all the suffering we caused him'",
+                  "themes": ["fear", "guilt", "retribution expected"],
+                  "keyDetail": "Brothers fear Joseph's revenge after father dies"
+                },
+                {
+                  "id": "50-22",
+                  "text": "They send a message to Joseph: 'Before he died your father gave a command'",
+                  "themes": ["message", "mediation", "claim"]
+                },
+                {
+                  "id": "50-23",
+                  "text": "'Say to Joseph: Please forgive your brothers' transgression and their sin - the suffering they caused you'",
+                  "themes": ["forgiveness requested", "transgression named", "suffering acknowledged"]
+                },
+                {
+                  "id": "50-24",
+                  "text": "'Therefore, please forgive the transgression of the servants of the God of your father'",
+                  "themes": ["appeal to God", "shared faith", "plea"]
+                },
+                {
+                  "id": "50-25",
+                  "text": "Joseph weeps when their message comes to him",
+                  "themes": ["weeping", "grief", "hurt"],
+                  "keyDetail": "Joseph weeps - hurt they still fear him"
+                },
+                {
+                  "id": "50-26",
+                  "text": "His brothers come and bow down before him: 'We are your slaves'",
+                  "themes": ["bowing", "submission", "slavery offered"],
+                  "keyDetail": "Brothers bow - final fulfillment of dreams"
+                },
+                {
+                  "id": "50-27",
+                  "text": "Joseph says to them 'Don't be afraid. Am I in the place of God?'",
+                  "themes": ["comfort", "humility", "God's role"],
+                  "keyDetail": "Joseph's humility - only God judges"
+                },
+                {
+                  "id": "50-28",
+                  "text": "'You planned evil against me; God planned it for good to bring about the present result - the survival of many people'",
+                  "themes": ["divine sovereignty", "good from evil", "salvation", "providence"],
+                  "keyDetail": "Genesis 50:20 - Joseph's famous statement of God's sovereignty"
+                },
+                {
+                  "id": "50-29",
+                  "text": "'Therefore don't be afraid. I will take care of you and your children'",
+                  "themes": ["reassurance", "provision promised", "care", "forgiveness"]
+                },
+                {
+                  "id": "50-30",
+                  "text": "Joseph reassures and comforts them",
+                  "themes": ["comfort", "kindness", "reassurance"],
+                  "keyDetail": "Joseph speaks kindly - complete forgiveness"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Joseph's Death",
+              "verseRange": "Genesis 50:22-26",
+              "plotPoints": [
+                {
+                  "id": "50-31",
+                  "text": "Joseph and his father's family remain in Egypt",
+                  "themes": ["settlement", "Egypt", "continuation"]
+                },
+                {
+                  "id": "50-32",
+                  "text": "Joseph lives 110 years",
+                  "themes": ["long life", "blessing", "age"],
+                  "keyDetail": "Joseph lives 110 - ideal lifespan in Egyptian thought"
+                },
+                {
+                  "id": "50-33",
+                  "text": "He sees Ephraim's sons to the third generation",
+                  "themes": ["generations", "blessing", "family"]
+                },
+                {
+                  "id": "50-34",
+                  "text": "The sons of Machir son of Manasseh are recognized by Joseph",
+                  "themes": ["generations", "legacy", "family"]
+                },
+                {
+                  "id": "50-35",
+                  "text": "Joseph says to his brothers 'I am about to die, but God will certainly come to your aid'",
+                  "themes": ["death approaching", "faith", "promise"],
+                  "keyDetail": "Joseph's death announcement and faith"
+                },
+                {
+                  "id": "50-36",
+                  "text": "'He will bring you up from this land to the land he swore to give to Abraham, Isaac, and Jacob'",
+                  "themes": ["exodus predicted", "promised land", "covenant", "return"],
+                  "keyDetail": "Joseph prophesies the Exodus"
+                },
+                {
+                  "id": "50-37",
+                  "text": "Joseph makes the sons of Israel take an oath: 'When God comes to your aid, you are to carry my bones up from here'",
+                  "themes": ["oath", "bones", "burial request", "faith"],
+                  "keyDetail": "Joseph's bones to be carried to Promised Land"
+                },
+                {
+                  "id": "50-38",
+                  "text": "Joseph dies at the age of 110",
+                  "themes": ["death", "end", "completion"]
+                },
+                {
+                  "id": "50-39",
+                  "text": "They embalm him and place him in a coffin in Egypt",
+                  "themes": ["embalming", "burial", "Egypt", "waiting"],
+                  "keyDetail": "Joseph's body waits in Egypt for Exodus"
+                },
+                {
+                  "id": "50-40",
+                  "text": "[Joseph's bones are later carried out of Egypt during the Exodus - Exodus 13:19; Joshua 24:32]",
+                  "themes": ["future fulfillment", "exodus", "promise kept"],
+                  "keyDetail": "Note: Fulfilled 400 years later in the Exodus"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
