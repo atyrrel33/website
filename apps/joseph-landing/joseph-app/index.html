@@ -1190,7 +1190,8 @@
                 display: none;
             }
         }
-    </style>
+  </style>
+    <link rel="stylesheet" href="./css/story-section.css">
 </head>
 <body>
     <!-- Loading Veil -->
@@ -1410,24 +1411,97 @@
 
             <!-- Content Body -->
             <div class="content-body">
-                
-                <!-- THE STORY Panel -->
+               <!-- THE STORY Panel -->
                 <div class="tab-panel active" id="panel-story">
-                    <div class="panel-container">
-                        <div class="section-placeholder">
-                            <div class="placeholder-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                                    <path d="M8 7h8M8 11h6M8 15h4"/>
-                                </svg>
+                    <!-- Chapter Navigator View -->
+                    <div id="chapterNavigator" class="chapter-navigator">
+                        <div class="navigator-header">
+                            <div class="navigator-title">
+                                <span class="title-ornament">✦</span>
+                                <span>The Story of Joseph</span>
+                                <span class="title-ornament">✦</span>
                             </div>
-                            <h3 class="placeholder-title">The Story Awaits</h3>
-                            <p class="placeholder-description">
-                                Genesis chapters 37–50 will unfold here, each plot point ready for your annotations and reflections.
-                            </p>
+                            <div class="navigator-subtitle">Genesis 37-50 • A Journey from Pit to Palace</div>
+                        </div>
+
+                        <div class="progress-summary">
+                            <div class="progress-text">
+                                <span id="chaptersRead">0 of 10 chapters</span> explored
+                                <span class="divider">•</span>
+                                <span id="chaptersAnnotated">0 chapters</span> annotated
+                            </div>
+                        </div>
+
+                        <div class="chapter-grid" id="chapterGrid">
+                            <!-- Chapters will be populated by JavaScript -->
                         </div>
                     </div>
+
+                    <!-- Reading View (hidden by default) -->
+                    <div id="readingView" class="reading-view" style="display: none;">
+                        <!-- Back Button -->
+                        <button class="back-to-chapters" id="backToChapters">
+                            <span class="back-arrow">←</span>
+                            <span>All Chapters</span>
+                        </button>
+
+                        <!-- Chapter Header -->
+                        <div class="chapter-reading-header">
+                            <div class="chapter-reading-meta">
+                                <span id="currentChapterBook">Genesis</span>
+                                <span class="chapter-divider">•</span>
+                                <span id="currentChapterNumber">37</span>
+                            </div>
+                            <h1 id="currentChapterTitle" class="chapter-reading-title">The Dreamer and His Brothers</h1>
+                            <div class="chapter-reading-age">Joseph's Age: <span id="currentChapterAge">17</span></div>
+                        </div>
+
+                        <!-- Themes to Notice -->
+                        <div class="chapter-themes" id="chapterThemes">
+                            <!-- Populated by JS -->
+                        </div>
+
+                        <!-- Two-Column Reading Layout -->
+                        <div class="reading-columns">
+                            <!-- Left Column: The Narrative -->
+                            <div class="narrative-column">
+                                <div id="narrativeContent" class="narrative-content">
+                                    <!-- Sections and plot points populated by JS -->
+                                </div>
+
+                                <!-- Reflection Questions at bottom -->
+                                <div class="reflection-questions" id="reflectionQuestions">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Annotations -->
+                            <div class="annotation-column">
+                                <div class="annotation-sticky-header">
+                                    <div class="annotation-author-label">Your Annotations</div>
+                                    <div class="annotation-toggle">
+                                        <button class="author-toggle active" data-author="trevor" id="trevorToggle">
+                                            <span class="toggle-icon">📝</span>
+                                            Trevor
+                                        </button>
+                                        <button class="author-toggle" data-author="tyrrel" id="tyrrelToggle">
+                                            <span class="toggle-icon">✍️</span>
+                                            Tyrrel
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="annotation-workspace" id="annotationWorkspace">
+                                    <div class="annotation-empty-state">
+                                        <div class="empty-icon">✍️</div>
+                                        <p>Click any plot point on the left to add your first note</p>
+                                        <small>Notes appear handwritten and stay anchored to their plot points</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
 
                 <!-- THE WORLD Panel -->
@@ -1797,7 +1871,8 @@
                     if (tab) tab.click();
                 }
             }
-        });
+    });
     </script>
+    <script src="./js/story-reader.js"></script>
 </body>
 </html>
