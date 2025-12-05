@@ -1,0 +1,468 @@
+/* ============================================
+   SPRINT 4 ENHANCEMENTS - STYLING
+   Export Modal, Search, & Polish
+   ============================================ */
+
+/* ============================================
+   EXPORT BUTTON IN SIDEBAR
+   ============================================ */
+
+.export-notes-btn {
+    width: 100%;
+    padding: var(--space-md);
+    background: linear-gradient(135deg, var(--burgundy-deep) 0%, var(--burgundy-primary) 100%);
+    color: var(--papyrus-light);
+    border: 1px solid var(--burgundy-bright);
+    border-radius: 8px;
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    transition: all 0.3s var(--ease-smooth);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.export-notes-btn:hover {
+    background: linear-gradient(135deg, var(--burgundy-primary) 0%, var(--burgundy-bright) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 58, 74, 0.4);
+}
+
+.export-notes-btn:active {
+    transform: translateY(0);
+}
+
+.export-icon {
+    font-size: 1.2em;
+}
+
+/* ============================================
+   EXPORT MODAL
+   ============================================ */
+
+.export-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.export-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.export-modal-content {
+    position: relative;
+    background: var(--night-deep);
+    border: 1px solid var(--gold-dim);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 
+                0 0 0 1px rgba(201, 169, 97, 0.2);
+    animation: slideUp 0.3s var(--ease-smooth);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.export-modal-header {
+    padding: var(--space-lg) var(--space-xl);
+    border-bottom: 1px solid var(--night-soft);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.export-modal-header h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--gold-primary);
+    margin: 0;
+}
+
+.export-modal-close {
+    background: none;
+    border: none;
+    color: var(--papyrus-aged);
+    font-size: 2rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.export-modal-close:hover {
+    background: var(--night-soft);
+    color: var(--gold-primary);
+}
+
+.export-modal-body {
+    padding: var(--space-xl);
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.export-option-group {
+    margin-bottom: var(--space-xl);
+}
+
+.export-label {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-md);
+}
+
+.export-radio-group,
+.export-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.export-radio-group label,
+.export-checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--night-mid);
+    border: 1px solid var(--night-soft);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    color: var(--papyrus-light);
+}
+
+.export-radio-group label:hover,
+.export-checkbox-group label:hover {
+    background: var(--night-soft);
+    border-color: var(--gold-dim);
+}
+
+.export-radio-group input[type="radio"],
+.export-checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--gold-primary);
+}
+
+.export-preview {
+    margin-top: var(--space-xl);
+    padding: var(--space-md);
+    background: var(--night-mid);
+    border-left: 3px solid var(--gold-primary);
+    border-radius: 4px;
+    font-family: 'EB Garamond', serif;
+    color: var(--papyrus-aged);
+}
+
+.export-preview strong {
+    color: var(--gold-primary);
+}
+
+#exportCount {
+    color: var(--papyrus-light);
+    font-weight: 600;
+}
+
+.export-modal-footer {
+    padding: var(--space-lg) var(--space-xl);
+    border-top: 1px solid var(--night-soft);
+    display: flex;
+    gap: var(--space-md);
+    justify-content: flex-end;
+}
+
+.btn-export-cancel,
+.btn-export-download {
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: 6px;
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-export-cancel {
+    background: var(--night-soft);
+    color: var(--papyrus-aged);
+}
+
+.btn-export-cancel:hover {
+    background: var(--night-whisper);
+    color: var(--papyrus-light);
+}
+
+.btn-export-download {
+    background: linear-gradient(135deg, var(--gold-warm) 0%, var(--gold-primary) 100%);
+    color: var(--night-void);
+    font-weight: 600;
+}
+
+.btn-export-download:hover {
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-bright) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.4);
+}
+
+.btn-export-download:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   EXPORT SUCCESS NOTIFICATION
+   ============================================ */
+
+.export-success-notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 10001;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.export-success-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.export-success-content {
+    background: linear-gradient(135deg, var(--gold-warm) 0%, var(--gold-primary) 100%);
+    color: var(--night-void);
+    padding: var(--space-md) var(--space-xl);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 
+                0 0 0 1px rgba(201, 169, 97, 0.3);
+    font-family: 'EB Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.export-success-icon {
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+}
+
+/* ============================================
+   SEARCH BAR
+   ============================================ */
+
+.note-search-bar {
+    position: relative;
+    margin: var(--space-md) 0;
+    padding: 0 var(--space-md);
+}
+
+.note-search-input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    padding-right: 40px;
+    background: var(--night-mid);
+    border: 1px solid var(--night-soft);
+    border-radius: 6px;
+    color: var(--papyrus-light);
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.note-search-input:focus {
+    outline: none;
+    border-color: var(--gold-dim);
+    background: var(--night-deep);
+    box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.1);
+}
+
+.note-search-input::placeholder {
+    color: var(--gold-dim);
+    opacity: 0.6;
+}
+
+.note-search-clear {
+    position: absolute;
+    right: calc(var(--space-md) + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--night-soft);
+    border: none;
+    color: var(--papyrus-aged);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.note-search-clear:hover {
+    background: var(--burgundy-primary);
+    color: var(--papyrus-light);
+}
+
+/* ============================================
+   SEARCH HIGHLIGHT
+   ============================================ */
+
+.note-content mark {
+    background: rgba(201, 169, 97, 0.3);
+    color: var(--gold-bright);
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-weight: 600;
+}
+
+/* ============================================
+   MOBILE RESPONSIVENESS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .export-modal-content {
+        width: 95%;
+        max-width: none;
+    }
+
+    .export-modal-header,
+    .export-modal-body,
+    .export-modal-footer {
+        padding: var(--space-md);
+    }
+
+    .export-modal-header h3 {
+        font-size: 1.25rem;
+    }
+
+    .export-modal-footer {
+        flex-direction: column;
+    }
+
+    .btn-export-cancel,
+    .btn-export-download {
+        width: 100%;
+    }
+
+    .export-success-notification {
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+    }
+
+    .export-success-content {
+        justify-content: center;
+    }
+}
+
+/* ============================================
+   IMPROVED EMPTY STATES
+   ============================================ */
+
+.no-notes-message {
+    text-align: center;
+    padding: var(--space-2xl);
+    color: var(--papyrus-aged);
+}
+
+.no-notes-message > div {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   BETTER FOCUS STATES (Accessibility)
+   ============================================ */
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--gold-primary);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   SMOOTH TRANSITIONS
+   ============================================ */
+
+.note-card {
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.note-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================
+   PRINT STYLES (for PDF export)
+   ============================================ */
+
+@media print {
+    @page {
+        margin: 1in;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .export-modal,
+    .sidebar,
+    .content-header,
+    button,
+    .note-actions,
+    .export-notes-btn {
+        display: none !important;
+    }
+}
