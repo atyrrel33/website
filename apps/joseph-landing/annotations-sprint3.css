@@ -1,0 +1,475 @@
+/* ============================================
+   ANNOTATION SYSTEM - SPRINT 3 ENHANCEMENTS
+   Handwritten Aesthetics & Mobile Polish
+   "The Word became flesh and dwelt among us"
+   ============================================ */
+
+/* ============================================
+   HANDWRITTEN FONT IMPORTS
+   Trevor's youthful hand vs Tyrrel's mature script
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap');
+
+/* ============================================
+   HANDWRITTEN NOTE STYLING
+   Notes feel personal, embodied, incarnational
+   ============================================ */
+
+/* Trevor's handwriting - youthful, energetic */
+.note-card.trevor .note-content {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    font-weight: 500;
+    color: var(--ink-eternal);
+    letter-spacing: 0.02em;
+}
+
+.note-card.trevor .note-input,
+.note-card.trevor .note-edit-input {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* Tyrrel's handwriting - mature, contemplative */
+.note-card.tyrrel .note-content {
+    font-family: 'Kalam', cursive;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    font-weight: 400;
+    color: var(--ink-eternal);
+    letter-spacing: 0.01em;
+}
+
+.note-card.tyrrel .note-input,
+.note-card.tyrrel .note-edit-input {
+    font-family: 'Kalam', cursive;
+    font-size: 1.15rem;
+    font-weight: 400;
+}
+
+/* Input styling for handwritten feel */
+.note-input {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* When Tyrrel is active */
+body.author-tyrrel .note-input {
+    font-family: 'Kalam', cursive;
+    font-size: 1.15rem;
+    font-weight: 400;
+}
+
+/* ============================================
+   STICKY NOTE AESTHETICS
+   Paper textures and subtle rotations
+   ============================================ */
+
+/* Trevor's notes - bright sticky notes */
+.note-card.trevor {
+    background: linear-gradient(135deg, 
+        #fef9e7 0%, 
+        #fdf5d9 100%
+    );
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    transform: rotate(-0.5deg);
+    position: relative;
+}
+
+.note-card.trevor:nth-child(even) {
+    transform: rotate(0.5deg);
+}
+
+.note-card.trevor::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, 
+        rgba(52, 152, 219, 0.4) 0%,
+        rgba(41, 128, 185, 0.6) 100%
+    );
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Tyrrel's notes - aged paper */
+.note-card.tyrrel {
+    background: linear-gradient(135deg, 
+        #f4ede4 0%, 
+        #ebe3d9 100%
+    );
+    border: 1px solid rgba(139, 58, 74, 0.25);
+    box-shadow: 
+        0 3px 10px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: rotate(0.3deg);
+    position: relative;
+}
+
+.note-card.tyrrel:nth-child(even) {
+    transform: rotate(-0.3deg);
+}
+
+.note-card.tyrrel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 12px;
+    width: 3px;
+    height: 40px;
+    background: linear-gradient(180deg,
+        rgba(139, 58, 74, 0.6) 0%,
+        rgba(139, 58, 74, 0.3) 100%
+    );
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   NOTE TYPE COLOR CODING - ENHANCED
+   Visual theology: each note type has meaning
+   ============================================ */
+
+/* Insight notes - Gold for divine revelation */
+.note-card[data-type="insight"] {
+    border-left: 4px solid var(--gold-warm);
+}
+
+.note-card.trevor[data-type="insight"]::before {
+    background: linear-gradient(135deg, 
+        rgba(201, 169, 97, 0.5) 0%,
+        rgba(184, 149, 77, 0.7) 100%
+    );
+    content: 'ðŸ'¡';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+}
+
+/* Question notes - Burgundy for seeking truth */
+.note-card[data-type="question"] {
+    border-left: 4px solid var(--burgundy-primary);
+}
+
+.note-card.trevor[data-type="question"]::before {
+    background: linear-gradient(135deg, 
+        rgba(139, 58, 74, 0.5) 0%,
+        rgba(114, 47, 55, 0.7) 100%
+    );
+    content: 'â"';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+}
+
+/* Parallel notes - Night blue for connection */
+.note-card[data-type="parallel"] {
+    border-left: 4px solid var(--night-soft);
+}
+
+.note-card.trevor[data-type="parallel"]::before {
+    background: linear-gradient(135deg, 
+        rgba(45, 63, 84, 0.5) 0%,
+        rgba(26, 38, 52, 0.7) 100%
+    );
+    content: 'ðŸ"—';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+}
+
+/* ============================================
+   AUTHOR FILTER ENHANCEMENTS
+   "Two become one in understanding"
+   ============================================ */
+
+.filter-controls {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--night-mid);
+    border-radius: 12px;
+    margin-bottom: var(--space-lg);
+    border: 1px solid rgba(201, 169, 97, 0.15);
+}
+
+.filter-btn {
+    flex: 1;
+    padding: var(--space-sm) var(--space-md);
+    background: transparent;
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    border-radius: 8px;
+    color: var(--papyrus-aged);
+    font-family: 'EB Garamond', serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+}
+
+.filter-btn:hover {
+    background: rgba(201, 169, 97, 0.1);
+    border-color: var(--gold-warm);
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: var(--gold-warm);
+    color: var(--night-deep);
+    border-color: var(--gold-warm);
+    font-weight: 600;
+}
+
+.filter-btn .note-count {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.filter-btn.active .note-count {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Filter by type */
+.type-filters {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+    padding: var(--space-md);
+    background: rgba(26, 38, 52, 0.3);
+    border-radius: 8px;
+    margin-top: var(--space-sm);
+}
+
+.type-filter-chip {
+    padding: var(--space-xs) var(--space-sm);
+    background: transparent;
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    border-radius: 16px;
+    font-size: 0.875rem;
+    color: var(--papyrus-aged);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.type-filter-chip:hover {
+    border-color: var(--gold-warm);
+    background: rgba(201, 169, 97, 0.1);
+}
+
+.type-filter-chip.active {
+    background: var(--gold-warm);
+    color: var(--night-deep);
+    border-color: var(--gold-warm);
+}
+
+/* ============================================
+   MOBILE RESPONSIVE LAYOUT
+   "Tablets of stone became scrolls of parchment"
+   ============================================ */
+
+@media (max-width: 1024px) {
+    /* Two-column becomes single on tablets */
+    .reading-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    .annotation-column {
+        position: static !important;
+        max-height: none !important;
+        margin-top: var(--space-2xl);
+    }
+}
+
+@media (max-width: 768px) {
+    /* Mobile: Notes slide up from bottom */
+    .reading-layout {
+        display: block;
+    }
+
+    .narrative-column {
+        padding: var(--space-lg);
+    }
+
+    .annotation-column {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-height: 70vh;
+        border-radius: 24px 24px 0 0;
+        z-index: 1000;
+        transform: translateY(calc(100% - 60px));
+        transition: transform 0.4s var(--ease-smooth);
+    }
+
+    .annotation-column.expanded {
+        transform: translateY(0);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Pull tab for mobile */
+    .annotation-column::after {
+        content: '';
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        background: var(--gold-dim);
+        border-radius: 2px;
+        opacity: 0.5;
+    }
+
+    /* Tap to expand hint */
+    .annotation-sticky-header {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .annotation-sticky-header::before {
+        content: 'Tap to expand notes';
+        display: block;
+        text-align: center;
+        font-size: 0.75rem;
+        color: var(--gold-dim);
+        margin-bottom: var(--space-xs);
+        font-family: 'Cinzel', serif;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .annotation-column.expanded .annotation-sticky-header::before {
+        content: 'Tap to minimize';
+    }
+
+    /* Adjust note cards for mobile */
+    .note-card {
+        margin-bottom: var(--space-md);
+    }
+
+    .note-content {
+        font-size: 1.125rem !important;
+    }
+
+    /* Filter controls stack vertically */
+    .filter-controls {
+        flex-direction: column;
+    }
+
+    .filter-btn {
+        padding: var(--space-md);
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra small screens */
+    .note-card.trevor .note-content,
+    .note-input {
+        font-size: 1.125rem;
+    }
+
+    .note-card.tyrrel .note-content {
+        font-size: 1.0625rem;
+    }
+
+    .annotation-header {
+        padding: var(--space-md);
+    }
+
+    .author-toggle {
+        flex-direction: column;
+    }
+
+    .author-btn {
+        padding: var(--space-md);
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   "That these words may be a witness"
+   ============================================ */
+
+@media print {
+    .annotation-column {
+        position: static !important;
+        max-height: none !important;
+        page-break-inside: avoid;
+    }
+
+    .note-card {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    .note-action-btn {
+        display: none !important;
+    }
+
+    .note-form {
+        display: none !important;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   "The blind receive sight, the lame walk"
+   ============================================ */
+
+/* Focus indicators */
+.note-input:focus,
+.note-edit-input:focus {
+    outline: 2px solid var(--gold-warm);
+    outline-offset: 2px;
+}
+
+.filter-btn:focus,
+.type-filter-chip:focus {
+    outline: 2px solid var(--gold-warm);
+    outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .note-card,
+    .filter-btn,
+    .annotation-column {
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .note-card.trevor,
+    .note-card.tyrrel {
+        border: 2px solid currentColor;
+    }
+
+    .filter-btn {
+        border: 2px solid currentColor;
+    }
+}
