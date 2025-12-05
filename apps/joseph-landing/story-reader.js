@@ -28,16 +28,141 @@ class StoryReader {
 
     async loadStoryData() {
         try {
-           const response = await fetch('./story.json');
+           const response = await fetch('story.json');
             if (!response.ok) {
                 throw new Error('Failed to load story data');
             }
-            this.storyData = await response.json();
+            const rawData = await response.json();
+            
+            // Transform the plot-point JSON into app-ready format
+            this.storyData = this.transformData(rawData);
             console.log('✅ Story data loaded:', this.storyData);
         } catch (error) {
             console.error('❌ Error loading story data:', error);
             this.showError('Unable to load the story. Please refresh the page.');
         }
+    }
+
+    transformData(rawData) {
+        // Flatten parts into chapters and enrich with metadata
+        const chapters = [];
+        
+        if (rawData.parts) {
+            rawData.parts.forEach(part => {
+                if (part.chapters) {
+                    part.chapters.forEach(chapter => {
+                        // Extract Joseph's age from plot points
+                        const josephAge = this.extractJosephAge(chapter);
+                        
+                        // Extract unique themes from all plot points
+                        const themes = this.extractThemes(chapter);
+                        
+                        // Generate summary from first few plot points
+                        const summary = this.generateSummary(chapter);
+                        
+                        // Transform to app format
+                        const transformedChapter = {
+                            id: `gen-${chapter.chapterNumber}`,
+                            book: 'Genesis',
+                            chapterNumber: chapter.chapterNumber.toString(),
+                            title: chapter.chapterTitle,
+                            summary: summary,
+                            josephAge: josephAge,
+                            themes: themes.slice(0, 5), // Top 5 themes
+                            sections: chapter.sections.map(section => ({
+                                sectionTitle: section.sectionTitle,
+                                verseRange: section.verseRange,
+                                plotPoints: section.plotPoints.map(point => ({
+                                    id: point.id,
+                                    text: point.text,
+                                    verse: section.verseRange // Add verse reference to each point
+                                }))
+                            })),
+                            reflectionQuestions: this.generateReflectionQuestions(chapter)
+                        };
+                        
+                        chapters.push(transformedChapter);
+                    });
+                }
+            });
+        }
+        
+        return { chapters };
+    }
+
+    extractJosephAge(chapter) {
+        // Look for age mentions in plot points
+        for (const section of chapter.sections) {
+            for (const point of section.plotPoints) {
+                if (point.keyDetail && point.keyDetail.includes('years old')) {
+                    const match = point.keyDetail.match(/(\d+)\s*years old/);
+                    if (match) return match[1];
+                }
+                if (point.text.includes('age 17')) return '17';
+                if (point.text.includes('Age 17')) return '17';
+            }
+        }
+        // Default ages based on chapter number
+        const chapterAges = {
+            37: '17', 38: '17-18', 39: '17-28', 40: '28-30', 41: '30', 
+            42: '39', 43: '39', 44: '39', 45: '39', 46: '39', 47: '39-56', 
+            48: '56', 49: '56', 50: '56-110'
+        };
+        return chapterAges[chapter.chapterNumber] || 'Unknown';
+    }
+
+    extractThemes(chapter) {
+        const themeSet = new Set();
+        chapter.sections.forEach(section => {
+            section.plotPoints.forEach(point => {
+                if (point.themes) {
+                    point.themes.forEach(theme => themeSet.add(theme));
+                }
+            });
+        });
+        return Array.from(themeSet);
+    }
+
+    generateSummary(chapter) {
+        // Create summary from first section's key points
+        const firstSection = chapter.sections[0];
+        if (firstSection && firstSection.plotPoints.length > 0) {
+            const keyPoints = firstSection.plotPoints
+                .filter(p => p.keyDetail)
+                .slice(0, 2);
+            
+            if (keyPoints.length > 0) {
+                return keyPoints.map(p => p.keyDetail).join('. ');
+            }
+            
+            // Fallback to first plot point
+            return firstSection.plotPoints[0].text.substring(0, 120) + '...';
+        }
+        return chapter.chapterTitle;
+    }
+
+    generateReflectionQuestions(chapter) {
+        // Generate 2-3 reflection questions based on themes
+        const themes = this.extractThemes(chapter);
+        const questions = [];
+        
+        if (themes.includes('dreams') || themes.includes('prophecy')) {
+            questions.push('How do Joseph\'s dreams shape his identity and future?');
+        }
+        if (themes.includes('betrayal') || themes.includes('hatred')) {
+            questions.push('What do the brothers\' actions reveal about jealousy and family conflict?');
+        }
+        if (themes.includes('providence') || themes.includes('God\'s presence')) {
+            questions.push('Where do you see God\'s hand at work in this chapter?');
+        }
+        
+        // Default question if none generated
+        if (questions.length === 0) {
+            questions.push('What stands out most to you in this chapter?');
+            questions.push('How might this chapter connect to your own life?');
+        }
+        
+        return questions.slice(0, 3);
     }
 
     renderChapterNavigator() {
@@ -73,7 +198,7 @@ class StoryReader {
                 <span class="chapter-card-age">Joseph: Age ${chapter.josephAge}</span>
                 ${hasNotes ? `
                     <span class="chapter-card-badge has-notes">
-                        ✍️ ${noteCount} ${noteCount === 1 ? 'note' : 'notes'}
+                        ✏️ ${noteCount} ${noteCount === 1 ? 'note' : 'notes'}
                     </span>
                 ` : `
                     <span class="chapter-card-badge">
@@ -190,7 +315,7 @@ class StoryReader {
         // Sprint 2 will add the actual annotation functionality
         workspace.innerHTML = `
             <div class="annotation-empty-state">
-                <div class="empty-icon">✍️</div>
+                <div class="empty-icon">✏️</div>
                 <p>Click any plot point on the left to add your first note</p>
                 <small>Notes appear handwritten and stay anchored to their plot points</small>
             </div>
@@ -272,7 +397,7 @@ class StoryReader {
             trevorToggle.classList.remove('active');
         }
 
-        console.log(`✍️ Switched to ${author}'s notebook`);
+        console.log(`✏️ Switched to ${author}'s notebook`);
     }
 
     // ============================================
@@ -303,7 +428,8 @@ class StoryReader {
                 <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--burgundy-bright);">
                     <h3>⚠️ ${message}</h3>
                     <p style="margin-top: 1rem; color: var(--papyrus-aged);">
-                        Make sure story.json is in the root directory (same folder as this HTML file)                    </p>
+                        Make sure story.json is in the same directory
+                    </p>
                 </div>
             `;
         }
