@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joseph | The Codex</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <style>
+        /* ============================================
+           ROOT VARIABLES - SACRED COLOR PALETTE
+           Inherited from landing, evolved for the codex
+        ============================================ */
+        :root {
+            /* Night Sky - The Void of the Pit */
+            --night-void: #0a0d14;
+            --night-deep: #0f1922;
+            --night-mid: #1a2634;
+            --night-soft: #2d3f54;
+            --night-whisper: #3d4f64;
+            
+            /* Gold - The Coat, The Crown */
+            --gold-bright: #e2c990;
+            --gold-primary: #c9a961;
+            --gold-warm: #b8954d;
+            --gold-dim: #8b7355;
+            --gold-shadow: #5c4a35;
+            --gold-ember: rgba(201, 169, 97, 0.15);
+            
+            /* Burgundy - The Blood, The Sacrifice */
+            --burgundy-bright: #a64d5a;
+            --burgundy-primary: #8b3a4a;
+            --burgundy-deep: #722f37;
+            --burgundy-warm: #8b3a3a;
+            --burgundy-glow: rgba(138, 58, 74, 0.6);
+            --crimson-faded: #4a2020;
+            
+            /* Papyrus & Ink - The Word Made Visible */
+            --papyrus-light: #f5f0e6;
+            --papyrus-aged: #e8e0d0;
+            --papyrus-warm: #d9d0c0;
+            --ink-eternal: #1a1a1a;
+            --ink-warm: #3d352a;
+            --sand-whisper: rgba(201, 169, 97, 0.03);
+            
+            /* Atmospheric Effects */
+            --glow-gold: rgba(201, 169, 97, 0.4);
+            --glow-burgundy: rgba(139, 58, 74, 0.3);
+            --shadow-deep: rgba(0, 0, 0, 0.7);
+            --glass-dark: rgba(15, 25, 34, 0.85);
+            --glass-light: rgba(245, 240, 230, 0.03);
+            
+            /* Spacing Scale */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+            
+            /* Sidebar Dimensions */
+            --sidebar-width: 280px;
+            --sidebar-collapsed: 72px;
+            --header-height: 64px;
+            
+            /* Transitions */
+            --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* ============================================
+           RESET & BASE STYLES
+        ============================================ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'EB Garamond', Georgia, serif;
+            background: var(--night-void);
+            color: var(--papyrus-light);
+            min-height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--night-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-dim);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-warm);
+        }
+
+        /* ============================================
+           LOADING VEIL - TRANSITION FROM LANDING
+        ============================================ */
+        .loading-veil {
+            position: fixed;
+            inset: 0;
+            background: var(--night-void);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .loading-symbol {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .loading-symbol::before,
+        .loading-symbol::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 2px solid transparent;
+            border-radius: 50%;
+        }
+
+        .loading-symbol::before {
+            border-top-color: var(--gold-primary);
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loading-symbol::after {
+            border-bottom-color: var(--burgundy-primary);
+            animation: spin 2s linear infinite reverse;
+        }
+
+        .loading-text {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            opacity: 0.7;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ============================================
+           APP CONTAINER - THE SACRED SPACE
+        ============================================ */
+        .app-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            opacity: 0;
+            background: var(--night-void);
+        }
+
+        /* Background Atmosphere */
+        .app-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-bg-gradient {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 100% 80% at 0% 0%, rgba(26, 38, 52, 0.8) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 100% 100%, var(--crimson-faded) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 60% at 50% 50%, rgba(45, 63, 84, 0.3) 0%, transparent 60%);
+        }
+
+        .app-bg-texture {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+        }
+
+        .app-bg-vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, var(--night-void) 100%);
+        }
+
+        /* Floating Dream Particles */
+        .dream-particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .dream-particle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: float-particle linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% {
+                transform: translateY(-10vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ============================================
+           SIDEBAR - THE NOTEBOOK TABS
+        ============================================ */
+        .sidebar {
+            position: relative;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, 
+                rgba(15, 25, 34, 0.98) 0%, 
+                rgba(10, 13, 20, 0.99) 100%
+            );
+            border-right: 1px solid rgba(139, 115, 85, 0.15);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transition: width 0.4s var(--ease-smooth);
+            overflow: hidden;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                var(--gold-dim) 20%,
+                var(--gold-dim) 80%,
+                transparent 100%
+            );
+            opacity: 0.3;
+        }
+
+        .sidebar::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='leather'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.08' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23leather)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+        }
+
+        /* Sidebar Header - The Codex Mark */
+        .sidebar-header {
+            padding: var(--space-xl);
+            border-bottom: 1px solid rgba(139, 115, 85, 0.1);
+            position: relative;
+        }
+
+        .sidebar-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: var(--space-xl);
+            right: var(--space-xl);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+            opacity: 0.3;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-logo:hover {
+            transform: translateX(4px);
+        }
+
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            position: relative;
+        }
+
+        .logo-mark svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold-warm) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Navigation Tabs */
+        .sidebar-nav {
+            flex: 1;
+            padding: var(--space-lg) 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-section {
+            margin-bottom: var(--space-lg);
+        }
+
+        .nav-section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            padding: var(--space-sm) var(--space-xl);
+            margin-bottom: var(--space-sm);
+            opacity: 0.6;
+        }
+
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-xl);
+            margin: var(--space-xs) var(--space-md);
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s var(--ease-smooth);
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, 
+                var(--gold-ember) 0%, 
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: linear-gradient(180deg, var(--gold-primary), var(--gold-warm));
+            border-radius: 0 2px 2px 0;
+            transition: height 0.3s var(--ease-smooth);
+        }
+
+        .nav-tab:hover::before {
+            opacity: 1;
+        }
+
+        .nav-tab:hover {
+            background: rgba(201, 169, 97, 0.05);
+        }
+
+        .nav-tab.active {
+            background: rgba(201, 169, 97, 0.08);
+        }
+
+        .nav-tab.active::before {
+            opacity: 1;
+        }
+
+        .nav-tab.active::after {
+            height: 60%;
+        }
+
+        .nav-tab-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-tab-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--gold-dim);
+            stroke-width: 1.5;
+            fill: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover .nav-tab-icon svg,
+        .nav-tab.active .nav-tab-icon svg {
+            stroke: var(--gold-primary);
+        }
+
+        .nav-tab-content {
+            flex: 1;
+            min-width: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-tab-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--papyrus-aged);
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-tab:hover .nav-tab-title,
+        .nav-tab.active .nav-tab-title {
+            color: var(--gold-bright);
+        }
+
+        .nav-tab-subtitle {
+            font-family: 'EB Garamond', serif;
+            font-size: 0.7rem;
+            font-style: italic;
+            color: var(--gold-dim);
+            opacity: 0.6;
+            margin-top: 2px;
+        }
+
+        .nav-tab-badge {
+            position: absolute;
+            top: 50%;
+            right: var(--space-md);
+            transform: translateY(-50%);
+            min-width: 18px;
+            height: 18px;
+            padding: 0 6px;
+            background: var(--burgundy-deep);
+            border-radius: 9px;
+            font-family: 'EB Garamond', serif;
+            font-size: 0.65rem;
+            color: var(--papyrus-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab.has-notes .nav-tab-badge {
+            opacity: 1;
+        }
+
+        /* Personal Study Sections */
+        .nav-tab.personal {
+            border: 1px solid rgba(139, 115, 85, 0.1);
+            margin: var(--space-sm) var(--space-md);
+        }
+
+        .nav-tab.personal::before {
+            background: linear-gradient(90deg, 
+                rgba(139, 58, 74, 0.1) 0%, 
+                transparent 100%
+            );
+        }
+
+        .nav-tab.personal.active {
+            border-color: rgba(139, 58, 74, 0.3);
+            background: rgba(139, 58, 74, 0.08);
+        }
+
+        .nav-tab.personal .nav-tab-icon svg {
+            stroke: var(--burgundy-primary);
+        }
+
+        .nav-tab.personal:hover .nav-tab-icon svg,
+        .nav-tab.personal.active .nav-tab-icon svg {
+            stroke: var(--burgundy-bright);
+        }
+
+        .nav-tab.personal:hover .nav-tab-title,
+        .nav-tab.personal.active .nav-tab-title {
+            color: var(--papyrus-light);
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding: var(--space-lg) var(--space-xl);
+            border-top: 1px solid rgba(139, 115, 85, 0.1);
+            position: relative;
+        }
+
+        .sidebar-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: var(--space-xl);
+            right: var(--space-xl);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+            opacity: 0.3;
+        }
+
+        .progress-container {
+            margin-bottom: var(--space-md);
+        }
+
+        .progress-label {
+            font-family: 'EB Garamond', serif;
+            font-size: 0.75rem;
+            color: var(--gold-dim);
+            margin-bottom: var(--space-sm);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: var(--night-mid);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gold-primary), var(--burgundy-primary));
+            border-radius: 2px;
+            transition: width 1s var(--ease-smooth);
+        }
+
+        .sidebar-verse {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.8rem;
+            font-style: italic;
+            color: var(--papyrus-aged);
+            line-height: 1.6;
+            opacity: 0.7;
+            text-align: center;
+        }
+
+        .sidebar-verse-ref {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            color: var(--gold-dim);
+            margin-top: var(--space-sm);
+            text-align: center;
+            display: block;
+        }
+
+        /* ============================================
+           MAIN CONTENT AREA - THE PAGES
+        ============================================ */
+        .main-content {
+            flex: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        /* Content Header */
+        .content-header {
+            height: var(--header-height);
+            padding: 0 var(--space-2xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(139, 115, 85, 0.1);
+            background: rgba(15, 25, 34, 0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 50;
+        }
+
+        .content-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: var(--space-2xl);
+            right: var(--space-2xl);
+            height: 1px;
+            background: linear-gradient(90deg, var(--gold-dim), transparent 50%, var(--gold-dim));
+            opacity: 0.2;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .breadcrumb-item {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            color: var(--gold-dim);
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb-item:hover {
+            color: var(--gold-primary);
+        }
+
+        .breadcrumb-separator {
+            font-size: 0.7rem;
+            color: var(--gold-dim);
+            opacity: 0.4;
+        }
+
+        .breadcrumb-current {
+            color: var(--papyrus-light);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .header-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header-btn:hover {
+            border-color: var(--gold-primary);
+            background: rgba(201, 169, 97, 0.1);
+        }
+
+        .header-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--gold-dim);
+            stroke-width: 1.5;
+            fill: none;
+            transition: stroke 0.3s ease;
+        }
+
+        .header-btn:hover svg {
+            stroke: var(--gold-primary);
+        }
+
+        /* Content Body */
+        .content-body {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Tab Content Panels */
+        .tab-panel {
+            position: absolute;
+            inset: 0;
+            padding: var(--space-2xl);
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.5s var(--ease-smooth);
+        }
+
+        .tab-panel.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Panel Inner Container */
+        .panel-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Welcome State */
+        .welcome-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: var(--space-3xl);
+        }
+
+        .welcome-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: var(--space-xl);
+            opacity: 0.6;
+        }
+
+        .welcome-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--gold-dim);
+            stroke-width: 1;
+            fill: none;
+        }
+
+        .welcome-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold-warm) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: var(--space-md);
+        }
+
+        .welcome-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--papyrus-aged);
+            opacity: 0.8;
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: var(--space-xl);
+        }
+
+        .welcome-verse {
+            font-family: 'EB Garamond', serif;
+            font-size: 1rem;
+            color: var(--gold-dim);
+            font-style: italic;
+            margin-bottom: var(--space-sm);
+        }
+
+        .welcome-verse-ref {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--gold-dim);
+            opacity: 0.6;
+        }
+
+        /* Section Placeholder States */
+        .section-placeholder {
+            background: rgba(26, 38, 52, 0.3);
+            border: 1px dashed rgba(139, 115, 85, 0.2);
+            border-radius: 12px;
+            padding: var(--space-3xl);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, 
+                rgba(201, 169, 97, 0.02) 0%, 
+                transparent 50%, 
+                rgba(139, 58, 74, 0.02) 100%
+            );
+        }
+
+        .placeholder-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto var(--space-lg);
+            opacity: 0.4;
+        }
+
+        .placeholder-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--gold-dim);
+            stroke-width: 1;
+            fill: none;
+        }
+
+        .placeholder-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+            color: var(--gold-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .placeholder-description {
+            font-family: 'EB Garamond', serif;
+            font-size: 1rem;
+            color: var(--papyrus-aged);
+            opacity: 0.7;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Personal Study Panel Styles */
+        .study-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid rgba(139, 115, 85, 0.15);
+        }
+
+        .study-title-group {
+            display: flex;
+            align-items: baseline;
+            gap: var(--space-md);
+        }
+
+        .study-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            letter-spacing: 0.1em;
+            background: linear-gradient(180deg, var(--papyrus-light) 0%, var(--papyrus-aged) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .study-subtitle {
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            color: var(--burgundy-primary);
+            opacity: 0.8;
+        }
+
+        .study-actions {
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .study-btn {
+            padding: var(--space-sm) var(--space-lg);
+            font-family: 'EB Garamond', serif;
+            font-size: 0.85rem;
+            background: transparent;
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            border-radius: 6px;
+            color: var(--papyrus-aged);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .study-btn:hover {
+            border-color: var(--gold-primary);
+            background: rgba(201, 169, 97, 0.1);
+            color: var(--gold-bright);
+        }
+
+        .study-btn.primary {
+            background: linear-gradient(135deg, var(--burgundy-deep) 0%, var(--burgundy-primary) 100%);
+            border-color: var(--burgundy-primary);
+        }
+
+        .study-btn.primary:hover {
+            background: linear-gradient(135deg, var(--burgundy-primary) 0%, var(--burgundy-bright) 100%);
+        }
+
+        /* Notes Grid */
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+
+        .note-card {
+            background: rgba(26, 38, 52, 0.4);
+            border: 1px solid rgba(139, 115, 85, 0.15);
+            border-radius: 8px;
+            padding: var(--space-lg);
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .note-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gold-primary);
+            border-radius: 8px 0 0 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .note-card:hover {
+            background: rgba(26, 38, 52, 0.6);
+            border-color: rgba(139, 115, 85, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .note-card:hover::before {
+            opacity: 1;
+        }
+
+        .note-card.burgundy::before {
+            background: var(--burgundy-primary);
+        }
+
+        .note-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: var(--space-md);
+        }
+
+        .note-card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--papyrus-light);
+        }
+
+        .note-card-date {
+            font-family: 'EB Garamond', serif;
+            font-size: 0.75rem;
+            color: var(--gold-dim);
+            opacity: 0.6;
+        }
+
+        .note-card-content {
+            font-family: 'Caveat', cursive;
+            font-size: 1rem;
+            color: var(--papyrus-aged);
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+
+        .note-card-tag {
+            display: inline-block;
+            margin-top: var(--space-md);
+            padding: 2px 10px;
+            font-family: 'EB Garamond', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            color: var(--gold-dim);
+            border: 1px solid rgba(139, 115, 85, 0.2);
+            border-radius: 20px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: var(--space-3xl) var(--space-xl);
+        }
+
+        .empty-state-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto var(--space-xl);
+            opacity: 0.3;
+        }
+
+        .empty-state-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--gold-dim);
+            stroke-width: 0.5;
+            fill: none;
+        }
+
+        .empty-state-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--papyrus-aged);
+            margin-bottom: var(--space-sm);
+        }
+
+        .empty-state-description {
+            font-family: 'EB Garamond', serif;
+            font-size: 0.95rem;
+            color: var(--gold-dim);
+            opacity: 0.7;
+            max-width: 350px;
+            margin: 0 auto var(--space-xl);
+            line-height: 1.6;
+        }
+
+        .empty-state-btn {
+            padding: var(--space-md) var(--space-xl);
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: transparent;
+            border: 1px solid var(--gold-dim);
+            border-radius: 6px;
+            color: var(--gold-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .empty-state-btn:hover {
+            background: rgba(201, 169, 97, 0.1);
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 20px rgba(201, 169, 97, 0.1);
+        }
+
+        /* ============================================
+           MOBILE SIDEBAR TOGGLE
+        ============================================ */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: var(--space-md);
+            left: var(--space-md);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--glass-dark);
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            z-index: 200;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gold-primary);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 13, 20, 0.8);
+            z-index: 90;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+        ============================================ */
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                transform: translateX(-100%);
+                z-index: 150;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay {
+                display: block;
+            }
+
+            .sidebar-overlay.visible {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .main-content {
+                width: 100%;
+            }
+
+            .content-header {
+                padding-left: calc(var(--space-2xl) + 50px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --sidebar-width: 100%;
+            }
+
+            .content-header {
+                padding: 0 var(--space-lg);
+                padding-left: calc(var(--space-lg) + 50px);
+            }
+
+            .tab-panel {
+                padding: var(--space-lg);
+            }
+
+            .welcome-state {
+                padding: var(--space-xl);
+            }
+
+            .notes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .study-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-md);
+            }
+
+            .study-title-group {
+                flex-direction: column;
+                gap: var(--space-xs);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-header {
+                padding: var(--space-lg);
+            }
+
+            .nav-tab {
+                padding: var(--space-md) var(--space-lg);
+                margin: var(--space-xs) var(--space-sm);
+            }
+
+            .header-right {
+                display: none;
+            }
+        }
+  </style>
+    <link rel="stylesheet" href="./css/story-section.css">
+</head>
+<body>
+    <!-- Loading Veil -->
+    <div class="loading-veil" id="loadingVeil">
+        <div class="loading-symbol"></div>
+        <div class="loading-text">Opening the Codex</div>
+    </div>
+
+    <!-- Background Atmosphere -->
+    <div class="app-bg">
+        <div class="app-bg-gradient"></div>
+        <div class="app-bg-texture"></div>
+        <div class="app-bg-vignette"></div>
+    </div>
+
+    <!-- Dream Particles -->
+    <div class="dream-particles" id="dreamParticles"></div>
+
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Mobile Toggle -->
+    <button class="mobile-toggle" id="mobileToggle">
+        <svg viewBox="0 0 24 24">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <!-- App Container -->
+    <div class="app-container" id="appContainer">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-logo">
+                    <div class="logo-mark">
+                        <svg viewBox="0 0 36 36">
+                            <!-- Coat of Many Colors Symbol -->
+                            <defs>
+                                <linearGradient id="coatGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#e2c990"/>
+                                    <stop offset="50%" stop-color="#c9a961"/>
+                                    <stop offset="100%" stop-color="#8b7355"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M18 4 L26 10 L26 26 L18 32 L10 26 L10 10 Z" 
+                                  stroke="url(#coatGradient)" 
+                                  stroke-width="1.5" 
+                                  fill="none"/>
+                            <circle cx="18" cy="14" r="3" 
+                                    stroke="url(#coatGradient)" 
+                                    stroke-width="1" 
+                                    fill="none"/>
+                            <path d="M12 18 L18 24 L24 18" 
+                                  stroke="url(#coatGradient)" 
+                                  stroke-width="1" 
+                                  fill="none"
+                                  stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">Joseph</span>
+                </a>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                
+                <!-- The Codex Sections -->
+                <div class="nav-section">
+                    <div class="nav-section-title">The Codex</div>
+                    
+                    <div class="nav-tab active" data-tab="story">
+                        <div class="nav-tab-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke-linecap="round"/>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                                <path d="M8 7h8M8 11h6"/>
+                            </svg>
+                        </div>
+                        <div class="nav-tab-content">
+                            <div class="nav-tab-title">The Story</div>
+                            <div class="nav-tab-subtitle">Plot points for annotation</div>
+                        </div>
+                        <span class="nav-tab-badge">0</span>
+                    </div>
+
+                    <div class="nav-tab" data-tab="world">
+                        <div class="nav-tab-icon">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                        </div>
+                        <div class="nav-tab-content">
+                            <div class="nav-tab-title">The World</div>
+                            <div class="nav-tab-subtitle">Historical & archaeological</div>
+                        </div>
+                        <span class="nav-tab-badge">0</span>
+                    </div>
+
+                    <div class="nav-tab" data-tab="pattern">
+                        <div class="nav-tab-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5"/>
+                                <path d="M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <div class="nav-tab-content">
+                            <div class="nav-tab-title">The Pattern</div>
+                            <div class="nav-tab-subtitle">Joseph & Jesus connections</div>
+                        </div>
+                        <span class="nav-tab-badge">0</span>
+                    </div>
+
+                    <div class="nav-tab" data-tab="power">
+                        <div class="nav-tab-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                                <circle cx="12" cy="12" r="4"/>
+                            </svg>
+                        </div>
+                        <div class="nav-tab-content">
+                            <div class="nav-tab-title">The Power</div>
+                            <div class="nav-tab-subtitle">Timeless principles</div>
+                        </div>
+                        <span class="nav-tab-badge">0</span>
+                    </div>
+                </div>
+
+                <!-- Personal Study Sections -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Personal Studies</div>
+                    
+                    <div class="nav-tab personal" data-tab="trevor">
+                        <div class="nav-tab-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <path d="M14 2v6h6"/>
+                                <path d="M9 15l2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <div class="nav-tab-content">
+                            <div class="nav-tab-title">Trevor's Study</div>
+                            <div class="nav-tab-subtitle">Your personal workspace</div>
+                        </div>
+                        <span class="nav-tab-badge">0</span>
+                    </div>
+
+                    <div class="nav-tab personal" data-tab="tyrrel">
+                        <div class="nav-tab-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <path d="M14 2v6h6"/>
+                                <path d="M12 18v-6M9 15h6"/>
+                            </svg>
+                        </div>
+                        <div class="nav-tab-content">
+                            <div class="nav-tab-title">Tyrrel's Study</div>
+                            <div class="nav-tab-subtitle">Mentor's workspace</div>
+                        </div>
+                        <span class="nav-tab-badge">0</span>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Your Journey</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                <p class="sidebar-verse">"The path of the righteous is like the morning sun, shining ever brighter till the full light of day."</p>
+                <span class="sidebar-verse-ref">Proverbs 4:18</span>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Content Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <nav class="breadcrumb">
+                        <span class="breadcrumb-item">Joseph</span>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-item breadcrumb-current" id="breadcrumbCurrent">The Story</span>
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <button class="header-btn" title="Search">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <button class="header-btn" title="Bookmarks">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </button>
+                    <button class="header-btn" title="Settings">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Body -->
+            <div class="content-body">
+               <!-- THE STORY Panel -->
+                <div class="tab-panel active" id="panel-story">
+                    <!-- Chapter Navigator View -->
+                    <div id="chapterNavigator" class="chapter-navigator">
+                        <div class="navigator-header">
+                            <div class="navigator-title">
+                                <span class="title-ornament">✦</span>
+                                <span>The Story of Joseph</span>
+                                <span class="title-ornament">✦</span>
+                            </div>
+                            <div class="navigator-subtitle">Genesis 37-50 • A Journey from Pit to Palace</div>
+                        </div>
+
+                        <div class="progress-summary">
+                            <div class="progress-text">
+                                <span id="chaptersRead">0 of 10 chapters</span> explored
+                                <span class="divider">•</span>
+                                <span id="chaptersAnnotated">0 chapters</span> annotated
+                            </div>
+                        </div>
+
+                        <div class="chapter-grid" id="chapterGrid">
+                            <!-- Chapters will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Reading View (hidden by default) -->
+                    <div id="readingView" class="reading-view" style="display: none;">
+                        <!-- Back Button -->
+                        <button class="back-to-chapters" id="backToChapters">
+                            <span class="back-arrow">←</span>
+                            <span>All Chapters</span>
+                        </button>
+
+                        <!-- Chapter Header -->
+                        <div class="chapter-reading-header">
+                            <div class="chapter-reading-meta">
+                                <span id="currentChapterBook">Genesis</span>
+                                <span class="chapter-divider">•</span>
+                                <span id="currentChapterNumber">37</span>
+                            </div>
+                            <h1 id="currentChapterTitle" class="chapter-reading-title">The Dreamer and His Brothers</h1>
+                            <div class="chapter-reading-age">Joseph's Age: <span id="currentChapterAge">17</span></div>
+                        </div>
+
+                        <!-- Themes to Notice -->
+                        <div class="chapter-themes" id="chapterThemes">
+                            <!-- Populated by JS -->
+                        </div>
+
+                        <!-- Two-Column Reading Layout -->
+                        <div class="reading-columns">
+                            <!-- Left Column: The Narrative -->
+                            <div class="narrative-column">
+                                <div id="narrativeContent" class="narrative-content">
+                                    <!-- Sections and plot points populated by JS -->
+                                </div>
+
+                                <!-- Reflection Questions at bottom -->
+                                <div class="reflection-questions" id="reflectionQuestions">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Annotations -->
+                            <div class="annotation-column">
+                                <div class="annotation-sticky-header">
+                                    <div class="annotation-author-label">Your Annotations</div>
+                                    <div class="annotation-toggle">
+                                        <button class="author-toggle active" data-author="trevor" id="trevorToggle">
+                                            <span class="toggle-icon">📝</span>
+                                            Trevor
+                                        </button>
+                                        <button class="author-toggle" data-author="tyrrel" id="tyrrelToggle">
+                                            <span class="toggle-icon">✍️</span>
+                                            Tyrrel
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="annotation-workspace" id="annotationWorkspace">
+                                    <div class="annotation-empty-state">
+                                        <div class="empty-icon">✍️</div>
+                                        <p>Click any plot point on the left to add your first note</p>
+                                        <small>Notes appear handwritten and stay anchored to their plot points</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- THE WORLD Panel -->
+                <div class="tab-panel" id="panel-world">
+                    <div class="panel-container">
+                        <div class="section-placeholder">
+                            <div class="placeholder-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M2 12h20"/>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                    <path d="M4.5 6.5h15M4.5 17.5h15"/>
+                                </svg>
+                            </div>
+                            <h3 class="placeholder-title">The Ancient World</h3>
+                            <p class="placeholder-description">
+                                Archaeological evidence, timelines, and historical context will ground this story in the reality of Africa's greatest civilization.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- THE PATTERN Panel -->
+                <div class="tab-panel" id="panel-pattern">
+                    <div class="panel-container">
+                        <div class="section-placeholder">
+                            <div class="placeholder-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                    <path d="M2 17l10 5 10-5"/>
+                                    <path d="M2 12l10 5 10-5"/>
+                                </svg>
+                            </div>
+                            <h3 class="placeholder-title">Divine Fingerprints</h3>
+                            <p class="placeholder-description">
+                                The typological connections between Joseph and Jesus will be revealed here—the scarlet thread running through Scripture.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- THE POWER Panel -->
+                <div class="tab-panel" id="panel-power">
+                    <div class="panel-container">
+                        <div class="section-placeholder">
+                            <div class="placeholder-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                                    <circle cx="12" cy="12" r="4"/>
+                                </svg>
+                            </div>
+                            <h3 class="placeholder-title">Timeless Principles</h3>
+                            <p class="placeholder-description">
+                                Why Joseph's story matters NOW—the crisis of betrayal, the unseen years, the power of integrity in obscurity.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TREVOR'S STUDY Panel -->
+                <div class="tab-panel" id="panel-trevor">
+                    <div class="panel-container">
+                        <div class="study-header">
+                            <div class="study-title-group">
+                                <h2 class="study-name">Trevor's Study</h2>
+                                <span class="study-subtitle">your sacred workspace</span>
+                            </div>
+                            <div class="study-actions">
+                                <button class="study-btn">Export Notes</button>
+                                <button class="study-btn primary">+ New Reflection</button>
+                            </div>
+                        </div>
+
+                        <div class="empty-state">
+                            <div class="empty-state-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                                    <path d="M2 2l7.586 7.586"/>
+                                    <circle cx="11" cy="11" r="2"/>
+                                </svg>
+                            </div>
+                            <h3 class="empty-state-title">Your journey begins with a single word</h3>
+                            <p class="empty-state-description">
+                                This is your space to capture insights, questions, and connections as you walk through Joseph's story. Every note you write becomes part of your own narrative.
+                            </p>
+                            <button class="empty-state-btn">Begin Your First Reflection</button>
+                        </div>
+
+                        <!-- Example Notes Grid (hidden by default, shown when notes exist) -->
+                        <div class="notes-grid" style="display: none;">
+                            <div class="note-card">
+                                <div class="note-card-header">
+                                    <span class="note-card-title">On Dreams & Destiny</span>
+                                    <span class="note-card-date">Dec 4</span>
+                                </div>
+                                <p class="note-card-content">
+                                    The brothers couldn't see what Joseph saw. Maybe that's the hardest part—carrying a vision no one else believes in...
+                                </p>
+                                <span class="note-card-tag">Genesis 37</span>
+                            </div>
+                            <div class="note-card burgundy">
+                                <div class="note-card-header">
+                                    <span class="note-card-title">Question: The Coat</span>
+                                    <span class="note-card-date">Dec 3</span>
+                                </div>
+                                <p class="note-card-content">
+                                    Why did Jacob give Joseph that coat knowing it would cause conflict? Was he testing his other sons?
+                                </p>
+                                <span class="note-card-tag">Question</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TYRREL'S STUDY Panel -->
+                <div class="tab-panel" id="panel-tyrrel">
+                    <div class="panel-container">
+                        <div class="study-header">
+                            <div class="study-title-group">
+                                <h2 class="study-name">Tyrrel's Study</h2>
+                                <span class="study-subtitle">mentor's workspace</span>
+                            </div>
+                            <div class="study-actions">
+                                <button class="study-btn">Export Notes</button>
+                                <button class="study-btn primary">+ New Entry</button>
+                            </div>
+                        </div>
+
+                        <div class="empty-state">
+                            <div class="empty-state-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                                    <path d="M15 5l4 4"/>
+                                </svg>
+                            </div>
+                            <h3 class="empty-state-title">A space for guidance and wisdom</h3>
+                            <p class="empty-state-description">
+                                Record your observations, teaching notes, and insights as you guide Trevor through this ancient narrative. Your words become the marginalia in his journey.
+                            </p>
+                            <button class="empty-state-btn">Create Your First Entry</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ============================================
+        // JOSEPH APP - PHASE 1 SHELL FUNCTIONALITY
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initDreamParticles();
+            initNavigation();
+            initMobileSidebar();
+            startEntranceSequence();
+        });
+
+        // Dream Particles - Continuation of landing page aesthetic
+        function initDreamParticles() {
+            const container = document.getElementById('dreamParticles');
+            const numParticles = 15;
+
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'dream-particle';
+
+                const size = Math.random() * 4 + 2;
+                const isGolden = Math.random() > 0.4;
+                const duration = Math.random() * 25 + 20;
+                const delay = Math.random() * 25;
+                const leftPos = Math.random() * 100;
+
+                particle.style.cssText = `
+                    left: ${leftPos}%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${isGolden 
+                        ? 'radial-gradient(circle, rgba(201, 169, 97, 0.5), rgba(201, 169, 97, 0))' 
+                        : 'radial-gradient(circle, rgba(139, 58, 74, 0.4), rgba(139, 58, 74, 0))'
+                    };
+                    animation-duration: ${duration}s;
+                    animation-delay: ${delay}s;
+                `;
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Tab Navigation System
+        function initNavigation() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const panels = document.querySelectorAll('.tab-panel');
+            const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
+
+            const tabTitles = {
+                'story': 'The Story',
+                'world': 'The World',
+                'pattern': 'The Pattern',
+                'power': 'The Power',
+                'trevor': "Trevor's Study",
+                'tyrrel': "Tyrrel's Study"
+            };
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetTab = tab.dataset.tab;
+
+                    // Update active states
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    panels.forEach(panel => panel.classList.remove('active'));
+                    document.getElementById(`panel-${targetTab}`).classList.add('active');
+
+                    // Update breadcrumb
+                    breadcrumbCurrent.textContent = tabTitles[targetTab];
+
+                    // Close mobile sidebar if open
+                    closeMobileSidebar();
+
+                    // Store current tab in localStorage
+                    localStorage.setItem('josephCurrentTab', targetTab);
+                });
+            });
+
+            // Restore last active tab
+            const savedTab = localStorage.getItem('josephCurrentTab');
+            if (savedTab) {
+                const savedTabElement = document.querySelector(`[data-tab="${savedTab}"]`);
+                if (savedTabElement) {
+                    savedTabElement.click();
+                }
+            }
+        }
+
+        // Mobile Sidebar
+        function initMobileSidebar() {
+            const toggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            toggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('visible');
+            });
+
+            overlay.addEventListener('click', closeMobileSidebar);
+        }
+
+        function closeMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.remove('open');
+            overlay.classList.remove('visible');
+        }
+
+        // Entrance Animation Sequence
+        function startEntranceSequence() {
+            const loadingVeil = document.getElementById('loadingVeil');
+            const appContainer = document.getElementById('appContainer');
+
+            // Simulate loading (would be replaced with actual data loading)
+            setTimeout(() => {
+                const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+                tl.to(loadingVeil, {
+                    opacity: 0,
+                    duration: 0.8,
+                    onComplete: () => {
+                        loadingVeil.style.display = 'none';
+                    }
+                });
+
+                tl.to(appContainer, {
+                    opacity: 1,
+                    duration: 0.6
+                }, '-=0.3');
+
+                // Animate sidebar elements
+                tl.from('.sidebar-header', {
+                    opacity: 0,
+                    x: -20,
+                    duration: 0.5
+                }, '-=0.2');
+
+                tl.from('.nav-tab', {
+                    opacity: 0,
+                    x: -15,
+                    duration: 0.4,
+                    stagger: 0.08
+                }, '-=0.3');
+
+                tl.from('.sidebar-footer', {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.5
+                }, '-=0.2');
+
+                // Animate main content
+                tl.from('.content-header', {
+                    opacity: 0,
+                    y: -20,
+                    duration: 0.5
+                }, '-=0.4');
+
+                tl.from('.tab-panel.active', {
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.6
+                }, '-=0.3');
+
+                // Animate progress bar
+                tl.to('#progressFill', {
+                    width: '0%',
+                    duration: 1,
+                    ease: 'power2.inOut'
+                }, '-=0.3');
+
+            }, 800);
+        }
+
+        // Progress Tracking (placeholder - would be connected to actual data)
+        function updateProgress(percent) {
+            const progressFill = document.getElementById('progressFill');
+            const progressPercent = document.getElementById('progressPercent');
+            
+            progressFill.style.width = `${percent}%`;
+            progressPercent.textContent = `${percent}%`;
+        }
+
+        // Note Badge Updates (placeholder - would be connected to localStorage)
+        function updateNoteBadge(tabId, count) {
+            const tab = document.querySelector(`[data-tab="${tabId}"]`);
+            if (tab) {
+                const badge = tab.querySelector('.nav-tab-badge');
+                if (badge) {
+                    badge.textContent = count;
+                    tab.classList.toggle('has-notes', count > 0);
+                }
+            }
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            // Escape closes mobile sidebar
+            if (e.key === 'Escape') {
+                closeMobileSidebar();
+            }
+
+            // Number keys 1-6 switch tabs (when not in input)
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                const tabKeys = {
+                    '1': 'story',
+                    '2': 'world',
+                    '3': 'pattern',
+                    '4': 'power',
+                    '5': 'trevor',
+                    '6': 'tyrrel'
+                };
+
+                if (tabKeys[e.key]) {
+                    const tab = document.querySelector(`[data-tab="${tabKeys[e.key]}"]`);
+                    if (tab) tab.click();
+                }
+            }
+    });
+    </script>
+    <script src="./js/story-reader.js"></script>
+</body>
+</html>
+
