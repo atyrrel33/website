@@ -28,7 +28,7 @@ class StoryReader {
 
     async loadStoryData() {
         try {
-           const response = await fetch('story.json');
+           const response = await fetch('./story.json');
             if (!response.ok) {
                 throw new Error('Failed to load story data');
             }
@@ -303,8 +303,7 @@ class StoryReader {
                 <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--burgundy-bright);">
                     <h3>⚠️ ${message}</h3>
                     <p style="margin-top: 1rem; color: var(--papyrus-aged);">
-                        Make sure story.json is in the ./data/ directory
-                    </p>
+                        Make sure story.json is in the root directory (same folder as this HTML file)                    </p>
                 </div>
             `;
         }
