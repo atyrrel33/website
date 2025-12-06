@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronicle - A Sacred Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="chronicle-styles.css">
+</head>
+<body>
+    <!-- Custom Flame Cursor -->
+    <div id="custom-cursor">
+        <div class="cursor-core"></div>
+    </div>
+
+    <!-- Main Application Container -->
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1 class="app-title">Chronicle</h1>
+                <p class="app-subtitle">A Sacred Workspace</p>
+            </div>
+            <div class="header-center">
+                <div class="project-name" id="projectName">Joseph: A Modern Story</div>
+            </div>
+            <div class="header-right">
+                <button class="prayer-btn" id="prayerBtn" title="Begin with Prayer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L12 7M12 7C10.5 7 9 8 9 9.5C9 11 10.5 12 12 12C13.5 12 15 11 15 9.5C15 8 13.5 7 12 7ZM12 12L12 22M8 22L16 22"/>
+                    </svg>
+                </button>
+                <div class="collaborators">
+                    <div class="collaborator" data-name="Tyrrel" title="Tyrrel">T</div>
+                    <div class="collaborator" data-name="Trevor" title="Trevor">T</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="main-nav">
+            <button class="nav-tab active" data-space="desk">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                <span>The Desk</span>
+            </button>
+            <button class="nav-tab" data-space="archive">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span>The Archive</span>
+            </button>
+            <button class="nav-tab" data-space="covenant">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>
+                </svg>
+                <span>The Covenant</span>
+            </button>
+            <button class="nav-tab" data-space="altar">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L12 7"/>
+                    <path d="M12 7C10.5 7 9 8 9 9.5C9 11 10.5 12 12 12C13.5 12 15 11 15 9.5C15 8 13.5 7 12 7Z"/>
+                    <path d="M12 12L12 22"/>
+                    <path d="M8 22L16 22"/>
+                    <circle cx="12" cy="7" r="8" opacity="0.2"/>
+                </svg>
+                <span>The Altar</span>
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- SPACE 1: THE DESK (Active Writing) -->
+            <section class="workspace active" id="desk">
+                <div class="desk-container">
+                    <!-- Writing Toolbar -->
+                    <div class="writing-toolbar">
+                        <div class="toolbar-left">
+                            <select class="font-selector" id="fontSelector">
+                                <option value="Crimson Text">Crimson Text</option>
+                                <option value="Libre Baskerville">Libre Baskerville</option>
+                                <option value="Lora">Lora</option>
+                                <option value="Georgia">Georgia</option>
+                            </select>
+                            <select class="format-selector" id="formatSelector">
+                                <option value="novel">Novel Prose</option>
+                                <option value="screenplay">Screenplay</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-center">
+                            <div class="scene-title-input">
+                                <input type="text" id="sceneTitle" placeholder="Scene Title..." value="Opening Scene">
+                            </div>
+                        </div>
+                        <div class="toolbar-right">
+                            <button class="tool-btn" id="focusModeBtn" title="Focus Mode">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <rect x="7" y="7" width="10" height="10" rx="1"/>
+                                </svg>
+                            </button>
+                            <button class="tool-btn" id="referenceBtn" title="Toggle Reference Panel">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                                    <path d="M8 7h8M8 11h8"/>
+                                </svg>
+                            </button>
+                            <div class="word-count" id="wordCount">0 words</div>
+                        </div>
+                    </div>
+
+                    <!-- Writing Area with Reference Panel -->
+                    <div class="writing-area-container">
+                        <div class="writing-editor">
+                            <div class="editor-wrapper">
+                                <div contenteditable="true" 
+                                     class="writing-surface" 
+                                     id="writingSurface"
+                                     data-placeholder="Begin writing... (The Lord replied, 'Write down the revelation and make it plain on tablets so that a herald may run with it.')">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Joseph App Reference Panel (Toggle) -->
+                        <aside class="reference-panel" id="referencePanel">
+                            <div class="panel-header">
+                                <h3>Joseph App Reference</h3>
+                                <button class="close-panel" id="closePanelBtn">×</button>
+                            </div>
+                            <div class="panel-content">
+                                <div class="reference-section">
+                                    <h4>Plot Points</h4>
+                                    <div class="reference-item">
+                                        <strong>The Favorite Son</strong>
+                                        <p>Jacob favors Joseph, giving him the coat of many colors. Brothers grow jealous.</p>
+                                    </div>
+                                    <div class="reference-item">
+                                        <strong>The Dreams</strong>
+                                        <p>Joseph dreams of his family bowing to him. His brothers' hatred intensifies.</p>
+                                    </div>
+                                    <div class="reference-item">
+                                        <strong>The Betrayal</strong>
+                                        <p>Brothers throw Joseph into the pit, then sell him to Midianite traders.</p>
+                                    </div>
+                                </div>
+                                <div class="reference-section">
+                                    <h4>Themes</h4>
+                                    <div class="theme-tag">Providence</div>
+                                    <div class="theme-tag">Betrayal</div>
+                                    <div class="theme-tag">Forgiveness</div>
+                                    <div class="theme-tag">Identity</div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+
+                    <!-- Auto-save Indicator -->
+                    <div class="autosave-indicator" id="autosaveIndicator">
+                        <span class="saving-text">Saving...</span>
+                        <span class="saved-text">All changes saved</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SPACE 2: THE ARCHIVE (Project Library) -->
+            <section class="workspace" id="archive">
+                <div class="archive-container">
+                    <div class="archive-sidebar">
+                        <h3>Project Structure</h3>
+                        <div class="structure-tree">
+                            <div class="structure-item expanded">
+                                <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                                <span>Act 1: The Favored</span>
+                            </div>
+                            <div class="structure-children">
+                                <div class="structure-item scene-item active">
+                                    <svg class="scene-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <span>Opening Scene</span>
+                                </div>
+                                <div class="structure-item scene-item">
+                                    <svg class="scene-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <span>The Dreams</span>
+                                </div>
+                            </div>
+                            <div class="structure-item">
+                                <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="9 6 15 12 9 18"/>
+                                </svg>
+                                <span>Act 2: The Pit</span>
+                            </div>
+                            <div class="structure-item">
+                                <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="9 6 15 12 9 18"/>
+                                </svg>
+                                <span>Act 3: The Rise</span>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-section">
+                            <h3>Quick Actions</h3>
+                            <button class="action-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"/>
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                New Scene
+                            </button>
+                            <button class="action-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                New Character
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="archive-main">
+                        <div class="archive-header">
+                            <h2>Scene Library</h2>
+                            <div class="view-controls">
+                                <button class="view-btn active" data-view="cards">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="7" height="7"/>
+                                        <rect x="14" y="3" width="7" height="7"/>
+                                        <rect x="14" y="14" width="7" height="7"/>
+                                        <rect x="3" y="14" width="7" height="7"/>
+                                    </svg>
+                                </button>
+                                <button class="view-btn" data-view="list">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="8" y1="6" x2="21" y2="6"/>
+                                        <line x1="8" y1="12" x2="21" y2="12"/>
+                                        <line x1="8" y1="18" x2="21" y2="18"/>
+                                        <line x1="3" y1="6" x2="3.01" y2="6"/>
+                                        <line x1="3" y1="12" x2="3.01" y2="12"/>
+                                        <line x1="3" y1="18" x2="3.01" y2="18"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="scene-cards-grid">
+                            <div class="scene-card">
+                                <div class="card-header">
+                                    <h4>Opening Scene</h4>
+                                    <span class="status-badge draft">Draft</span>
+                                </div>
+                                <p class="card-summary">Marcus arrives at the family gathering, tension simmering beneath the surface celebration.</p>
+                                <div class="card-meta">
+                                    <span class="meta-item">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M12 20h9"/>
+                                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                                        </svg>
+                                        1,247 words
+                                    </span>
+                                    <span class="meta-item">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                            <line x1="16" y1="2" x2="16" y2="6"/>
+                                            <line x1="8" y1="2" x2="8" y2="6"/>
+                                            <line x1="3" y1="10" x2="21" y2="10"/>
+                                        </svg>
+                                        Dec 5
+                                    </span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag">Family</span>
+                                    <span class="tag">Identity</span>
+                                </div>
+                            </div>
+
+                            <div class="scene-card">
+                                <div class="card-header">
+                                    <h4>The Dreams</h4>
+                                    <span class="status-badge in-progress">In Progress</span>
+                                </div>
+                                <p class="card-summary">Marcus shares his vision for the future, unknowingly stoking his brothers' jealousy.</p>
+                                <div class="card-meta">
+                                    <span class="meta-item">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M12 20h9"/>
+                                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 7 19l-4 1 1-4L16.5 3.5z"/>
+                                        </svg>
+                                        823 words
+                                    </span>
+                                    <span class="meta-item">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                            <line x1="16" y1="2" x2="16" y2="6"/>
+                                            <line x1="8" y1="2" x2="8" y2="6"/>
+                                            <line x1="3" y1="10" x2="21" y2="10"/>
+                                        </svg>
+                                        Dec 6
+                                    </span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag">Dreams</span>
+                                    <span class="tag">Betrayal</span>
+                                </div>
+                            </div>
+
+                            <div class="scene-card add-new">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"/>
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                <p>Create New Scene</p>
+                            </div>
+                        </div>
+
+                        <!-- Characters Tab -->
+                        <div class="archive-section" style="margin-top: 3rem;">
+                            <h2>Character Profiles</h2>
+                            <div class="character-grid">
+                                <div class="character-card">
+                                    <div class="character-initial">M</div>
+                                    <h4>Marcus James</h4>
+                                    <p class="character-role">Protagonist (Joseph)</p>
+                                    <p class="character-desc">17-year-old with big dreams, favored by his father, struggles with pride</p>
+                                </div>
+                                <div class="character-card">
+                                    <div class="character-initial">D</div>
+                                    <h4>David James</h4>
+                                    <p class="character-role">Father (Jacob)</p>
+                                    <p class="character-desc">Successful businessman, shows favoritism, bears old wounds</p>
+                                </div>
+                                <div class="character-card add-new">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                    </svg>
+                                    <p>Add Character</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SPACE 3: THE COVENANT (Structure & Craft) -->
+            <section class="workspace" id="covenant">
+                <div class="covenant-container">
+                    <div class="covenant-header">
+                        <h2>Story Structure & Craft</h2>
+                        <p class="covenant-subtitle">Your covenant with excellence in storytelling</p>
+                    </div>
+
+                    <div class="covenant-grid">
+                        <!-- Story Arc Visualizer -->
+                        <div class="covenant-card large">
+                            <h3>Story Arc</h3>
+                            <div class="arc-visualizer">
+                                <svg class="arc-chart" viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet">
+                                    <!-- Story arc curve -->
+                                    <path d="M 50 250 Q 150 200, 200 180 T 350 120 T 500 80 L 550 100" 
+                                          fill="none" 
+                                          stroke="var(--teal)" 
+                                          stroke-width="3"
+                                          opacity="0.6"/>
+                                    
+                                    <!-- Plot points -->
+                                    <circle cx="50" cy="250" r="8" fill="var(--gold)" opacity="0.8"/>
+                                    <circle cx="200" cy="180" r="8" fill="var(--gold)" opacity="0.8"/>
+                                    <circle cx="350" cy="120" r="10" fill="var(--burgundy)"/>
+                                    <circle cx="500" cy="80" r="8" fill="var(--gold)" opacity="0.8"/>
+                                    <circle cx="550" cy="100" r="8" fill="var(--gold)" opacity="0.8"/>
+                                    
+                                    <!-- Labels -->
+                                    <text x="50" y="280" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Setup</text>
+                                    <text x="200" y="210" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Inciting</text>
+                                    <text x="350" y="150" text-anchor="middle" fill="var(--text-primary)" font-size="13" font-weight="600">Midpoint</text>
+                                    <text x="500" y="110" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Climax</text>
+                                    <text x="550" y="130" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Resolution</text>
+                                </svg>
+                            </div>
+                            <div class="arc-notes">
+                                <p><strong>Current Position:</strong> Act 1 - Setup Phase</p>
+                                <p>You're establishing the world, introducing Marcus, and setting up the family dynamics that will drive the betrayal.</p>
+                            </div>
+                        </div>
+
+                        <!-- Character Arc Tracker -->
+                        <div class="covenant-card">
+                            <h3>Character Arcs</h3>
+                            <div class="character-arc-list">
+                                <div class="arc-item">
+                                    <div class="arc-header">
+                                        <strong>Marcus James</strong>
+                                        <span class="arc-progress">15%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 15%"></div>
+                                    </div>
+                                    <p class="arc-stage">Arrogant → Humbled → Wise</p>
+                                </div>
+                                <div class="arc-item">
+                                    <div class="arc-header">
+                                        <strong>The Brothers</strong>
+                                        <span class="arc-progress">8%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 8%"></div>
+                                    </div>
+                                    <p class="arc-stage">Jealous → Remorseful → Reconciled</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Theme Distribution -->
+                        <div class="covenant-card">
+                            <h3>Theme Distribution</h3>
+                            <div class="theme-distribution">
+                                <div class="theme-bar">
+                                    <span class="theme-label">Providence</span>
+                                    <div class="theme-track">
+                                        <div class="theme-fill" style="width: 40%"></div>
+                                    </div>
+                                    <span class="theme-count">4 scenes</span>
+                                </div>
+                                <div class="theme-bar">
+                                    <span class="theme-label">Betrayal</span>
+                                    <div class="theme-track">
+                                        <div class="theme-fill burgundy" style="width: 60%"></div>
+                                    </div>
+                                    <span class="theme-count">6 scenes</span>
+                                </div>
+                                <div class="theme-bar">
+                                    <span class="theme-label">Forgiveness</span>
+                                    <div class="theme-track">
+                                        <div class="theme-fill teal" style="width: 20%"></div>
+                                    </div>
+                                    <span class="theme-count">2 scenes</span>
+                                </div>
+                                <div class="theme-bar">
+                                    <span class="theme-label">Identity</span>
+                                    <div class="theme-track">
+                                        <div class="theme-fill" style="width: 50%"></div>
+                                    </div>
+                                    <span class="theme-count">5 scenes</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scene Structure Helper -->
+                        <div class="covenant-card large">
+                            <h3>Scene Structure Workshop</h3>
+                            <div class="scene-workshop">
+                                <div class="workshop-field">
+                                    <label>Scene Purpose</label>
+                                    <input type="text" placeholder="Why does this scene exist? What's its job?" />
+                                </div>
+                                <div class="workshop-field">
+                                    <label>Goal</label>
+                                    <input type="text" placeholder="What does the protagonist want in this scene?" />
+                                </div>
+                                <div class="workshop-field">
+                                    <label>Conflict</label>
+                                    <input type="text" placeholder="What prevents them from getting it?" />
+                                </div>
+                                <div class="workshop-field">
+                                    <label>Change</label>
+                                    <input type="text" placeholder="How does this scene change the status quo?" />
+                                </div>
+                                <div class="workshop-field">
+                                    <label>Emotional Beat</label>
+                                    <select>
+                                        <option>Hope</option>
+                                        <option>Fear</option>
+                                        <option>Anger</option>
+                                        <option>Joy</option>
+                                        <option>Sorrow</option>
+                                        <option>Anticipation</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SPACE 4: THE ALTAR (Reflection & Prayer) -->
+            <section class="workspace" id="altar">
+                <div class="altar-container">
+                    <div class="altar-header">
+                        <div class="altar-flame">
+                            <svg viewBox="0 0 100 140" fill="none">
+                                <path d="M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z" 
+                                      fill="url(#flameGradient)" 
+                                      opacity="0.9">
+                                    <animate attributeName="d" 
+                                             dur="2s" 
+                                             repeatCount="indefinite"
+                                             values="M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z;
+                                                     M50 10 C42 30, 45 50, 50 70 C58 50, 52 30, 50 10 Z;
+                                                     M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z"/>
+                                </path>
+                                <defs>
+                                    <linearGradient id="flameGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ffcc88;stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#ff9955;stop-opacity:0.9" />
+                                        <stop offset="100%" style="stop-color:#d4a574;stop-opacity:0.6" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h2>The Altar</h2>
+                        <p class="altar-subtitle">A space for reflection, prayer, and release</p>
+                    </div>
+
+                    <div class="altar-grid">
+                        <!-- Prayer & Intention -->
+                        <div class="altar-card">
+                            <h3>Today's Prayer</h3>
+                            <div class="prayer-input">
+                                <textarea 
+                                    placeholder="Before you write, invite God into this work. What is your intention for today's session?"
+                                    rows="4"></textarea>
+                                <button class="altar-btn">Offer This Prayer</button>
+                            </div>
+                        </div>
+
+                        <!-- Reflection Journal -->
+                        <div class="altar-card large">
+                            <h3>Reflection Journal</h3>
+                            <div class="journal-tabs">
+                                <button class="journal-tab active">Personal</button>
+                                <button class="journal-tab">Shared with Trevor</button>
+                            </div>
+                            <div class="journal-editor">
+                                <textarea 
+                                    placeholder="What are you learning through this process? What is God teaching you? Write honestly..."
+                                    rows="12"></textarea>
+                            </div>
+                            <div class="journal-actions">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" />
+                                    <span>Share this reflection with Trevor</span>
+                                </label>
+                                <button class="altar-btn">Save Reflection</button>
+                            </div>
+                        </div>
+
+                        <!-- Scripture Meditation -->
+                        <div class="altar-card">
+                            <h3>Scripture for Today</h3>
+                            <div class="scripture-display">
+                                <p class="verse-text">
+                                    "For we are God's handiwork, created in Christ Jesus to do good works, 
+                                    which God prepared in advance for us to do."
+                                </p>
+                                <p class="verse-ref">— Ephesians 2:10</p>
+                            </div>
+                            <button class="altar-btn secondary">Change Verse</button>
+                        </div>
+
+                        <!-- Letting Go / Release -->
+                        <div class="altar-card">
+                            <h3>Let It Go</h3>
+                            <p class="altar-instruction">
+                                Write what you need to release—fear, doubt, unforgiveness. 
+                                Then watch it dissolve.
+                            </p>
+                            <div class="release-input">
+                                <textarea 
+                                    id="releaseText"
+                                    placeholder="I release my fear of..."
+                                    rows="3"></textarea>
+                                <button class="altar-btn release-btn" id="releaseBtn">
+                                    Release to God
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Prayer Log History -->
+                        <div class="altar-card large">
+                            <h3>Prayer History</h3>
+                            <div class="prayer-history">
+                                <div class="prayer-entry">
+                                    <div class="entry-date">December 5, 2024</div>
+                                    <p>"God, help me write authentic dialogue for Marcus that resonates with Trevor's generation."</p>
+                                    <div class="entry-note">✓ Answered - Scene flows naturally now</div>
+                                </div>
+                                <div class="prayer-entry">
+                                    <div class="entry-date">December 4, 2024</div>
+                                    <p>"Give me wisdom to balance the modern setting with the timeless truth of Joseph's story."</p>
+                                </div>
+                                <div class="prayer-entry">
+                                    <div class="entry-date">December 3, 2024</div>
+                                    <p>"Lord, use this collaboration to strengthen my relationship with Trevor."</p>
+                                    <div class="entry-note">✓ Answered - Had breakthrough conversation today</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Prayer Modal -->
+    <div class="modal" id="prayerModal">
+        <div class="modal-content prayer-modal">
+            <button class="modal-close" id="closePrayerModal">×</button>
+            <div class="modal-header">
+                <div class="prayer-flame-icon">
+                    <svg viewBox="0 0 100 140" fill="none">
+                        <path d="M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z" 
+                              fill="url(#modalFlameGradient)">
+                            <animate attributeName="d" 
+                                     dur="2s" 
+                                     repeatCount="indefinite"
+                                     values="M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z;
+                                             M50 10 C42 30, 45 50, 50 70 C58 50, 52 30, 50 10 Z;
+                                             M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z"/>
+                        </path>
+                        <defs>
+                            <linearGradient id="modalFlameGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ffcc88;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#ff9955;stop-opacity:0.9" />
+                                <stop offset="100%" style="stop-color:#d4a574;stop-opacity:0.6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h2>Begin with Prayer</h2>
+                <p>Take a moment to invite God into this work</p>
+            </div>
+            <div class="modal-body">
+                <textarea 
+                    id="prayerText"
+                    placeholder="Write a prayer or simply sit in silence..."
+                    rows="6"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" id="skipPrayer">Continue without prayer</button>
+                <button class="modal-btn primary" id="offerPrayer">Amen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Release Animation Container -->
+    <div class="release-animation-container" id="releaseAnimation"></div>
+
+    <script src="chronicle-app.js"></script>
+</body>
+</html>
