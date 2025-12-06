@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chronicle - A Sacred Workspace</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -32,15 +32,15 @@
             height: 100vh;
         }
 
-        /* Custom Cursor */
+        /* ENHANCED CUSTOM CURSOR WITH SMOLDERING EFFECT */
         #custom-cursor {
             position: fixed;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             pointer-events: none;
             z-index: 10000;
             mix-blend-mode: screen;
-            filter: blur(0.5px);
+            transition: transform 0.1s ease;
         }
 
         .cursor-core {
@@ -48,82 +48,73 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            background: radial-gradient(circle, var(--flame-core) 0%, var(--ember-bright) 40%, transparent 70%);
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, var(--flame-core) 0%, var(--ember-bright) 35%, rgba(255, 153, 85, 0.6) 60%, transparent 100%);
             border-radius: 50%;
             box-shadow: 
-                0 0 10px var(--ember-bright),
-                0 0 20px var(--amber-glow),
-                0 0 30px rgba(255, 153, 85, 0.3);
-            animation: flicker 0.15s infinite alternate;
+                0 0 20px var(--ember-bright),
+                0 0 40px rgba(255, 204, 136, 0.8),
+                0 0 60px rgba(255, 153, 85, 0.5);
+            animation: coreFlicker 0.15s infinite alternate;
         }
 
-        @keyframes flicker {
-            0%, 100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        @keyframes coreFlicker {
+            0%, 100% { 
+                opacity: 0.9; 
+                transform: translate(-50%, -50%) scale(1);
+                filter: blur(0.5px);
+            }
+            50% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.2);
+                filter: blur(0px);
+            }
         }
 
         .cursor-trail {
             position: fixed;
-            width: 6px;
-            height: 6px;
-            background: radial-gradient(circle, var(--ember-bright), transparent);
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, var(--ember-bright), rgba(255, 153, 85, 0.4), transparent);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             mix-blend-mode: screen;
-            animation: fadeTrail 0.8s ease-out forwards;
+            animation: fadeTrail 1.5s ease-out forwards;
+            box-shadow: 0 0 15px rgba(255, 153, 85, 0.6);
         }
 
         @keyframes fadeTrail {
             0% {
-                opacity: 0.8;
+                opacity: 1;
                 transform: scale(1);
+                filter: blur(1px);
             }
             100% {
                 opacity: 0;
-                transform: scale(0.3);
+                transform: scale(0.1);
+                filter: blur(5px);
             }
         }
 
-        /* Stone Texture Background */
+        /* REALISTIC STONE BACKGROUND - MUCH DARKER */
         .stone-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                linear-gradient(135deg, var(--stone-dark) 0%, var(--maroon-deep) 50%, var(--stone-base) 100%);
+            background: linear-gradient(135deg, 
+                #1a1410 0%, 
+                #251812 20%, 
+                #2d1810 40%, 
+                #3a1f18 60%, 
+                #2d2419 80%, 
+                #1a1410 100%
+            );
             background-size: 400% 400%;
-            animation: backgroundShift 30s ease infinite;
-        }
-
-        .stone-background::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px),
-                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
-            opacity: 0.3;
-        }
-
-        .stone-background::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 30%, rgba(212, 165, 116, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 70%, rgba(74, 31, 31, 0.15) 0%, transparent 50%);
-            animation: glowPulse 8s ease-in-out infinite;
+            animation: backgroundShift 50s ease infinite;
         }
 
         @keyframes backgroundShift {
@@ -131,24 +122,176 @@
             50% { background-position: 100% 50%; }
         }
 
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        /* Texture Overlay */
-        .texture-overlay {
+        /* VISIBLE STONE TEXTURE WITH GRAIN */
+        .stone-texture {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none;
-            opacity: 0.5;
+            opacity: 0.8;
+            background-image: 
+                /* Fine grain texture */
+                repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.05) 1px, rgba(0,0,0,0.05) 2px),
+                repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,0.05) 1px, rgba(0,0,0,0.05) 2px),
+                /* Medium stone grain */
+                repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(60,40,30,0.15) 4px, rgba(60,40,30,0.15) 8px),
+                repeating-linear-gradient(-45deg, transparent, transparent 4px, rgba(40,30,20,0.15) 4px, rgba(40,30,20,0.15) 8px),
+                /* Rough texture */
+                repeating-linear-gradient(30deg, transparent, transparent 2px, rgba(30,20,15,0.1) 2px, rgba(30,20,15,0.1) 5px);
         }
 
-        /* Floating Particles */
+        /* VISIBLE CRACKS AND IMPERFECTIONS */
+        .cracks-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                /* Major diagonal crack 1 */
+                linear-gradient(125deg, 
+                    transparent 0%, transparent 46%, 
+                    rgba(0,0,0,0.8) 47%, 
+                    rgba(0,0,0,0.9) 47.5%, 
+                    rgba(0,0,0,0.7) 48%, 
+                    rgba(0,0,0,0.4) 49%, 
+                    transparent 50%, transparent 100%),
+                /* Major crack 2 */
+                linear-gradient(35deg, 
+                    transparent 0%, transparent 60%, 
+                    rgba(0,0,0,0.7) 61%, 
+                    rgba(0,0,0,0.8) 61.5%, 
+                    rgba(0,0,0,0.5) 62%, 
+                    rgba(0,0,0,0.3) 63%, 
+                    transparent 64%, transparent 100%),
+                /* Crack 3 */
+                linear-gradient(-55deg, 
+                    transparent 0%, transparent 26%, 
+                    rgba(0,0,0,0.6) 27%, 
+                    rgba(0,0,0,0.7) 27.5%, 
+                    rgba(0,0,0,0.4) 28%, 
+                    rgba(0,0,0,0.2) 29%, 
+                    transparent 30%, transparent 100%),
+                /* Minor crack 4 */
+                linear-gradient(88deg, 
+                    transparent 0%, transparent 73%, 
+                    rgba(0,0,0,0.5) 73.5%, 
+                    rgba(0,0,0,0.3) 74%, 
+                    rgba(0,0,0,0.2) 74.5%, 
+                    transparent 75%, transparent 100%),
+                /* Minor crack 5 */
+                linear-gradient(178deg, 
+                    transparent 0%, transparent 13%, 
+                    rgba(0,0,0,0.4) 13.5%, 
+                    rgba(0,0,0,0.2) 14%, 
+                    transparent 14.5%, transparent 100%),
+                /* Blemish spots */
+                radial-gradient(ellipse 30px 40px at 18% 28%, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%),
+                radial-gradient(ellipse 25px 35px at 82% 65%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 50%, transparent 100%),
+                radial-gradient(ellipse 20px 25px at 45% 85%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, transparent 100%),
+                radial-gradient(ellipse 15px 20px at 68% 18%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, transparent 100%),
+                radial-gradient(ellipse 35px 30px at 35% 45%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 50%, transparent 100%),
+                radial-gradient(ellipse 22px 28px at 90% 30%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.15) 50%, transparent 100%),
+                radial-gradient(ellipse 18px 24px at 12% 70%, rgba(0,0,0,0.48) 0%, rgba(0,0,0,0.18) 50%, transparent 100%);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        /* WEATHERING AND AGE MARKS */
+        .weathering {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse 600px 500px at 25% 25%, rgba(60, 35, 25, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse 500px 600px at 75% 75%, rgba(70, 40, 30, 0.18) 0%, transparent 50%),
+                radial-gradient(ellipse 700px 400px at 50% 50%, rgba(50, 30, 20, 0.12) 0%, transparent 60%);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* DARK VIGNETTE FOR DEPTH */
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.6) 100%);
+            pointer-events: none;
+        }
+
+        /* ANIMATED CURSIVE WRITING LAYER */
+        .writing-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.15;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        .cursive-text {
+            position: absolute;
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            color: var(--amber-glow);
+            white-space: nowrap;
+            opacity: 0;
+            text-shadow: 0 0 15px rgba(212, 165, 116, 0.8);
+            font-weight: 400;
+        }
+
+        .cursive-1 {
+            top: 12%;
+            left: -150%;
+            animation: writeAcross1 28s ease-in-out infinite;
+        }
+
+        .cursive-2 {
+            top: 38%;
+            right: -150%;
+            animation: writeAcross2 32s ease-in-out infinite;
+            animation-delay: 10s;
+        }
+
+        .cursive-3 {
+            top: 62%;
+            left: -150%;
+            animation: writeAcross1 30s ease-in-out infinite;
+            animation-delay: 18s;
+        }
+
+        .cursive-4 {
+            top: 82%;
+            right: -150%;
+            animation: writeAcross2 35s ease-in-out infinite;
+            animation-delay: 6s;
+        }
+
+        @keyframes writeAcross1 {
+            0% { left: -150%; opacity: 0; }
+            10% { opacity: 0.2; }
+            50% { left: 50%; transform: translateX(-50%); opacity: 0.15; }
+            90% { opacity: 0.1; }
+            100% { left: 150%; opacity: 0; }
+        }
+
+        @keyframes writeAcross2 {
+            0% { right: -150%; opacity: 0; }
+            10% { opacity: 0.2; }
+            50% { right: 50%; transform: translateX(50%); opacity: 0.15; }
+            90% { opacity: 0.1; }
+            100% { right: 150%; opacity: 0; }
+        }
+
+        /* ENHANCED FLOATING PARTICLES */
         .particles-container {
             position: fixed;
             top: 0;
@@ -157,68 +300,95 @@
             height: 100%;
             pointer-events: none;
             overflow: hidden;
+            z-index: 8;
         }
 
         .particle {
             position: absolute;
-            width: 2px;
-            height: 2px;
+            width: 3px;
+            height: 3px;
             background: var(--amber-glow);
             border-radius: 50%;
             opacity: 0;
-            animation: floatUp 15s linear infinite;
-            box-shadow: 0 0 4px var(--amber-glow);
+            animation: floatUp 20s linear infinite;
+            box-shadow: 0 0 8px var(--amber-glow);
         }
 
         @keyframes floatUp {
             0% {
                 opacity: 0;
-                transform: translateY(0) translateX(0);
+                transform: translateY(0) translateX(0) rotate(0deg);
             }
-            10% {
-                opacity: 0.6;
+            8% {
+                opacity: 0.8;
             }
-            90% {
-                opacity: 0.2;
+            92% {
+                opacity: 0.3;
             }
             100% {
                 opacity: 0;
-                transform: translateY(-100vh) translateX(20px);
+                transform: translateY(-110vh) translateX(60px) rotate(180deg);
             }
         }
 
-        /* Candlelight Flicker */
+        /* ENHANCED CANDLELIGHT GLOW */
         .candle-glow {
             position: fixed;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255, 153, 85, 0.2) 0%, transparent 70%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 153, 85, 0.3) 0%, rgba(255, 153, 85, 0.15) 40%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
-            animation: candleFlicker 3s ease-in-out infinite;
-            filter: blur(40px);
+            animation: candleFlicker 5s ease-in-out infinite;
+            filter: blur(80px);
         }
 
         .candle-glow-left {
-            top: 20%;
-            left: 10%;
+            top: 10%;
+            left: 3%;
             animation-delay: 0s;
         }
 
         .candle-glow-right {
-            bottom: 20%;
-            right: 10%;
-            animation-delay: 1.5s;
+            bottom: 10%;
+            right: 3%;
+            animation-delay: 2.5s;
+        }
+
+        .candle-glow-center {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            animation-delay: 1.2s;
+            opacity: 0.5;
         }
 
         @keyframes candleFlicker {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            25% { opacity: 0.5; transform: scale(1.05); }
-            50% { opacity: 0.4; transform: scale(0.98); }
-            75% { opacity: 0.6; transform: scale(1.02); }
+            0%, 100% { 
+                opacity: 0.3; 
+                transform: scale(1) translate(0, 0);
+            }
+            20% { 
+                opacity: 0.5; 
+                transform: scale(1.1) translate(8px, -8px);
+            }
+            40% { 
+                opacity: 0.35; 
+                transform: scale(0.92) translate(-5px, 5px);
+            }
+            60% { 
+                opacity: 0.6; 
+                transform: scale(1.08) translate(3px, -3px);
+            }
+            80% { 
+                opacity: 0.4; 
+                transform: scale(0.97) translate(-2px, 2px);
+            }
         }
 
-        /* Main Content */
+        /* MAIN CONTENT */
         .content {
             position: relative;
             z-index: 10;
@@ -233,149 +403,184 @@
 
         .title {
             font-family: 'Cinzel', serif;
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(4rem, 12vw, 8rem);
             font-weight: 700;
             color: var(--amber-glow);
             text-transform: uppercase;
-            letter-spacing: 0.3em;
-            margin-bottom: 1.5rem;
+            letter-spacing: 0.35em;
+            margin-bottom: 2rem;
             text-shadow: 
-                0 0 20px rgba(212, 165, 116, 0.6),
-                0 0 40px rgba(255, 153, 85, 0.3),
-                2px 2px 4px rgba(0, 0, 0, 0.8);
-            animation: titleGlow 4s ease-in-out infinite;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.9));
+                0 0 40px rgba(212, 165, 116, 0.9),
+                0 0 80px rgba(255, 153, 85, 0.5),
+                4px 4px 8px rgba(0, 0, 0, 1);
+            animation: titleGlow 6s ease-in-out infinite;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 1));
         }
 
         @keyframes titleGlow {
-            0%, 100% { text-shadow: 0 0 20px rgba(212, 165, 116, 0.6), 0 0 40px rgba(255, 153, 85, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8); }
-            50% { text-shadow: 0 0 30px rgba(212, 165, 116, 0.8), 0 0 50px rgba(255, 153, 85, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.8); }
+            0%, 100% { 
+                text-shadow: 
+                    0 0 40px rgba(212, 165, 116, 0.9),
+                    0 0 80px rgba(255, 153, 85, 0.5),
+                    4px 4px 8px rgba(0, 0, 0, 1);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 60px rgba(212, 165, 116, 1),
+                    0 0 100px rgba(255, 153, 85, 0.7),
+                    4px 4px 8px rgba(0, 0, 0, 1);
+            }
         }
 
         .tagline {
             font-family: 'Crimson Text', serif;
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
             font-style: italic;
             color: var(--gold-accent);
-            margin-bottom: 3rem;
-            opacity: 0.9;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-            letter-spacing: 0.05em;
+            margin-bottom: 3.5rem;
+            opacity: 0.95;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 1);
+            letter-spacing: 0.1em;
+            animation: fadeInOut 7s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.88; }
+            50% { opacity: 1; }
         }
 
         .verse-container {
-            max-width: 700px;
-            margin: 3rem auto;
-            padding: 2.5rem;
-            background: rgba(29, 20, 16, 0.6);
-            border: 1px solid rgba(212, 165, 116, 0.3);
-            border-radius: 4px;
+            max-width: 800px;
+            margin: 3.5rem auto;
+            padding: 3.5rem;
+            background: rgba(29, 20, 16, 0.85);
+            border: 3px solid rgba(212, 165, 116, 0.5);
+            border-radius: 8px;
             position: relative;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.6),
-                inset 0 1px 0 rgba(212, 165, 116, 0.1);
+                0 16px 64px rgba(0, 0, 0, 0.9),
+                inset 0 2px 0 rgba(212, 165, 116, 0.2),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.6);
+            animation: pulseGlow 10s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 16px 64px rgba(0, 0, 0, 0.9),
+                    inset 0 2px 0 rgba(212, 165, 116, 0.2),
+                    inset 0 -2px 0 rgba(0, 0, 0, 0.6);
+                border-color: rgba(212, 165, 116, 0.5);
+            }
+            50% {
+                box-shadow: 
+                    0 16px 64px rgba(212, 165, 116, 0.4),
+                    inset 0 2px 0 rgba(212, 165, 116, 0.35),
+                    inset 0 -2px 0 rgba(0, 0, 0, 0.6);
+                border-color: rgba(212, 165, 116, 0.7);
+            }
         }
 
         .verse-container::before,
         .verse-container::after {
             content: '';
             position: absolute;
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--amber-glow);
-            opacity: 0.4;
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--amber-glow);
+            opacity: 0.6;
         }
 
         .verse-container::before {
-            top: -2px;
-            left: -2px;
+            top: -3px;
+            left: -3px;
             border-right: none;
             border-bottom: none;
         }
 
         .verse-container::after {
-            bottom: -2px;
-            right: -2px;
+            bottom: -3px;
+            right: -3px;
             border-left: none;
             border-top: none;
         }
 
         .verse-text {
             font-family: 'Crimson Text', serif;
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            line-height: 1.8;
+            font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+            line-height: 2;
             color: var(--amber-glow);
             font-style: italic;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 1);
         }
 
         .verse-reference {
             font-family: 'Cinzel', serif;
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
             color: var(--gold-accent);
             text-transform: uppercase;
-            letter-spacing: 0.2em;
-            opacity: 0.8;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            letter-spacing: 0.3em;
+            opacity: 0.95;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 1);
         }
 
-        /* Audio Player */
+        /* PRAYER MUSIC PLAYER */
         .audio-player {
             position: fixed;
             bottom: 3rem;
             right: 3rem;
-            background: rgba(29, 20, 16, 0.8);
-            border: 1px solid rgba(212, 165, 116, 0.3);
-            border-radius: 8px;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            background: rgba(29, 20, 16, 0.95);
+            border: 3px solid rgba(212, 165, 116, 0.5);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.9);
             z-index: 100;
-            min-width: 280px;
+            min-width: 340px;
         }
 
         .audio-title {
             font-family: 'Cinzel', serif;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             color: var(--amber-glow);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            letter-spacing: 0.2em;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 1);
         }
 
         .audio-controls {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .play-button {
-            width: 40px;
-            height: 40px;
+            width: 52px;
+            height: 52px;
             background: linear-gradient(135deg, var(--maroon-deep), var(--stone-base));
-            border: 1px solid var(--amber-glow);
+            border: 3px solid var(--amber-glow);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            transition: all 0.5s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
         }
 
         .play-button:hover {
             background: linear-gradient(135deg, var(--maroon-deep), var(--amber-glow));
-            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
-            transform: scale(1.05);
+            box-shadow: 0 10px 28px rgba(212, 165, 116, 0.6);
+            transform: scale(1.1);
         }
 
         .play-button svg {
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             fill: var(--amber-glow);
         }
 
@@ -383,20 +588,20 @@
             flex: 1;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 1.2rem;
         }
 
         .volume-icon {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             fill: var(--gold-accent);
         }
 
         .volume-slider {
             flex: 1;
-            height: 4px;
-            background: rgba(212, 165, 116, 0.2);
-            border-radius: 2px;
+            height: 8px;
+            background: rgba(212, 165, 116, 0.3);
+            border-radius: 4px;
             position: relative;
             cursor: none;
         }
@@ -408,58 +613,39 @@
             top: 0;
             height: 100%;
             width: var(--volume, 70%);
-            background: linear-gradient(90deg, var(--amber-glow), var(--gold-accent));
-            border-radius: 2px;
-            box-shadow: 0 0 8px rgba(212, 165, 116, 0.6);
+            background: linear-gradient(90deg, var(--ember-bright), var(--gold-accent));
+            border-radius: 4px;
+            box-shadow: 0 0 12px rgba(212, 165, 116, 0.8);
         }
 
-        .ambient-toggle {
-            display: flex;
-            gap: 0.5rem;
+        .track-info {
+            font-family: 'Crimson Text', serif;
+            font-size: 1rem;
+            color: var(--gold-accent);
+            opacity: 0.85;
             margin-top: 1rem;
             padding-top: 1rem;
-            border-top: 1px solid rgba(212, 165, 116, 0.2);
+            border-top: 1px solid rgba(212, 165, 116, 0.3);
+            text-align: center;
         }
 
-        .ambient-btn {
-            flex: 1;
-            padding: 0.5rem;
-            background: rgba(45, 36, 25, 0.6);
-            border: 1px solid rgba(212, 165, 116, 0.3);
-            border-radius: 4px;
-            color: var(--gold-accent);
-            font-family: 'Crimson Text', serif;
-            font-size: 0.85rem;
-            cursor: none;
-            transition: all 0.3s ease;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-        }
-
-        .ambient-btn:hover,
-        .ambient-btn.active {
-            background: rgba(74, 31, 31, 0.6);
-            border-color: var(--amber-glow);
-            color: var(--amber-glow);
-            box-shadow: 0 0 12px rgba(212, 165, 116, 0.3);
-        }
-
-        /* Enter Button */
+        /* ENTER BUTTON */
         .enter-button {
-            margin-top: 4rem;
-            padding: 1.2rem 3rem;
-            background: linear-gradient(135deg, rgba(74, 31, 31, 0.8), rgba(45, 36, 25, 0.8));
-            border: 2px solid var(--amber-glow);
-            border-radius: 4px;
+            margin-top: 4.5rem;
+            padding: 1.8rem 4.5rem;
+            background: linear-gradient(135deg, rgba(74, 31, 31, 0.95), rgba(45, 36, 25, 0.95));
+            border: 4px solid var(--amber-glow);
+            border-radius: 8px;
             color: var(--amber-glow);
             font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
+            font-size: 1.4rem;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.3em;
             cursor: none;
-            transition: all 0.4s ease;
+            transition: all 0.6s ease;
             box-shadow: 
-                0 8px 24px rgba(0, 0, 0, 0.6),
-                inset 0 1px 0 rgba(212, 165, 116, 0.2);
+                0 12px 40px rgba(0, 0, 0, 0.8),
+                inset 0 2px 0 rgba(212, 165, 116, 0.3);
             position: relative;
             overflow: hidden;
         }
@@ -471,23 +657,23 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: radial-gradient(circle, rgba(212, 165, 116, 0.4), transparent);
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.6), transparent);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
+            transition: width 0.8s ease, height 0.8s ease;
         }
 
         .enter-button:hover {
-            background: linear-gradient(135deg, rgba(74, 31, 31, 1), rgba(45, 36, 25, 1));
+            background: linear-gradient(135deg, rgba(74, 31, 31, 1), rgba(65, 55, 45, 1));
             box-shadow: 
-                0 12px 36px rgba(212, 165, 116, 0.4),
-                inset 0 1px 0 rgba(212, 165, 116, 0.3);
-            transform: translateY(-2px);
+                0 16px 56px rgba(212, 165, 116, 0.6),
+                inset 0 2px 0 rgba(212, 165, 116, 0.5);
+            transform: translateY(-4px);
         }
 
         .enter-button:hover::before {
-            width: 300px;
-            height: 300px;
+            width: 500px;
+            height: 500px;
         }
 
         .enter-button span {
@@ -495,48 +681,49 @@
             z-index: 1;
         }
 
-        /* Ambient Sound Waves */
-        .sound-wave {
+        /* AMBIENT SOUND INDICATOR */
+        .sound-indicator {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            pointer-events: none;
-            opacity: 0.15;
+            bottom: 3rem;
+            left: 3rem;
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            padding: 1.2rem 2rem;
+            background: rgba(29, 20, 16, 0.9);
+            border: 2px solid rgba(212, 165, 116, 0.4);
+            border-radius: 10px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 32px rgba(0, 0, 0, 0.7);
         }
 
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, transparent, var(--amber-glow));
-            opacity: 0;
-            animation: wave 8s ease-in-out infinite;
+        .sound-wave-indicator {
+            width: 5px;
+            height: 24px;
+            background: var(--amber-glow);
+            border-radius: 3px;
+            animation: soundBounce 1.4s ease-in-out infinite;
+            box-shadow: 0 0 8px var(--amber-glow);
         }
 
-        .wave:nth-child(2) {
-            animation-delay: 2s;
+        .sound-wave-indicator:nth-child(1) { animation-delay: 0s; }
+        .sound-wave-indicator:nth-child(2) { animation-delay: 0.25s; }
+        .sound-wave-indicator:nth-child(3) { animation-delay: 0.5s; }
+        .sound-wave-indicator:nth-child(4) { animation-delay: 0.75s; }
+
+        @keyframes soundBounce {
+            0%, 100% { height: 14px; opacity: 0.6; }
+            50% { height: 28px; opacity: 1; }
         }
 
-        .wave:nth-child(3) {
-            animation-delay: 4s;
+        .sound-label {
+            font-family: 'Crimson Text', serif;
+            color: var(--gold-accent);
+            font-size: 1rem;
+            margin-left: 0.6rem;
         }
 
-        @keyframes wave {
-            0%, 100% {
-                opacity: 0;
-                transform: translateX(-100%) scaleY(0.5);
-            }
-            50% {
-                opacity: 0.3;
-                transform: translateX(100%) scaleY(1);
-            }
-        }
-
-        /* Responsive */
+        /* RESPONSIVE */
         @media (max-width: 768px) {
             .audio-player {
                 bottom: 2rem;
@@ -545,12 +732,18 @@
                 min-width: auto;
             }
             
+            .sound-indicator {
+                bottom: 2rem;
+                left: 2rem;
+                padding: 1rem 1.5rem;
+            }
+            
             .content {
                 padding: 2rem 1.5rem;
             }
             
             .verse-container {
-                padding: 1.5rem;
+                padding: 2.5rem;
             }
         }
     </style>
@@ -561,22 +754,36 @@
         <div class="cursor-core"></div>
     </div>
 
-    <!-- Stone Background -->
+    <!-- Stone Background Layers -->
     <div class="stone-background"></div>
-    <div class="texture-overlay"></div>
+    <div class="stone-texture"></div>
+    <div class="cracks-overlay"></div>
+    <div class="weathering"></div>
+    <div class="vignette"></div>
+
+    <!-- Animated Cursive Writing -->
+    <div class="writing-layer">
+        <div class="cursive-text cursive-1">Write the vision and make it plain on tablets...</div>
+        <div class="cursive-text cursive-2">For the word of the Lord is living and active...</div>
+        <div class="cursive-text cursive-3">Let this be written for a future generation...</div>
+        <div class="cursive-text cursive-4">That a people not yet created may praise the Lord...</div>
+    </div>
 
     <!-- Candlelight Glow -->
     <div class="candle-glow candle-glow-left"></div>
     <div class="candle-glow candle-glow-right"></div>
+    <div class="candle-glow candle-glow-center"></div>
 
     <!-- Floating Particles -->
     <div class="particles-container" id="particles"></div>
 
-    <!-- Sound Waves -->
-    <div class="sound-wave">
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
+    <!-- Ambient Sound Indicator -->
+    <div class="sound-indicator">
+        <div class="sound-wave-indicator"></div>
+        <div class="sound-wave-indicator"></div>
+        <div class="sound-wave-indicator"></div>
+        <div class="sound-wave-indicator"></div>
+        <span class="sound-label">Sacred Ambience</span>
     </div>
 
     <!-- Main Content -->
@@ -597,9 +804,9 @@
         </button>
     </div>
 
-    <!-- Audio Player -->
+    <!-- Prayer Music Player -->
     <div class="audio-player">
-        <div class="audio-title">Sacred Atmosphere</div>
+        <div class="audio-title">Prayer Music</div>
         <div class="audio-controls">
             <button class="play-button" id="playBtn">
                 <svg id="playIcon" viewBox="0 0 24 24">
@@ -616,18 +823,23 @@
                 <div class="volume-slider" id="volumeSlider"></div>
             </div>
         </div>
-        <div class="ambient-toggle">
-            <button class="ambient-btn" data-sound="scribe">Quill Sounds</button>
-            <button class="ambient-btn" data-sound="fire">Fireplace</button>
-        </div>
+        <div class="track-info" id="trackInfo">Prayer Song 1</div>
     </div>
 
+    <!-- Audio Elements -->
+    <audio id="prayerMusic" loop>
+        <source src="prayersong1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="ambientSound" loop autoplay>
+        <!-- Placeholder for ambient sound - will play automatically -->
+    </audio>
+
     <script>
-        // Custom Cursor with Ember Trail
+        // Custom Cursor with Enhanced Smoldering Trail
         const cursor = document.getElementById('custom-cursor');
         const trailContainer = document.body;
         let lastTrailTime = 0;
-        const trailInterval = 30;
+        const trailInterval = 25; // More frequent trails
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
@@ -647,46 +859,43 @@
             trail.style.top = y + 'px';
             trailContainer.appendChild(trail);
 
-            setTimeout(() => trail.remove(), 800);
+            setTimeout(() => trail.remove(), 1500);
         }
 
-        // Floating Particles
+        // Enhanced Floating Particles
         const particlesContainer = document.getElementById('particles');
         function createParticle() {
             const particle = document.createElement('div');
             particle.className = 'particle';
             particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (18 + Math.random() * 12) + 's';
             particlesContainer.appendChild(particle);
         }
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 60; i++) {
             createParticle();
         }
 
-        // Audio Player
+        // Prayer Music Player
         const playBtn = document.getElementById('playBtn');
         const playIcon = document.getElementById('playIcon');
         const pauseIcon = document.getElementById('pauseIcon');
         const volumeSlider = document.getElementById('volumeSlider');
-        const ambientBtns = document.querySelectorAll('.ambient-btn');
+        const prayerMusic = document.getElementById('prayerMusic');
 
-        let isPlaying = false;
         let currentVolume = 70;
+        prayerMusic.volume = currentVolume / 100;
 
         playBtn.addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            if (isPlaying) {
+            if (prayerMusic.paused) {
+                prayerMusic.play();
                 playIcon.style.display = 'none';
                 pauseIcon.style.display = 'block';
-                // Here you would actually play audio
-                console.log('Playing ambient sound...');
             } else {
+                prayerMusic.pause();
                 playIcon.style.display = 'block';
                 pauseIcon.style.display = 'none';
-                // Here you would pause audio
-                console.log('Pausing ambient sound...');
             }
         });
 
@@ -695,45 +904,54 @@
             const percent = ((e.clientX - rect.left) / rect.width) * 100;
             currentVolume = Math.max(0, Math.min(100, percent));
             volumeSlider.style.setProperty('--volume', currentVolume + '%');
-            console.log('Volume:', currentVolume);
+            prayerMusic.volume = currentVolume / 100;
         });
 
-        ambientBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                ambientBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const sound = btn.dataset.sound;
-                console.log('Switching to:', sound);
-                // Here you would switch audio sources
-            });
-        });
+        // Auto-play ambient sound (simulated)
+        const ambientSound = document.getElementById('ambientSound');
+        // Note: Auto-play with sound may be blocked by browser policies
+        // User interaction may be required
+        document.addEventListener('click', () => {
+            if (ambientSound.paused) {
+                ambientSound.play().catch(() => {
+                    console.log('Ambient autoplay prevented by browser');
+                });
+            }
+        }, { once: true });
 
         // Enter Button
         const enterBtn = document.querySelector('.enter-button');
         enterBtn.addEventListener('click', () => {
             console.log('Entering Chronicle...');
-            // Here you would navigate to the main app
+            // Navigate to main app
         });
 
-        // Add glow effect to elements on hover
-        const interactiveElements = document.querySelectorAll('.play-button, .ambient-btn, .enter-button');
+        // Hover effects for cursor
+        const interactiveElements = document.querySelectorAll('.play-button, .enter-button, .volume-slider');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(1.5)';
+                cursor.style.transform = 'scale(1.6)';
             });
             el.addEventListener('mouseleave', () => {
                 cursor.style.transform = 'scale(1)';
             });
         });
 
-        // Ambient background animation
+        // Dynamic candlelight movement
         setInterval(() => {
-            const glow = document.querySelector('.candle-glow-left');
-            const randomX = 5 + Math.random() * 10;
-            const randomY = 15 + Math.random() * 10;
-            glow.style.left = randomX + '%';
-            glow.style.top = randomY + '%';
-        }, 8000);
+            const glowLeft = document.querySelector('.candle-glow-left');
+            const glowRight = document.querySelector('.candle-glow-right');
+            
+            const randomXLeft = 2 + Math.random() * 8;
+            const randomYLeft = 8 + Math.random() * 12;
+            glowLeft.style.left = randomXLeft + '%';
+            glowLeft.style.top = randomYLeft + '%';
+            
+            const randomXRight = 90 + Math.random() * 8;
+            const randomYRight = 80 + Math.random() * 12;
+            glowRight.style.right = (100 - randomXRight) + '%';
+            glowRight.style.bottom = (100 - randomYRight) + '%';
+        }, 10000);
     </script>
 </body>
 </html>
