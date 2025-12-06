@@ -1,0 +1,420 @@
+/**
+ * WORLD STYLES - SPRINT 4: UNIFIED DESIGN SYSTEM
+ * Museum-Quality Sacred Aesthetic for The World Section
+ * 
+ * "How lovely is your dwelling place, O Lord Almighty!" — Psalm 84:1
+ * 
+ * Design Philosophy:
+ * - Clarity reflects divine order
+ * - Space allows room for reflection
+ * - Gold accents honor the sacred
+ * - Transitions mirror providence's patient work
+ */
+
+/* ============================================
+   WORLD VIEWER CONTAINER - THE FOUNDATION
+============================================ */
+
+.world-viewer-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-lg);
+    min-height: 100vh;
+}
+
+/* ============================================
+   SECTION HEADER - THE ENTRY POINT
+============================================ */
+
+.world-section-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--gold-shadow);
+}
+
+.section-breadcrumb {
+    margin-bottom: var(--space-lg);
+}
+
+.breadcrumb-btn {
+    background: transparent;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-primary);
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.breadcrumb-btn:hover {
+    background: var(--gold-shadow);
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 15px var(--glow-gold);
+}
+
+.world-main-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--gold-bright);
+    margin-bottom: var(--space-sm);
+    letter-spacing: 0.03em;
+    text-shadow: 0 0 30px var(--glow-gold);
+}
+
+.world-main-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--papyrus-light);
+    margin-bottom: var(--space-xl);
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* ============================================
+   PROGRESS TRACKING - THE JOURNEY INDICATOR
+============================================ */
+
+.world-progress-container {
+    max-width: 600px;
+    margin: var(--space-xl) auto 0;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'EB Garamond', serif;
+    color: var(--papyrus-dim);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-sm);
+}
+
+#progressPercent {
+    color: var(--gold-primary);
+    font-weight: 600;
+}
+
+.progress-bar-track {
+    height: 8px;
+    background: var(--glass-dark);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--gold-shadow);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold-primary), var(--gold-bright));
+    box-shadow: 0 0 15px var(--glow-gold);
+    transition: width 0.6s ease;
+}
+
+/* ============================================
+   SECTION NAVIGATION - THE PATHWAYS
+============================================ */
+
+.world-section-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-3xl);
+}
+
+.world-nav-btn {
+    background: var(--glass-dark);
+    border: 1px solid var(--gold-shadow);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.world-nav-btn:hover {
+    background: var(--glass-light);
+    border-color: var(--gold-primary);
+    box-shadow: 0 8px 30px rgba(201, 169, 97, 0.15);
+    transform: translateY(-2px);
+}
+
+.world-nav-btn.active {
+    background: var(--glass-light);
+    border-color: var(--gold-bright);
+    box-shadow: 0 8px 30px var(--glow-gold);
+}
+
+.world-nav-btn .nav-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.world-nav-btn .nav-content {
+    flex: 1;
+}
+
+.world-nav-btn .nav-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gold-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.world-nav-btn .nav-desc {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    color: var(--papyrus-dim);
+}
+
+.world-nav-btn.active .nav-title {
+    color: var(--gold-bright);
+}
+
+/* ============================================
+   CONTENT CONTAINER - THE CANVAS
+============================================ */
+
+.world-content-container {
+    min-height: 600px;
+    margin-bottom: var(--space-3xl);
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ============================================
+   SIGNIFICANCE FOOTER - THE REFLECTION
+============================================ */
+
+.world-significance-footer {
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-3xl);
+    border-top: 1px solid var(--gold-shadow);
+}
+
+.significance-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--glass-dark);
+    border: 1px solid var(--gold-shadow);
+    border-radius: 12px;
+    padding: var(--space-2xl);
+}
+
+.significance-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--gold-bright);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.significance-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--papyrus-light);
+    margin-bottom: var(--space-lg);
+}
+
+.significance-text strong {
+    color: var(--gold-primary);
+    font-weight: 600;
+}
+
+.significance-quote {
+    background: var(--glass-light);
+    border-left: 4px solid var(--gold-primary);
+    padding: var(--space-lg);
+    margin: var(--space-xl) 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--papyrus-light);
+    line-height: 1.7;
+}
+
+.significance-quote .verse-ref {
+    display: block;
+    margin-top: var(--space-sm);
+    font-size: 1rem;
+    color: var(--gold-dim);
+    font-style: normal;
+    text-align: right;
+}
+
+.significance-final {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--papyrus-light);
+    text-align: center;
+    font-style: italic;
+    margin-top: var(--space-lg);
+    margin-bottom: 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE GRACE
+============================================ */
+
+@media (max-width: 768px) {
+    .world-viewer-container {
+        padding: var(--space-lg) var(--space-md);
+    }
+    
+    .world-main-title {
+        font-size: 2rem;
+    }
+    
+    .world-main-subtitle {
+        font-size: 1.25rem;
+    }
+    
+    .world-section-nav {
+        grid-template-columns: 1fr;
+    }
+    
+    .world-section-nav.mobile-stack {
+        gap: var(--space-md);
+    }
+    
+    .world-nav-btn {
+        padding: var(--space-md);
+    }
+    
+    .world-nav-btn .nav-title {
+        font-size: 1.25rem;
+    }
+    
+    .world-nav-btn .nav-icon {
+        font-size: 2rem;
+    }
+    
+    .significance-card {
+        padding: var(--space-lg);
+    }
+    
+    .significance-title {
+        font-size: 1.5rem;
+    }
+    
+    .significance-text,
+    .significance-final {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   CROSS-SECTION HIGHLIGHTS
+   For when references jump from Story to World
+============================================ */
+
+.world-cross-reference-highlight {
+    animation: pulseGlow 2s ease-out;
+}
+
+@keyframes pulseGlow {
+    0% {
+        background-color: rgba(201, 169, 97, 0.3);
+        box-shadow: 0 0 30px rgba(201, 169, 97, 0.4);
+    }
+    100% {
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   "Whatever you did for the least of these..." — Matthew 25:40
+============================================ */
+
+@media (prefers-contrast: high) {
+    .world-nav-btn {
+        border-width: 2px;
+    }
+    
+    .world-nav-btn.active {
+        border-width: 3px;
+    }
+    
+    .breadcrumb-btn {
+        border-width: 2px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .world-nav-btn,
+    .breadcrumb-btn,
+    .progress-bar-fill,
+    .world-content-container {
+        transition: none;
+    }
+    
+    .world-cross-reference-highlight {
+        animation: none;
+        background-color: rgba(201, 169, 97, 0.2);
+    }
+}
+
+.world-nav-btn:focus-visible,
+.breadcrumb-btn:focus-visible {
+    outline: 2px solid var(--gold-bright);
+    outline-offset: 4px;
+}
+
+/* ============================================
+   PRINT STYLES
+============================================ */
+
+@media print {
+    .world-section-nav,
+    .breadcrumb-btn,
+    .world-progress-container {
+        display: none;
+    }
+    
+    .world-viewer-container {
+        max-width: 100%;
+    }
+    
+    .significance-card {
+        border: 2px solid #000;
+        page-break-inside: avoid;
+    }
+}
+
+/* ============================================
+   LOADING STATES
+============================================ */
+
+.world-content-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.25rem;
+    color: var(--papyrus-dim);
+}
+
+.world-content-loading::after {
+    content: '...';
+    animation: ellipsis 1.5s infinite;
+}
+
+@keyframes ellipsis {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+}
