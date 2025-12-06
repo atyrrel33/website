@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronicle - A Sacred Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --stone-dark: #1a1410;
+            --stone-base: #2d2419;
+            --maroon-deep: #4a1f1f;
+            --amber-glow: #d4a574;
+            --gold-accent: #b8945f;
+            --ember-bright: #ff9955;
+            --flame-core: #ffcc88;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--stone-dark);
+            color: var(--amber-glow);
+            overflow: hidden;
+            cursor: none;
+            position: relative;
+            height: 100vh;
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: screen;
+            filter: blur(0.5px);
+        }
+
+        .cursor-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, var(--flame-core) 0%, var(--ember-bright) 40%, transparent 70%);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 10px var(--ember-bright),
+                0 0 20px var(--amber-glow),
+                0 0 30px rgba(255, 153, 85, 0.3);
+            animation: flicker 0.15s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, var(--ember-bright), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            animation: fadeTrail 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeTrail {
+            0% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+        }
+
+        /* Stone Texture Background */
+        .stone-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, var(--stone-dark) 0%, var(--maroon-deep) 50%, var(--stone-base) 100%);
+            background-size: 400% 400%;
+            animation: backgroundShift 30s ease infinite;
+        }
+
+        .stone-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
+            opacity: 0.3;
+        }
+
+        .stone-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(212, 165, 116, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(74, 31, 31, 0.15) 0%, transparent 50%);
+            animation: glowPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Texture Overlay */
+        .texture-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Floating Particles */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--amber-glow);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatUp 15s linear infinite;
+            box-shadow: 0 0 4px var(--amber-glow);
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(0) translateX(0);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) translateX(20px);
+            }
+        }
+
+        /* Candlelight Flicker */
+        .candle-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 153, 85, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: candleFlicker 3s ease-in-out infinite;
+            filter: blur(40px);
+        }
+
+        .candle-glow-left {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .candle-glow-right {
+            bottom: 20%;
+            right: 10%;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes candleFlicker {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            25% { opacity: 0.5; transform: scale(1.05); }
+            50% { opacity: 0.4; transform: scale(0.98); }
+            75% { opacity: 0.6; transform: scale(1.02); }
+        }
+
+        /* Main Content */
+        .content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            color: var(--amber-glow);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 1.5rem;
+            text-shadow: 
+                0 0 20px rgba(212, 165, 116, 0.6),
+                0 0 40px rgba(255, 153, 85, 0.3),
+                2px 2px 4px rgba(0, 0, 0, 0.8);
+            animation: titleGlow 4s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.9));
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(212, 165, 116, 0.6), 0 0 40px rgba(255, 153, 85, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8); }
+            50% { text-shadow: 0 0 30px rgba(212, 165, 116, 0.8), 0 0 50px rgba(255, 153, 85, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.8); }
+        }
+
+        .tagline {
+            font-family: 'Crimson Text', serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-style: italic;
+            color: var(--gold-accent);
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+            letter-spacing: 0.05em;
+        }
+
+        .verse-container {
+            max-width: 700px;
+            margin: 3rem auto;
+            padding: 2.5rem;
+            background: rgba(29, 20, 16, 0.6);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 4px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(212, 165, 116, 0.1);
+        }
+
+        .verse-container::before,
+        .verse-container::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--amber-glow);
+            opacity: 0.4;
+        }
+
+        .verse-container::before {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .verse-container::after {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .verse-text {
+            font-family: 'Crimson Text', serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            line-height: 1.8;
+            color: var(--amber-glow);
+            font-style: italic;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .verse-reference {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            opacity: 0.8;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Audio Player */
+        .audio-player {
+            position: fixed;
+            bottom: 3rem;
+            right: 3rem;
+            background: rgba(29, 20, 16, 0.8);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            z-index: 100;
+            min-width: 280px;
+        }
+
+        .audio-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: var(--amber-glow);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .play-button {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--maroon-deep), var(--stone-base));
+            border: 1px solid var(--amber-glow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        .play-button:hover {
+            background: linear-gradient(135deg, var(--maroon-deep), var(--amber-glow));
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
+            transform: scale(1.05);
+        }
+
+        .play-button svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--amber-glow);
+        }
+
+        .volume-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .volume-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--gold-accent);
+        }
+
+        .volume-slider {
+            flex: 1;
+            height: 4px;
+            background: rgba(212, 165, 116, 0.2);
+            border-radius: 2px;
+            position: relative;
+            cursor: none;
+        }
+
+        .volume-slider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: var(--volume, 70%);
+            background: linear-gradient(90deg, var(--amber-glow), var(--gold-accent));
+            border-radius: 2px;
+            box-shadow: 0 0 8px rgba(212, 165, 116, 0.6);
+        }
+
+        .ambient-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(212, 165, 116, 0.2);
+        }
+
+        .ambient-btn {
+            flex: 1;
+            padding: 0.5rem;
+            background: rgba(45, 36, 25, 0.6);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 4px;
+            color: var(--gold-accent);
+            font-family: 'Crimson Text', serif;
+            font-size: 0.85rem;
+            cursor: none;
+            transition: all 0.3s ease;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .ambient-btn:hover,
+        .ambient-btn.active {
+            background: rgba(74, 31, 31, 0.6);
+            border-color: var(--amber-glow);
+            color: var(--amber-glow);
+            box-shadow: 0 0 12px rgba(212, 165, 116, 0.3);
+        }
+
+        /* Enter Button */
+        .enter-button {
+            margin-top: 4rem;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, rgba(74, 31, 31, 0.8), rgba(45, 36, 25, 0.8));
+            border: 2px solid var(--amber-glow);
+            border-radius: 4px;
+            color: var(--amber-glow);
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            cursor: none;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(212, 165, 116, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enter-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.4), transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .enter-button:hover {
+            background: linear-gradient(135deg, rgba(74, 31, 31, 1), rgba(45, 36, 25, 1));
+            box-shadow: 
+                0 12px 36px rgba(212, 165, 116, 0.4),
+                inset 0 1px 0 rgba(212, 165, 116, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .enter-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .enter-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ambient Sound Waves */
+        .sound-wave {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, var(--amber-glow));
+            opacity: 0;
+            animation: wave 8s ease-in-out infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation-delay: 2s;
+        }
+
+        .wave:nth-child(3) {
+            animation-delay: 4s;
+        }
+
+        @keyframes wave {
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(-100%) scaleY(0.5);
+            }
+            50% {
+                opacity: 0.3;
+                transform: translateX(100%) scaleY(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .audio-player {
+                bottom: 2rem;
+                right: 2rem;
+                left: 2rem;
+                min-width: auto;
+            }
+            
+            .content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .verse-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div id="custom-cursor">
+        <div class="cursor-core"></div>
+    </div>
+
+    <!-- Stone Background -->
+    <div class="stone-background"></div>
+    <div class="texture-overlay"></div>
+
+    <!-- Candlelight Glow -->
+    <div class="candle-glow candle-glow-left"></div>
+    <div class="candle-glow candle-glow-right"></div>
+
+    <!-- Floating Particles -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Sound Waves -->
+    <div class="sound-wave">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h1 class="title">Chronicle</h1>
+        <p class="tagline">An App for God's Best Scribes</p>
+
+        <div class="verse-container">
+            <p class="verse-text">
+                "Write down the revelation and make it plain on tablets,
+                so that a herald may run with it."
+            </p>
+            <p class="verse-reference">— Habakkuk 2:2</p>
+        </div>
+
+        <button class="enter-button">
+            <span>Enter the Chamber</span>
+        </button>
+    </div>
+
+    <!-- Audio Player -->
+    <div class="audio-player">
+        <div class="audio-title">Sacred Atmosphere</div>
+        <div class="audio-controls">
+            <button class="play-button" id="playBtn">
+                <svg id="playIcon" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                <svg id="pauseIcon" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M6 4h4v16H6zm8 0h4v16h-4z"/>
+                </svg>
+            </button>
+            <div class="volume-container">
+                <svg class="volume-icon" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <div class="volume-slider" id="volumeSlider"></div>
+            </div>
+        </div>
+        <div class="ambient-toggle">
+            <button class="ambient-btn" data-sound="scribe">Quill Sounds</button>
+            <button class="ambient-btn" data-sound="fire">Fireplace</button>
+        </div>
+    </div>
+
+    <script>
+        // Custom Cursor with Ember Trail
+        const cursor = document.getElementById('custom-cursor');
+        const trailContainer = document.body;
+        let lastTrailTime = 0;
+        const trailInterval = 30;
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            const now = Date.now();
+            if (now - lastTrailTime > trailInterval) {
+                createTrail(e.clientX, e.clientY);
+                lastTrailTime = now;
+            }
+        });
+
+        function createTrail(x, y) {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            trailContainer.appendChild(trail);
+
+            setTimeout(() => trail.remove(), 800);
+        }
+
+        // Floating Particles
+        const particlesContainer = document.getElementById('particles');
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        for (let i = 0; i < 30; i++) {
+            createParticle();
+        }
+
+        // Audio Player
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const ambientBtns = document.querySelectorAll('.ambient-btn');
+
+        let isPlaying = false;
+        let currentVolume = 70;
+
+        playBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                // Here you would actually play audio
+                console.log('Playing ambient sound...');
+            } else {
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                // Here you would pause audio
+                console.log('Pausing ambient sound...');
+            }
+        });
+
+        volumeSlider.addEventListener('click', (e) => {
+            const rect = volumeSlider.getBoundingClientRect();
+            const percent = ((e.clientX - rect.left) / rect.width) * 100;
+            currentVolume = Math.max(0, Math.min(100, percent));
+            volumeSlider.style.setProperty('--volume', currentVolume + '%');
+            console.log('Volume:', currentVolume);
+        });
+
+        ambientBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                ambientBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const sound = btn.dataset.sound;
+                console.log('Switching to:', sound);
+                // Here you would switch audio sources
+            });
+        });
+
+        // Enter Button
+        const enterBtn = document.querySelector('.enter-button');
+        enterBtn.addEventListener('click', () => {
+            console.log('Entering Chronicle...');
+            // Here you would navigate to the main app
+        });
+
+        // Add glow effect to elements on hover
+        const interactiveElements = document.querySelectorAll('.play-button, .ambient-btn, .enter-button');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+            });
+        });
+
+        // Ambient background animation
+        setInterval(() => {
+            const glow = document.querySelector('.candle-glow-left');
+            const randomX = 5 + Math.random() * 10;
+            const randomY = 15 + Math.random() * 10;
+            glow.style.left = randomX + '%';
+            glow.style.top = randomY + '%';
+        }, 8000);
+    </script>
+</body>
+</html>
