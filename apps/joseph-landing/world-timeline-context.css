@@ -1,0 +1,295 @@
+/* ============================================
+   TIMELINE CONTEXT PANEL
+   Dynamic content that reveals history as you journey
+   ============================================ */
+
+.timeline-context-panel {
+    margin: var(--space-xl) 0;
+    padding: var(--space-xl);
+    background: linear-gradient(
+        135deg,
+        rgba(26, 38, 52, 0.6) 0%,
+        rgba(15, 25, 34, 0.8) 100%
+    );
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline-context-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--gold-primary) 50%,
+        transparent 100%
+    );
+}
+
+.context-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   JOSEPH EVENTS IN CONTEXT
+   ============================================ */
+
+.context-events {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.context-event {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    background: rgba(139, 58, 74, 0.1);
+    border-left: 3px solid var(--burgundy-primary);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.context-event:hover {
+    background: rgba(139, 58, 74, 0.15);
+    transform: translateX(5px);
+}
+
+.context-event-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 8px rgba(201, 169, 97, 0.4));
+}
+
+.context-event-details {
+    flex: 1;
+}
+
+.context-event-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--papyrus-light);
+    margin-bottom: var(--space-xs);
+}
+
+.context-event-detail {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    color: var(--papyrus-aged);
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+}
+
+.context-event-verse {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--gold-dim);
+}
+
+/* ============================================
+   RULING PHARAOH CONTEXT
+   ============================================ */
+
+.context-pharaoh {
+    padding: var(--space-lg);
+    background: rgba(201, 169, 97, 0.08);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    border-radius: 8px;
+}
+
+.context-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: var(--space-sm);
+}
+
+.context-pharaoh-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--gold-bright);
+    margin-bottom: var(--space-xs);
+}
+
+.context-pharaoh-reign {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--gold-dim);
+    margin-bottom: var(--space-md);
+}
+
+.context-pharaoh-desc {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    color: var(--papyrus-aged);
+    line-height: 1.6;
+}
+
+/* ============================================
+   PERIOD OVERVIEW
+   ============================================ */
+
+.period-overview {
+    text-align: center;
+    padding: var(--space-xl);
+}
+
+.period-label {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-primary);
+    margin-bottom: var(--space-md);
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold-warm));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.period-description {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--papyrus-aged);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   ACTIVE EVENT HIGHLIGHTING
+   ============================================ */
+
+.journey-event {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.journey-event.active-event {
+    z-index: 10;
+}
+
+.journey-event.active-event .journey-marker {
+    background: var(--burgundy-bright);
+    box-shadow: 
+        0 0 20px rgba(139, 58, 74, 0.6),
+        0 0 40px rgba(139, 58, 74, 0.4);
+}
+
+.journey-event.active-event .marker-icon {
+    font-size: 1.4rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.journey-event.active-event .journey-details {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.05);
+    background: linear-gradient(
+        135deg,
+        rgba(139, 58, 74, 0.9) 0%,
+        rgba(114, 47, 55, 0.95) 100%
+    );
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(139, 58, 74, 0.3);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+/* ============================================
+   ACTIVE PHARAOH HIGHLIGHTING
+   ============================================ */
+
+.pharaoh-card {
+    transition: all 0.3s ease;
+}
+
+.pharaoh-card.active-pharaoh {
+    background: linear-gradient(
+        135deg,
+        rgba(201, 169, 97, 0.15) 0%,
+        rgba(201, 169, 97, 0.08) 100%
+    );
+    border-color: var(--gold-primary);
+    box-shadow: 
+        0 0 30px rgba(201, 169, 97, 0.2),
+        inset 0 1px 0 rgba(201, 169, 97, 0.1);
+}
+
+.pharaoh-card.active-pharaoh::before {
+    content: '👑 Currently Reigning';
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    padding: 4px 12px;
+    background: rgba(201, 169, 97, 0.2);
+    border: 1px solid var(--gold-primary);
+    border-radius: 20px;
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(201, 169, 97, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(201, 169, 97, 0.5);
+    }
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .timeline-context-panel {
+        padding: var(--space-lg);
+    }
+    
+    .context-event {
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+    
+    .context-event-icon {
+        font-size: 1.5rem;
+    }
+    
+    .period-overview {
+        padding: var(--space-lg);
+    }
+    
+    .pharaoh-card.active-pharaoh::before {
+        position: static;
+        display: block;
+        margin-bottom: var(--space-md);
+        text-align: center;
+    }
+}
