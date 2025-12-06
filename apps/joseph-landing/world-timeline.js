@@ -382,6 +382,8 @@
                 <div class="pharaoh-card" 
                      data-pharaoh="${pharaoh.id}"
                      data-index="${index}"
+                     data-reign-start="${startYear}"
+                     data-reign-end="${endYear}"
                      style="left: ${startPos}%; width: ${width}%">
                     <div class="pharaoh-info">
                         <h4 class="pharaoh-name">${pharaoh.name}</h4>
@@ -649,6 +651,212 @@
         if (progressBar) {
             progressBar.style.width = `${position}%`;
         }
+        
+        // 🔥 NEW: Update contextual content based on year
+        updateTimelineContext(year);
+    }
+    
+    // ============================================
+    // CONTEXTUAL HISTORY DISPLAY
+    // ============================================
+    
+    function updateTimelineContext(year) {
+        // Highlight active Joseph events
+        highlightActiveEvents(year);
+        
+        // Highlight active pharaohs
+        highlightActivePharaohs(year);
+        
+        // Update context panel
+        updateContextPanel(year);
+    }
+    
+    function highlightActiveEvents(year) {
+        const journeyEvents = document.querySelectorAll('.journey-event');
+        const tolerance = 5; // Years of tolerance for highlighting
+        
+        journeyEvents.forEach(event => {
+            const eventYear = parseInt(event.dataset.year);
+            const isActive = Math.abs(year - eventYear) <= tolerance;
+            
+            if (isActive) {
+                event.classList.add('active-event');
+                gsap.to(event, {
+                    scale: 1.15,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            } else {
+                event.classList.remove('active-event');
+                gsap.to(event, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            }
+        });
+    }
+    
+    function highlightActivePharaohs(year) {
+        const pharaohCards = document.querySelectorAll('.pharaoh-card');
+        
+        pharaohCards.forEach(card => {
+            const reignStart = parseInt(card.dataset.reignStart);
+            const reignEnd = parseInt(card.dataset.reignEnd);
+            const isReigning = year >= reignEnd && year <= reignStart; // BCE numbers are reversed
+            
+            if (isReigning) {
+                card.classList.add('active-pharaoh');
+            } else {
+                card.classList.remove('active-pharaoh');
+            }
+        });
+    }
+    
+    function updateContextPanel(year) {
+        // Get or create context panel
+        let contextPanel = document.getElementById('timelineContext');
+        if (!contextPanel) {
+            const container = document.querySelector('.world-timeline-container');
+            if (!container) return;
+            
+            contextPanel = document.createElement('div');
+            contextPanel.id = 'timelineContext';
+            contextPanel.className = 'timeline-context-panel';
+            
+            // Insert after the scrubber
+            const scrubberWrapper = document.querySelector('.timeline-scrubber-wrapper');
+            scrubberWrapper.after(contextPanel);
+        }
+        
+        // Find what's happening at this year
+        const context = getYearContext(year);
+        
+        if (context.events.length > 0 || context.pharaoh) {
+            contextPanel.innerHTML = buildContextHTML(context, year);
+            contextPanel.style.display = 'block';
+            
+            // Animate in
+            gsap.fromTo(contextPanel, 
+                { opacity: 0, y: -20 },
+                { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+            );
+        } else {
+            // Show period overview
+            contextPanel.innerHTML = buildPeriodHTML(year);
+            contextPanel.style.display = 'block';
+            
+            gsap.fromTo(contextPanel, 
+                { opacity: 0, y: -20 },
+                { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+            );
+        }
+    }
+    
+    function getYearContext(year) {
+        const context = {
+            events: [],
+            pharaoh: null
+        };
+        
+        // Find Joseph events near this year (within 3 years)
+        const keyDates = WorldTimeline.timelineData.subsections
+            .find(sub => sub.subsectionId === 'key-dates');
+        
+        if (keyDates) {
+            keyDates.content.forEach(event => {
+                const eventYear = extractYear(event.date);
+                if (Math.abs(year - eventYear) <= 3) {
+                    context.events.push({
+                        ...event,
+                        year: eventYear
+                    });
+                }
+            });
+        }
+        
+        // Find ruling pharaoh
+        const pharaohs = WorldTimeline.timelineData.subsections
+            .find(sub => sub.subsectionId === 'pharaohs');
+        
+        if (pharaohs) {
+            pharaohs.rulers.forEach(ruler => {
+                const reignMatch = ruler.reign.match(/(\d{4})-(\d{4})/);
+                if (reignMatch) {
+                    const start = parseInt(reignMatch[1]);
+                    const end = parseInt(reignMatch[2]);
+                    // BCE years are reversed
+                    if (year >= end && year <= start) {
+                        context.pharaoh = ruler;
+                    }
+                }
+            });
+        }
+        
+        return context;
+    }
+    
+    function buildContextHTML(context, year) {
+        let html = '<div class="context-content">';
+        
+        // Show Joseph events
+        if (context.events.length > 0) {
+            html += '<div class="context-events">';
+            context.events.forEach(event => {
+                html += `
+                    <div class="context-event">
+                        <div class="context-event-icon">${getEventIcon(event.themes)}</div>
+                        <div class="context-event-details">
+                            <h4 class="context-event-title">${event.event}</h4>
+                            <p class="context-event-detail">${event.detail}</p>
+                            <span class="context-event-verse">${event.verseRef}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+        }
+        
+        // Show ruling pharaoh
+        if (context.pharaoh) {
+            html += `
+                <div class="context-pharaoh">
+                    <div class="context-label">Ruling Pharaoh:</div>
+                    <h4 class="context-pharaoh-name">${context.pharaoh.name}</h4>
+                    <p class="context-pharaoh-reign">${context.pharaoh.reign}</p>
+                    <p class="context-pharaoh-desc">${context.pharaoh.description}</p>
+                </div>
+            `;
+        }
+        
+        html += '</div>';
+        return html;
+    }
+    
+    function buildPeriodHTML(year) {
+        let period = '';
+        let description = '';
+        
+        if (year >= 2050) {
+            period = 'Early 12th Dynasty';
+            description = 'Egypt is consolidating power after reunification. The Middle Kingdom is rising.';
+        } else if (year >= 1900) {
+            period = 'Middle 12th Dynasty';
+            description = 'Egypt\'s Golden Age. Strong pharaohs, massive building projects, agricultural innovation.';
+        } else if (year >= 1850) {
+            period = 'Late 12th Dynasty';
+            description = 'Joseph\'s era. Egypt at the height of its power, administered by a Hebrew vizier.';
+        } else {
+            period = 'End of 12th Dynasty';
+            description = 'The dynasty is waning, but Egypt remains strong. The seeds of the Exodus are being planted.';
+        }
+        
+        return `
+            <div class="context-content period-overview">
+                <div class="period-label">${period}</div>
+                <p class="period-description">${description}</p>
+            </div>
+        `;
     }
 
     // ============================================
