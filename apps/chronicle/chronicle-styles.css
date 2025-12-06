@@ -5,19 +5,21 @@
 
 /* CSS Variables */
 :root {
-    /* Color Palette - The Tabernacle */
-    --cream-primary: #F5F1E8;
-    --cream-soft: #FFFBF5;
-    --gray-gentle: #E8E3DA;
+    /* Color Palette - The Stone Tablets */
+    --stone-deep: #2a2822;
+    --stone-medium: #3a3832;
+    --stone-light: #4a4840;
+    --stone-surface: #353530;
     --brown-warm: #8B7355;
     --teal: #2C5F5F;
     --gold: #C9A961;
     --burgundy: #722F37;
+    --cream-accent: #F5F1E8;
     
     /* Text Colors */
-    --text-primary: #2D2D2D;
-    --text-secondary: #5F5F5F;
-    --text-faded: #A0A0A0;
+    --text-primary: #e8e3da;
+    --text-secondary: #b8b3aa;
+    --text-faded: #8a8580;
     
     /* Flame Colors */
     --ember-bright: #ff9955;
@@ -56,7 +58,7 @@ html, body {
 
 body {
     font-family: 'Crimson Text', Georgia, serif;
-    background: var(--cream-primary);
+    background: var(--stone-deep);
     color: var(--text-primary);
     cursor: none;
     line-height: 1.6;
@@ -134,11 +136,11 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(135deg, var(--cream-primary) 0%, var(--cream-soft) 50%, var(--gray-gentle) 100%);
+    background: linear-gradient(135deg, var(--stone-deep) 0%, var(--stone-medium) 50%, var(--stone-surface) 100%);
     position: relative;
 }
 
-/* Subtle Paper Texture */
+/* Deep Stone Texture - Multiple Layers */
 .app-container::before {
     content: '';
     position: absolute;
@@ -147,9 +149,31 @@ body {
     width: 100%;
     height: 100%;
     background-image: 
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 115, 85, 0.02) 2px, rgba(139, 115, 85, 0.02) 4px),
-        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 115, 85, 0.02) 2px, rgba(139, 115, 85, 0.02) 4px);
-    opacity: 0.5;
+        /* Fine grain texture */
+        repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.15) 1px, rgba(0,0,0,0.15) 2px),
+        repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,0.15) 1px, rgba(0,0,0,0.15) 2px),
+        /* Medium stone grain */
+        repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.02) 3px, rgba(255,255,255,0.02) 6px),
+        repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 6px),
+        /* Rough texture */
+        repeating-linear-gradient(30deg, transparent, transparent 2px, rgba(139,115,85,0.03) 2px, rgba(139,115,85,0.03) 5px);
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+/* Subtle weathering and depth */
+.app-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse 800px 600px at 20% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+        radial-gradient(ellipse 700px 500px at 80% 70%, rgba(0, 0, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse 900px 700px at 50% 50%, rgba(139, 115, 85, 0.03) 0%, transparent 60%);
+    opacity: 0.8;
     pointer-events: none;
 }
 
@@ -159,9 +183,9 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: var(--spacing-md) var(--spacing-xl);
-    background: linear-gradient(180deg, rgba(255, 251, 245, 0.95) 0%, rgba(245, 241, 232, 0.8) 100%);
-    border-bottom: 2px solid rgba(139, 115, 85, 0.2);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    background: linear-gradient(180deg, rgba(42, 40, 34, 0.98) 0%, rgba(53, 53, 48, 0.95) 100%);
+    border-bottom: 2px solid rgba(139, 115, 85, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(20px);
     z-index: 100;
 }
@@ -175,11 +199,13 @@ body {
     font-family: 'Cinzel', serif;
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--brown-warm);
+    color: var(--gold);
     letter-spacing: 0.15em;
     text-transform: uppercase;
     margin: 0;
-    text-shadow: 0 2px 8px rgba(139, 115, 85, 0.2);
+    text-shadow: 
+        0 2px 8px rgba(201, 169, 97, 0.4),
+        0 0 20px rgba(201, 169, 97, 0.2);
 }
 
 .app-subtitle {
@@ -195,6 +221,8 @@ body {
     flex: 1;
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: var(--spacing-lg);
 }
 
 .project-name {
@@ -203,6 +231,57 @@ body {
     color: var(--teal);
     font-weight: 600;
     letter-spacing: 0.05em;
+    text-shadow: 0 2px 8px rgba(44, 95, 95, 0.4);
+}
+
+/* USER SWITCHER - The Sacred Distinction */
+.user-switcher {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    border-radius: 12px;
+    padding: 0.4rem;
+}
+
+.user-switch-btn {
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: none;
+    transition: all var(--transition-medium);
+    position: relative;
+}
+
+.user-switch-btn.active {
+    background: linear-gradient(135deg, rgba(139, 115, 85, 0.3), rgba(139, 115, 85, 0.2));
+    color: var(--gold);
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3);
+}
+
+.user-switch-btn.tyrrel.active {
+    background: linear-gradient(135deg, rgba(139, 115, 85, 0.4), rgba(139, 115, 85, 0.25));
+    border: 1px solid var(--gold);
+    color: var(--gold);
+}
+
+.user-switch-btn.trevor.active {
+    background: linear-gradient(135deg, rgba(44, 95, 95, 0.4), rgba(44, 95, 95, 0.25));
+    border: 1px solid var(--teal);
+    color: var(--teal);
+}
+
+.user-switch-btn:hover:not(.active) {
+    background: rgba(139, 115, 85, 0.15);
+    color: var(--text-primary);
 }
 
 .header-right {
@@ -268,7 +347,7 @@ body {
 /* Navigation */
 .main-nav {
     display: flex;
-    background: rgba(232, 227, 218, 0.7);
+    background: rgba(42, 40, 34, 0.95);
     border-bottom: 2px solid rgba(139, 115, 85, 0.3);
     padding: 0 var(--spacing-lg);
     gap: var(--spacing-sm);
@@ -306,11 +385,11 @@ body {
 
 .nav-tab:hover {
     color: var(--text-primary);
-    background: rgba(201, 169, 97, 0.1);
+    background: rgba(201, 169, 97, 0.15);
 }
 
 .nav-tab.active {
-    color: var(--brown-warm);
+    color: var(--gold);
     border-bottom-color: var(--gold);
 }
 
@@ -360,13 +439,37 @@ body {
 
 /* ===================================
    THE DESK - Active Writing Space
+   WITH USER DISTINCTION
    =================================== */
 
 .desk-container {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: var(--cream-soft);
+    background: var(--stone-medium);
+}
+
+/* User Indicator on Desk */
+.desk-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--gold) 0%, rgba(201, 169, 97, 0.3) 100%);
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+}
+
+body.user-tyrrel .desk-container::before {
+    background: linear-gradient(180deg, var(--gold) 0%, rgba(201, 169, 97, 0.3) 100%);
+    opacity: 1;
+}
+
+body.user-trevor .desk-container::before {
+    background: linear-gradient(180deg, var(--teal) 0%, rgba(44, 95, 95, 0.3) 100%);
+    opacity: 1;
 }
 
 .writing-toolbar {
@@ -374,8 +477,8 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: var(--spacing-md) var(--spacing-lg);
-    background: rgba(232, 227, 218, 0.6);
-    border-bottom: 1px solid rgba(139, 115, 85, 0.2);
+    background: rgba(53, 53, 48, 0.8);
+    border-bottom: 1px solid rgba(139, 115, 85, 0.25);
     gap: var(--spacing-md);
 }
 
@@ -395,7 +498,7 @@ body {
 .font-selector,
 .format-selector {
     padding: var(--spacing-xs) var(--spacing-sm);
-    background: var(--cream-soft);
+    background: rgba(42, 40, 34, 0.9);
     border: 1px solid rgba(139, 115, 85, 0.3);
     border-radius: 6px;
     color: var(--text-primary);
@@ -408,7 +511,7 @@ body {
 .font-selector:hover,
 .format-selector:hover {
     border-color: var(--gold);
-    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.2);
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3);
 }
 
 .scene-title-input input {
@@ -416,7 +519,7 @@ body {
     background: transparent;
     border: none;
     border-bottom: 2px solid rgba(139, 115, 85, 0.3);
-    color: var(--brown-warm);
+    color: var(--gold);
     font-family: 'Cinzel', serif;
     font-size: 1.1rem;
     font-weight: 600;
@@ -430,6 +533,17 @@ body {
 .scene-title-input input:focus {
     outline: none;
     border-bottom-color: var(--gold);
+}
+
+/* User-specific title colors */
+body.user-tyrrel .scene-title-input input {
+    color: var(--gold);
+    border-bottom-color: rgba(201, 169, 97, 0.4);
+}
+
+body.user-trevor .scene-title-input input {
+    color: var(--teal);
+    border-bottom-color: rgba(44, 95, 95, 0.4);
 }
 
 .tool-btn {
@@ -475,6 +589,7 @@ body {
     flex: 1;
     display: flex;
     overflow: hidden;
+    background: var(--stone-deep);
 }
 
 .writing-editor {
@@ -483,6 +598,7 @@ body {
     flex-direction: column;
     overflow: hidden;
     transition: all var(--transition-medium);
+    position: relative;
 }
 
 .writing-editor.with-reference {
@@ -493,6 +609,7 @@ body {
     flex: 1;
     overflow-y: auto;
     padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+    background: var(--stone-deep);
 }
 
 .writing-surface {
@@ -500,13 +617,35 @@ body {
     max-width: 42rem;
     margin: 0 auto;
     padding: var(--spacing-xl);
-    background: transparent;
+    background: rgba(53, 53, 48, 0.6);
+    border: 1px solid rgba(139, 115, 85, 0.2);
+    border-radius: 8px;
     font-family: 'Crimson Text', serif;
     font-size: 1.25rem;
     line-height: 1.9;
     color: var(--text-primary);
     outline: none;
     cursor: text;
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.3),
+        0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* User-specific writing surface borders */
+body.user-tyrrel .writing-surface {
+    border-left: 4px solid var(--gold);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.3),
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        -4px 0 12px rgba(201, 169, 97, 0.15);
+}
+
+body.user-trevor .writing-surface {
+    border-left: 4px solid var(--teal);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.3),
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        -4px 0 12px rgba(44, 95, 95, 0.15);
 }
 
 .writing-surface:empty::before {
@@ -514,6 +653,27 @@ body {
     color: var(--text-faded);
     font-style: italic;
     cursor: text;
+}
+
+.writing-surface:focus {
+    background: rgba(53, 53, 48, 0.8);
+}
+
+/* User-specific focus glow */
+body.user-tyrrel .writing-surface:focus {
+    border-left-color: var(--gold);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.3),
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        -6px 0 20px rgba(201, 169, 97, 0.3);
+}
+
+body.user-trevor .writing-surface:focus {
+    border-left-color: var(--teal);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.3),
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        -6px 0 20px rgba(44, 95, 95, 0.3);
 }
 
 /* Reference Panel */
@@ -1772,4 +1932,252 @@ body {
         background: white;
         color: black;
     }
+}
+/* Additional Dark Theme Updates - Reference Panel, Archive, Covenant, Altar */
+
+/* Reference Panel */
+.reference-panel {
+    flex: 0 0 35%;
+    background: rgba(42, 40, 34, 0.95);
+    border-left: 2px solid rgba(139, 115, 85, 0.3);
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+}
+
+.panel-header {
+    background: rgba(53, 53, 48, 0.9);
+    border-bottom: 1px solid rgba(139, 115, 85, 0.3);
+}
+
+.panel-header h3 {
+    color: var(--gold);
+}
+
+.panel-content {
+    background: transparent;
+}
+
+.reference-item {
+    background: rgba(53, 53, 48, 0.6);
+    border-left: 3px solid var(--gold);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.reference-item strong {
+    color: var(--gold);
+}
+
+.reference-item p {
+    color: var(--text-secondary);
+}
+
+/* Archive Areas */
+.archive-container {
+    background: var(--stone-deep);
+}
+
+.archive-sidebar {
+    background: rgba(42, 40, 34, 0.9);
+    border-right: 2px solid rgba(139, 115, 85, 0.3);
+}
+
+.archive-sidebar h3 {
+    color: var(--gold);
+}
+
+.archive-main {
+    background: var(--stone-medium);
+}
+
+.archive-header h2 {
+    color: var(--gold);
+}
+
+.scene-card {
+    background: linear-gradient(135deg, rgba(53, 53, 48, 0.9), rgba(58, 56, 50, 0.8));
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.scene-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 8px 24px rgba(201, 169, 97, 0.2);
+}
+
+.scene-card.add-new {
+    background: rgba(42, 40, 34, 0.6);
+    border-style: dashed;
+    border-color: rgba(139, 115, 85, 0.4);
+}
+
+.card-header h4 {
+    color: var(--gold);
+}
+
+.card-summary {
+    color: var(--text-secondary);
+}
+
+.character-card {
+    background: linear-gradient(135deg, rgba(53, 53, 48, 0.95), rgba(58, 56, 50, 0.85));
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.character-card:hover {
+    border-color: var(--teal);
+    box-shadow: 0 8px 24px rgba(44, 95, 95, 0.3);
+}
+
+.character-card h4 {
+    color: var(--gold);
+}
+
+.character-desc {
+    color: var(--text-secondary);
+}
+
+/* Covenant Areas */
+.covenant-container {
+    background: var(--stone-deep);
+}
+
+.covenant-header h2 {
+    color: var(--gold);
+}
+
+.covenant-card {
+    background: linear-gradient(135deg, rgba(53, 53, 48, 0.95), rgba(58, 56, 50, 0.85));
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.covenant-card h3 {
+    color: var(--gold);
+}
+
+.arc-visualizer {
+    background: rgba(42, 40, 34, 0.6);
+}
+
+.arc-notes {
+    background: rgba(44, 95, 95, 0.15);
+    border-left: 3px solid var(--teal);
+}
+
+.arc-item {
+    background: rgba(53, 53, 48, 0.7);
+}
+
+.arc-header strong {
+    color: var(--gold);
+}
+
+.workshop-field input,
+.workshop-field select {
+    background: rgba(42, 40, 34, 0.8);
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    color: var(--text-primary);
+}
+
+.workshop-field input:focus,
+.workshop-field select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3);
+}
+
+/* Altar Areas */
+.altar-container {
+    background: linear-gradient(135deg, var(--stone-deep) 0%, var(--stone-medium) 100%);
+}
+
+.altar-header h2 {
+    color: var(--gold);
+}
+
+.altar-card {
+    background: linear-gradient(135deg, rgba(53, 53, 48, 0.98), rgba(58, 56, 50, 0.92));
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.altar-card h3 {
+    color: var(--gold);
+}
+
+.prayer-input textarea,
+.journal-editor textarea,
+.release-input textarea {
+    background: rgba(42, 40, 34, 0.9);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    color: var(--text-primary);
+}
+
+.prayer-input textarea::placeholder,
+.journal-editor textarea::placeholder,
+.release-input textarea::placeholder {
+    color: var(--text-faded);
+}
+
+.scripture-display {
+    background: rgba(44, 95, 95, 0.15);
+    border-left: 4px solid var(--teal);
+}
+
+.prayer-entry {
+    background: rgba(53, 53, 48, 0.8);
+    border-left: 3px solid var(--gold);
+}
+
+.prayer-entry p {
+    color: var(--text-primary);
+}
+
+/* Modal Updates */
+.modal-content {
+    background: linear-gradient(135deg, var(--stone-medium), var(--stone-deep));
+    border: 3px solid var(--gold);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.modal-header h2 {
+    color: var(--gold);
+}
+
+.modal-body textarea {
+    background: rgba(42, 40, 34, 0.9);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    color: var(--text-primary);
+}
+
+.modal-body textarea::placeholder {
+    color: var(--text-faded);
+}
+
+/* Auto-save Indicator */
+.autosave-indicator {
+    background: rgba(42, 40, 34, 0.98);
+    border: 1px solid rgba(139, 115, 85, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(42, 40, 34, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(139, 115, 85, 0.5);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 115, 85, 0.7);
 }
