@@ -1,0 +1,327 @@
+/* ============================================
+   TIMELINE VISIBILITY RESTORATION
+   "Let there be light" - Genesis 1:3
+   Making Joseph's journey and pharaohs VISIBLE
+   ============================================ */
+
+/* ============================================
+   JOSEPH'S JOURNEY - ALWAYS VISIBLE EVENTS
+   ============================================ */
+
+/* Make journey events larger and always visible */
+.journey-path {
+    position: relative;
+    height: 300px !important; /* Increased from 200px for better visibility */
+    margin-top: var(--space-xl);
+}
+
+.journey-event {
+    position: absolute;
+    top: 20px; /* Position from top for consistency */
+    transform: translateX(-50%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+/* Make markers more prominent */
+.journey-marker {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 auto 12px;
+    background: radial-gradient(
+        circle,
+        rgba(139, 58, 74, 0.3) 0%,
+        var(--night-deep) 100%
+    ) !important;
+    border: 3px solid var(--gold-primary) !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.6),
+        0 0 25px var(--glow-gold) !important;
+}
+
+.marker-icon {
+    font-size: 1.8rem !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* CRITICAL: Make journey details ALWAYS VISIBLE */
+.journey-details {
+    background: linear-gradient(
+        135deg,
+        rgba(26, 38, 52, 0.95) 0%,
+        rgba(15, 25, 34, 0.98) 100%
+    ) !important;
+    border: 1px solid var(--gold-shadow);
+    border-radius: 12px;
+    padding: 12px 14px !important;
+    min-width: 180px !important;
+    max-width: 220px !important;
+    opacity: 1 !important; /* ALWAYS VISIBLE */
+    transform: translateY(0) !important; /* ALWAYS IN POSITION */
+    pointer-events: auto !important;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.6),
+        0 0 15px rgba(201, 169, 97, 0.15);
+    backdrop-filter: blur(8px);
+}
+
+/* Hover enhancement instead of reveal */
+.journey-event:hover .journey-details {
+    transform: translateY(-5px) scale(1.05) !important;
+    border-color: var(--gold-primary);
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.7),
+        0 0 25px rgba(201, 169, 97, 0.3);
+}
+
+.journey-event:hover .journey-marker {
+    transform: scale(1.15);
+    border-color: var(--gold-bright);
+    box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.7),
+        0 0 35px var(--glow-gold);
+}
+
+/* Text styling for better readability */
+.event-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: var(--gold-bright) !important;
+    margin-bottom: 6px !important;
+    line-height: 1.3;
+}
+
+.event-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem !important;
+    color: var(--gold-dim) !important;
+    margin-bottom: 6px !important;
+    letter-spacing: 0.03em;
+}
+
+.event-detail {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.9rem !important;
+    color: var(--papyrus-aged) !important;
+    line-height: 1.4;
+    margin-bottom: 8px !important;
+}
+
+.event-verse {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.75rem !important;
+    font-style: italic;
+    color: var(--gold-shadow) !important;
+    display: block;
+}
+
+/* ============================================
+   PHARAOHS - MAKE CARDS PROMINENT
+   ============================================ */
+
+.pharaohs-list {
+    position: relative;
+    height: 400px !important; /* Increased from 300px */
+    margin-top: var(--space-2xl);
+}
+
+/* Make pharaoh cards more visible with better sizing */
+.pharaoh-card {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(
+        135deg,
+        rgba(139, 58, 74, 0.3) 0%,
+        rgba(15, 25, 34, 0.95) 100%
+    ) !important;
+    border: 2px solid var(--burgundy-primary) !important;
+    border-radius: 14px;
+    padding: 18px !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 240px !important; /* Increased from 200px */
+    max-width: 350px !important;
+    box-shadow: 
+        0 6px 18px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(139, 58, 74, 0.2) !important;
+    backdrop-filter: blur(10px);
+    z-index: 1;
+}
+
+.pharaoh-card:hover {
+    border-color: var(--burgundy-bright) !important;
+    box-shadow: 
+        0 10px 30px rgba(139, 58, 74, 0.4),
+        0 0 35px var(--glow-burgundy) !important;
+    transform: translateY(-55%); /* Slight lift on hover */
+    z-index: 10;
+}
+
+.pharaoh-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem !important;
+    font-weight: 600 !important;
+    color: var(--burgundy-bright) !important;
+    margin-bottom: 6px !important;
+    letter-spacing: 0.05em;
+}
+
+.pharaoh-reign {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem !important;
+    color: var(--papyrus-warm) !important;
+    font-style: italic;
+}
+
+/* ============================================
+   ACTIVE STATE ENHANCEMENTS
+   ============================================ */
+
+/* Make active journey events even more prominent */
+.journey-event.active-event .journey-marker {
+    background: radial-gradient(
+        circle,
+        rgba(139, 58, 74, 0.6) 0%,
+        rgba(114, 47, 55, 0.8) 100%
+    ) !important;
+    border-color: var(--burgundy-bright) !important;
+    border-width: 4px !important;
+    box-shadow: 
+        0 8px 24px rgba(139, 58, 74, 0.6),
+        0 0 45px rgba(139, 58, 74, 0.5),
+        inset 0 0 20px rgba(201, 169, 97, 0.2) !important;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.journey-event.active-event .journey-details {
+    background: linear-gradient(
+        135deg,
+        rgba(139, 58, 74, 0.5) 0%,
+        rgba(26, 38, 52, 0.95) 100%
+    ) !important;
+    border-color: var(--burgundy-primary) !important;
+    border-width: 2px;
+    box-shadow: 
+        0 12px 35px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(139, 58, 74, 0.4);
+}
+
+.journey-event.active-event .event-title {
+    color: var(--burgundy-bright) !important;
+    text-shadow: 0 0 10px rgba(139, 58, 74, 0.5);
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 
+            0 8px 24px rgba(139, 58, 74, 0.6),
+            0 0 45px rgba(139, 58, 74, 0.5);
+    }
+    50% {
+        box-shadow: 
+            0 8px 24px rgba(139, 58, 74, 0.8),
+            0 0 60px rgba(139, 58, 74, 0.7);
+    }
+}
+
+/* Active pharaoh visual enhancement */
+.pharaoh-card.active-pharaoh {
+    background: linear-gradient(
+        135deg,
+        rgba(201, 169, 97, 0.25) 0%,
+        rgba(139, 58, 74, 0.3) 50%,
+        rgba(15, 25, 34, 0.95) 100%
+    ) !important;
+    border-color: var(--gold-primary) !important;
+    border-width: 3px !important;
+    box-shadow: 
+        0 10px 35px rgba(201, 169, 97, 0.3),
+        0 0 40px rgba(201, 169, 97, 0.25),
+        inset 0 1px 0 rgba(201, 169, 97, 0.15) !important;
+}
+
+/* ============================================
+   MOBILE OPTIMIZATIONS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .journey-path {
+        height: 350px !important; /* More vertical space on mobile */
+    }
+    
+    .journey-event {
+        top: 30px;
+    }
+    
+    .journey-details {
+        min-width: 160px !important;
+        max-width: 200px !important;
+        padding: 10px 12px !important;
+    }
+    
+    .event-title {
+        font-size: 0.95rem !important;
+    }
+    
+    .event-date,
+    .event-detail {
+        font-size: 0.85rem !important;
+    }
+    
+    .event-verse {
+        font-size: 0.7rem !important;
+    }
+    
+    .pharaohs-list {
+        height: 450px !important;
+    }
+    
+    .pharaoh-card {
+        min-width: 220px !important;
+        padding: 14px !important;
+    }
+    
+    .pharaoh-name {
+        font-size: 1.05rem !important;
+    }
+    
+    .pharaoh-reign {
+        font-size: 0.8rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .journey-path {
+        height: 380px !important;
+    }
+    
+    .journey-marker {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    .marker-icon {
+        font-size: 1.5rem !important;
+    }
+    
+    .journey-details {
+        min-width: 140px !important;
+        max-width: 180px !important;
+        padding: 8px 10px !important;
+    }
+    
+    .pharaohs-list {
+        height: 500px !important;
+    }
+    
+    .pharaoh-card {
+        min-width: 200px !important;
+    }
+}

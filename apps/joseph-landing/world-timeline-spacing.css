@@ -1,0 +1,32 @@
+/* ============================================
+   TIMELINE SPACING ADJUSTMENTS
+   "How good and pleasant it is when brothers
+   dwell together in unity!" - Psalm 133:1
+   ============================================ */
+
+/* Reduce excessive gaps between timeline sections */
+.joseph-journey {
+    margin: var(--space-xl) 0 !important; /* Reduced from 3xl (4rem) to xl (2rem) */
+}
+
+.smoking-gun-section {
+    margin: var(--space-xl) 0 !important; /* Bring smoking gun closer */
+}
+
+.pharaohs-timeline {
+    margin: var(--space-xl) 0 !important; /* Reduced from 3xl (4rem) to xl (2rem) */
+}
+
+/* Ensure proper visual hierarchy without excessive whitespace */
+.world-timeline-container > * + * {
+    margin-top: var(--space-xl); /* Consistent spacing between major sections */
+}
+
+/* Override default margins for better flow */
+.world-timeline-header {
+    margin-bottom: var(--space-2xl) !important; /* Keep header separated */
+}
+
+.timeline-scrubber-wrapper {
+    margin-bottom: var(--space-2xl) !important; /* Buffer after interactive scrubber */
+}
