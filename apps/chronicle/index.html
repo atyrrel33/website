@@ -98,7 +98,7 @@
             }
         }
 
-        /* REALISTIC STONE BACKGROUND - MUCH DARKER */
+        /* DIGNIFIED MAROON BACKGROUND - TEXTURED DEPTH */
         .stone-background {
             position: fixed;
             top: 0;
@@ -106,12 +106,11 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, 
-                #1a1410 0%, 
-                #251812 20%, 
-                #2d1810 40%, 
-                #3a1f18 60%, 
-                #2d2419 80%, 
-                #1a1410 100%
+                #4a1f1f 0%, 
+                #5a2828 25%, 
+                #6a3030 50%, 
+                #5a2828 75%, 
+                #4a1f1f 100%
             );
             background-size: 400% 400%;
             animation: backgroundShift 50s ease infinite;
@@ -122,109 +121,40 @@
             50% { background-position: 100% 50%; }
         }
 
-        /* VISIBLE STONE TEXTURE WITH GRAIN */
+        /* RICH STONE TEXTURE WITH DEPTH */
         .stone-texture {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.8;
+            opacity: 1;
             background-image: 
                 /* Fine grain texture */
-                repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.05) 1px, rgba(0,0,0,0.05) 2px),
-                repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,0.05) 1px, rgba(0,0,0,0.05) 2px),
+                repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.08) 1px, rgba(0,0,0,0.08) 2px),
+                repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,0.08) 1px, rgba(0,0,0,0.08) 2px),
                 /* Medium stone grain */
-                repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(60,40,30,0.15) 4px, rgba(60,40,30,0.15) 8px),
-                repeating-linear-gradient(-45deg, transparent, transparent 4px, rgba(40,30,20,0.15) 4px, rgba(40,30,20,0.15) 8px),
-                /* Rough texture */
-                repeating-linear-gradient(30deg, transparent, transparent 2px, rgba(30,20,15,0.1) 2px, rgba(30,20,15,0.1) 5px);
+                repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(60,45,35,0.2) 3px, rgba(60,45,35,0.2) 6px),
+                repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(50,38,28,0.2) 3px, rgba(50,38,28,0.2) 6px),
+                /* Depth texture */
+                repeating-linear-gradient(30deg, transparent, transparent 2px, rgba(40,30,22,0.15) 2px, rgba(40,30,22,0.15) 4px),
+                /* Organic variation */
+                radial-gradient(ellipse 800px 600px at 30% 40%, rgba(70, 55, 40, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse 700px 700px at 70% 60%, rgba(60, 45, 35, 0.12) 0%, transparent 60%);
         }
 
-        /* VISIBLE CRACKS AND IMPERFECTIONS */
-        .cracks-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                /* Major diagonal crack 1 */
-                linear-gradient(125deg, 
-                    transparent 0%, transparent 46%, 
-                    rgba(0,0,0,0.8) 47%, 
-                    rgba(0,0,0,0.9) 47.5%, 
-                    rgba(0,0,0,0.7) 48%, 
-                    rgba(0,0,0,0.4) 49%, 
-                    transparent 50%, transparent 100%),
-                /* Major crack 2 */
-                linear-gradient(35deg, 
-                    transparent 0%, transparent 60%, 
-                    rgba(0,0,0,0.7) 61%, 
-                    rgba(0,0,0,0.8) 61.5%, 
-                    rgba(0,0,0,0.5) 62%, 
-                    rgba(0,0,0,0.3) 63%, 
-                    transparent 64%, transparent 100%),
-                /* Crack 3 */
-                linear-gradient(-55deg, 
-                    transparent 0%, transparent 26%, 
-                    rgba(0,0,0,0.6) 27%, 
-                    rgba(0,0,0,0.7) 27.5%, 
-                    rgba(0,0,0,0.4) 28%, 
-                    rgba(0,0,0,0.2) 29%, 
-                    transparent 30%, transparent 100%),
-                /* Minor crack 4 */
-                linear-gradient(88deg, 
-                    transparent 0%, transparent 73%, 
-                    rgba(0,0,0,0.5) 73.5%, 
-                    rgba(0,0,0,0.3) 74%, 
-                    rgba(0,0,0,0.2) 74.5%, 
-                    transparent 75%, transparent 100%),
-                /* Minor crack 5 */
-                linear-gradient(178deg, 
-                    transparent 0%, transparent 13%, 
-                    rgba(0,0,0,0.4) 13.5%, 
-                    rgba(0,0,0,0.2) 14%, 
-                    transparent 14.5%, transparent 100%),
-                /* Blemish spots */
-                radial-gradient(ellipse 30px 40px at 18% 28%, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%),
-                radial-gradient(ellipse 25px 35px at 82% 65%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 50%, transparent 100%),
-                radial-gradient(ellipse 20px 25px at 45% 85%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, transparent 100%),
-                radial-gradient(ellipse 15px 20px at 68% 18%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, transparent 100%),
-                radial-gradient(ellipse 35px 30px at 35% 45%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 50%, transparent 100%),
-                radial-gradient(ellipse 22px 28px at 90% 30%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.15) 50%, transparent 100%),
-                radial-gradient(ellipse 18px 24px at 12% 70%, rgba(0,0,0,0.48) 0%, rgba(0,0,0,0.18) 50%, transparent 100%);
-            opacity: 0.9;
-            pointer-events: none;
-        }
-
-        /* WEATHERING AND AGE MARKS */
-        .weathering {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse 600px 500px at 25% 25%, rgba(60, 35, 25, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse 500px 600px at 75% 75%, rgba(70, 40, 30, 0.18) 0%, transparent 50%),
-                radial-gradient(ellipse 700px 400px at 50% 50%, rgba(50, 30, 20, 0.12) 0%, transparent 60%);
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        /* DARK VIGNETTE FOR DEPTH */
+        /* GENTLE VIGNETTE FOR DEPTH */
         .vignette {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.6) 100%);
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%);
             pointer-events: none;
         }
 
-        /* ANIMATED CURSIVE WRITING LAYER */
+        /* DIVINE WRITING LAYER - BLACK, VISIBLE, POSITIONED IN OPEN SPACES */
         .writing-layer {
             position: fixed;
             top: 0;
@@ -232,63 +162,109 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            opacity: 0.15;
             overflow: hidden;
             z-index: 5;
         }
 
-        .cursive-text {
+        .writing-svg {
             position: absolute;
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(2.5rem, 5vw, 5rem);
-            color: var(--amber-glow);
-            white-space: nowrap;
+            width: 100%;
             opacity: 0;
-            text-shadow: 0 0 15px rgba(212, 165, 116, 0.8);
-            font-weight: 400;
         }
 
-        .cursive-1 {
-            top: 12%;
-            left: -150%;
-            animation: writeAcross1 28s ease-in-out infinite;
+        .writing-svg text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            fill: none;
+            stroke: rgba(0, 0, 0, 0.85);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            font-style: italic;
+            transform: rotate(-3deg);
         }
 
-        .cursive-2 {
-            top: 38%;
-            right: -150%;
-            animation: writeAcross2 32s ease-in-out infinite;
-            animation-delay: 10s;
+        .writing-1 {
+            top: 5%;
+            left: 5%;
+            width: 50%;
+            animation: revealWriting 25s ease-in-out infinite;
         }
 
-        .cursive-3 {
-            top: 62%;
-            left: -150%;
-            animation: writeAcross1 30s ease-in-out infinite;
-            animation-delay: 18s;
+        .writing-2 {
+            top: 22%;
+            right: 8%;
+            width: 55%;
+            animation: revealWriting 28s ease-in-out infinite;
+            animation-delay: 8s;
         }
 
-        .cursive-4 {
-            top: 82%;
-            right: -150%;
-            animation: writeAcross2 35s ease-in-out infinite;
-            animation-delay: 6s;
+        .writing-2 text {
+            transform: rotate(2deg);
         }
 
-        @keyframes writeAcross1 {
-            0% { left: -150%; opacity: 0; }
-            10% { opacity: 0.2; }
-            50% { left: 50%; transform: translateX(-50%); opacity: 0.15; }
-            90% { opacity: 0.1; }
-            100% { left: 150%; opacity: 0; }
+        .writing-3 {
+            bottom: 25%;
+            left: 10%;
+            width: 45%;
+            animation: revealWriting 26s ease-in-out infinite;
+            animation-delay: 16s;
         }
 
-        @keyframes writeAcross2 {
-            0% { right: -150%; opacity: 0; }
-            10% { opacity: 0.2; }
-            50% { right: 50%; transform: translateX(50%); opacity: 0.15; }
-            90% { opacity: 0.1; }
-            100% { right: 150%; opacity: 0; }
+        .writing-3 text {
+            transform: rotate(-4deg);
+        }
+
+        .writing-4 {
+            bottom: 8%;
+            right: 5%;
+            width: 50%;
+            animation: revealWriting 30s ease-in-out infinite;
+            animation-delay: 5s;
+        }
+
+        .writing-4 text {
+            transform: rotate(1deg);
+        }
+
+        @keyframes revealWriting {
+            0% { opacity: 0; }
+            5% { opacity: 0.75; }
+            85% { opacity: 0.75; }
+            95% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .writing-svg text {
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+        }
+
+        .writing-1 text {
+            animation: write 25s ease-in-out infinite;
+        }
+
+        .writing-2 text {
+            animation: write 28s ease-in-out infinite;
+            animation-delay: 8s;
+        }
+
+        .writing-3 text {
+            animation: write 26s ease-in-out infinite;
+            animation-delay: 16s;
+        }
+
+        .writing-4 text {
+            animation: write 30s ease-in-out infinite;
+            animation-delay: 5s;
+        }
+
+        @keyframes write {
+            0% { stroke-dashoffset: 2000; }
+            40% { stroke-dashoffset: 0; }
+            85% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -2000; }
         }
 
         /* ENHANCED FLOATING PARTICLES */
@@ -757,16 +733,22 @@
     <!-- Stone Background Layers -->
     <div class="stone-background"></div>
     <div class="stone-texture"></div>
-    <div class="cracks-overlay"></div>
-    <div class="weathering"></div>
     <div class="vignette"></div>
 
-    <!-- Animated Cursive Writing -->
+    <!-- Divine Writing Being Penned -->
     <div class="writing-layer">
-        <div class="cursive-text cursive-1">Write the vision and make it plain on tablets...</div>
-        <div class="cursive-text cursive-2">For the word of the Lord is living and active...</div>
-        <div class="cursive-text cursive-3">Let this be written for a future generation...</div>
-        <div class="cursive-text cursive-4">That a people not yet created may praise the Lord...</div>
+        <svg class="writing-svg writing-1" viewBox="0 0 1400 100" xmlns="http://www.w3.org/2000/svg">
+            <text x="50%" y="50" text-anchor="middle" dominant-baseline="middle">Write the vision and make it plain on tablets...</text>
+        </svg>
+        <svg class="writing-svg writing-2" viewBox="0 0 1400 100" xmlns="http://www.w3.org/2000/svg">
+            <text x="50%" y="50" text-anchor="middle" dominant-baseline="middle">For the word of the Lord is living and active...</text>
+        </svg>
+        <svg class="writing-svg writing-3" viewBox="0 0 1400 100" xmlns="http://www.w3.org/2000/svg">
+            <text x="50%" y="50" text-anchor="middle" dominant-baseline="middle">Let this be written for a future generation...</text>
+        </svg>
+        <svg class="writing-svg writing-4" viewBox="0 0 1400 100" xmlns="http://www.w3.org/2000/svg">
+            <text x="50%" y="50" text-anchor="middle" dominant-baseline="middle">That a people not yet created may praise the Lord...</text>
+        </svg>
     </div>
 
     <!-- Candlelight Glow -->
@@ -796,7 +778,7 @@
                 "Write down the revelation and make it plain on tablets,
                 so that a herald may run with it."
             </p>
-            <p class="verse-reference">— Habakkuk 2:2</p>
+            <p class="verse-reference">Habakkuk 2:2</p>
         </div>
 
         <button class="enter-button">
@@ -826,20 +808,22 @@
         <div class="track-info" id="trackInfo">Prayer Song 1</div>
     </div>
 
-    <!-- Audio Elements -->
+    <!-- Audio Elements - Fixed Implementation -->
     <audio id="prayerMusic" loop>
-        <source src="prayersong1.mp3" type="audio/mpeg">
+        <!-- Add your prayer music file here -->
+        <!-- <source src="prayersong1.mp3" type="audio/mpeg"> -->
     </audio>
-    <audio id="ambientSound" loop autoplay>
-        <!-- Placeholder for ambient sound - will play automatically -->
+    <audio id="ambientSound" loop>
+        <!-- Soft ambient crackling/atmosphere sound -->
+        <!-- <source src="ambient-crackling.mp3" type="audio/mpeg"> -->
     </audio>
 
     <script>
-        // Custom Cursor with Enhanced Smoldering Trail
+        // ===== CUSTOM CURSOR WITH ENHANCED SMOLDERING TRAIL =====
         const cursor = document.getElementById('custom-cursor');
         const trailContainer = document.body;
         let lastTrailTime = 0;
-        const trailInterval = 25; // More frequent trails
+        const trailInterval = 25;
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
@@ -858,11 +842,10 @@
             trail.style.left = x + 'px';
             trail.style.top = y + 'px';
             trailContainer.appendChild(trail);
-
             setTimeout(() => trail.remove(), 1500);
         }
 
-        // Enhanced Floating Particles
+        // ===== ENHANCED FLOATING PARTICLES =====
         const particlesContainer = document.getElementById('particles');
         function createParticle() {
             const particle = document.createElement('div');
@@ -877,21 +860,56 @@
             createParticle();
         }
 
-        // Prayer Music Player
+        // ===== AUDIO SYSTEM - FIXED =====
         const playBtn = document.getElementById('playBtn');
         const playIcon = document.getElementById('playIcon');
         const pauseIcon = document.getElementById('pauseIcon');
         const volumeSlider = document.getElementById('volumeSlider');
         const prayerMusic = document.getElementById('prayerMusic');
+        const ambientSound = document.getElementById('ambientSound');
 
         let currentVolume = 70;
-        prayerMusic.volume = currentVolume / 100;
+        let audioUnlocked = false;
 
+        // Initialize volume
+        prayerMusic.volume = currentVolume / 100;
+        ambientSound.volume = 0.3; // Ambient is quieter
+        volumeSlider.style.setProperty('--volume', currentVolume + '%');
+
+        // Unlock audio on first user interaction (required by browsers)
+        function unlockAudio() {
+            if (!audioUnlocked) {
+                // Try to play and immediately pause to unlock audio context
+                const playPromise = ambientSound.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Audio unlocked
+                        audioUnlocked = true;
+                        console.log('Audio context unlocked');
+                    }).catch(err => {
+                        console.log('Waiting for user interaction to unlock audio');
+                    });
+                }
+            }
+        }
+
+        // Unlock on any user interaction
+        document.addEventListener('click', unlockAudio, { once: true });
+        document.addEventListener('touchstart', unlockAudio, { once: true });
+
+        // Prayer music play/pause
         playBtn.addEventListener('click', () => {
             if (prayerMusic.paused) {
-                prayerMusic.play();
-                playIcon.style.display = 'none';
-                pauseIcon.style.display = 'block';
+                const playPromise = prayerMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        playIcon.style.display = 'none';
+                        pauseIcon.style.display = 'block';
+                    }).catch(err => {
+                        console.log('Playback prevented:', err);
+                        alert('Please interact with the page first to enable audio');
+                    });
+                }
             } else {
                 prayerMusic.pause();
                 playIcon.style.display = 'block';
@@ -899,6 +917,7 @@
             }
         });
 
+        // Volume control
         volumeSlider.addEventListener('click', (e) => {
             const rect = volumeSlider.getBoundingClientRect();
             const percent = ((e.clientX - rect.left) / rect.width) * 100;
@@ -907,26 +926,18 @@
             prayerMusic.volume = currentVolume / 100;
         });
 
-        // Auto-play ambient sound (simulated)
-        const ambientSound = document.getElementById('ambientSound');
-        // Note: Auto-play with sound may be blocked by browser policies
-        // User interaction may be required
+        // Auto-start ambient sound after first interaction
+        let ambientStarted = false;
         document.addEventListener('click', () => {
-            if (ambientSound.paused) {
-                ambientSound.play().catch(() => {
-                    console.log('Ambient autoplay prevented by browser');
+            if (!ambientStarted && audioUnlocked) {
+                ambientSound.play().catch(err => {
+                    console.log('Ambient sound blocked by browser');
                 });
+                ambientStarted = true;
             }
         }, { once: true });
 
-        // Enter Button
-        const enterBtn = document.querySelector('.enter-button');
-        enterBtn.addEventListener('click', () => {
-            console.log('Entering Chronicle...');
-            // Navigate to main app
-        });
-
-        // Hover effects for cursor
+        // ===== INTERACTIVE ELEMENTS =====
         const interactiveElements = document.querySelectorAll('.play-button, .enter-button, .volume-slider');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
@@ -937,7 +948,15 @@
             });
         });
 
-        // Dynamic candlelight movement
+        // ===== ENTER BUTTON =====
+        const enterBtn = document.querySelector('.enter-button');
+        enterBtn.addEventListener('click', () => {
+            console.log('Entering Chronicle...');
+            // Navigate to main app
+            window.location.href = 'chronicle-app.html';
+        });
+
+        // ===== DYNAMIC CANDLELIGHT MOVEMENT =====
         setInterval(() => {
             const glowLeft = document.querySelector('.candle-glow-left');
             const glowRight = document.querySelector('.candle-glow-right');
