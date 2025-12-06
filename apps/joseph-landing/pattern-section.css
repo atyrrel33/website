@@ -1,0 +1,815 @@
+/**
+ * THE PATTERN SECTION - SACRED STYLESHEET
+ * "In Him all things hold together" (Colossians 1:17)
+ * 
+ * Design Philosophy:
+ * - TYPOLOGY as divine foreshadowing (Hebrews 10:1)
+ * - SYMMETRY reflecting the Perfect Pattern (Hebrews 8:5)
+ * - CONNECTION manifesting redemptive thread (Luke 24:27)
+ * - REVELATION bringing shadow into light (Colossians 2:17)
+ * 
+ * This stylesheet helps Trevor see how Joseph's story was always
+ * pointing beyond itself to the greater Joseph—Jesus Christ.
+ */
+
+/* ============================================
+   PATTERN CONTAINER
+   "All Scripture points to Christ"
+   ============================================ */
+
+.pattern-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-xl);
+    background: linear-gradient(
+        180deg,
+        var(--night-void) 0%,
+        var(--night-deep) 40%,
+        var(--night-mid) 100%
+    );
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+/* Heavenly backdrop - "The pattern shown on the mount" */
+.pattern-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(2px 2px at 15% 25%, var(--gold-dim), transparent),
+        radial-gradient(2px 2px at 75% 60%, var(--burgundy-primary), transparent),
+        radial-gradient(1px 1px at 40% 80%, var(--gold-primary), transparent),
+        radial-gradient(1px 1px at 90% 20%, var(--gold-shadow), transparent);
+    background-size: 250% 250%;
+    animation: patternStars 80s ease-in-out infinite;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes patternStars {
+    0%, 100% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+}
+
+/* ============================================
+   HEADER SECTION
+   "Christ is all, and in all"
+   ============================================ */
+
+.pattern-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    position: relative;
+    z-index: 1;
+}
+
+.pattern-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    color: var(--gold-primary);
+    text-shadow: 0 0 30px var(--glow-gold);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.05em;
+}
+
+.pattern-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    color: var(--burgundy-bright);
+    font-style: italic;
+    margin-bottom: var(--space-lg);
+    text-shadow: 0 0 15px var(--glow-burgundy);
+}
+
+.pattern-description {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--papyrus-warm);
+    max-width: 900px;
+    margin: 0 auto var(--space-lg);
+}
+
+.pattern-intro {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--papyrus-aged);
+    max-width: 850px;
+    margin: 0 auto;
+    padding: var(--space-lg);
+    background: var(--glass-dark);
+    border: 1px solid var(--gold-shadow);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+/* ============================================
+   CATEGORY NAVIGATION
+   "Organized for revelation"
+   ============================================ */
+
+.pattern-nav {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+    padding: 0 var(--space-lg);
+}
+
+.pattern-nav-btn {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.125rem;
+    padding: var(--space-md) var(--space-xl);
+    background: var(--glass-dark);
+    border: 2px solid var(--gold-shadow);
+    color: var(--gold-primary);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+}
+
+.pattern-nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: var(--gold-ember);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+.pattern-nav-btn:hover {
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 20px var(--glow-gold);
+    transform: translateY(-2px);
+}
+
+.pattern-nav-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.pattern-nav-btn.active {
+    background: linear-gradient(135deg, var(--burgundy-deep), var(--burgundy-primary));
+    border-color: var(--burgundy-bright);
+    color: var(--papyrus-light);
+    box-shadow: 0 0 25px var(--glow-burgundy);
+}
+
+.pattern-nav-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   CATEGORY DISPLAY
+   "Each section tells part of the story"
+   ============================================ */
+
+.category-section {
+    margin-bottom: var(--space-3xl);
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: categoryFadeIn 0.6s forwards;
+}
+
+@keyframes categoryFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.category-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+    padding: var(--space-xl);
+    background: linear-gradient(135deg, var(--glass-dark), rgba(139, 58, 74, 0.1));
+    border-radius: 12px;
+    border: 1px solid var(--burgundy-primary);
+}
+
+.category-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: var(--burgundy-bright);
+    margin-bottom: var(--space-sm);
+    text-shadow: 0 0 20px var(--glow-burgundy);
+}
+
+.category-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--gold-primary);
+    font-style: italic;
+    margin-bottom: var(--space-md);
+}
+
+.category-intro {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--papyrus-aged);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   PARALLEL CARDS
+   "Side by side - Shadow and Substance"
+   ============================================ */
+
+.parallels-grid {
+    display: grid;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+}
+
+.parallel-card {
+    background: var(--glass-dark);
+    border: 2px solid var(--gold-shadow);
+    border-radius: 12px;
+    padding: var(--space-xl);
+    transition: all 0.4s var(--ease-smooth);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.parallel-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--burgundy-primary), var(--gold-primary));
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.parallel-card:hover {
+    border-color: var(--gold-primary);
+    box-shadow: 0 8px 30px rgba(201, 169, 97, 0.2);
+    transform: translateY(-4px);
+}
+
+.parallel-card:hover::before {
+    opacity: 1;
+}
+
+.parallel-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.75rem;
+    color: var(--gold-bright);
+    margin-bottom: var(--space-lg);
+    text-align: center;
+    text-shadow: 0 0 15px var(--glow-gold);
+}
+
+.parallel-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-lg);
+    position: relative;
+}
+
+/* Dividing line between Joseph and Jesus */
+.parallel-comparison::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        transparent,
+        var(--burgundy-primary) 20%,
+        var(--gold-primary) 50%,
+        var(--burgundy-primary) 80%,
+        transparent
+    );
+    transform: translateX(-50%);
+}
+
+.joseph-side,
+.jesus-side {
+    padding: var(--space-lg);
+}
+
+.joseph-side {
+    border-right: 1px solid var(--gold-shadow);
+}
+
+.side-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.joseph-side .side-label {
+    color: var(--gold-dim);
+}
+
+.jesus-side .side-label {
+    color: var(--burgundy-bright);
+}
+
+.side-label::before {
+    content: '';
+    width: 30px;
+    height: 2px;
+    background: currentColor;
+}
+
+.side-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--papyrus-light);
+    margin-bottom: var(--space-md);
+    font-style: italic;
+}
+
+.side-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--papyrus-warm);
+    opacity: 0.8;
+}
+
+.parallel-connection {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--papyrus-aged);
+    padding: var(--space-lg);
+    background: rgba(201, 169, 97, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--gold-primary);
+    margin-bottom: var(--space-md);
+}
+
+.parallel-significance {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--burgundy-bright);
+    font-style: italic;
+    text-align: center;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--gold-shadow);
+}
+
+.parallel-detail {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.95rem;
+    color: var(--gold-primary);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--glass-dark);
+    border-radius: 6px;
+    margin-top: var(--space-sm);
+    border-left: 2px solid var(--gold-primary);
+}
+
+/* ============================================
+   SCARLET THREAD SECTION
+   "The golden thread through history"
+   ============================================ */
+
+.scarlet-thread-section {
+    margin-top: var(--space-3xl);
+    padding: var(--space-2xl);
+    background: linear-gradient(135deg, var(--glass-dark), rgba(139, 58, 58, 0.1));
+    border-radius: 16px;
+    border: 2px solid var(--burgundy-primary);
+    position: relative;
+    z-index: 1;
+}
+
+.scarlet-thread-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+.scarlet-thread-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: var(--burgundy-bright);
+    margin-bottom: var(--space-md);
+    text-shadow: 0 0 25px var(--glow-burgundy);
+}
+
+.scarlet-thread-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--gold-primary);
+    font-style: italic;
+}
+
+.scarlet-thread-intro {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--papyrus-aged);
+    max-width: 800px;
+    margin: 0 auto var(--space-2xl);
+    text-align: center;
+}
+
+.thread-timeline {
+    position: relative;
+    padding: var(--space-2xl) 0;
+}
+
+/* The golden thread line */
+.thread-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(
+        180deg,
+        transparent,
+        var(--gold-primary) 10%,
+        var(--burgundy-primary) 50%,
+        var(--gold-primary) 90%,
+        transparent
+    );
+    transform: translateX(-50%);
+    box-shadow: 0 0 20px var(--glow-gold);
+}
+
+.thread-node {
+    position: relative;
+    margin-bottom: var(--space-2xl);
+    padding-left: calc(50% + var(--space-2xl));
+}
+
+.thread-node:nth-child(even) {
+    padding-left: 0;
+    padding-right: calc(50% + var(--space-2xl));
+    text-align: right;
+}
+
+.thread-node::before {
+    content: '';
+    position: absolute;
+    top: var(--space-lg);
+    width: 16px;
+    height: 16px;
+    background: var(--gold-primary);
+    border: 3px solid var(--burgundy-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--glow-gold);
+    z-index: 2;
+}
+
+.thread-node:nth-child(odd)::before {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.thread-node:nth-child(even)::before {
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.thread-card {
+    background: var(--glass-dark);
+    padding: var(--space-lg);
+    border-radius: 10px;
+    border: 1px solid var(--gold-shadow);
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.thread-card:hover {
+    border-color: var(--gold-primary);
+    box-shadow: 0 4px 20px rgba(201, 169, 97, 0.15);
+    transform: translateX(-4px);
+}
+
+.thread-node:nth-child(even) .thread-card:hover {
+    transform: translateX(4px);
+}
+
+.thread-figure {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--burgundy-bright);
+    margin-bottom: var(--space-sm);
+}
+
+.thread-period {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.875rem;
+    color: var(--gold-dim);
+    margin-bottom: var(--space-md);
+}
+
+.thread-promise {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--papyrus-light);
+    margin-bottom: var(--space-md);
+}
+
+.thread-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.875rem;
+    color: var(--papyrus-warm);
+    margin-bottom: var(--space-sm);
+}
+
+.thread-connection {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--papyrus-aged);
+}
+
+/* ============================================
+   PRACTICAL APPLICATION SECTION
+   "Make it personal"
+   ============================================ */
+
+.practical-section {
+    margin-top: var(--space-3xl);
+    padding: var(--space-2xl);
+    background: linear-gradient(135deg, rgba(15, 25, 34, 0.9), rgba(201, 169, 97, 0.05));
+    border-radius: 16px;
+    border: 2px solid var(--gold-primary);
+    position: relative;
+    z-index: 1;
+}
+
+.practical-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+.practical-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: var(--gold-bright);
+    margin-bottom: var(--space-md);
+    text-shadow: 0 0 25px var(--glow-gold);
+}
+
+.practical-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--burgundy-bright);
+    font-style: italic;
+}
+
+.practical-intro {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--papyrus-aged);
+    max-width: 800px;
+    margin: 0 auto var(--space-2xl);
+    text-align: center;
+}
+
+.principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--space-xl);
+}
+
+.principle-card {
+    background: var(--glass-dark);
+    padding: var(--space-xl);
+    border-radius: 10px;
+    border: 2px solid var(--gold-shadow);
+    transition: all 0.3s var(--ease-smooth);
+    backdrop-filter: blur(10px);
+}
+
+.principle-card:hover {
+    border-color: var(--gold-primary);
+    box-shadow: 0 6px 25px rgba(201, 169, 97, 0.2);
+    transform: translateY(-4px);
+}
+
+.principle-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--gold-primary);
+    margin-bottom: var(--space-lg);
+    text-align: center;
+}
+
+.principle-examples {
+    margin-bottom: var(--space-lg);
+}
+
+.principle-example {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--papyrus-warm);
+    margin-bottom: var(--space-sm);
+    padding-left: var(--space-md);
+    border-left: 2px solid var(--burgundy-primary);
+}
+
+.principle-example strong {
+    color: var(--burgundy-bright);
+}
+
+.principle-application {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--papyrus-light);
+    padding: var(--space-md);
+    background: rgba(201, 169, 97, 0.08);
+    border-radius: 6px;
+    margin-bottom: var(--space-md);
+}
+
+.principle-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--gold-dim);
+    text-align: right;
+    font-style: italic;
+}
+
+/* ============================================
+   REFLECTION QUESTIONS
+   "Dig deeper"
+   ============================================ */
+
+.reflection-section {
+    margin-top: var(--space-3xl);
+    padding: var(--space-2xl);
+    background: var(--glass-dark);
+    border-radius: 16px;
+    border: 2px solid var(--burgundy-primary);
+    position: relative;
+    z-index: 1;
+}
+
+.reflection-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+.reflection-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.25rem;
+    color: var(--burgundy-bright);
+    margin-bottom: var(--space-md);
+    text-shadow: 0 0 20px var(--glow-burgundy);
+}
+
+.reflection-intro {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--papyrus-aged);
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.questions-list {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.question-card {
+    background: linear-gradient(135deg, rgba(15, 25, 34, 0.8), rgba(139, 58, 74, 0.05));
+    padding: var(--space-lg);
+    border-radius: 8px;
+    border-left: 4px solid var(--burgundy-primary);
+    margin-bottom: var(--space-lg);
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.question-card:hover {
+    border-left-color: var(--gold-primary);
+    box-shadow: 0 4px 20px rgba(201, 169, 97, 0.1);
+    transform: translateX(8px);
+}
+
+.question-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--papyrus-light);
+    margin-bottom: var(--space-sm);
+}
+
+.question-purpose {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: var(--gold-dim);
+    font-style: italic;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   "Accessible to all"
+   ============================================ */
+
+@media (max-width: 968px) {
+    .pattern-title {
+        font-size: 2.5rem;
+    }
+    
+    .parallel-comparison {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+    
+    .parallel-comparison::before {
+        display: none;
+    }
+    
+    .joseph-side {
+        border-right: none;
+        border-bottom: 1px solid var(--gold-shadow);
+        padding-bottom: var(--space-lg);
+    }
+    
+    .thread-node {
+        padding-left: var(--space-xl);
+        padding-right: 0;
+        text-align: left;
+    }
+    
+    .thread-node:nth-child(even) {
+        padding-left: var(--space-xl);
+        padding-right: 0;
+        text-align: left;
+    }
+    
+    .thread-timeline::before {
+        left: 0;
+        transform: none;
+    }
+    
+    .thread-node::before {
+        left: 0 !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+    }
+    
+    .principles-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .pattern-container {
+        padding: var(--space-xl) var(--space-md);
+    }
+    
+    .pattern-title {
+        font-size: 2rem;
+    }
+    
+    .category-title {
+        font-size: 2rem;
+    }
+    
+    .pattern-nav {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+    
+    .pattern-nav-btn {
+        width: 100%;
+    }
+}
