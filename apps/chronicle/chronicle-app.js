@@ -5,13 +5,15 @@
 
 // State Management
 const ChronicleApp = {
+    currentUser: 'tyrrel', // Default to Tyrrel
     currentSpace: 'desk',
     currentScene: {
         id: 'scene-001',
         title: 'Opening Scene',
         content: '',
         wordCount: 0,
-        lastModified: new Date()
+        lastModified: new Date(),
+        author: 'tyrrel' // Track who wrote this
     },
     settings: {
         font: 'Crimson Text',
@@ -97,6 +99,17 @@ function createCursorTrail(x, y) {
 // ===================================
 
 function setupEventListeners() {
+    // User switcher - The Sacred Distinction
+    const switchTyrrel = document.getElementById('switchTyrrel');
+    const switchTrevor = document.getElementById('switchTrevor');
+    
+    if (switchTyrrel) {
+        switchTyrrel.addEventListener('click', () => switchUser('tyrrel'));
+    }
+    if (switchTrevor) {
+        switchTrevor.addEventListener('click', () => switchUser('trevor'));
+    }
+    
     // Navigation tabs
     const navTabs = document.querySelectorAll('.nav-tab');
     navTabs.forEach(tab => {
@@ -181,6 +194,40 @@ function switchSpace(spaceName) {
     
     // Save navigation state
     localStorage.setItem('chronicle_current_space', spaceName);
+}
+
+// ===================================
+// USER SWITCHING - IRON SHARPENS IRON
+// "As iron sharpens iron, so one person sharpens another" - Proverbs 27:17
+// Each scribe must have their own distinct mark, their own color, their own voice
+// ===================================
+
+function switchUser(userName) {
+    // Update current user
+    ChronicleApp.currentUser = userName;
+    
+    // Update body class for user-specific styling
+    document.body.classList.remove('user-tyrrel', 'user-trevor');
+    document.body.classList.add(`user-${userName}`);
+    
+    // Update button states
+    document.querySelectorAll('.user-switch-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.user === userName) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Update current scene author if creating new content
+    if (ChronicleApp.currentScene.content === '') {
+        ChronicleApp.currentScene.author = userName;
+    }
+    
+    // Save user preference
+    localStorage.setItem('chronicle_current_user', userName);
+    
+    console.log(`Workspace now inscribed by: ${userName === 'tyrrel' ? 'Tyrrel' : 'Trevor'}`);
+    console.log(`Color: ${userName === 'tyrrel' ? 'Gold - The wisdom of the mentor' : 'Teal - The vision of the student'}`);
 }
 
 // ===================================
@@ -382,6 +429,15 @@ function saveSettings() {
 // ===================================
 
 function loadSavedData() {
+    // Load current user - The identity of the scribe
+    const savedUser = localStorage.getItem('chronicle_current_user');
+    if (savedUser) {
+        switchUser(savedUser);
+    } else {
+        // Default to Tyrrel, but mark it clearly
+        switchUser('tyrrel');
+    }
+    
     // Load settings
     const savedSettings = localStorage.getItem('chronicle_settings');
     if (savedSettings) {
@@ -639,12 +695,14 @@ function importProject(file) {
 }
 
 // ===================================
-// CONSOLE MESSAGE
+// CONSOLE MESSAGE - THE INSCRIPTION
 // ===================================
 
-console.log('%c✍️ Chronicle - A Sacred Workspace', 'font-size: 20px; font-weight: bold; color: #8B7355;');
-console.log('%c"Write the vision and make it plain on tablets, so that a herald may run with it." - Habakkuk 2:2', 'font-size: 12px; font-style: italic; color: #5F5F5F;');
-console.log('%cMay your words flow with divine inspiration.', 'font-size: 12px; color: #2C5F5F;');
+console.log('%c✍️ Chronicle - A Sacred Workspace', 'font-size: 20px; font-weight: bold; color: #C9A961;');
+console.log('%c"Write the vision and make it plain on tablets, so that a herald may run with it." - Habakkuk 2:2', 'font-size: 12px; font-style: italic; color: #b8b3aa;');
+console.log('%c"As iron sharpens iron, so one person sharpens another." - Proverbs 27:17', 'font-size: 12px; font-style: italic; color: #2C5F5F;');
+console.log('%cTwo scribes, one calling. Tyrrel (Gold) and Trevor (Teal).', 'font-size: 12px; color: #8B7355;');
+console.log('%cMay your words flow with divine inspiration.', 'font-size: 12px; color: #b8b3aa;');
 
 // Make some functions available globally for debugging
 window.ChronicleApp = ChronicleApp;
