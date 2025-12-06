@@ -1,0 +1,483 @@
+/**
+ * TREVOR'S STUDY - STYLES
+ * Sacred workspace for personal reflection
+ * Consistent with Joseph App aesthetic: Navy, Gold, Burgundy
+ */
+
+/* ============================================
+   STUDY WELCOME BANNER
+============================================ */
+.study-welcome {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-xl);
+    margin-bottom: var(--space-2xl);
+    background: linear-gradient(
+        135deg,
+        rgba(26, 38, 52, 0.3) 0%,
+        rgba(45, 63, 84, 0.2) 100%
+    );
+    border-radius: 12px;
+    border: 1px solid rgba(201, 169, 97, 0.1);
+}
+
+.study-welcome-icon {
+    font-size: 2.5rem;
+    color: var(--gold-primary);
+    margin-bottom: var(--space-md);
+    text-shadow: 0 0 20px var(--glow-gold);
+}
+
+.study-welcome-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.75rem;
+    color: var(--gold-bright);
+    margin-bottom: var(--space-sm);
+    letter-spacing: 0.05em;
+}
+
+.study-welcome-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.125rem;
+    color: var(--papyrus-aged);
+    opacity: 0.8;
+    font-style: italic;
+}
+
+/* ============================================
+   STUDY DASHBOARD
+============================================ */
+.study-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+}
+
+.study-card {
+    background: linear-gradient(
+        135deg,
+        rgba(15, 25, 34, 0.6) 0%,
+        rgba(26, 38, 52, 0.4) 100%
+    );
+    border: 1px solid rgba(201, 169, 97, 0.15);
+    border-radius: 8px;
+    padding: var(--space-xl);
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.study-card:hover {
+    border-color: rgba(201, 169, 97, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.study-card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.25rem;
+    color: var(--gold-primary);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.05em;
+}
+
+.study-card-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--papyrus-aged);
+    opacity: 0.8;
+    margin-bottom: var(--space-lg);
+    line-height: 1.6;
+}
+
+/* ============================================
+   PROGRESS STATS
+============================================ */
+.progress-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+}
+
+.progress-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-md);
+    background: rgba(10, 13, 20, 0.4);
+    border-radius: 6px;
+    border: 1px solid rgba(201, 169, 97, 0.1);
+}
+
+.progress-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.875rem;
+    color: var(--papyrus-warm);
+    opacity: 0.7;
+    margin-bottom: var(--space-xs);
+    text-align: center;
+}
+
+.progress-value {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: var(--gold-bright);
+    font-weight: 600;
+    text-shadow: 0 0 12px var(--glow-gold);
+}
+
+/* ============================================
+   JOURNAL INTERFACE
+============================================ */
+.journal-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: var(--space-md);
+    background: rgba(10, 13, 20, 0.5);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    border-radius: 6px;
+    color: var(--papyrus-light);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    resize: vertical;
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.journal-textarea:focus {
+    outline: none;
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 0 2px rgba(201, 169, 97, 0.1);
+    background: rgba(10, 13, 20, 0.7);
+}
+
+.journal-textarea::placeholder {
+    color: var(--papyrus-warm);
+    opacity: 0.4;
+    font-style: italic;
+}
+
+.journal-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+.journal-btn {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--gold-dim);
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.15), rgba(201, 169, 97, 0.05));
+    color: var(--gold-bright);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+    letter-spacing: 0.05em;
+}
+
+.journal-btn:hover {
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.25), rgba(201, 169, 97, 0.15));
+    border-color: var(--gold-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.2);
+}
+
+.journal-btn:active {
+    transform: translateY(0);
+}
+
+.journal-status {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+.journal-status.success {
+    color: var(--gold-bright);
+}
+
+.journal-status.error {
+    color: var(--burgundy-bright);
+}
+
+/* ============================================
+   JOURNAL ENTRIES LIST
+============================================ */
+.study-entries {
+    grid-column: 1 / -1;
+}
+
+.study-entries-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+}
+
+.entries-export {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.875rem;
+    padding: var(--space-xs) var(--space-md);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    background: transparent;
+    color: var(--gold-dim);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+    letter-spacing: 0.05em;
+}
+
+.entries-export:hover {
+    background: rgba(201, 169, 97, 0.1);
+    color: var(--gold-bright);
+    border-color: var(--gold-primary);
+}
+
+.journal-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: var(--space-sm);
+}
+
+.journal-entry {
+    padding: var(--space-lg);
+    background: rgba(10, 13, 20, 0.4);
+    border: 1px solid rgba(201, 169, 97, 0.1);
+    border-radius: 6px;
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.journal-entry:hover {
+    border-color: rgba(201, 169, 97, 0.2);
+    background: rgba(10, 13, 20, 0.6);
+}
+
+.journal-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+}
+
+.journal-entry-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.875rem;
+    color: var(--gold-dim);
+    font-style: italic;
+}
+
+.journal-entry-delete {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--burgundy-primary);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.2s var(--ease-smooth);
+    border-radius: 4px;
+}
+
+.journal-entry-delete:hover {
+    opacity: 1;
+    background: rgba(139, 58, 74, 0.2);
+}
+
+.journal-entry-text {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1rem;
+    color: var(--papyrus-light);
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+.journal-empty {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-xl);
+    color: var(--papyrus-warm);
+    opacity: 0.6;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+}
+
+/* ============================================
+   EXODUS GATEWAY
+============================================ */
+.exodus-gateway {
+    margin-top: var(--space-3xl);
+    padding: var(--space-3xl);
+    background: linear-gradient(
+        135deg,
+        rgba(139, 58, 74, 0.15) 0%,
+        rgba(26, 38, 52, 0.3) 50%,
+        rgba(45, 63, 84, 0.2) 100%
+    );
+    border: 2px solid rgba(201, 169, 97, 0.2);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    gap: var(--space-xl);
+    align-items: center;
+}
+
+.exodus-gateway::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(201, 169, 97, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(139, 58, 74, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.exodus-icon {
+    font-size: 4rem;
+    color: var(--gold-primary);
+    text-shadow: 0 0 30px var(--glow-gold);
+    flex-shrink: 0;
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { 
+        opacity: 0.8;
+        text-shadow: 0 0 20px var(--glow-gold);
+    }
+    50% { 
+        opacity: 1;
+        text-shadow: 0 0 40px var(--glow-gold);
+    }
+}
+
+.exodus-content {
+    position: relative;
+    z-index: 1;
+}
+
+.exodus-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--gold-bright);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.05em;
+}
+
+.exodus-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.125rem;
+    color: var(--papyrus-light);
+    line-height: 1.8;
+    margin-bottom: var(--space-md);
+}
+
+.exodus-text strong {
+    color: var(--gold-bright);
+    font-weight: 600;
+}
+
+.exodus-subtext {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--papyrus-aged);
+    font-style: italic;
+    opacity: 0.8;
+    margin-bottom: var(--space-lg);
+}
+
+.exodus-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.875rem;
+    padding: var(--space-md) var(--space-xl);
+    border: 2px solid var(--gold-dim);
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.2), rgba(201, 169, 97, 0.1));
+    color: var(--gold-bright);
+    border-radius: 8px;
+    cursor: not-allowed;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.exodus-btn:not(:disabled) {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.exodus-btn:not(:disabled):hover {
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.3), rgba(201, 169, 97, 0.2));
+    border-color: var(--gold-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201, 169, 97, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+============================================ */
+@media (max-width: 768px) {
+    .study-dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .progress-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .exodus-gateway {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .study-welcome {
+        padding: var(--space-xl) var(--space-md);
+    }
+
+    .study-welcome-title {
+        font-size: 1.5rem;
+    }
+
+    .exodus-icon {
+        font-size: 3rem;
+    }
+
+    .exodus-title {
+        font-size: 1.25rem;
+    }
+
+    .exodus-text,
+    .exodus-subtext {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   SCROLLBAR STYLING FOR JOURNAL LIST
+============================================ */
+.journal-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.journal-list::-webkit-scrollbar-track {
+    background: rgba(10, 13, 20, 0.5);
+    border-radius: 3px;
+}
+
+.journal-list::-webkit-scrollbar-thumb {
+    background: var(--gold-dim);
+    border-radius: 3px;
+}
+
+.journal-list::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-primary);
+}
