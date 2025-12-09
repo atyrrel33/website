@@ -1729,14 +1729,13 @@
                 });
             });
 
-                    // Always open to Story section (trevor's entry point)
+           
+        // ⭐ ALWAYS OPEN TO STORY SECTION ⭐
         const storyTab = document.querySelector('[data-tab="story"]');
         if (storyTab) {
             storyTab.click();
         }
-        // Still save user's progress as they navigate
-        // (helpful for future features, just don't restore on load)
-        // Mobile Sidebar
+    }
         function initMobileSidebar() {
             const toggle = document.getElementById('mobileToggle');
             const sidebar = document.getElementById('sidebar');
