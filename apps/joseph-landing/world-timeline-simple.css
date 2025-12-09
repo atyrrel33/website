@@ -1,0 +1,1020 @@
+/**
+ * WORLD TIMELINE - SIMPLE & INTERACTIVE STYLES
+ * "Let all things be done decently and in order" (1 Corinthians 14:40)
+ * 
+ * Design Philosophy:
+ * - VERTICAL FLOW: Time descends like divine revelation
+ * - SACRED BEAUTY: Every element honors the story
+ * - SMOOTH INTERACTIONS: Animations reveal truth gradually
+ * - CLARITY: Structure serves understanding
+ * 
+ * For Trevor: A timeline that feels alive with history
+ */
+
+/* ============================================
+   CONTAINER & HEADER
+   "In the beginning..." - The sacred entrance
+   ============================================ */
+
+.timeline-simple-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-xl);
+    background: linear-gradient(
+        180deg,
+        var(--night-void) 0%,
+        var(--night-deep) 40%,
+        var(--night-mid) 100%
+    );
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Starfield background - "The heavens declare His glory" */
+.timeline-simple-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, var(--gold-dim), transparent),
+        radial-gradient(2px 2px at 60% 70%, var(--gold-shadow), transparent),
+        radial-gradient(1px 1px at 50% 50%, var(--gold-primary), transparent),
+        radial-gradient(1px 1px at 80% 10%, var(--burgundy-primary), transparent);
+    background-size: 200% 200%;
+    animation: starsFloat 60s ease-in-out infinite;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes starsFloat {
+    0%, 100% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+}
+
+.timeline-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+}
+
+.timeline-main-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    color: var(--gold-primary);
+    text-shadow: 0 0 20px var(--glow-gold);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.05em;
+}
+
+.timeline-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    color: var(--papyrus-aged);
+    font-style: italic;
+    margin-bottom: var(--space-lg);
+}
+
+.timeline-intro {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: var(--space-lg);
+    background: var(--glass-dark);
+    border: 1px solid var(--gold-shadow);
+    border-radius: 12px;
+}
+
+.timeline-intro p {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--papyrus-warm);
+    margin: 0;
+}
+
+/* ============================================
+   SMOKING GUN FEATURE CARD
+   "The stone the builders rejected" - The evidence
+   ============================================ */
+
+.smoking-gun-feature {
+    margin: var(--space-3xl) 0;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+}
+
+.feature-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: linear-gradient(135deg, var(--burgundy-primary), var(--burgundy-deep));
+    color: var(--gold-bright);
+    border-radius: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-lg);
+    box-shadow: 0 4px 12px rgba(139, 58, 74, 0.3);
+}
+
+.banner-icon {
+    font-size: 1.25rem;
+}
+
+.smoking-gun-card {
+    background: var(--glass-dark);
+    border: 2px solid var(--gold-primary);
+    border-radius: 16px;
+    padding: var(--space-2xl);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 0 40px var(--glow-gold);
+    transition: all 0.4s var(--ease-smooth);
+}
+
+.smoking-gun-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.6),
+        0 0 60px var(--glow-gold);
+}
+
+.gun-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+.gun-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: var(--gold-bright);
+    margin-bottom: var(--space-md);
+}
+
+.gun-description {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--papyrus-warm);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Price Chart */
+.price-chart {
+    margin: var(--space-2xl) 0;
+}
+
+.chart-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    color: var(--papyrus-light);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    font-weight: 500;
+}
+
+.chart-bars {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    gap: var(--space-lg);
+    height: 300px;
+    padding: var(--space-lg);
+    background: rgba(26, 38, 52, 0.4);
+    border-radius: 8px;
+    margin-bottom: var(--space-lg);
+}
+
+.price-bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.price-bar-group:hover {
+    transform: translateY(-5px);
+}
+
+.price-bar-group.match {
+    animation: pulseMatch 2s ease-in-out infinite;
+}
+
+@keyframes pulseMatch {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.bar-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.price-bar {
+    width: 60px;
+    background: linear-gradient(
+        180deg,
+        var(--gold-dim),
+        var(--gold-shadow)
+    );
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: all 0.4s var(--ease-smooth);
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.price-bar-group.match .price-bar {
+    background: linear-gradient(
+        180deg,
+        var(--gold-bright),
+        var(--gold-primary)
+    );
+    box-shadow: 
+        0 -4px 8px rgba(0, 0, 0, 0.3),
+        0 0 20px var(--glow-gold);
+}
+
+.price-bar-group.highlighted .price-bar {
+    background: linear-gradient(
+        180deg,
+        var(--burgundy-bright),
+        var(--burgundy-primary)
+    );
+    box-shadow: 0 0 20px var(--glow-burgundy);
+}
+
+.bar-value {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cinzel', serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gold-bright);
+    white-space: nowrap;
+}
+
+.bar-label {
+    margin-top: var(--space-md);
+    text-align: center;
+}
+
+.period-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.75rem;
+    color: var(--papyrus-warm);
+    line-height: 1.4;
+}
+
+.match-badge {
+    display: inline-block;
+    margin-top: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--gold-primary);
+    color: var(--night-void);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.chart-note {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--papyrus-light);
+    padding: var(--space-lg);
+    background: rgba(201, 169, 97, 0.05);
+    border-left: 3px solid var(--gold-primary);
+    border-radius: 4px;
+}
+
+.chart-note strong {
+    color: var(--gold-bright);
+}
+
+.scholar-credit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--gold-shadow);
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.credit-label {
+    color: var(--papyrus-aged);
+    font-size: 0.875rem;
+}
+
+.credit-name {
+    color: var(--gold-bright);
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.credit-desc {
+    color: var(--papyrus-warm);
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+/* ============================================
+   VERTICAL TIMELINE
+   "A straight path for your feet" (Hebrews 12:13)
+   ============================================ */
+
+.timeline-vertical {
+    position: relative;
+    margin: var(--space-3xl) 0;
+    padding: var(--space-2xl) 0;
+    z-index: 1;
+}
+
+/* The spine - central timeline */
+.timeline-spine {
+    position: absolute;
+    left: 80px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(
+        180deg,
+        transparent,
+        var(--gold-primary) 10%,
+        var(--gold-primary) 90%,
+        transparent
+    );
+    box-shadow: 0 0 10px var(--glow-gold);
+    transform-origin: top;
+}
+
+/* ============================================
+   CONTEXT MARKERS (Jacob, etc.)
+   "Before you were born, I knew you" (Jeremiah 1:5)
+   ============================================ */
+
+.timeline-context-marker {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    margin: var(--space-2xl) 0;
+    padding-left: 40px;
+    opacity: 0;
+}
+
+.context-dot {
+    width: 16px;
+    height: 16px;
+    background: var(--night-whisper);
+    border: 2px solid var(--papyrus-aged);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+    position: relative;
+    left: 40px;
+}
+
+.context-label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.context-year {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--papyrus-aged);
+}
+
+.context-event {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.125rem;
+    color: var(--papyrus-light);
+    font-weight: 500;
+}
+
+.context-detail {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.875rem;
+    color: var(--papyrus-warm);
+    font-style: italic;
+}
+
+/* ============================================
+   EVENT CARDS (Joseph's Life)
+   "From pit to palace" - The sacred journey
+   ============================================ */
+
+.timeline-event {
+    display: flex;
+    gap: var(--space-xl);
+    margin: var(--space-3xl) 0;
+    opacity: 0;
+}
+
+.event-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.marker-dot {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-warm));
+    border: 3px solid var(--night-deep);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 0 20px var(--glow-gold);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.marker-dot.elevation {
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold-primary));
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 0 30px var(--glow-gold);
+}
+
+.marker-dot.trial {
+    background: linear-gradient(135deg, var(--burgundy-primary), var(--burgundy-deep));
+}
+
+.marker-dot.completion {
+    background: linear-gradient(135deg, var(--night-whisper), var(--night-soft));
+    border-color: var(--papyrus-aged);
+}
+
+.marker-icon {
+    font-size: 1.5rem;
+}
+
+.marker-line {
+    width: 2px;
+    height: 100px;
+    background: var(--gold-shadow);
+    opacity: 0.3;
+}
+
+/* Event Cards */
+.event-card {
+    flex: 1;
+    background: var(--glass-dark);
+    border: 1px solid var(--gold-shadow);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.4s var(--ease-smooth);
+    cursor: pointer;
+}
+
+.event-card:hover {
+    border-color: var(--gold-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.event-card.expanded {
+    border-color: var(--gold-bright);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 0 30px var(--glow-gold);
+}
+
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--space-lg);
+    background: linear-gradient(
+        135deg,
+        rgba(201, 169, 97, 0.1),
+        transparent
+    );
+}
+
+.card-year {
+    font-family: 'Cinzel', serif;
+    font-size: 0.875rem;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xs);
+}
+
+.card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--gold-bright);
+    font-weight: 500;
+    margin: 0;
+    flex: 1;
+}
+
+.expand-btn {
+    width: 36px;
+    height: 36px;
+    background: var(--burgundy-primary);
+    border: none;
+    border-radius: 50%;
+    color: var(--papyrus-light);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.expand-btn:hover {
+    background: var(--burgundy-bright);
+    transform: scale(1.1);
+}
+
+.expand-icon {
+    font-size: 1.5rem;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+}
+
+/* Card Body (collapsible) */
+.card-body {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 var(--space-lg);
+}
+
+.event-card.expanded .card-body {
+    padding: var(--space-lg);
+}
+
+.card-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.detail-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.detail-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--papyrus-light);
+}
+
+.key-detail {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: rgba(201, 169, 97, 0.08);
+    border-left: 3px solid var(--gold-primary);
+    border-radius: 4px;
+    margin-bottom: var(--space-md);
+}
+
+.key-icon {
+    font-size: 1.125rem;
+}
+
+.key-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--gold-bright);
+    font-weight: 500;
+    font-style: italic;
+}
+
+.verse-ref {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+    margin-bottom: var(--space-md);
+}
+
+.ref-icon {
+    color: var(--burgundy-bright);
+    font-size: 0.875rem;
+}
+
+.ref-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.875rem;
+    color: var(--papyrus-aged);
+    font-style: italic;
+}
+
+.themes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+.theme-tag {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--night-soft);
+    color: var(--papyrus-warm);
+    font-family: 'EB Garamond', serif;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    text-transform: lowercase;
+}
+
+/* ============================================
+   PHARAOH MARKERS
+   "The powers that be" (Romans 13:1)
+   ============================================ */
+
+.timeline-pharaoh {
+    display: flex;
+    gap: var(--space-xl);
+    margin: var(--space-2xl) 0;
+    margin-left: 100px;
+    opacity: 0;
+}
+
+.pharaoh-marker {
+    flex-shrink: 0;
+}
+
+.pharaoh-crown {
+    font-size: 2rem;
+    filter: drop-shadow(0 0 8px rgba(166, 77, 90, 0.5));
+}
+
+.pharaoh-card {
+    flex: 1;
+    max-width: 600px;
+    background: linear-gradient(
+        135deg,
+        rgba(139, 58, 74, 0.15),
+        rgba(139, 58, 74, 0.05)
+    );
+    border: 1px solid var(--burgundy-primary);
+    border-radius: 10px;
+    padding: var(--space-lg);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pharaoh-card:hover {
+    border-color: var(--burgundy-bright);
+    box-shadow: 0 4px 16px rgba(139, 58, 74, 0.3);
+}
+
+.pharaoh-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-sm);
+}
+
+.pharaoh-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.25rem;
+    color: var(--burgundy-bright);
+    margin: 0;
+}
+
+.pharaoh-reign {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.875rem;
+    color: var(--papyrus-aged);
+}
+
+.pharaoh-body {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: var(--space-md);
+}
+
+.pharaoh-card.expanded .pharaoh-body {
+    height: auto;
+    opacity: 1;
+}
+
+.pharaoh-description {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--papyrus-light);
+    margin-bottom: var(--space-md);
+}
+
+.pharaoh-significance {
+    padding: var(--space-md);
+    background: rgba(139, 58, 74, 0.1);
+    border-left: 3px solid var(--burgundy-bright);
+    border-radius: 4px;
+    margin-bottom: var(--space-md);
+}
+
+.pharaoh-significance strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.875rem;
+    color: var(--burgundy-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: var(--space-xs);
+}
+
+.pharaoh-significance p {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--papyrus-light);
+    margin: 0;
+}
+
+.pharaoh-key-detail {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(166, 77, 90, 0.15);
+    border-radius: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--burgundy-bright);
+    font-style: italic;
+}
+
+/* ============================================
+   FOOTER
+   "The end of a matter" (Ecclesiastes 7:8)
+   ============================================ */
+
+.timeline-footer {
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-3xl);
+    border-top: 2px solid var(--gold-shadow);
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+}
+
+.timeline-summary {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.timeline-summary h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: var(--gold-primary);
+    margin-bottom: var(--space-lg);
+}
+
+.timeline-summary p {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--papyrus-warm);
+    margin-bottom: var(--space-xl);
+}
+
+.verse-reference {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--glass-dark);
+    border: 1px solid var(--burgundy-primary);
+    border-radius: 8px;
+}
+
+.verse-icon {
+    color: var(--burgundy-bright);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.verse-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--papyrus-light);
+    font-style: italic;
+    text-align: left;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   "All things in their proper order" (1 Corinthians 14:40)
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .timeline-main-title {
+        font-size: 2.5rem;
+    }
+
+    .chart-bars {
+        height: 250px;
+        gap: var(--space-md);
+    }
+
+    .price-bar {
+        width: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .timeline-simple-container {
+        padding: var(--space-2xl) var(--space-md);
+    }
+
+    .timeline-main-title {
+        font-size: 2rem;
+    }
+
+    .timeline-subtitle {
+        font-size: 1.25rem;
+    }
+
+    .timeline-spine {
+        left: 30px;
+    }
+
+    .timeline-context-marker {
+        padding-left: 0;
+    }
+
+    .context-dot {
+        left: 12px;
+    }
+
+    .timeline-event {
+        flex-direction: column;
+        gap: var(--space-md);
+        margin-left: var(--space-xl);
+    }
+
+    .event-marker {
+        flex-direction: row;
+        gap: var(--space-md);
+    }
+
+    .marker-line {
+        width: 40px;
+        height: 2px;
+    }
+
+    .marker-dot {
+        width: 40px;
+        height: 40px;
+    }
+
+    .marker-icon {
+        font-size: 1.25rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+    }
+
+    .timeline-pharaoh {
+        margin-left: var(--space-xl);
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+
+    .chart-bars {
+        height: 200px;
+        gap: var(--space-sm);
+        overflow-x: auto;
+        padding-bottom: var(--space-lg);
+    }
+
+    .price-bar {
+        width: 40px;
+    }
+
+    .smoking-gun-card {
+        padding: var(--space-lg);
+    }
+
+    .gun-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .timeline-main-title {
+        font-size: 1.75rem;
+    }
+
+    .card-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .expand-btn {
+        align-self: flex-end;
+    }
+
+    .verse-reference {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .verse-text {
+        text-align: center;
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   "Whatever you did for the least of these" (Matthew 25:40)
+   ============================================ */
+
+.event-card:focus,
+.pharaoh-card:focus,
+.expand-btn:focus {
+    outline: 2px solid var(--gold-primary);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+    .timeline-spine,
+    .event-card,
+    .pharaoh-card {
+        border-width: 2px;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   "Write it on a scroll" (Jeremiah 36:2)
+   ============================================ */
+
+@media print {
+    .timeline-simple-container {
+        background: white;
+    }
+
+    .timeline-simple-container::before {
+        display: none;
+    }
+
+    .expand-btn {
+        display: none;
+    }
+
+    .card-body,
+    .pharaoh-body {
+        height: auto !important;
+        opacity: 1 !important;
+    }
+
+    * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+}
