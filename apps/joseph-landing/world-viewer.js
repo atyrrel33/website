@@ -259,8 +259,7 @@
     }
 
     function loadSection(sectionName) {
-        const contentContainer = document.getElementById('worldContentContainer');
-        
+        const contentContainer = document.getElementById('world');        
         switch(sectionName) {
             case 'timeline':
                 // Timeline module builds itself via world-timeline.js
