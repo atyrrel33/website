@@ -60,9 +60,9 @@
     // ============================================
     
     function buildTimeline() {
-        const worldSection = document.getElementById('world');
+        const worldSection = document.getElementById('worldContentContainer');
         if (!worldSection) {
-            console.error('❌ World section not found');
+            console.error('❌ World content container not found');
             return;
         }
 
