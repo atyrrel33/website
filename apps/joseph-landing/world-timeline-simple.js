@@ -61,7 +61,7 @@ gsap.registerPlugin(ScrollTrigger);
     // ============================================
     
     function buildTimeline() {
-        const worldSection = document.getElementById('worldContentContainer');
+        const worldSection = document.getElementById('timeline-section');
         if (!worldSection) {
             console.error('❌ World content container not found');
             return;
@@ -618,7 +618,18 @@ gsap.registerPlugin(ScrollTrigger);
     // ============================================
     // INITIALIZE
     // ============================================
+   // ============================================
+    // INITIALIZE - WAIT FOR CONTAINER
+    // ============================================
     
-    init();
-
+    // Expose init function for world-viewer to call
+    window.TimelineModule = {
+        init: init
+    };
+    
+    // Also auto-initialize if timeline-section already exists
+    if (document.getElementById('timeline-section')) {
+        init();
+    }
+    
 })();
