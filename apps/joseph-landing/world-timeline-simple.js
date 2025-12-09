@@ -1,3 +1,4 @@
+gsap.registerPlugin(ScrollTrigger);
 /**
  * WORLD TIMELINE - SIMPLE & INTERACTIVE
  * "There is a time for everything, and a season for every activity" (Ecclesiastes 3:1)
