@@ -262,8 +262,11 @@
         const contentContainer = document.getElementById('world');        
         switch(sectionName) {
             case 'timeline':
-                // Timeline module builds itself via world-timeline.js
                 contentContainer.innerHTML = '<div id="timeline-section"></div>';
+                // Trigger timeline initialization after container exists
+                if (window.TimelineModule) {
+                    setTimeout(() => window.TimelineModule.init(), 50);
+                }
                 break;
                 
             case 'evidence':
