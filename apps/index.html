@@ -46,6 +46,18 @@
   </style>
 </head>
 <body>
+    <script>
+    // SIMPLE PASSWORD PROTECT
+    const correctPassword = "tyrrel33"; // ← put your password inside the quotes
+
+    const userPassword = prompt("Enter password to access the apps:");
+
+    if (userPassword !== correctPassword) {
+      alert("Incorrect password.");
+      window.location.href = "/"; // send them back to Home
+    }
+  </script>
+
   <h1>APPS</h1>
   
   <a href="/apps/dailies-archive/" class="app-link">
