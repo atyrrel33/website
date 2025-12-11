@@ -1,0 +1,534 @@
+/* ============================================================================
+   CHRONICLE - THE SCRIBE'S DESK
+   Stylesheet for Screenplay Formatting (Sprint 1: Foundation)
+   
+   "Write this on a scroll as something to be remembered" - Exodus 17:14
+   ============================================================================ */
+
+/* ============================================================================
+   THE SIX ELEMENTS - Sacred Screenplay Structure
+   ============================================================================ */
+
+/* Element Container - The Writing Surface */
+.scribe-writing-area {
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-size: 12pt;
+    line-height: 1;
+    width: 6.5in;
+    margin: 0 auto;
+    padding: 1in 0;
+    background: transparent;
+}
+
+/* Base Element Styling */
+.screenplay-line {
+    margin: 0;
+    padding: 0;
+    min-height: 12pt;
+    position: relative;
+}
+
+/* ============================================================================
+   ELEMENT 1: THE DECREE (Scene Heading)
+   "In the beginning..." - Genesis 1:1
+   ============================================================================ */
+.element-decree {
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    margin-left: 1.5in;
+    letter-spacing: 0.02em;
+}
+
+.element-decree::before {
+    content: '';
+    position: absolute;
+    left: 1.2in;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 16px;
+    background: linear-gradient(to bottom, #D4A574, transparent);
+    opacity: 0.3;
+}
+
+/* ============================================================================
+   ELEMENT 2: THE VISION (Action/Description)
+   "And God saw that it was good" - Genesis 1:10
+   ============================================================================ */
+.element-vision {
+    margin: 0.5em 0;
+    margin-left: 1.5in;
+    margin-right: 1in;
+    line-height: 1.5;
+    text-transform: none;
+}
+
+.element-vision.new-paragraph {
+    margin-top: 1em;
+}
+
+/* Character name capitalization in vision */
+.element-vision .character-mention {
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* ============================================================================
+   ELEMENT 3: THE VOICE (Character Name)
+   "Then the LORD said..." - Genesis 1:3
+   ============================================================================ */
+.element-voice {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 1em;
+    margin-bottom: 0;
+    margin-left: 3.7in;
+    letter-spacing: 0.05em;
+}
+
+.element-voice::before {
+    content: '';
+    position: absolute;
+    left: 3.5in;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 12px;
+    background: var(--user-accent);
+    opacity: 0.4;
+}
+
+/* ============================================================================
+   ELEMENT 4: THE WHISPER (Parenthetical)
+   "A still small voice" - 1 Kings 19:12
+   ============================================================================ */
+.element-whisper {
+    text-align: center;
+    margin-left: 3.1in;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-style: italic;
+    opacity: 0.85;
+}
+
+.element-whisper::before {
+    content: '(';
+}
+
+.element-whisper::after {
+    content: ')';
+}
+
+/* ============================================================================
+   ELEMENT 5: THE WORD (Dialogue)
+   "In the beginning was the Word" - John 1:1
+   ============================================================================ */
+.element-word {
+    text-align: left;
+    margin-left: 2.5in;
+    margin-right: 1.5in;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    line-height: 1.5;
+    text-transform: none;
+}
+
+/* ============================================================================
+   ELEMENT 6: THE TRANSITION (Scene Ending)
+   "And there was evening, and morning" - Genesis 1:5
+   ============================================================================ */
+.element-transition {
+    text-align: right;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    margin-right: 1in;
+    letter-spacing: 0.05em;
+}
+
+.element-transition::after {
+    content: ':';
+}
+
+/* ============================================================================
+   ELEMENT INDICATOR - Current Writing Mode Display
+   ============================================================================ */
+.current-element-indicator {
+    position: fixed;
+    bottom: 80px;
+    right: 30px;
+    background: rgba(212, 165, 116, 0.12);
+    border: 1px solid rgba(212, 165, 116, 0.3);
+    border-radius: 8px;
+    padding: 12px 20px;
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    transition: all 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.current-element-indicator.active {
+    opacity: 1;
+}
+
+.element-indicator-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.element-name {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--user-accent);
+    letter-spacing: 0.05em;
+}
+
+.element-hint {
+    font-family: 'Crimson Text', serif;
+    font-size: 11px;
+    color: rgba(212, 165, 116, 0.6);
+    font-style: italic;
+}
+
+/* ============================================================================
+   SCRIBE TOOLBAR - Formatting Controls
+   ============================================================================ */
+.scribe-toolbar {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(212, 165, 116, 0.08);
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.mode-screenwriter .scribe-toolbar {
+    display: flex;
+}
+
+.element-selector {
+    font-family: 'Crimson Text', serif;
+    font-size: 13px;
+    padding: 6px 12px;
+    background: rgba(212, 165, 116, 0.12);
+    border: 1px solid rgba(212, 165, 116, 0.25);
+    border-radius: 4px;
+    color: #D4A574;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 140px;
+}
+
+.element-selector:hover {
+    background: rgba(212, 165, 116, 0.18);
+    border-color: rgba(212, 165, 116, 0.4);
+}
+
+.element-selector option {
+    background: #3A3530;
+    color: #D4A574;
+    padding: 8px;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(212, 165, 116, 0.2);
+    margin: 0 4px;
+}
+
+.character-quick-insert {
+    font-family: 'Crimson Text', serif;
+    font-size: 12px;
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid rgba(212, 165, 116, 0.25);
+    border-radius: 4px;
+    color: #D4A574;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.character-quick-insert:hover {
+    background: rgba(212, 165, 116, 0.12);
+    border-color: rgba(212, 165, 116, 0.4);
+}
+
+.page-count-display {
+    font-family: 'Crimson Text', serif;
+    font-size: 12px;
+    color: rgba(212, 165, 116, 0.7);
+    margin-left: auto;
+    padding: 6px 12px;
+    background: rgba(212, 165, 116, 0.08);
+    border-radius: 4px;
+}
+
+.page-count-display .page-number {
+    font-weight: 600;
+    color: #D4A574;
+}
+
+/* ============================================================================
+   KEYBOARD SHORTCUTS OVERLAY
+   ============================================================================ */
+.shortcuts-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(58, 53, 48, 0.98);
+    border: 2px solid rgba(212, 165, 116, 0.4);
+    border-radius: 12px;
+    padding: 30px 40px;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.shortcuts-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.shortcuts-header {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #D4A574;
+    text-align: center;
+    margin-bottom: 24px;
+    letter-spacing: 0.08em;
+}
+
+.shortcuts-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 32px;
+}
+
+.shortcut-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.shortcut-key {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    padding: 4px 8px;
+    background: rgba(212, 165, 116, 0.15);
+    border: 1px solid rgba(212, 165, 116, 0.3);
+    border-radius: 4px;
+    color: #D4A574;
+    min-width: 80px;
+    text-align: center;
+}
+
+.shortcut-desc {
+    font-family: 'Crimson Text', serif;
+    font-size: 13px;
+    color: rgba(212, 165, 116, 0.8);
+}
+
+.shortcuts-footer {
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(212, 165, 116, 0.2);
+    font-family: 'Crimson Text', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: rgba(212, 165, 116, 0.6);
+}
+
+/* ============================================================================
+   CHARACTER AUTOCOMPLETE DROPDOWN
+   ============================================================================ */
+.character-autocomplete {
+    position: absolute;
+    background: rgba(42, 38, 35, 0.98);
+    border: 1px solid rgba(212, 165, 116, 0.4);
+    border-radius: 6px;
+    padding: 4px 0;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 200;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    display: none;
+}
+
+.character-autocomplete.visible {
+    display: block;
+}
+
+.autocomplete-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-family: 'Crimson Text', serif;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.selected {
+    background: rgba(212, 165, 116, 0.2);
+}
+
+.autocomplete-character-name {
+    font-weight: 600;
+    color: #D4A574;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+
+.autocomplete-character-info {
+    font-size: 11px;
+    color: rgba(212, 165, 116, 0.6);
+    font-style: italic;
+}
+
+/* ============================================================================
+   MODE-SPECIFIC ADJUSTMENTS
+   ============================================================================ */
+
+/* Hide novelist tools in screenwriter mode */
+.mode-screenwriter .novelist-only {
+    display: none;
+}
+
+/* Hide screenwriter tools in novelist mode */
+.mode-novelist .screenwriter-only {
+    display: none;
+}
+
+/* Adjust writing area for screenplay format */
+.mode-screenwriter .writing-area {
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-size: 12pt;
+    line-height: 1;
+}
+
+.mode-screenwriter .writing-area[contenteditable] {
+    padding: 1in 0.5in;
+    max-width: 8.5in;
+    margin: 0 auto;
+}
+
+/* ============================================================================
+   USER COLOR OVERRIDES - Tyrrel (Gold) / Trevor (Teal)
+   ============================================================================ */
+
+/* Tyrrel's accent colors */
+.user-tyrrel .element-voice::before {
+    background: #D4A574;
+}
+
+.user-tyrrel .current-element-indicator {
+    background: rgba(212, 165, 116, 0.12);
+    border-color: rgba(212, 165, 116, 0.3);
+}
+
+/* Trevor's accent colors */
+.user-trevor .element-voice::before {
+    background: #6FA89C;
+}
+
+.user-trevor .current-element-indicator {
+    background: rgba(111, 168, 156, 0.12);
+    border-color: rgba(111, 168, 156, 0.3);
+}
+
+.user-trevor .element-name {
+    color: #6FA89C;
+}
+
+.user-trevor .scribe-toolbar {
+    background: rgba(111, 168, 156, 0.08);
+}
+
+.user-trevor .element-selector {
+    background: rgba(111, 168, 156, 0.12);
+    border-color: rgba(111, 168, 156, 0.25);
+    color: #6FA89C;
+}
+
+/* ============================================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================================ */
+@media (max-width: 1024px) {
+    .current-element-indicator {
+        bottom: 60px;
+        right: 20px;
+        padding: 10px 16px;
+    }
+    
+    .shortcuts-overlay {
+        padding: 24px 28px;
+        max-width: 90vw;
+    }
+    
+    .shortcuts-list {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+/* ============================================================================
+   PRINT STYLES - For PDF Export
+   ============================================================================ */
+@media print {
+    .scribe-toolbar,
+    .current-element-indicator,
+    .character-autocomplete,
+    .shortcuts-overlay {
+        display: none !important;
+    }
+    
+    .scribe-writing-area {
+        width: 100%;
+        max-width: 6.5in;
+    }
+    
+    .element-decree::before,
+    .element-voice::before {
+        display: none;
+    }
+}
+
+/* ============================================================================
+   ANIMATIONS & TRANSITIONS
+   ============================================================================ */
+@keyframes elementChange {
+    0% {
+        opacity: 0.5;
+        transform: scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.screenplay-line.changing-element {
+    animation: elementChange 0.2s ease;
+}
+
+/* Smooth transitions for element switching */
+.screenplay-line {
+    transition: margin 0.15s ease, text-align 0.15s ease;
+}
