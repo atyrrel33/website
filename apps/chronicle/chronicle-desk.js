@@ -1,5 +1,5 @@
 // ===================================
-// CHRONICLE DESK - Scene Management & Export
+// CHRONICLE DESK - Scene Management & Formatting
 // "Write down the revelation and make it plain"
 // - Habakkuk 2:2
 // ===================================
@@ -14,13 +14,8 @@ const ChronicleDesk = {
     // Active themes
     themes: [],
     
-    // Export settings
-    exportSettings: {
-        format: 'docx',
-        includeMetadata: true,
-        fontSize: 12,
-        lineSpacing: 2
-    },
+    // Current scene being edited
+    currentSceneId: null,
     
     // Initialize
     init() {
@@ -30,28 +25,137 @@ const ChronicleDesk = {
         this.loadThemes();
         this.setupDeskEventListeners();
         this.populateReferencePanel();
+        this.populateSceneSwitcher();
+        this.loadMostRecentScene();
         console.log('The Desk stands ready for your labor');
     },
     
     // Setup Desk-specific event listeners
     setupDeskEventListeners() {
-        // Export button (we'll add this to the toolbar)
+        // Scene management buttons
+        const newSceneBtn = document.getElementById('newSceneBtn');
+        const saveSceneBtn = document.getElementById('saveSceneBtn');
+        const sceneSwitcher = document.getElementById('sceneSwitcher');
         const exportBtn = document.getElementById('exportSceneBtn');
+        
+        if (newSceneBtn) {
+            newSceneBtn.addEventListener('click', () => this.createNewScene());
+        }
+        if (saveSceneBtn) {
+            saveSceneBtn.addEventListener('click', () => this.saveCurrentSceneExplicitly());
+        }
+        if (sceneSwitcher) {
+            sceneSwitcher.addEventListener('change', (e) => this.loadSceneById(e.target.value));
+        }
         if (exportBtn) {
             exportBtn.addEventListener('click', () => this.showExportModal());
         }
         
-        // Scene switcher (we'll add this to toolbar)
-        const sceneSwitcher = document.getElementById('sceneSwitcher');
-        if (sceneSwitcher) {
-            sceneSwitcher.addEventListener('change', (e) => this.loadSceneById(e.target.value));
+        // Formatting buttons
+        this.setupFormattingButtons();
+        
+        // Font size controls
+        const fontSizeSelector = document.getElementById('fontSizeSelector');
+        if (fontSizeSelector) {
+            fontSizeSelector.addEventListener('change', (e) => this.changeFontSize(e.target.value));
+        }
+    },
+    
+    setupFormattingButtons() {
+        // Bold
+        const boldBtn = document.getElementById('boldBtn');
+        if (boldBtn) {
+            boldBtn.addEventListener('click', () => this.formatText('bold'));
         }
         
-        // New scene button
-        const newSceneBtn = document.getElementById('newSceneBtn');
-        if (newSceneBtn) {
-            newSceneBtn.addEventListener('click', () => this.createNewScene());
+        // Italic
+        const italicBtn = document.getElementById('italicBtn');
+        if (italicBtn) {
+            italicBtn.addEventListener('click', () => this.formatText('italic'));
         }
+        
+        // Underline
+        const underlineBtn = document.getElementById('underlineBtn');
+        if (underlineBtn) {
+            underlineBtn.addEventListener('click', () => this.formatText('underline'));
+        }
+        
+        // Bullet list
+        const bulletBtn = document.getElementById('bulletListBtn');
+        if (bulletBtn) {
+            bulletBtn.addEventListener('click', () => this.formatText('insertUnorderedList'));
+        }
+        
+        // Numbered list
+        const numberBtn = document.getElementById('numberedListBtn');
+        if (numberBtn) {
+            numberBtn.addEventListener('click', () => this.formatText('insertOrderedList'));
+        }
+        
+        // Increase font size
+        const increaseFontBtn = document.getElementById('increaseFontBtn');
+        if (increaseFontBtn) {
+            increaseFontBtn.addEventListener('click', () => this.adjustFontSize(2));
+        }
+        
+        // Decrease font size
+        const decreaseFontBtn = document.getElementById('decreaseFontBtn');
+        if (decreaseFontBtn) {
+            decreaseFontBtn.addEventListener('click', () => this.adjustFontSize(-2));
+        }
+        
+        // Text alignment
+        const alignLeftBtn = document.getElementById('alignLeftBtn');
+        const alignCenterBtn = document.getElementById('alignCenterBtn');
+        const alignRightBtn = document.getElementById('alignRightBtn');
+        
+        if (alignLeftBtn) alignLeftBtn.addEventListener('click', () => this.formatText('justifyLeft'));
+        if (alignCenterBtn) alignCenterBtn.addEventListener('click', () => this.formatText('justifyCenter'));
+        if (alignRightBtn) alignRightBtn.addEventListener('click', () => this.formatText('justifyRight'));
+        
+        // Keyboard shortcuts for formatting
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key.toLowerCase()) {
+                    case 'b':
+                        e.preventDefault();
+                        this.formatText('bold');
+                        break;
+                    case 'i':
+                        e.preventDefault();
+                        this.formatText('italic');
+                        break;
+                    case 'u':
+                        e.preventDefault();
+                        this.formatText('underline');
+                        break;
+                }
+            }
+        });
+    },
+    
+    formatText(command) {
+        document.execCommand(command, false, null);
+        const writingSurface = document.getElementById('writingSurface');
+        if (writingSurface) {
+            writingSurface.focus();
+        }
+    },
+    
+    changeFontSize(size) {
+        const writingSurface = document.getElementById('writingSurface');
+        if (writingSurface) {
+            writingSurface.style.fontSize = size;
+        }
+    },
+    
+    adjustFontSize(delta) {
+        const writingSurface = document.getElementById('writingSurface');
+        if (!writingSurface) return;
+        
+        const currentSize = parseFloat(window.getComputedStyle(writingSurface).fontSize);
+        const newSize = currentSize + delta;
+        writingSurface.style.fontSize = newSize + 'px';
     },
     
     // ===================================
@@ -60,21 +164,24 @@ const ChronicleDesk = {
     
     loadScenes() {
         this.scenes = JSON.parse(localStorage.getItem('chronicle_scenes') || '[]');
-        console.log(`Loaded ${this.scenes.length} scenes from the archive`);
+        console.log(`📚 Loaded ${this.scenes.length} scenes from the archive`);
     },
     
     saveScenes() {
         localStorage.setItem('chronicle_scenes', JSON.stringify(this.scenes));
+        console.log('💾 Scenes saved to LocalStorage');
     },
     
     createNewScene() {
         // Save current scene first
-        ChronicleApp.saveCurrentScene();
+        if (this.currentSceneId) {
+            this.saveCurrentScene();
+        }
         
-        // Create new scene
+        // Generate new scene
         const newScene = {
             id: `scene-${Date.now()}`,
-            title: 'Untitled Scene',
+            title: `Untitled Scene ${this.scenes.length + 1}`,
             content: '',
             wordCount: 0,
             author: ChronicleApp.currentUser,
@@ -87,11 +194,10 @@ const ChronicleDesk = {
         };
         
         this.scenes.push(newScene);
+        this.currentSceneId = newScene.id;
         this.saveScenes();
-        
-        // Load the new scene
-        ChronicleApp.currentScene = newScene;
         this.displayScene(newScene);
+        this.populateSceneSwitcher();
         
         // Focus on title input
         const titleInput = document.getElementById('sceneTitle');
@@ -99,39 +205,135 @@ const ChronicleDesk = {
             titleInput.select();
         }
         
-        console.log('✨ New scene created:', newScene.id);
+        console.log('✨ New scene created:', newScene.title);
+    },
+    
+    saveCurrentSceneExplicitly() {
+        if (!this.currentSceneId) {
+            // If no current scene, create one first
+            this.createNewScene();
+            return;
+        }
+        
+        this.saveCurrentScene();
+        
+        // Show visual feedback
+        const saveBtn = document.getElementById('saveSceneBtn');
+        if (saveBtn) {
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<span style="color: var(--teal);">✓ Saved</span>';
+            setTimeout(() => {
+                saveBtn.innerHTML = originalText;
+            }, 1500);
+        }
+        
+        console.log('💾 Scene saved explicitly');
+    },
+    
+    saveCurrentScene() {
+        if (!this.currentSceneId) return;
+        
+        const writingSurface = document.getElementById('writingSurface');
+        const sceneTitle = document.getElementById('sceneTitle');
+        
+        if (!writingSurface) return;
+        
+        const sceneIndex = this.scenes.findIndex(s => s.id === this.currentSceneId);
+        if (sceneIndex === -1) return;
+        
+        // Update scene data
+        this.scenes[sceneIndex].content = writingSurface.innerHTML; // Save HTML for formatting
+        this.scenes[sceneIndex].title = sceneTitle ? sceneTitle.value : this.scenes[sceneIndex].title;
+        this.scenes[sceneIndex].wordCount = ChronicleApp.countWords(writingSurface.innerText);
+        this.scenes[sceneIndex].lastModified = new Date().toISOString();
+        this.scenes[sceneIndex].author = ChronicleApp.currentUser;
+        
+        this.saveScenes();
+        this.populateSceneSwitcher();
+        
+        // Update word count display
+        ChronicleApp.currentScene = this.scenes[sceneIndex];
+        ChronicleApp.updateWordCount();
     },
     
     loadSceneById(sceneId) {
+        if (!sceneId) return;
+        
+        // Save current scene first
+        if (this.currentSceneId) {
+            this.saveCurrentScene();
+        }
+        
         const scene = this.scenes.find(s => s.id === sceneId);
         if (scene) {
-            // Save current scene first
-            ChronicleApp.saveCurrentScene();
-            
-            // Load requested scene
-            ChronicleApp.currentScene = scene;
+            this.currentSceneId = sceneId;
             this.displayScene(scene);
-            
             console.log('📄 Scene loaded:', scene.title);
         }
+    },
+    
+    loadMostRecentScene() {
+        if (this.scenes.length === 0) {
+            // No scenes exist, create first one
+            this.createNewScene();
+            return;
+        }
+        
+        // Load most recently modified scene
+        const sorted = [...this.scenes].sort((a, b) => 
+            new Date(b.lastModified) - new Date(a.lastModified)
+        );
+        
+        this.currentSceneId = sorted[0].id;
+        this.displayScene(sorted[0]);
     },
     
     displayScene(scene) {
         const writingSurface = document.getElementById('writingSurface');
         const sceneTitle = document.getElementById('sceneTitle');
+        const sceneSwitcher = document.getElementById('sceneSwitcher');
         
         if (writingSurface) {
-            writingSurface.innerText = scene.content || '';
+            writingSurface.innerHTML = scene.content || ''; // Load HTML to preserve formatting
         }
         if (sceneTitle) {
             sceneTitle.value = scene.title || '';
         }
+        if (sceneSwitcher) {
+            sceneSwitcher.value = scene.id;
+        }
         
-        ChronicleApp.currentScene.wordCount = ChronicleApp.countWords(scene.content);
+        // Update global state
+        ChronicleApp.currentScene = scene;
+        ChronicleApp.currentScene.wordCount = ChronicleApp.countWords(writingSurface ? writingSurface.innerText : '');
         ChronicleApp.updateWordCount();
+    },
+    
+    populateSceneSwitcher() {
+        const sceneSwitcher = document.getElementById('sceneSwitcher');
+        if (!sceneSwitcher) return;
         
-        // Update session tracking
-        ChronicleApp.currentSession.sessionStartWords = scene.wordCount;
+        sceneSwitcher.innerHTML = '';
+        
+        if (this.scenes.length === 0) {
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = 'No scenes yet';
+            sceneSwitcher.appendChild(option);
+            return;
+        }
+        
+        // Sort by last modified
+        const sorted = [...this.scenes].sort((a, b) => 
+            new Date(b.lastModified) - new Date(a.lastModified)
+        );
+        
+        sorted.forEach(scene => {
+            const option = document.createElement('option');
+            option.value = scene.id;
+            option.textContent = scene.title;
+            sceneSwitcher.appendChild(option);
+        });
     },
     
     deleteScene(sceneId) {
@@ -139,11 +341,16 @@ const ChronicleDesk = {
             this.scenes = this.scenes.filter(s => s.id !== sceneId);
             this.saveScenes();
             
-            // If we deleted the current scene, create a new one
-            if (ChronicleApp.currentScene.id === sceneId) {
-                this.createNewScene();
+            // If we deleted the current scene, load another or create new
+            if (this.currentSceneId === sceneId) {
+                if (this.scenes.length > 0) {
+                    this.loadMostRecentScene();
+                } else {
+                    this.createNewScene();
+                }
             }
             
+            this.populateSceneSwitcher();
             console.log('🗑️ Scene deleted:', sceneId);
         }
     },
@@ -445,7 +652,7 @@ const ChronicleDesk = {
         const currentOnly = document.getElementById('exportCurrentOnly').checked;
         const includeMetadata = document.getElementById('exportMetadata').checked;
         
-        const scenesToExport = currentOnly ? [ChronicleApp.currentScene] : this.scenes;
+        const scenesToExport = currentOnly ? [this.scenes.find(s => s.id === this.currentSceneId)] : this.scenes;
         
         switch(format) {
             case 'docx':
@@ -488,7 +695,10 @@ const ChronicleDesk = {
                 content += `\n\n### ${scene.title} ###\n\n`;
             }
             
-            content += scene.content + '\n';
+            // Strip HTML tags for plain text export
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = scene.content;
+            content += tempDiv.textContent + '\n';
         });
         
         this.downloadFile(content, 'chronicle-export.txt', 'text/plain');
@@ -496,9 +706,7 @@ const ChronicleDesk = {
     },
     
     exportAsDocx(scenes, includeMetadata) {
-        // For now, we'll create a simple HTML version that can be saved as .doc
-        // True .docx generation would require a library like docx.js
-        
+        // HTML-based .doc format (opens in Word)
         let html = `
             <!DOCTYPE html>
             <html>
@@ -534,8 +742,7 @@ const ChronicleDesk = {
                         padding-bottom: 0.5rem;
                     }
                     p {
-                        text-indent: 0.5in;
-                        margin-bottom: 0;
+                        margin-bottom: 1rem;
                         text-align: justify;
                     }
                     .scene-break {
@@ -571,11 +778,7 @@ const ChronicleDesk = {
                 `;
             }
             
-            // Convert content to paragraphs
-            const paragraphs = scene.content.split('\n').filter(p => p.trim());
-            paragraphs.forEach(para => {
-                html += `<p>${this.escapeHtml(para)}</p>`;
-            });
+            html += `<div>${scene.content}</div>`;
             
             if (index < scenes.length - 1) {
                 html += '<div class="scene-break">✦ ✦ ✦</div>';
@@ -587,13 +790,11 @@ const ChronicleDesk = {
             </html>
         `;
         
-        // Download as .doc (HTML-based, opens in Word)
         this.downloadFile(html, 'chronicle-export.doc', 'application/msword');
         console.log('📝 Exported as DOCX-compatible format');
     },
     
     exportAsPdf(scenes, includeMetadata) {
-        // Similar to DOCX, but trigger print dialog for PDF save
         const html = this.exportAsDocx(scenes, includeMetadata);
         
         const printWindow = window.open('', '_blank');
