@@ -1,0 +1,299 @@
+/* ===================================
+CHRONICLE DESK - Enhanced Styling
+"Every word fitly spoken"
+   =================================== */
+
+/* ===================================
+ENHANCED REFERENCE PANEL
+   =================================== */
+
+.character-item {
+    background: linear-gradient(135deg, rgba(44, 95, 95, 0.1), rgba(42, 40, 34, 0.6));
+    border-left-color: var(--teal);
+}
+
+.character-item:hover {
+    background: linear-gradient(135deg, rgba(44, 95, 95, 0.15), rgba(42, 40, 34, 0.7));
+    transform: translateX(4px);
+}
+
+.plot-point-item {
+    border-left-color: var(--gold);
+    cursor: pointer;
+    transition: all var(--transition-medium);
+}
+
+.plot-point-item:hover {
+    background: rgba(201, 169, 97, 0.08);
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.2);
+}
+
+/* ===================================
+EXPORT MODAL
+   =================================== */
+
+.export-modal {
+    max-width: 550px;
+}
+
+.export-option {
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm) 0;
+    background: rgba(42, 40, 34, 0.6);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    border-radius: 8px;
+    cursor: none;
+    transition: all var(--transition-fast);
+}
+
+.export-option:hover {
+    background: rgba(53, 53, 48, 0.8);
+    border-color: var(--gold);
+}
+
+.export-option input[type="radio"] {
+    margin-right: var(--spacing-sm);
+    cursor: none;
+}
+
+.export-option input[type="radio"]:checked + label {
+    color: var(--gold);
+}
+
+.export-option label {
+    cursor: none;
+    display: block;
+}
+
+.export-option strong {
+    color: var(--gold);
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.export-option small {
+    color: #b8b3aa;
+    font-style: italic;
+    display: block;
+    margin-top: 0.3rem;
+}
+
+.export-settings {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid rgba(139, 115, 85, 0.3);
+}
+
+.export-settings h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    color: var(--teal);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.08em;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) 0;
+    color: #e8e3da;
+    cursor: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+    cursor: none;
+}
+
+/* ===================================
+SCENE MANAGEMENT UI
+   =================================== */
+
+.scene-management {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs);
+}
+
+.scene-switcher {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(42, 40, 34, 0.9);
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    border-radius: 6px;
+    color: #e8e3da;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    cursor: none;
+    max-width: 200px;
+    transition: all var(--transition-fast);
+}
+
+.scene-switcher:hover {
+    border-color: var(--gold);
+    background: rgba(53, 53, 48, 0.9);
+}
+
+.scene-switcher:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(201, 169, 97, 0.3);
+}
+
+/* ===================================
+NEW SCENE BUTTON
+   =================================== */
+
+.new-scene-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: linear-gradient(135deg, rgba(44, 95, 95, 0.2), rgba(44, 95, 95, 0.1));
+    border: 1px solid var(--teal);
+    border-radius: 6px;
+    color: var(--teal);
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+}
+
+.new-scene-btn:hover {
+    background: linear-gradient(135deg, rgba(44, 95, 95, 0.3), rgba(44, 95, 95, 0.15));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(44, 95, 95, 0.3);
+}
+
+.new-scene-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+}
+
+/* ===================================
+EXPORT BUTTON
+   =================================== */
+
+.export-scene-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: linear-gradient(135deg, rgba(114, 47, 55, 0.2), rgba(114, 47, 55, 0.1));
+    border: 1px solid var(--burgundy);
+    border-radius: 6px;
+    color: var(--burgundy);
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+}
+
+.export-scene-btn:hover {
+    background: linear-gradient(135deg, rgba(114, 47, 55, 0.3), rgba(114, 47, 55, 0.15));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(114, 47, 55, 0.3);
+}
+
+.export-scene-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+}
+
+/* ===================================
+WRITING SURFACE ENHANCEMENTS
+   =================================== */
+
+.writing-surface::selection {
+    background: rgba(201, 169, 97, 0.3);
+    color: #F5F1E8;
+}
+
+.writing-surface::-moz-selection {
+    background: rgba(201, 169, 97, 0.3);
+    color: #F5F1E8;
+}
+
+/* Paragraph spacing for better reading */
+.writing-surface p {
+    margin-bottom: 1.2rem;
+}
+
+/* First line indent (novel style) */
+.writing-surface p + p {
+    text-indent: 2rem;
+}
+
+/* ===================================
+CHARACTER COUNT TOOLTIP
+   =================================== */
+
+.word-count:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    background: rgba(42, 40, 34, 0.98);
+    border: 1px solid rgba(139, 115, 85, 0.4);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ===================================
+SCENE STATUS INDICATORS
+   =================================== */
+
+.scene-status {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.scene-status.draft {
+    background: rgba(139, 115, 85, 0.2);
+    color: var(--brown-warm);
+}
+
+.scene-status.in-progress {
+    background: rgba(44, 95, 95, 0.2);
+    color: var(--teal);
+}
+
+.scene-status.polished {
+    background: rgba(201, 169, 97, 0.2);
+    color: var(--gold);
+}
+
+/* ===================================
+RESPONSIVE ADJUSTMENTS
+   =================================== */
+
+@media (max-width: 768px) {
+    .scene-management {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .scene-switcher {
+        max-width: 100%;
+    }
+    
+    .export-modal {
+        max-width: 95%;
+    }
+}
