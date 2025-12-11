@@ -1,0 +1,906 @@
+/* ===================================
+   CHRONICLE - THE NOVEL SANCTUARY
+   A Sacred Space for Prose & Poetry
+   =================================== */
+
+:root {
+    /* Core Color Palette */
+    --cream-warm: #FAF7F2;
+    --cream-soft: #F5F1E8;
+    --brown-warm: #A89882;
+    --brown-accent: #8B7355;
+    --text-primary: #2d2d2d;
+    --text-secondary: #5a5a5a;
+    
+    /* Stone Foundation */
+    --stone-deep: #2a2822;
+    --stone-medium: #3a3832;
+    --stone-light: #4a4840;
+    
+    /* Sacred Accents */
+    --teal: #2C5F5F;
+    --gold: #C9A961;
+    --burgundy: #722F37;
+    
+    /* Flame Colors */
+    --ember-bright: #ff9955;
+    --flame-core: #ffcc88;
+    --amber-glow: #d4a574;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ===================================
+   BASE STYLES
+   =================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Crimson Text', Georgia, serif;
+    background: var(--stone-deep);
+    color: #e8e3da;
+    cursor: none;
+    line-height: 1.6;
+}
+
+/* ===================================
+   CUSTOM CURSOR
+   =================================== */
+
+#custom-cursor {
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: screen;
+    transition: transform 0.1s ease;
+}
+
+.cursor-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, var(--flame-core) 0%, var(--ember-bright) 35%, rgba(255, 153, 85, 0.6) 60%, transparent 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 20px var(--ember-bright),
+        0 0 40px rgba(255, 204, 136, 0.8),
+        0 0 60px rgba(255, 153, 85, 0.5);
+    animation: coreFlicker 0.15s infinite alternate;
+}
+
+@keyframes coreFlicker {
+    0%, 100% { 
+        opacity: 0.9; 
+        transform: translate(-50%, -50%) scale(1);
+        filter: blur(0.5px);
+    }
+    50% { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1.2);
+        filter: blur(0px);
+    }
+}
+
+.cursor-trail {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, var(--ember-bright), rgba(255, 153, 85, 0.4), transparent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: screen;
+    animation: fadeTrail 1.5s ease-out forwards;
+    box-shadow: 0 0 15px rgba(255, 153, 85, 0.6);
+}
+
+@keyframes fadeTrail {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(1px);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.1);
+        filter: blur(5px);
+    }
+}
+
+/* ===================================
+   SESSION INDICATOR
+   =================================== */
+
+.session-indicator {
+    position: fixed;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: rgba(42, 40, 34, 0.95);
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    font-family: 'Crimson Text', serif;
+}
+
+.session-badge {
+    color: var(--gold);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.session-time {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* ===================================
+   APP CONTAINER
+   =================================== */
+
+.app-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, var(--stone-deep) 0%, var(--stone-medium) 50%, var(--stone-deep) 100%);
+    position: relative;
+}
+
+.app-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.15) 1px, rgba(0,0,0,0.15) 2px),
+        repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,0.15) 1px, rgba(0,0,0,0.15) 2px),
+        repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.02) 3px, rgba(255,255,255,0.02) 6px);
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+/* ===================================
+   HEADER
+   =================================== */
+
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: linear-gradient(180deg, rgba(42, 40, 34, 0.98) 0%, rgba(53, 53, 48, 0.95) 100%);
+    border-bottom: 2px solid rgba(139, 115, 85, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.app-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 0;
+    text-shadow: 
+        0 2px 8px rgba(201, 169, 97, 0.4),
+        0 0 20px rgba(201, 169, 97, 0.2);
+}
+
+.app-subtitle {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    color: #b8b3aa;
+    font-style: italic;
+    margin: 0;
+    letter-spacing: 0.05em;
+}
+
+.header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+/* ===================================
+   USER SWITCHER
+   =================================== */
+
+.user-switcher {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    border-radius: 12px;
+    padding: 0.4rem;
+}
+
+.user-switch-btn {
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: #8a8580;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: none;
+    transition: all var(--transition-medium);
+}
+
+.user-switch-btn.active {
+    background: linear-gradient(135deg, rgba(139, 115, 85, 0.3), rgba(139, 115, 85, 0.2));
+    color: var(--gold);
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3);
+}
+
+.user-switch-btn.tyrrel.active {
+    background: linear-gradient(135deg, rgba(139, 115, 85, 0.4), rgba(139, 115, 85, 0.25));
+    border: 1px solid var(--gold);
+    color: var(--gold);
+}
+
+.user-switch-btn.trevor.active {
+    background: linear-gradient(135deg, rgba(44, 95, 95, 0.4), rgba(44, 95, 95, 0.25));
+    border: 1px solid var(--teal);
+    color: var(--teal);
+}
+
+.project-name {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.3rem;
+    color: var(--teal);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 8px rgba(44, 95, 95, 0.4);
+}
+
+/* Header Right */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.prayer-btn {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--burgundy), #5a2630);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: all var(--transition-medium);
+    box-shadow: 0 4px 12px rgba(114, 47, 55, 0.3);
+}
+
+.prayer-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(114, 47, 55, 0.5);
+}
+
+.prayer-btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--gold);
+}
+
+/* ===================================
+   NAVIGATION
+   =================================== */
+
+.main-nav {
+    display: flex;
+    background: rgba(42, 40, 34, 0.95);
+    border-bottom: 2px solid rgba(139, 115, 85, 0.3);
+    padding: 0 var(--spacing-lg);
+    gap: var(--spacing-sm);
+    backdrop-filter: blur(10px);
+}
+
+.nav-tab {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #8a8580;
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+}
+
+.nav-tab:hover {
+    color: #e8e3da;
+    background: rgba(201, 169, 97, 0.15);
+}
+
+.nav-tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+}
+
+/* ===================================
+   MAIN CONTENT
+   =================================== */
+
+.main-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.workspace {
+    display: none;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--transition-medium), transform var(--transition-medium);
+}
+
+.workspace.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================
+   THE DESK
+   =================================== */
+
+.desk-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===================================
+   WRITING TOOLBAR
+   =================================== */
+
+.writing-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: rgba(53, 53, 48, 0.8);
+    border-bottom: 1px solid rgba(139, 115, 85, 0.25);
+    gap: var(--spacing-md);
+}
+
+.toolbar-left,
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.toolbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.font-selector {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(42, 40, 34, 0.9);
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    border-radius: 6px;
+    color: #e8e3da;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    cursor: none;
+    transition: all var(--transition-fast);
+}
+
+.scene-title-input input {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(139, 115, 85, 0.3);
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    min-width: 300px;
+    color: var(--brown-warm);
+    cursor: none;
+    transition: all var(--transition-fast);
+    letter-spacing: 0.08em;
+}
+
+.scene-title-input input:focus {
+    outline: none;
+    border-bottom-color: var(--gold);
+}
+
+.tool-btn {
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: all var(--transition-fast);
+}
+
+.tool-btn:hover {
+    background: rgba(201, 169, 97, 0.15);
+    border-color: var(--gold);
+}
+
+.tool-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: #8a8580;
+}
+
+.word-count {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(168, 152, 130, 0.15);
+    border-radius: 6px;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--brown-warm);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* ===================================
+   WRITING SURFACE
+   =================================== */
+
+.writing-area-container {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.writing-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all var(--transition-medium);
+}
+
+.editor-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-xl);
+}
+
+.writing-surface {
+    min-height: 100%;
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    background: rgba(250, 247, 242, 0.08);
+    border: 1px solid rgba(139, 115, 85, 0.2);
+    border-left: 4px solid var(--brown-warm);
+    border-radius: 8px;
+    font-family: 'Crimson Text', serif;
+    font-size: 1.25rem;
+    line-height: 1.9;
+    color: #e8e3da;
+    outline: none;
+    cursor: text;
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.3),
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        -4px 0 12px rgba(168, 152, 130, 0.15);
+    transition: all var(--transition-medium);
+}
+
+.writing-surface:focus {
+    background: rgba(250, 247, 242, 0.12);
+    border-left-color: var(--brown-warm);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.3),
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        -6px 0 20px rgba(168, 152, 130, 0.3);
+}
+
+.writing-surface:empty::before {
+    content: "Begin your story here... Let the words flow like water from a spring.";
+    color: var(--brown-accent);
+    opacity: 0.5;
+    font-style: italic;
+    cursor: text;
+}
+
+/* ===================================
+   REFERENCE PANEL
+   =================================== */
+
+.reference-panel {
+    flex: 0 0 35%;
+    background: rgba(42, 40, 34, 0.95);
+    border-left: 2px solid rgba(139, 115, 85, 0.3);
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+}
+
+.reference-panel.active {
+    display: flex;
+    animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: rgba(53, 53, 48, 0.9);
+    border-bottom: 1px solid rgba(139, 115, 85, 0.3);
+}
+
+.panel-header h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.close-panel {
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    color: #8a8580;
+    cursor: none;
+    transition: all var(--transition-fast);
+}
+
+.close-panel:hover {
+    color: var(--burgundy);
+    transform: scale(1.2);
+}
+
+.panel-content {
+    padding: var(--spacing-lg);
+}
+
+.reference-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.reference-section h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    color: var(--teal);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.reference-item {
+    padding: var(--spacing-sm);
+    background: rgba(53, 53, 48, 0.6);
+    border-left: 3px solid var(--gold);
+    margin-bottom: var(--spacing-sm);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.reference-item strong {
+    display: block;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+    font-size: 1.05rem;
+}
+
+.reference-item p {
+    color: #b8b3aa;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.theme-tag {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background: linear-gradient(135deg, rgba(44, 95, 95, 0.15), rgba(44, 95, 95, 0.25));
+    border: 1px solid rgba(44, 95, 95, 0.3);
+    border-radius: 6px;
+    color: var(--teal);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0.3rem;
+    cursor: none;
+    transition: all var(--transition-fast);
+}
+
+/* ===================================
+   AUTO-SAVE INDICATOR
+   =================================== */
+
+.autosave-indicator {
+    position: absolute;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(42, 40, 34, 0.98);
+    border: 1px solid rgba(139, 115, 85, 0.4);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #8a8580;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.autosave-indicator .saving-text {
+    display: none;
+    color: var(--amber-glow);
+}
+
+.autosave-indicator.saving .saving-text {
+    display: inline;
+}
+
+.autosave-indicator.saving .saved-text {
+    display: none;
+}
+
+/* ===================================
+   MODAL STYLES
+   =================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 20, 16, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, var(--stone-medium), var(--stone-deep));
+    border: 3px solid var(--gold);
+    border-radius: 16px;
+    padding: var(--spacing-xl);
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: #8a8580;
+    cursor: none;
+    transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: var(--burgundy);
+    transform: scale(1.2) rotate(90deg);
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.prayer-flame-icon {
+    width: 80px;
+    height: 112px;
+    margin: 0 auto var(--spacing-md);
+    filter: drop-shadow(0 0 20px rgba(255, 153, 85, 0.6));
+}
+
+.modal-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.08em;
+}
+
+.modal-header p {
+    color: #b8b3aa;
+    font-style: italic;
+    font-size: 1.05rem;
+}
+
+.modal-body textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    background: rgba(42, 40, 34, 0.9);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    border-radius: 8px;
+    color: #e8e3da;
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    resize: vertical;
+    cursor: text;
+}
+
+.modal-body textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(201, 169, 97, 0.3);
+}
+
+.modal-footer {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: flex-end;
+    margin-top: var(--spacing-lg);
+}
+
+.modal-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: none;
+    transition: all var(--transition-medium);
+}
+
+.modal-btn.primary {
+    background: linear-gradient(135deg, var(--burgundy), #5a2630);
+    border: 2px solid var(--gold);
+    color: #F5F1E8;
+    box-shadow: 0 4px 12px rgba(114, 47, 55, 0.3);
+}
+
+.modal-btn.primary:hover {
+    background: linear-gradient(135deg, #5a2630, var(--burgundy));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(114, 47, 55, 0.5);
+}
+
+.modal-btn.secondary {
+    background: transparent;
+    border: 2px solid var(--brown-accent);
+    color: var(--brown-accent);
+}
+
+.modal-btn.secondary:hover {
+    background: rgba(139, 115, 85, 0.1);
+}
+
+/* ===================================
+   SCROLLBAR
+   =================================== */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(42, 40, 34, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(139, 115, 85, 0.5);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 115, 85, 0.7);
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+@media (max-width: 768px) {
+    .writing-surface {
+        font-size: 1.1rem;
+    }
+}
