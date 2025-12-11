@@ -1,0 +1,1350 @@
+/* ===================================
+   CHRONICLE REFINED - PRE-SPRINT 2
+   Foundation Polish & Improvements
+   =================================== */
+
+/* CSS Variables */
+:root {
+    /* Novelist Mode Colors - Warmer, Organic */
+    --novelist-cream: #FAF7F2;
+    --novelist-cream-soft: #F5F1E8;
+    --novelist-brown-warm: #A89882;
+    --novelist-brown-accent: #8B7355;
+    --novelist-text: #2d2d2d;
+    --novelist-text-secondary: #5a5a5a;
+    
+    /* Screenwriter Mode Colors - Cooler, Structured */
+    --screenwriter-gray: #E8E3DA;
+    --screenwriter-gray-dark: #D0CBC1;
+    --screenwriter-brown: #8B7355;
+    --screenwriter-stone: #6B6458;
+    --screenwriter-text: #2d2d2d;
+    --screenwriter-text-secondary: #5a5a5a;
+    
+    /* Shared Colors - The Sacred Palette */
+    --stone-deep: #2a2822;
+    --stone-medium: #3a3832;
+    --stone-light: #4a4840;
+    --teal: #2C5F5F;
+    --gold: #C9A961;
+    --burgundy: #722F37;
+    
+    /* Flame Colors */
+    --ember-bright: #ff9955;
+    --flame-core: #ffcc88;
+    --amber-glow: #d4a574;
+    
+    /* Dark Theme */
+    --stone-dark: #1a1410;
+    --stone-base: #2d2419;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ===================================
+   BASE STYLES
+   =================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Crimson Text', Georgia, serif;
+    background: var(--stone-deep);
+    color: #e8e3da;
+    cursor: none;
+    line-height: 1.6;
+}
+
+/* Custom Flame Cursor */
+#custom-cursor {
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: screen;
+    transition: transform 0.1s ease;
+}
+
+.cursor-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, var(--flame-core) 0%, var(--ember-bright) 35%, rgba(255, 153, 85, 0.6) 60%, transparent 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 20px var(--ember-bright),
+        0 0 40px rgba(255, 204, 136, 0.8),
+        0 0 60px rgba(212, 165, 116, 0.4);
+    animation: flamePulse 2s ease-in-out infinite;
+}
+
+@keyframes flamePulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.9; }
+}
+
+/* ===================================
+   APP CONTAINER
+   =================================== */
+
+.app-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, 
+        rgba(42, 40, 34, 1) 0%, 
+        rgba(35, 33, 28, 1) 50%, 
+        rgba(42, 40, 34, 1) 100%);
+    background-size: 200% 200%;
+    animation: subtleShift 20s ease-in-out infinite;
+    position: relative;
+}
+
+/* Texture overlay for stone effect */
+.app-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.05) 2px, rgba(0,0,0,.05) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.05) 2px, rgba(0,0,0,.05) 4px);
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+@keyframes subtleShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* ===================================
+   HEADER
+   =================================== */
+
+.app-header {
+    background: rgba(26, 20, 16, 0.8);
+    border-bottom: 2px solid rgba(201, 169, 97, 0.3);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.app-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(201, 169, 97, 0.4);
+    letter-spacing: 2px;
+}
+
+.app-subtitle {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: rgba(232, 227, 218, 0.7);
+    letter-spacing: 1px;
+}
+
+.header-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* Mode Switcher - The Two Chambers */
+.mode-switcher {
+    display: flex;
+    gap: var(--spacing-xs);
+    background: rgba(42, 40, 34, 0.6);
+    padding: 0.35rem;
+    border-radius: 8px;
+    border: 1px solid rgba(201, 169, 97, 0.2);
+}
+
+.mode-switch-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: rgba(232, 227, 218, 0.6);
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    cursor: none;
+    transition: all var(--transition-medium);
+    position: relative;
+}
+
+.mode-switch-btn .mode-icon {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.5;
+    transition: all var(--transition-medium);
+}
+
+.mode-switch-btn:hover {
+    color: rgba(232, 227, 218, 0.9);
+    background: rgba(201, 169, 97, 0.1);
+}
+
+.mode-switch-btn.active {
+    background: rgba(201, 169, 97, 0.15);
+    border-color: rgba(201, 169, 97, 0.4);
+    color: var(--gold);
+}
+
+.mode-switch-btn.novelist.active {
+    box-shadow: 0 0 15px rgba(250, 247, 242, 0.2);
+}
+
+.mode-switch-btn.screenwriter.active {
+    box-shadow: 0 0 15px rgba(232, 227, 218, 0.2);
+}
+
+/* User Switcher - Iron Sharpens Iron */
+.user-switcher {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.4rem;
+    background: rgba(42, 40, 34, 0.4);
+    border-radius: 6px;
+}
+
+.user-switch-btn {
+    padding: 0.5rem 1.5rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: rgba(232, 227, 218, 0.6);
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+    letter-spacing: 0.5px;
+}
+
+.user-switch-btn:hover {
+    color: rgba(232, 227, 218, 0.9);
+}
+
+.user-switch-btn.tyrrel.active {
+    background: rgba(201, 169, 97, 0.2);
+    border-color: var(--gold);
+    color: var(--gold);
+    box-shadow: 0 0 10px rgba(201, 169, 97, 0.3);
+}
+
+.user-switch-btn.trevor.active {
+    background: rgba(44, 95, 95, 0.2);
+    border-color: var(--teal);
+    color: var(--teal);
+    box-shadow: 0 0 10px rgba(44, 95, 95, 0.3);
+}
+
+.project-name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.95rem;
+    color: rgba(232, 227, 218, 0.8);
+    padding: 0.4rem 1rem;
+    background: rgba(42, 40, 34, 0.3);
+    border-radius: 4px;
+    border: 1px solid rgba(201, 169, 97, 0.15);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* Prayer Button */
+.prayer-btn {
+    width: 44px;
+    height: 44px;
+    background: rgba(114, 47, 55, 0.3);
+    border: 2px solid rgba(114, 47, 55, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: all var(--transition-medium);
+}
+
+.prayer-btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: rgba(232, 227, 218, 0.7);
+    transition: all var(--transition-medium);
+}
+
+.prayer-btn:hover {
+    background: rgba(114, 47, 55, 0.5);
+    border-color: var(--burgundy);
+    transform: scale(1.05);
+}
+
+.prayer-btn:hover svg {
+    stroke: #e8e3da;
+    filter: drop-shadow(0 0 8px rgba(255, 204, 136, 0.6));
+}
+
+/* Collaborators */
+.collaborators {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.collaborator {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 2px solid;
+    cursor: none;
+    transition: all var(--transition-medium);
+}
+
+.collaborator[data-name="Tyrrel"] {
+    background: rgba(201, 169, 97, 0.2);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.collaborator[data-name="Trevor"] {
+    background: rgba(44, 95, 95, 0.2);
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+.collaborator:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px currentColor;
+}
+
+/* ===================================
+   NAVIGATION TABS
+   =================================== */
+
+.main-nav {
+    display: flex;
+    gap: 0;
+    background: rgba(26, 20, 16, 0.6);
+    border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+    padding: 0;
+    position: relative;
+    z-index: 90;
+}
+
+.nav-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem 1.5rem;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: rgba(232, 227, 218, 0.6);
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+    position: relative;
+}
+
+.nav-tab .nav-icon {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.5;
+    transition: all var(--transition-medium);
+}
+
+.nav-tab:hover {
+    background: rgba(201, 169, 97, 0.05);
+    color: rgba(232, 227, 218, 0.9);
+}
+
+.nav-tab.active {
+    background: rgba(201, 169, 97, 0.1);
+    border-bottom-color: var(--gold);
+    color: var(--gold);
+}
+
+.nav-tab.active .nav-icon {
+    filter: drop-shadow(0 0 8px rgba(201, 169, 97, 0.4));
+}
+
+/* ===================================
+   MAIN CONTENT AREA
+   =================================== */
+
+.main-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.workspace {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+}
+
+.workspace.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===================================
+   THE DESK - Main Writing Space
+   =================================== */
+
+.desk-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: var(--spacing-md);
+}
+
+/* Mode Banner */
+.mode-banner {
+    background: linear-gradient(135deg, rgba(42, 40, 34, 0.8), rgba(35, 33, 28, 0.8));
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    backdrop-filter: blur(5px);
+    transition: all var(--transition-slow);
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    width: 100%;
+}
+
+.banner-icon {
+    width: 48px;
+    height: 48px;
+    stroke: var(--gold);
+    stroke-width: 2;
+    filter: drop-shadow(0 0 10px rgba(201, 169, 97, 0.3));
+}
+
+.banner-text h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.5px;
+}
+
+.banner-text p {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    color: rgba(232, 227, 218, 0.7);
+    font-style: italic;
+}
+
+/* Screenwriter Banner Distinction */
+.screenwriter-banner .banner-icon {
+    stroke: var(--screenwriter-brown);
+}
+
+.screenwriter-banner .banner-text h3 {
+    color: var(--screenwriter-brown);
+    font-family: 'Courier Prime', monospace;
+    letter-spacing: 2px;
+}
+
+.screenwriter-banner .banner-text p {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.9rem;
+}
+
+/* Writing Toolbar */
+.writing-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(42, 40, 34, 0.6);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    border-radius: 8px;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.toolbar-left,
+.toolbar-center,
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* Toolbar Buttons */
+.toolbar-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(201, 169, 97, 0.1);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    border-radius: 4px;
+    color: rgba(232, 227, 218, 0.8);
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    cursor: none;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.toolbar-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.5;
+}
+
+.toolbar-btn:hover {
+    background: rgba(201, 169, 97, 0.2);
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-1px);
+}
+
+.toolbar-btn.active {
+    background: rgba(201, 169, 97, 0.3);
+    border-color: var(--gold);
+    color: var(--gold);
+    box-shadow: 0 0 10px rgba(201, 169, 97, 0.2);
+}
+
+/* Font Selector */
+.font-selector {
+    padding: 0.5rem 1rem;
+    background: rgba(42, 40, 34, 0.8);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    border-radius: 4px;
+    color: rgba(232, 227, 218, 0.9);
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    cursor: none;
+    transition: all var(--transition-fast);
+    min-width: 150px;
+}
+
+.font-selector:hover {
+    border-color: var(--gold);
+    background: rgba(42, 40, 34, 0.95);
+}
+
+.font-selector:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(201, 169, 97, 0.2);
+}
+
+/* Scene Selector */
+.scene-selector {
+    padding: 0.5rem 1rem;
+    background: rgba(42, 40, 34, 0.8);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    border-radius: 4px;
+    color: rgba(232, 227, 218, 0.9);
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.9rem;
+    cursor: none;
+    transition: all var(--transition-fast);
+    min-width: 200px;
+}
+
+.scene-selector:hover {
+    border-color: var(--gold);
+    background: rgba(42, 40, 34, 0.95);
+}
+
+.scene-selector:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(201, 169, 97, 0.2);
+}
+
+/* Word Count Display */
+.word-count {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 0.5rem 1rem;
+    background: rgba(42, 40, 34, 0.6);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    border-radius: 4px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.85rem;
+}
+
+.word-count .count-label {
+    color: rgba(232, 227, 218, 0.6);
+    font-size: 0.8rem;
+}
+
+.word-count .count-value {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+/* Writing Surface */
+.writing-surface {
+    flex: 1;
+    display: flex;
+    gap: var(--spacing-md);
+    min-height: 0;
+}
+
+/* Main Editor */
+.main-editor {
+    flex: 1;
+    background: rgba(42, 40, 34, 0.7);
+    border: 2px solid rgba(201, 169, 97, 0.3);
+    border-radius: 8px;
+    padding: var(--spacing-xl);
+    overflow-y: auto;
+    position: relative;
+    backdrop-filter: blur(5px);
+}
+
+/* Novelist Mode Editor Styling */
+.mode-novelist .main-editor {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #e8e3da;
+    background: linear-gradient(135deg, rgba(250, 247, 242, 0.08), rgba(245, 241, 232, 0.08));
+}
+
+.mode-novelist .editor-content {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.mode-novelist .editor-content p {
+    margin-bottom: 1.5rem;
+    text-indent: 2em;
+}
+
+.mode-novelist .editor-content p:first-of-type {
+    text-indent: 0;
+}
+
+/* Screenwriter Mode Editor Styling */
+.mode-screenwriter .main-editor {
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e8e3da;
+    background: linear-gradient(135deg, rgba(232, 227, 218, 0.08), rgba(208, 203, 193, 0.08));
+}
+
+.mode-screenwriter .editor-content {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+/* Screenplay Element Styles (for Sprint 2) */
+.screenplay-element {
+    margin-bottom: 1rem;
+}
+
+.element-scene-heading {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+}
+
+.element-action {
+    margin-bottom: 1rem;
+}
+
+.element-character {
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.element-parenthetical {
+    text-align: center;
+    margin-bottom: 0.25rem;
+    font-style: italic;
+}
+
+.element-dialogue {
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto 1rem;
+}
+
+.element-transition {
+    text-align: right;
+    text-transform: uppercase;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* Editor Content (contenteditable) */
+.editor-content {
+    min-height: 100%;
+    outline: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.editor-content:empty::before {
+    content: attr(data-placeholder);
+    color: rgba(232, 227, 218, 0.4);
+    font-style: italic;
+}
+
+/* ===================================
+   PLACEHOLDER CONTENT FOR INACTIVE SPACES
+   =================================== */
+
+.placeholder-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+.placeholder-icon {
+    width: 120px;
+    height: 120px;
+    margin-bottom: var(--spacing-lg);
+    stroke: rgba(201, 169, 97, 0.3);
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 20px rgba(201, 169, 97, 0.2));
+}
+
+.placeholder-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 2px;
+}
+
+.placeholder-subtitle {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.2rem;
+    color: rgba(232, 227, 218, 0.8);
+    margin-bottom: var(--spacing-lg);
+    font-style: italic;
+}
+
+.placeholder-description {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(232, 227, 218, 0.7);
+    max-width: 600px;
+    margin-bottom: var(--spacing-xl);
+}
+
+.placeholder-scripture {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: rgba(201, 169, 97, 0.8);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: rgba(201, 169, 97, 0.1);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    max-width: 500px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.placeholder-scripture::before {
+    content: '"';
+    font-size: 2rem;
+    color: rgba(201, 169, 97, 0.4);
+    margin-right: 0.5rem;
+}
+
+.placeholder-scripture::after {
+    content: '"';
+    font-size: 2rem;
+    color: rgba(201, 169, 97, 0.4);
+    margin-left: 0.5rem;
+}
+
+.placeholder-reference {
+    display: block;
+    text-align: right;
+    font-size: 0.85rem;
+    color: rgba(232, 227, 218, 0.6);
+    margin-top: 0.5rem;
+}
+
+.placeholder-coming-soon {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.9rem;
+    color: rgba(232, 227, 218, 0.5);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(42, 40, 34, 0.4);
+    border: 1px dashed rgba(201, 169, 97, 0.3);
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+/* ===================================
+   FOCUS MODE
+   =================================== */
+
+.focus-mode-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--stone-deep);
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.focus-mode-overlay.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.focus-editor {
+    width: 100%;
+    max-width: 900px;
+    height: 80vh;
+    background: rgba(42, 40, 34, 0.9);
+    border: 2px solid rgba(201, 169, 97, 0.4);
+    border-radius: 8px;
+    padding: var(--spacing-xl) calc(var(--spacing-xl) * 2);
+    overflow-y: auto;
+    outline: none;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 60px rgba(201, 169, 97, 0.2);
+}
+
+.mode-novelist .focus-editor {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 1.2rem;
+    line-height: 2;
+    color: #e8e3da;
+}
+
+.mode-screenwriter .focus-editor {
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #e8e3da;
+}
+
+.focus-exit-hint {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.85rem;
+    color: rgba(232, 227, 218, 0.4);
+    background: rgba(42, 40, 34, 0.8);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 4px;
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    animation: fadeIn 1s ease-out 2s both;
+}
+
+/* ===================================
+   SESSION INDICATOR
+   =================================== */
+
+.session-indicator {
+    position: fixed;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 0.5rem 1rem;
+    background: rgba(26, 20, 16, 0.9);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    border-radius: 6px;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.session-badge {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.75rem;
+    color: rgba(232, 227, 218, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.session-time {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-weight: 600;
+    min-width: 50px;
+    text-align: right;
+}
+
+/* User accent for session indicator */
+.user-tyrrel .session-time {
+    color: var(--gold);
+}
+
+.user-trevor .session-time {
+    color: var(--teal);
+}
+
+/* ===================================
+   INKWELL TAB (existing styles)
+   =================================== */
+
+.inkwell-tab {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+    background: rgba(26, 20, 16, 0.9);
+    border: 2px solid rgba(201, 169, 97, 0.3);
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    cursor: none;
+    transition: all var(--transition-medium);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.inkwell-tab:hover {
+    padding-right: 1rem;
+    background: rgba(26, 20, 16, 0.95);
+    border-color: var(--gold);
+}
+
+.inkwell-tab-icon {
+    width: 24px;
+    height: 24px;
+    stroke: rgba(232, 227, 218, 0.7);
+    stroke-width: 2;
+    transition: all var(--transition-medium);
+}
+
+.inkwell-tab:hover .inkwell-tab-icon {
+    stroke: var(--gold);
+    filter: drop-shadow(0 0 8px rgba(201, 169, 97, 0.4));
+}
+
+.inkwell-tab-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(232, 227, 218, 0.7);
+    letter-spacing: 2px;
+    transition: all var(--transition-medium);
+}
+
+.inkwell-tab:hover .inkwell-tab-text {
+    color: var(--gold);
+}
+
+/* ===================================
+   MODAL STYLES
+   =================================== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease-out;
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, rgba(42, 40, 34, 0.95), rgba(35, 33, 28, 0.95));
+    border: 2px solid rgba(201, 169, 97, 0.4);
+    border-radius: 12px;
+    padding: var(--spacing-xl);
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 0 60px rgba(201, 169, 97, 0.3);
+    animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: rgba(232, 227, 218, 0.6);
+    font-size: 1.5rem;
+    cursor: none;
+    transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: var(--gold);
+    transform: scale(1.1);
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.modal-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 1px;
+}
+
+.modal-header p {
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    color: rgba(232, 227, 218, 0.7);
+    font-style: italic;
+}
+
+.modal-body {
+    margin-bottom: var(--spacing-lg);
+}
+
+.modal-body textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: var(--spacing-md);
+    background: rgba(42, 40, 34, 0.8);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    border-radius: 6px;
+    color: #e8e3da;
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: vertical;
+    cursor: none;
+}
+
+.modal-body textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(201, 169, 97, 0.2);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+}
+
+.modal-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid;
+    border-radius: 6px;
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+}
+
+.modal-btn.primary {
+    background: rgba(201, 169, 97, 0.2);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.modal-btn.primary:hover {
+    background: rgba(201, 169, 97, 0.3);
+    box-shadow: 0 0 15px rgba(201, 169, 97, 0.3);
+    transform: translateY(-2px);
+}
+
+.modal-btn.secondary {
+    background: transparent;
+    border-color: rgba(232, 227, 218, 0.3);
+    color: rgba(232, 227, 218, 0.7);
+}
+
+.modal-btn.secondary:hover {
+    border-color: rgba(232, 227, 218, 0.6);
+    color: rgba(232, 227, 218, 0.9);
+}
+
+/* Prayer Modal Specific Styles */
+.prayer-flame-icon {
+    width: 100px;
+    height: 140px;
+    margin: 0 auto var(--spacing-md);
+}
+
+/* ===================================
+   SCROLLBAR STYLING
+   =================================== */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(42, 40, 34, 0.5);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(201, 169, 97, 0.3);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(201, 169, 97, 0.5);
+}
+
+/* ===================================
+   USER-SPECIFIC ACCENTS
+   =================================== */
+
+/* Tyrrel (Gold Accent) */
+.user-tyrrel .toolbar-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.user-tyrrel .font-selector:focus,
+.user-tyrrel .scene-selector:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(201, 169, 97, 0.2);
+}
+
+.user-tyrrel .main-editor {
+    border-color: rgba(201, 169, 97, 0.3);
+}
+
+/* Trevor (Teal Accent) */
+.user-trevor .toolbar-btn.active {
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+.user-trevor .font-selector:focus,
+.user-trevor .scene-selector:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 10px rgba(44, 95, 95, 0.2);
+}
+
+.user-trevor .main-editor {
+    border-color: rgba(44, 95, 95, 0.3);
+}
+
+.user-trevor .word-count .count-value {
+    color: var(--teal);
+}
+
+.user-trevor .nav-tab.active {
+    border-bottom-color: var(--teal);
+    color: var(--teal);
+}
+
+.user-trevor .modal-btn.primary {
+    background: rgba(44, 95, 95, 0.2);
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+.user-trevor .modal-btn.primary:hover {
+    background: rgba(44, 95, 95, 0.3);
+    box-shadow: 0 0 15px rgba(44, 95, 95, 0.3);
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+@media (max-width: 1024px) {
+    .app-header {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .writing-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .toolbar-left,
+    .toolbar-center,
+    .toolbar-right {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .mode-switcher {
+        flex-direction: column;
+    }
+    
+    .mode-switch-btn {
+        width: 100%;
+    }
+    
+    .main-editor {
+        padding: var(--spacing-md);
+    }
+    
+    .placeholder-content {
+        padding: var(--spacing-md);
+    }
+    
+    .placeholder-icon {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .placeholder-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* ===================================
+   UTILITY CLASSES
+   =================================== */
+
+.hidden {
+    display: none !important;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.scale-in {
+    animation: scaleIn 0.3s ease-out;
+}
+
+/* Text Selection */
+::selection {
+    background: rgba(201, 169, 97, 0.3);
+    color: #e8e3da;
+}
+
+::-moz-selection {
+    background: rgba(201, 169, 97, 0.3);
+    color: #e8e3da;
+}
