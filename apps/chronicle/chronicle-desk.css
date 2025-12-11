@@ -1,97 +1,903 @@
 /* ===================================
-CHRONICLE DESK - Enhanced Styling
-"Every word fitly spoken"
+   CHRONICLE DESK - The Writing Sanctuary
+   "Write down the revelation and make it plain on tablets"
+   - Habakkuk 2:2
+   
+   This stylesheet governs The Desk workspace exclusively.
+   All other spaces have their own sacred vestments.
    =================================== */
 
 /* ===================================
-ENHANCED REFERENCE PANEL
+   DESK CONTAINER - The Foundation
    =================================== */
 
+.desk-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: linear-gradient(135deg, 
+        var(--stone-deep) 0%, 
+        var(--stone-medium) 50%, 
+        var(--stone-deep) 100%);
+}
+
+/* Subtle texture overlay for depth */
+.desk-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* ===================================
+   WRITING TOOLBAR - The Instrument Panel
+   =================================== */
+
+.writing-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: linear-gradient(180deg, 
+        rgba(53, 53, 48, 0.95) 0%, 
+        rgba(42, 40, 34, 0.9) 100%);
+    border-bottom: 2px solid rgba(139, 115, 85, 0.25);
+    gap: var(--spacing-md);
+    backdrop-filter: blur(20px);
+    z-index: 50;
+    position: relative;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.writing-toolbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: var(--spacing-xl);
+    right: var(--spacing-xl);
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--gold) 50%, 
+        transparent 100%);
+    opacity: 0.3;
+}
+
+.toolbar-left,
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.toolbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===================================
+   FONT SELECTOR - Typography Choice
+   =================================== */
+
+.font-selector {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: rgba(26, 20, 16, 0.7);
+    border: 1px solid rgba(139, 115, 85, 0.4);
+    border-radius: 6px;
+    color: #e8e3da;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    cursor: none;
+    transition: all var(--transition-fast);
+    min-width: 140px;
+}
+
+.font-selector:hover {
+    border-color: var(--gold);
+    background: rgba(26, 20, 16, 0.85);
+}
+
+.font-selector:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 16px rgba(201, 169, 97, 0.3);
+}
+
+.font-selector option {
+    background: var(--stone-deep);
+    color: #e8e3da;
+}
+
+/* ===================================
+   SCENE TITLE INPUT - The Name
+   =================================== */
+
+.scene-title-input {
+    position: relative;
+}
+
+.scene-title-input input {
+    padding: var(--spacing-xs) var(--spacing-lg);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(139, 115, 85, 0.3);
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    text-align: center;
+    min-width: 320px;
+    color: var(--gold);
+    cursor: none;
+    transition: all var(--transition-medium);
+    letter-spacing: 0.08em;
+}
+
+.scene-title-input input::placeholder {
+    color: rgba(139, 115, 85, 0.5);
+    font-weight: 400;
+}
+
+.scene-title-input input:focus {
+    outline: none;
+    border-bottom-color: var(--gold);
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.2);
+}
+
+/* ===================================
+   TOOL BUTTONS - The Instruments
+   =================================== */
+
+.tool-btn {
+    width: 38px;
+    height: 38px;
+    background: rgba(42, 40, 34, 0.6);
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(201, 169, 97, 0.1) 0%, 
+        transparent 100%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.tool-btn:hover {
+    background: rgba(53, 53, 48, 0.8);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.2);
+}
+
+.tool-btn:hover::before {
+    opacity: 1;
+}
+
+.tool-btn:active {
+    transform: translateY(0);
+}
+
+.tool-btn svg {
+    width: 19px;
+    height: 19px;
+    stroke: #8a8580;
+    stroke-width: 2;
+    fill: none;
+    transition: stroke var(--transition-fast);
+    position: relative;
+    z-index: 1;
+}
+
+.tool-btn:hover svg {
+    stroke: var(--gold);
+}
+
+/* ===================================
+   WORD COUNT DISPLAY - The Measure
+   =================================== */
+
+.word-count {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: linear-gradient(135deg, 
+        rgba(168, 152, 130, 0.15) 0%, 
+        rgba(139, 115, 85, 0.1) 100%);
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    border-radius: 6px;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--brown-warm);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    position: relative;
+}
+
+.count-number {
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.05em;
+}
+
+.count-label {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    text-transform: lowercase;
+}
+
+/* Tooltip on hover */
+.word-count::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    right: 0;
+    padding: 0.5rem 0.8rem;
+    background: rgba(26, 20, 16, 0.98);
+    border: 1px solid rgba(139, 115, 85, 0.4);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.word-count:hover::after {
+    opacity: 1;
+}
+
+/* ===================================
+   SCENE MANAGEMENT - Organization
+   =================================== */
+
+.scene-management {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.scene-switcher {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: rgba(26, 20, 16, 0.7);
+    border: 1px solid rgba(139, 115, 85, 0.4);
+    border-radius: 6px;
+    color: #e8e3da;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: none;
+    max-width: 200px;
+    transition: all var(--transition-fast);
+}
+
+.scene-switcher:hover {
+    border-color: var(--gold);
+    background: rgba(26, 20, 16, 0.85);
+}
+
+.scene-switcher:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 16px rgba(201, 169, 97, 0.3);
+}
+
+/* ===================================
+   ACTION BUTTONS - New Scene & Export
+   =================================== */
+
+.new-scene-btn,
+.export-scene-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: 2px solid;
+    border-radius: 6px;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+.new-scene-btn::before,
+.export-scene-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+}
+
+.new-scene-btn {
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.2) 0%, 
+        rgba(44, 95, 95, 0.1) 100%);
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+.new-scene-btn::before {
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.3), 
+        rgba(44, 95, 95, 0.15));
+}
+
+.new-scene-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(44, 95, 95, 0.3);
+}
+
+.new-scene-btn:hover::before {
+    opacity: 1;
+}
+
+.export-scene-btn {
+    background: linear-gradient(135deg, 
+        rgba(114, 47, 55, 0.2) 0%, 
+        rgba(114, 47, 55, 0.1) 100%);
+    border-color: var(--burgundy);
+    color: var(--burgundy);
+}
+
+.export-scene-btn::before {
+    background: linear-gradient(135deg, 
+        rgba(114, 47, 55, 0.3), 
+        rgba(114, 47, 55, 0.15));
+}
+
+.export-scene-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(114, 47, 55, 0.3);
+}
+
+.export-scene-btn:hover::before {
+    opacity: 1;
+}
+
+.new-scene-btn svg,
+.export-scene-btn svg {
+    width: 17px;
+    height: 17px;
+    stroke: currentColor;
+    fill: none;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===================================
+   WRITING AREA - The Sacred Surface
+   =================================== */
+
+.writing-area-container {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    background: transparent;
+}
+
+.writing-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all var(--transition-medium);
+    position: relative;
+}
+
+.writing-editor.with-reference {
+    flex: 0 0 65%;
+}
+
+.editor-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-xl) var(--spacing-2xl);
+    background: transparent;
+    position: relative;
+}
+
+/* Ambient lighting effect */
+.editor-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(ellipse at center, 
+        rgba(255, 153, 85, 0.05) 0%, 
+        transparent 70%);
+    pointer-events: none;
+    animation: ambientPulse 8s ease-in-out infinite;
+}
+
+@keyframes ambientPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+}
+
+/* ===================================
+   WRITING SURFACE - The Parchment
+   =================================== */
+
+.writing-surface {
+    min-height: 100%;
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-2xl);
+    background: linear-gradient(180deg, 
+        rgba(250, 247, 242, 0.08) 0%, 
+        rgba(250, 247, 242, 0.10) 100%);
+    border: 1px solid rgba(139, 115, 85, 0.2);
+    border-left: 4px solid var(--brown-warm);
+    border-radius: 8px;
+    font-family: 'Crimson Text', serif;
+    font-size: 1.25rem;
+    line-height: 1.9;
+    color: #e8e3da;
+    outline: none;
+    cursor: text;
+    box-shadow: 
+        inset 0 2px 12px rgba(0, 0, 0, 0.3),
+        0 4px 20px rgba(0, 0, 0, 0.25),
+        -6px 0 16px rgba(168, 152, 130, 0.15);
+    transition: all var(--transition-medium);
+    position: relative;
+}
+
+/* Paper texture simulation */
+.writing-surface::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23paper)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    pointer-events: none;
+    border-radius: 8px;
+}
+
+.writing-surface:focus {
+    background: linear-gradient(180deg, 
+        rgba(250, 247, 242, 0.12) 0%, 
+        rgba(250, 247, 242, 0.14) 100%);
+    border-left-color: var(--gold);
+    box-shadow: 
+        inset 0 2px 12px rgba(0, 0, 0, 0.35),
+        0 6px 24px rgba(0, 0, 0, 0.3),
+        -8px 0 24px rgba(201, 169, 97, 0.25),
+        0 0 40px rgba(201, 169, 97, 0.1);
+}
+
+/* Placeholder text */
+.writing-surface:empty::before {
+    content: attr(data-novelist-placeholder);
+    color: rgba(139, 115, 85, 0.5);
+    opacity: 0.7;
+    font-style: italic;
+    cursor: text;
+    position: relative;
+    z-index: 1;
+}
+
+/* Text selection */
+.writing-surface::selection {
+    background: rgba(201, 169, 97, 0.35);
+    color: #F5F1E8;
+}
+
+.writing-surface::-moz-selection {
+    background: rgba(201, 169, 97, 0.35);
+    color: #F5F1E8;
+}
+
+/* Paragraph styling for proper flow */
+.writing-surface p {
+    margin-bottom: 1.3rem;
+    position: relative;
+}
+
+.writing-surface p + p {
+    text-indent: 2.5rem;
+}
+
+/* First paragraph no indent */
+.writing-surface p:first-of-type {
+    text-indent: 0;
+}
+
+/* ===================================
+   REFERENCE PANEL - The Codex
+   =================================== */
+
+.reference-panel {
+    flex: 0 0 35%;
+    background: linear-gradient(180deg, 
+        rgba(42, 40, 34, 0.98) 0%, 
+        rgba(35, 31, 25, 0.95) 100%);
+    border-left: 2px solid rgba(139, 115, 85, 0.3);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    box-shadow: -4px 0 16px rgba(0, 0, 0, 0.3);
+}
+
+.reference-panel.active {
+    display: flex;
+    animation: slideInReference 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInReference {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Panel Header */
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: linear-gradient(180deg, 
+        rgba(53, 53, 48, 0.95) 0%, 
+        rgba(42, 40, 34, 0.9) 100%);
+    border-bottom: 2px solid rgba(139, 115, 85, 0.3);
+    position: relative;
+}
+
+.panel-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: var(--spacing-xl);
+    right: var(--spacing-xl);
+    height: 1px;
+    background: linear-gradient(90deg, 
+        var(--gold) 0%, 
+        transparent 50%, 
+        var(--gold) 100%);
+    opacity: 0.3;
+}
+
+.panel-header h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(201, 169, 97, 0.3);
+}
+
+.close-panel {
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    border-radius: 50%;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: #8a8580;
+    cursor: none;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-panel:hover {
+    color: var(--burgundy);
+    border-color: var(--burgundy);
+    background: rgba(114, 47, 55, 0.1);
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* Panel Content */
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-lg) var(--spacing-xl);
+}
+
+/* Reference Sections */
+.reference-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.reference-section:last-child {
+    margin-bottom: 0;
+}
+
+.reference-section h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    color: var(--teal);
+    margin-bottom: var(--spacing-md);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid rgba(44, 95, 95, 0.3);
+}
+
+/* Reference Items */
+.reference-item {
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, 
+        rgba(53, 53, 48, 0.6) 0%, 
+        rgba(42, 40, 34, 0.5) 100%);
+    border-left: 3px solid var(--gold);
+    margin-bottom: var(--spacing-sm);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-medium);
+    cursor: pointer;
+}
+
+.reference-item:hover {
+    background: linear-gradient(135deg, 
+        rgba(53, 53, 48, 0.8) 0%, 
+        rgba(42, 40, 34, 0.7) 100%);
+    transform: translateX(6px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.reference-item strong {
+    display: block;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.reference-item p {
+    color: #b8b3aa;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.reference-item em {
+    display: block;
+    color: var(--teal);
+    font-size: 0.9rem;
+    margin: 0.3rem 0;
+    font-style: italic;
+}
+
+/* Character-specific styling */
 .character-item {
-    background: linear-gradient(135deg, rgba(44, 95, 95, 0.1), rgba(42, 40, 34, 0.6));
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.15) 0%, 
+        rgba(42, 40, 34, 0.6) 100%);
     border-left-color: var(--teal);
 }
 
 .character-item:hover {
-    background: linear-gradient(135deg, rgba(44, 95, 95, 0.15), rgba(42, 40, 34, 0.7));
-    transform: translateX(4px);
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.25) 0%, 
+        rgba(42, 40, 34, 0.75) 100%);
 }
 
+/* Plot point styling */
 .plot-point-item {
-    border-left-color: var(--gold);
-    cursor: pointer;
-    transition: all var(--transition-medium);
+    border-left-color: var(--burgundy);
 }
 
 .plot-point-item:hover {
-    background: rgba(201, 169, 97, 0.08);
-    transform: translateX(4px);
-    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.2);
+    border-left-color: var(--gold);
+}
+
+/* Theme Tags */
+.theme-tag {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.2) 0%, 
+        rgba(44, 95, 95, 0.15) 100%);
+    border: 1px solid rgba(44, 95, 95, 0.4);
+    border-radius: 20px;
+    color: var(--teal);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0.3rem 0.2rem;
+    cursor: none;
+    transition: all var(--transition-fast);
+    letter-spacing: 0.05em;
+}
+
+.theme-tag:hover {
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.3) 0%, 
+        rgba(44, 95, 95, 0.25) 100%);
+    border-color: var(--teal);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 95, 95, 0.3);
 }
 
 /* ===================================
-EXPORT MODAL
+   AUTO-SAVE INDICATOR
    =================================== */
 
-.export-modal {
-    max-width: 550px;
-}
-
-.export-option {
-    padding: var(--spacing-md);
-    margin: var(--spacing-sm) 0;
-    background: rgba(42, 40, 34, 0.6);
-    border: 2px solid rgba(139, 115, 85, 0.3);
+.autosave-indicator {
+    position: fixed;
+    bottom: var(--spacing-xl);
+    right: var(--spacing-xl);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: rgba(26, 20, 16, 0.98);
+    border: 1px solid rgba(139, 115, 85, 0.5);
     border-radius: 8px;
-    cursor: none;
+    font-size: 0.85rem;
+    color: #8a8580;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     transition: all var(--transition-fast);
 }
 
+.autosave-indicator::before {
+    content: '✓';
+    font-size: 1rem;
+    color: var(--teal);
+}
+
+.autosave-indicator .saving-text {
+    display: none;
+    color: var(--amber-glow);
+}
+
+.autosave-indicator .saved-text {
+    display: inline;
+}
+
+.autosave-indicator.saving {
+    border-color: var(--amber-glow);
+}
+
+.autosave-indicator.saving::before {
+    content: '⋯';
+    color: var(--amber-glow);
+    animation: savingPulse 1s infinite;
+}
+
+@keyframes savingPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+.autosave-indicator.saving .saving-text {
+    display: inline;
+}
+
+.autosave-indicator.saving .saved-text {
+    display: none;
+}
+
+/* ===================================
+   EXPORT MODAL - Preservation
+   =================================== */
+
+.export-modal {
+    max-width: 560px;
+}
+
+.export-option {
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: var(--spacing-sm) 0;
+    background: linear-gradient(135deg, 
+        rgba(42, 40, 34, 0.7) 0%, 
+        rgba(35, 31, 25, 0.6) 100%);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    border-radius: 8px;
+    cursor: none;
+    transition: all var(--transition-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+.export-option::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(201, 169, 97, 0.1) 0%, 
+        transparent 100%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
 .export-option:hover {
-    background: rgba(53, 53, 48, 0.8);
+    background: linear-gradient(135deg, 
+        rgba(53, 53, 48, 0.85) 0%, 
+        rgba(42, 40, 34, 0.75) 100%);
     border-color: var(--gold);
+    transform: translateX(4px);
+}
+
+.export-option:hover::before {
+    opacity: 1;
 }
 
 .export-option input[type="radio"] {
-    margin-right: var(--spacing-sm);
+    margin-right: var(--spacing-md);
     cursor: none;
-}
-
-.export-option input[type="radio"]:checked + label {
-    color: var(--gold);
+    accent-color: var(--gold);
 }
 
 .export-option label {
     cursor: none;
     display: block;
+    position: relative;
+    z-index: 1;
 }
 
 .export-option strong {
     color: var(--gold);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    font-family: 'Cinzel', serif;
     display: block;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.05em;
 }
 
 .export-option small {
     color: #b8b3aa;
     font-style: italic;
     display: block;
-    margin-top: 0.3rem;
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
 }
 
+/* Export Settings */
 .export-settings {
-    margin-top: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
     padding-top: var(--spacing-lg);
-    border-top: 1px solid rgba(139, 115, 85, 0.3);
+    border-top: 2px solid rgba(139, 115, 85, 0.3);
 }
 
 .export-settings h4 {
     font-family: 'Cinzel', serif;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--teal);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
     letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .checkbox-label {
@@ -101,199 +907,192 @@ EXPORT MODAL
     padding: var(--spacing-xs) 0;
     color: #e8e3da;
     cursor: none;
+    transition: color var(--transition-fast);
+}
+
+.checkbox-label:hover {
+    color: var(--gold);
 }
 
 .checkbox-label input[type="checkbox"] {
     cursor: none;
+    accent-color: var(--teal);
 }
 
 /* ===================================
-SCENE MANAGEMENT UI
-   =================================== */
-
-.scene-management {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-xs);
-}
-
-.scene-switcher {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    background: rgba(42, 40, 34, 0.9);
-    border: 1px solid rgba(139, 115, 85, 0.3);
-    border-radius: 6px;
-    color: #e8e3da;
-    font-family: 'Crimson Text', serif;
-    font-size: 0.95rem;
-    cursor: none;
-    max-width: 200px;
-    transition: all var(--transition-fast);
-}
-
-.scene-switcher:hover {
-    border-color: var(--gold);
-    background: rgba(53, 53, 48, 0.9);
-}
-
-.scene-switcher:focus {
-    outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 12px rgba(201, 169, 97, 0.3);
-}
-
-/* ===================================
-NEW SCENE BUTTON
-   =================================== */
-
-.new-scene-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: var(--spacing-xs) var(--spacing-md);
-    background: linear-gradient(135deg, rgba(44, 95, 95, 0.2), rgba(44, 95, 95, 0.1));
-    border: 1px solid var(--teal);
-    border-radius: 6px;
-    color: var(--teal);
-    font-family: 'Crimson Text', serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: none;
-    transition: all var(--transition-medium);
-}
-
-.new-scene-btn:hover {
-    background: linear-gradient(135deg, rgba(44, 95, 95, 0.3), rgba(44, 95, 95, 0.15));
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(44, 95, 95, 0.3);
-}
-
-.new-scene-btn svg {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-}
-
-/* ===================================
-EXPORT BUTTON
-   =================================== */
-
-.export-scene-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: var(--spacing-xs) var(--spacing-md);
-    background: linear-gradient(135deg, rgba(114, 47, 55, 0.2), rgba(114, 47, 55, 0.1));
-    border: 1px solid var(--burgundy);
-    border-radius: 6px;
-    color: var(--burgundy);
-    font-family: 'Crimson Text', serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: none;
-    transition: all var(--transition-medium);
-}
-
-.export-scene-btn:hover {
-    background: linear-gradient(135deg, rgba(114, 47, 55, 0.3), rgba(114, 47, 55, 0.15));
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(114, 47, 55, 0.3);
-}
-
-.export-scene-btn svg {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-}
-
-/* ===================================
-WRITING SURFACE ENHANCEMENTS
-   =================================== */
-
-.writing-surface::selection {
-    background: rgba(201, 169, 97, 0.3);
-    color: #F5F1E8;
-}
-
-.writing-surface::-moz-selection {
-    background: rgba(201, 169, 97, 0.3);
-    color: #F5F1E8;
-}
-
-/* Paragraph spacing for better reading */
-.writing-surface p {
-    margin-bottom: 1.2rem;
-}
-
-/* First line indent (novel style) */
-.writing-surface p + p {
-    text-indent: 2rem;
-}
-
-/* ===================================
-CHARACTER COUNT TOOLTIP
-   =================================== */
-
-.word-count:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 0.5rem;
-    padding: 0.5rem 0.8rem;
-    background: rgba(42, 40, 34, 0.98);
-    border: 1px solid rgba(139, 115, 85, 0.4);
-    border-radius: 6px;
-    font-size: 0.85rem;
-    white-space: nowrap;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-/* ===================================
-SCENE STATUS INDICATORS
+   SCENE STATUS BADGES
    =================================== */
 
 .scene-status {
     display: inline-block;
-    padding: 0.3rem 0.6rem;
-    border-radius: 4px;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    border: 1px solid;
 }
 
 .scene-status.draft {
     background: rgba(139, 115, 85, 0.2);
+    border-color: rgba(139, 115, 85, 0.4);
     color: var(--brown-warm);
 }
 
 .scene-status.in-progress {
     background: rgba(44, 95, 95, 0.2);
+    border-color: rgba(44, 95, 95, 0.4);
     color: var(--teal);
 }
 
 .scene-status.polished {
     background: rgba(201, 169, 97, 0.2);
+    border-color: rgba(201, 169, 97, 0.4);
     color: var(--gold);
 }
 
 /* ===================================
-RESPONSIVE ADJUSTMENTS
+   FOCUS MODE - Distraction-Free
    =================================== */
 
+body.focus-mode .writing-toolbar,
+body.focus-mode .autosave-indicator {
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.focus-mode .writing-surface {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    max-width: 50rem;
+}
+
+body.focus-mode .writing-surface::before {
+    display: none;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+@media (max-width: 1200px) {
+    .writing-editor.with-reference {
+        flex: 0 0 60%;
+    }
+    
+    .reference-panel {
+        flex: 0 0 40%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .writing-surface {
+        max-width: 36rem;
+        font-size: 1.15rem;
+    }
+}
+
 @media (max-width: 768px) {
-    .scene-management {
-        flex-direction: column;
-        align-items: stretch;
+    .writing-toolbar {
+        flex-wrap: wrap;
+        padding: var(--spacing-sm) var(--spacing-md);
     }
     
-    .scene-switcher {
+    .toolbar-left,
+    .toolbar-right,
+    .toolbar-center {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .scene-title-input input {
+        min-width: 200px;
+    }
+    
+    .writing-surface {
         max-width: 100%;
+        font-size: 1.1rem;
+        padding: var(--spacing-lg);
     }
     
-    .export-modal {
-        max-width: 95%;
+    .reference-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        flex: none;
+        z-index: 200;
+    }
+    
+    .autosave-indicator {
+        bottom: var(--spacing-md);
+        right: var(--spacing-md);
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .writing-surface {
+        padding: var(--spacing-md);
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+    
+    .word-count {
+        font-size: 0.8rem;
+    }
+    
+    .tool-btn {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* ===================================
+   SCROLLBAR REFINEMENT
+   =================================== */
+
+.editor-wrapper::-webkit-scrollbar,
+.panel-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.editor-wrapper::-webkit-scrollbar-track,
+.panel-content::-webkit-scrollbar-track {
+    background: rgba(26, 20, 16, 0.4);
+}
+
+.editor-wrapper::-webkit-scrollbar-thumb,
+.panel-content::-webkit-scrollbar-thumb {
+    background: rgba(139, 115, 85, 0.4);
+    border-radius: 4px;
+}
+
+.editor-wrapper::-webkit-scrollbar-thumb:hover,
+.panel-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 115, 85, 0.6);
+}
+
+/* ===================================
+   PRINT STYLES - For Export Preview
+   =================================== */
+
+@media print {
+    .writing-toolbar,
+    .autosave-indicator,
+    .reference-panel {
+        display: none !important;
+    }
+    
+    .writing-surface {
+        border: none;
+        box-shadow: none;
+        background: white;
+        color: black;
+        max-width: 100%;
     }
 }
