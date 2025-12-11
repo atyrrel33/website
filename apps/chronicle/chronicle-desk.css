@@ -1106,3 +1106,128 @@ body.focus-mode .writing-surface::before {
         max-width: 100%;
     }
 }
+/* ===================================
+   NEW ITEM MODAL - Scene/Chapter/Beat Selection
+   Add this to the END of chronicle-desk.css
+   =================================== */
+
+.new-item-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.new-item-option {
+    width: 100%;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: linear-gradient(135deg, 
+        rgba(42, 40, 34, 0.7) 0%, 
+        rgba(35, 31, 25, 0.6) 100%);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    border-radius: 8px;
+    cursor: none;
+    transition: all var(--transition-medium);
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+}
+
+.new-item-option::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(201, 169, 97, 0.1) 0%, 
+        transparent 100%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.new-item-option:hover {
+    background: linear-gradient(135deg, 
+        rgba(53, 53, 48, 0.85) 0%, 
+        rgba(42, 40, 34, 0.75) 100%);
+    border-color: var(--gold);
+    transform: translateX(6px);
+    box-shadow: 0 4px 16px rgba(201, 169, 97, 0.3);
+}
+
+.new-item-option:hover::before {
+    opacity: 1;
+}
+
+.new-item-option strong {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 1;
+}
+
+.new-item-option small {
+    display: block;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    color: #b8b3aa;
+    font-style: italic;
+    line-height: 1.4;
+    position: relative;
+    z-index: 1;
+}
+
+/* Scene option - gold accent */
+.new-item-option:nth-child(1):hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(201, 169, 97, 0.4);
+}
+
+/* Chapter option - teal accent */
+.new-item-option:nth-child(2):hover {
+    border-color: var(--teal);
+    box-shadow: 0 4px 16px rgba(44, 95, 95, 0.4);
+}
+
+.new-item-option:nth-child(2):hover::before {
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.1) 0%, 
+        transparent 100%);
+}
+
+.new-item-option:nth-child(2):hover strong {
+    color: var(--teal);
+}
+
+/* Beat option - burgundy accent */
+.new-item-option:nth-child(3):hover {
+    border-color: var(--burgundy);
+    box-shadow: 0 4px 16px rgba(114, 47, 55, 0.4);
+}
+
+.new-item-option:nth-child(3):hover::before {
+    background: linear-gradient(135deg, 
+        rgba(114, 47, 55, 0.1) 0%, 
+        transparent 100%);
+}
+
+.new-item-option:nth-child(3):hover strong {
+    color: var(--burgundy);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .new-item-option {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .new-item-option strong {
+        font-size: 1.1rem;
+    }
+    
+    .new-item-option small {
+        font-size: 0.85rem;
+    }
+}
