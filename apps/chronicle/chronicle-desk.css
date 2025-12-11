@@ -4,11 +4,10 @@
    - Habakkuk 2:2
    
    This stylesheet governs The Desk workspace exclusively.
-   All other spaces have their own sacred vestments.
    =================================== */
 
 /* ===================================
-   DESK CONTAINER - The Foundation
+   DESK CONTAINER
    =================================== */
 
 .desk-container {
@@ -22,32 +21,19 @@
         var(--stone-deep) 100%);
 }
 
-/* Subtle texture overlay for depth */
-.desk-container::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: 
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px),
-        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
-    opacity: 0.4;
-    pointer-events: none;
-}
-
 /* ===================================
-   WRITING TOOLBAR - The Instrument Panel
+   WRITING TOOLBAR - EXPANDED
    =================================== */
 
 .writing-toolbar {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: var(--spacing-sm);
     padding: var(--spacing-md) var(--spacing-xl);
     background: linear-gradient(180deg, 
         rgba(53, 53, 48, 0.95) 0%, 
         rgba(42, 40, 34, 0.9) 100%);
     border-bottom: 2px solid rgba(139, 115, 85, 0.25);
-    gap: var(--spacing-md);
     backdrop-filter: blur(20px);
     z-index: 50;
     position: relative;
@@ -68,7 +54,16 @@
     opacity: 0.3;
 }
 
+/* Top Row - Scene Management */
+.toolbar-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+}
+
 .toolbar-left,
+.toolbar-center,
 .toolbar-right {
     display: flex;
     align-items: center;
@@ -77,16 +72,41 @@
 
 .toolbar-center {
     flex: 1;
-    display: flex;
     justify-content: center;
+}
+
+/* Bottom Row - Text Formatting */
+.toolbar-bottom-row {
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid rgba(139, 115, 85, 0.15);
+}
+
+.format-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.format-group-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--brown-warm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-right: var(--spacing-xs);
+    opacity: 0.7;
 }
 
 /* ===================================
-   FONT SELECTOR - Typography Choice
+   FONT & SIZE SELECTORS
    =================================== */
 
-.font-selector {
+.font-selector,
+.font-size-selector {
     padding: var(--spacing-xs) var(--spacing-md);
     background: rgba(26, 20, 16, 0.7);
     border: 1px solid rgba(139, 115, 85, 0.4);
@@ -99,24 +119,31 @@
     min-width: 140px;
 }
 
-.font-selector:hover {
+.font-size-selector {
+    min-width: 90px;
+}
+
+.font-selector:hover,
+.font-size-selector:hover {
     border-color: var(--gold);
     background: rgba(26, 20, 16, 0.85);
 }
 
-.font-selector:focus {
+.font-selector:focus,
+.font-size-selector:focus {
     outline: none;
     border-color: var(--gold);
     box-shadow: 0 0 16px rgba(201, 169, 97, 0.3);
 }
 
-.font-selector option {
+.font-selector option,
+.font-size-selector option {
     background: var(--stone-deep);
     color: #e8e3da;
 }
 
 /* ===================================
-   SCENE TITLE INPUT - The Name
+   SCENE TITLE & MANAGEMENT
    =================================== */
 
 .scene-title-input {
@@ -150,8 +177,33 @@
     box-shadow: 0 4px 12px rgba(201, 169, 97, 0.2);
 }
 
+.scene-switcher {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: rgba(26, 20, 16, 0.7);
+    border: 1px solid rgba(139, 115, 85, 0.4);
+    border-radius: 6px;
+    color: #e8e3da;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: none;
+    max-width: 220px;
+    transition: all var(--transition-fast);
+}
+
+.scene-switcher:hover {
+    border-color: var(--gold);
+    background: rgba(26, 20, 16, 0.85);
+}
+
+.scene-switcher:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 16px rgba(201, 169, 97, 0.3);
+}
+
 /* ===================================
-   TOOL BUTTONS - The Instruments
+   TOOL BUTTONS - Unified
    =================================== */
 
 .tool-btn {
@@ -191,7 +243,10 @@
     opacity: 1;
 }
 
-.tool-btn:active {
+.tool-btn:active,
+.tool-btn.active {
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.2), rgba(139, 115, 85, 0.15));
+    border-color: var(--gold);
     transform: translateY(0);
 }
 
@@ -206,12 +261,136 @@
     z-index: 1;
 }
 
-.tool-btn:hover svg {
+.tool-btn:hover svg,
+.tool-btn.active svg {
     stroke: var(--gold);
 }
 
+/* Format-specific button sizing */
+.format-btn {
+    width: 36px;
+    height: 36px;
+}
+
+.format-btn svg {
+    width: 17px;
+    height: 17px;
+}
+
 /* ===================================
-   WORD COUNT DISPLAY - The Measure
+   ACTION BUTTONS - Scene Management
+   =================================== */
+
+.new-scene-btn,
+.save-scene-btn,
+.export-scene-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: 2px solid;
+    border-radius: 6px;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+.new-scene-btn::before,
+.save-scene-btn::before,
+.export-scene-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+}
+
+.new-scene-btn {
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.2) 0%, 
+        rgba(44, 95, 95, 0.1) 100%);
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+.new-scene-btn::before {
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.3), 
+        rgba(44, 95, 95, 0.15));
+}
+
+.new-scene-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(44, 95, 95, 0.3);
+}
+
+.new-scene-btn:hover::before {
+    opacity: 1;
+}
+
+.save-scene-btn {
+    background: linear-gradient(135deg, 
+        rgba(201, 169, 97, 0.2) 0%, 
+        rgba(201, 169, 97, 0.1) 100%);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.save-scene-btn::before {
+    background: linear-gradient(135deg, 
+        rgba(201, 169, 97, 0.3), 
+        rgba(201, 169, 97, 0.15));
+}
+
+.save-scene-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(201, 169, 97, 0.3);
+}
+
+.save-scene-btn:hover::before {
+    opacity: 1;
+}
+
+.export-scene-btn {
+    background: linear-gradient(135deg, 
+        rgba(114, 47, 55, 0.2) 0%, 
+        rgba(114, 47, 55, 0.1) 100%);
+    border-color: var(--burgundy);
+    color: var(--burgundy);
+}
+
+.export-scene-btn::before {
+    background: linear-gradient(135deg, 
+        rgba(114, 47, 55, 0.3), 
+        rgba(114, 47, 55, 0.15));
+}
+
+.export-scene-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(114, 47, 55, 0.3);
+}
+
+.export-scene-btn:hover::before {
+    opacity: 1;
+}
+
+.new-scene-btn svg,
+.save-scene-btn svg,
+.export-scene-btn svg {
+    width: 17px;
+    height: 17px;
+    stroke: currentColor;
+    fill: none;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===================================
+   WORD COUNT DISPLAY
    =================================== */
 
 .word-count {
@@ -245,152 +424,8 @@
     text-transform: lowercase;
 }
 
-/* Tooltip on hover */
-.word-count::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: calc(100% + 0.5rem);
-    right: 0;
-    padding: 0.5rem 0.8rem;
-    background: rgba(26, 20, 16, 0.98);
-    border: 1px solid rgba(139, 115, 85, 0.4);
-    border-radius: 6px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--transition-fast);
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-.word-count:hover::after {
-    opacity: 1;
-}
-
 /* ===================================
-   SCENE MANAGEMENT - Organization
-   =================================== */
-
-.scene-management {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.scene-switcher {
-    padding: var(--spacing-xs) var(--spacing-md);
-    background: rgba(26, 20, 16, 0.7);
-    border: 1px solid rgba(139, 115, 85, 0.4);
-    border-radius: 6px;
-    color: #e8e3da;
-    font-family: 'Crimson Text', serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: none;
-    max-width: 200px;
-    transition: all var(--transition-fast);
-}
-
-.scene-switcher:hover {
-    border-color: var(--gold);
-    background: rgba(26, 20, 16, 0.85);
-}
-
-.scene-switcher:focus {
-    outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 16px rgba(201, 169, 97, 0.3);
-}
-
-/* ===================================
-   ACTION BUTTONS - New Scene & Export
-   =================================== */
-
-.new-scene-btn,
-.export-scene-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: var(--spacing-xs) var(--spacing-md);
-    border: 2px solid;
-    border-radius: 6px;
-    font-family: 'Crimson Text', serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: none;
-    transition: all var(--transition-medium);
-    position: relative;
-    overflow: hidden;
-}
-
-.new-scene-btn::before,
-.export-scene-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity var(--transition-medium);
-}
-
-.new-scene-btn {
-    background: linear-gradient(135deg, 
-        rgba(44, 95, 95, 0.2) 0%, 
-        rgba(44, 95, 95, 0.1) 100%);
-    border-color: var(--teal);
-    color: var(--teal);
-}
-
-.new-scene-btn::before {
-    background: linear-gradient(135deg, 
-        rgba(44, 95, 95, 0.3), 
-        rgba(44, 95, 95, 0.15));
-}
-
-.new-scene-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(44, 95, 95, 0.3);
-}
-
-.new-scene-btn:hover::before {
-    opacity: 1;
-}
-
-.export-scene-btn {
-    background: linear-gradient(135deg, 
-        rgba(114, 47, 55, 0.2) 0%, 
-        rgba(114, 47, 55, 0.1) 100%);
-    border-color: var(--burgundy);
-    color: var(--burgundy);
-}
-
-.export-scene-btn::before {
-    background: linear-gradient(135deg, 
-        rgba(114, 47, 55, 0.3), 
-        rgba(114, 47, 55, 0.15));
-}
-
-.export-scene-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(114, 47, 55, 0.3);
-}
-
-.export-scene-btn:hover::before {
-    opacity: 1;
-}
-
-.new-scene-btn svg,
-.export-scene-btn svg {
-    width: 17px;
-    height: 17px;
-    stroke: currentColor;
-    fill: none;
-    position: relative;
-    z-index: 1;
-}
-
-/* ===================================
-   WRITING AREA - The Sacred Surface
+   WRITING AREA
    =================================== */
 
 .writing-area-container {
@@ -407,7 +442,6 @@
     flex-direction: column;
     overflow: hidden;
     transition: all var(--transition-medium);
-    position: relative;
 }
 
 .writing-editor.with-reference {
@@ -448,9 +482,9 @@
 
 .writing-surface {
     min-height: 100%;
-    max-width: 42rem;
+    max-width: 46rem;
     margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-2xl);
+    padding: var(--spacing-2xl) var(--spacing-3xl);
     background: linear-gradient(180deg, 
         rgba(250, 247, 242, 0.08) 0%, 
         rgba(250, 247, 242, 0.10) 100%);
@@ -496,7 +530,7 @@
 
 /* Placeholder text */
 .writing-surface:empty::before {
-    content: attr(data-novelist-placeholder);
+    content: "Begin writing your story... Let the narrative flow organically, discovering your characters as you write.";
     color: rgba(139, 115, 85, 0.5);
     opacity: 0.7;
     font-style: italic;
@@ -516,23 +550,43 @@
     color: #F5F1E8;
 }
 
-/* Paragraph styling for proper flow */
+/* Paragraph styling */
 .writing-surface p {
     margin-bottom: 1.3rem;
     position: relative;
 }
 
 .writing-surface p + p {
-    text-indent: 2.5rem;
-}
-
-/* First paragraph no indent */
-.writing-surface p:first-of-type {
     text-indent: 0;
 }
 
+/* Lists */
+.writing-surface ul,
+.writing-surface ol {
+    margin-left: 2rem;
+    margin-bottom: 1.3rem;
+}
+
+.writing-surface li {
+    margin-bottom: 0.5rem;
+}
+
+/* Formatted text */
+.writing-surface strong {
+    font-weight: 700;
+    color: #f5f1e8;
+}
+
+.writing-surface em {
+    font-style: italic;
+}
+
+.writing-surface u {
+    text-decoration: underline;
+}
+
 /* ===================================
-   REFERENCE PANEL - The Codex
+   REFERENCE PANEL
    =================================== */
 
 .reference-panel {
@@ -711,15 +765,6 @@
         rgba(42, 40, 34, 0.75) 100%);
 }
 
-/* Plot point styling */
-.plot-point-item {
-    border-left-color: var(--burgundy);
-}
-
-.plot-point-item:hover {
-    border-left-color: var(--gold);
-}
-
 /* Theme Tags */
 .theme-tag {
     display: inline-block;
@@ -809,7 +854,7 @@
 }
 
 /* ===================================
-   EXPORT MODAL - Preservation
+   EXPORT MODAL
    =================================== */
 
 .export-modal {
@@ -920,40 +965,7 @@
 }
 
 /* ===================================
-   SCENE STATUS BADGES
-   =================================== */
-
-.scene-status {
-    display: inline-block;
-    padding: 0.3rem 0.7rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    border: 1px solid;
-}
-
-.scene-status.draft {
-    background: rgba(139, 115, 85, 0.2);
-    border-color: rgba(139, 115, 85, 0.4);
-    color: var(--brown-warm);
-}
-
-.scene-status.in-progress {
-    background: rgba(44, 95, 95, 0.2);
-    border-color: rgba(44, 95, 95, 0.4);
-    color: var(--teal);
-}
-
-.scene-status.polished {
-    background: rgba(201, 169, 97, 0.2);
-    border-color: rgba(201, 169, 97, 0.4);
-    color: var(--gold);
-}
-
-/* ===================================
-   FOCUS MODE - Distraction-Free
+   FOCUS MODE
    =================================== */
 
 body.focus-mode .writing-toolbar,
@@ -989,21 +1001,24 @@ body.focus-mode .writing-surface::before {
 
 @media (max-width: 1024px) {
     .writing-surface {
-        max-width: 36rem;
+        max-width: 40rem;
         font-size: 1.15rem;
+        padding: var(--spacing-xl) var(--spacing-2xl);
+    }
+    
+    .toolbar-bottom-row {
+        flex-wrap: wrap;
     }
 }
 
 @media (max-width: 768px) {
     .writing-toolbar {
-        flex-wrap: wrap;
         padding: var(--spacing-sm) var(--spacing-md);
     }
     
-    .toolbar-left,
-    .toolbar-right,
-    .toolbar-center {
-        width: 100%;
+    .toolbar-top-row,
+    .toolbar-bottom-row {
+        flex-wrap: wrap;
         justify-content: center;
     }
     
@@ -1042,13 +1057,8 @@ body.focus-mode .writing-surface::before {
         line-height: 1.7;
     }
     
-    .word-count {
-        font-size: 0.8rem;
-    }
-    
-    .tool-btn {
-        width: 32px;
-        height: 32px;
+    .format-group {
+        flex-wrap: wrap;
     }
 }
 
@@ -1078,7 +1088,7 @@ body.focus-mode .writing-surface::before {
 }
 
 /* ===================================
-   PRINT STYLES - For Export Preview
+   PRINT STYLES
    =================================== */
 
 @media print {
