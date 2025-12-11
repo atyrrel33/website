@@ -2,6 +2,29 @@
    CHRONICLE - THE NOVEL SANCTUARY
    A Sacred Space for Prose & Poetry
    =================================== */
+/* ===================================
+   CRITICAL: Ensure App Visibility
+   =================================== */
+
+.app-container {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.workspace {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.workspace.active {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
 
 :root {
     /* Core Color Palette */
