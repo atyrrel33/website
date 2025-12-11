@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chronicle - A Sacred Workspace</title>
+    <title>Chronicle - A Story Sanctuary </title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="chronicle-styles-renewed.css">
     <link rel="stylesheet" href="chronicle-inkwell.css">
-    <link rel="stylesheet" href="chronicle-scribe.css">
 </head>
 <body class="mode-novelist user-tyrrel">
     <!-- Custom Flame Cursor -->
@@ -36,28 +35,10 @@
         <!-- Header -->
         <header class="app-header">
             <div class="header-left">
-                <h1 class="app-title">Chronicle</h1>
-                <p class="app-subtitle">A Sacred Workspace</p>
+                 <h1 class="app-title">Chronicle</h1>
+                <p class="app-subtitle">A Story Sanctuary</p>
             </div>
             <div class="header-center">
-                <!-- MODE SWITCHER - The Two Chambers -->
-                <div class="mode-switcher">
-                    <button class="mode-switch-btn novelist active" id="switchNovelist" data-mode="novelist">
-                        <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                        </svg>
-                        <span>The Novelist's Desk</span>
-                    </button>
-                    <button class="mode-switch-btn screenwriter" id="switchScreenwriter" data-mode="screenwriter">
-                        <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="3" width="20" height="14" rx="2"/>
-                            <path d="M8 21h8"/>
-                            <path d="M12 17v4"/>
-                        </svg>
-                        <span>The Screenwriter's Desk</span>
-                    </button>
-                </div>
                 
                 <!-- User Switcher - Iron Sharpens Iron -->
                 <div class="user-switcher">
@@ -144,12 +125,6 @@
                                 <path d="M8 21h8"/>
                                 <path d="M12 17v4"/>
                             </svg>
-                            <div class="banner-text">
-                                <h3>The Screenwriter's Desk</h3>
-                                <p>Industry-standard formatting • Professional structure • Precise craft</p>
-                            </div>
-                        </div>
-                    </div>
                     
                     <!-- Writing Toolbar -->
                     <div class="writing-toolbar">
@@ -162,13 +137,6 @@
                                     <option value="Lora">Lora</option>
                                     <option value="Georgia">Georgia</option>
                                 </optgroup>
-                                <!-- Screenwriter fonts -->
-                                <optgroup label="Screenwriter Fonts" class="screenwriter-fonts" style="display: none;">
-                                    <option value="Courier Prime">Courier Prime</option>
-                                    <option value="Courier New">Courier New</option>
-                                    <option value="Courier">Courier</option>
-                                </optgroup>
-                            </select>
                         </div>
                         <div class="toolbar-center">
                             <div class="scene-title-input">
@@ -490,6 +458,5 @@ Begin your screenplay... Press TAB to cycle through elements.">
 
     <script src="chronicle-app-renewed.js"></script>
     <script src="chronicle-inkwell.js"></script>
-    <script src="chronicle-scribe.js"></script>
 </body>
 </html>
