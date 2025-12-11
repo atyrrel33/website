@@ -904,3 +904,53 @@ body {
         font-size: 1.1rem;
     }
 }
+/* ===================================
+   DESK WORKSPACE
+   =================================== */
+
+.desk-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.writing-area-container {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--stone-deep) 0%, var(--stone-medium) 50%, var(--stone-deep) 100%);
+}
+
+.writing-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all var(--transition-medium);
+}
+
+.writing-editor.with-reference {
+    flex: 0 0 65%;
+}
+
+.editor-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-xl);
+    background: transparent;
+}
+
+/* ===================================
+   ARCHIVE/COVENANT/ALTAR CONTAINERS
+   =================================== */
+
+.archive-container,
+.covenant-container,
+.altar-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-3xl);
+}
