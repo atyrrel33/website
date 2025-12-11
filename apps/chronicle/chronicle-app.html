@@ -6,13 +6,23 @@
     <title>Chronicle - A Sacred Workspace</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="chronicle-styles-renewed.css">
+    <link rel="stylesheet" href="chronicle-inkwell.css">
 </head>
 <body class="mode-novelist user-tyrrel">
     <!-- Custom Flame Cursor -->
     <div id="custom-cursor">
         <div class="cursor-core"></div>
     </div>
-
+    <!-- Inkwell Tab - Always visible on left edge -->
+    <div class="inkwell-tab" id="inkwellTab">
+        <svg class="inkwell-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+            <path d="M2 2l7.586 7.586"/>
+            <circle cx="11" cy="11" r="2"/>
+        </svg>
+        <span class="inkwell-tab-text">Inkwell</span>
+    </div>
     <!-- Session Indicator (shows which session we're in) -->
     <div class="session-indicator" id="sessionIndicator">
         <span class="session-badge">Session Active</span>
@@ -264,7 +274,118 @@ Begin your screenplay... Press TAB to cycle through elements.">
         </main>
 
     </div>
-
+    <!-- THE INKWELL PANEL -->
+    <div class="inkwell-panel" id="inkwellPanel">
+        <!-- Header -->
+        <div class="inkwell-header">
+            <div class="inkwell-title-row">
+                <div class="inkwell-title">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                        <path d="M2 2l7.586 7.586"/>
+                        <circle cx="11" cy="11" r="2"/>
+                    </svg>
+                    <h2>The Inkwell</h2>
+                </div>
+                <button class="inkwell-close" id="closeInkwell">×</button>
+            </div>
+            <p class="inkwell-subtitle">"Pour out what flows..."</p>
+            
+            <!-- View Tabs -->
+            <div class="inkwell-view-tabs">
+                <button class="inkwell-view-tab active" data-view="start">Start</button>
+                <button class="inkwell-view-tab" data-view="history">Fragments</button>
+            </div>
+        </div>
+        
+        <!-- Body -->
+        <div class="inkwell-body">
+            <!-- START VIEW -->
+            <div class="inkwell-start-view" id="startView">
+                <div class="inkwell-invitation">
+                    <p>Choose your sacred duration. When the flame dims, your outpouring is complete.</p>
+                </div>
+                
+                <div class="timer-options">
+                    <div class="timer-option" data-seconds="120">
+                        <span class="time">2</span>
+                        <span class="label">minutes</span>
+                    </div>
+                    <div class="timer-option selected" data-seconds="300">
+                        <span class="time">5</span>
+                        <span class="label">minutes</span>
+                    </div>
+                    <div class="timer-option" data-seconds="600">
+                        <span class="time">10</span>
+                        <span class="label">minutes</span>
+                    </div>
+                    <div class="timer-option" data-seconds="0">
+                        <span class="time">∞</span>
+                        <span class="label">no limit</span>
+                    </div>
+                </div>
+                
+                <button class="start-outpouring-btn" id="startOutpouring">
+                    Begin Outpouring
+                </button>
+            </div>
+            
+            <!-- WRITING VIEW -->
+            <div class="inkwell-writing-view" id="writingView">
+                <div class="inkwell-timer-display">
+                    <svg class="timer-flame" viewBox="0 0 100 140" fill="none">
+                        <path d="M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z" fill="url(#inkwellFlameGradient)">
+                            <animate attributeName="d" dur="2s" repeatCount="indefinite"
+                                values="M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z;
+                                        M50 10 C42 30, 45 50, 50 70 C58 50, 52 30, 50 10 Z;
+                                        M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z"/>
+                        </path>
+                        <defs>
+                            <linearGradient id="inkwellFlameGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ffcc88;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#ff9955;stop-opacity:0.9" />
+                                <stop offset="100%" style="stop-color:#d4a574;stop-opacity:0.6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="timer-text">5:00</div>
+                    <div class="timer-label">Time remaining</div>
+                </div>
+                
+                <textarea 
+                    class="inkwell-textarea" 
+                    id="inkwellTextarea"
+                    placeholder="Begin writing... let the words flow without judgment or structure. This is sacred space for raw creation."></textarea>
+                
+                <div class="inkwell-writing-actions">
+                    <button class="inkwell-action-btn extend" id="extendTime">
+                        Extend +2 min
+                    </button>
+                    <button class="inkwell-action-btn finish" id="finishOutpouring">
+                        Finish & Save
+                    </button>
+                </div>
+            </div>
+            
+            <!-- HISTORY VIEW -->
+            <div class="inkwell-history-view" id="historyView">
+                <div class="history-controls">
+                    <input 
+                        type="text" 
+                        class="history-search" 
+                        id="fragmentSearch"
+                        placeholder="Search fragments...">
+                    <button class="export-fragments-btn" id="exportFragments">Export</button>
+                    <button class="import-fragments-btn" id="importFragments">Import</button>
+                </div>
+                
+                <div class="fragments-list" id="fragmentsList">
+                    <!-- Fragments will be dynamically populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Prayer Modal (unchanged for now) -->
     <div class="modal" id="prayerModal">
         <div class="modal-content prayer-modal">
@@ -305,10 +426,68 @@ Begin your screenplay... Press TAB to cycle through elements.">
             </div>
         </div>
     </div>
+    <!-- Save Fragment Modal -->
+    <div class="save-fragment-modal" id="saveFragmentModal">
+        <div class="save-fragment-content">
+            <h3>Preserve This Fragment</h3>
+            
+            <input 
+                type="text" 
+                class="fragment-title-input" 
+                id="fragmentTitleInput"
+                placeholder="Name this fragment...">
+            
+            <div class="fragment-destination">
+                <p>Where shall this fragment dwell?</p>
+                <div class="destination-options">
+                    <div class="destination-option">
+                        <input type="radio" name="fragmentDestination" value="inkwell" id="destInkwell" checked>
+                        <label for="destInkwell">The Inkwell (keep as fragment)</label>
+                    </div>
+                    <div class="destination-option">
+                        <input type="radio" name="fragmentDestination" value="scene" id="destScene">
+                        <label for="destScene">Convert to Scene (future feature)</label>
+                    </div>
+                    <div class="destination-option">
+                        <input type="radio" name="fragmentDestination" value="notes" id="destNotes">
+                        <label for="destNotes">Add to Character Notes (future feature)</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="save-fragment-actions">
+                <button class="cancel-save" id="cancelSaveFragment">Discard</button>
+                <button class="confirm-save" id="confirmSaveFragment">Save Fragment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Fragment Modal -->
+    <div class="view-fragment-modal" id="viewFragmentModal">
+        <div class="view-fragment-content">
+            <div class="view-fragment-header">
+                <h3>Fragment Title</h3>
+                <button class="close-view-fragment">×</button>
+            </div>
+            <div class="view-fragment-body">
+                Fragment content will appear here...
+            </div>
+            <div class="view-fragment-footer">
+                <div class="fragment-metadata">
+                    Date • Words • Author
+                </div>
+                <button class="export-single-btn">Export</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="importFragmentsInput" accept=".json" style="display: none;">
 
     <!-- Release Animation Container -->
     <div class="release-animation-container" id="releaseAnimation"></div>
 
     <script src="chronicle-app-renewed.js"></script>
+    <script src="chronicle-inkwell.js"></script>
 </body>
 </html>
