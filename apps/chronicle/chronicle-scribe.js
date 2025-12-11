@@ -1,12 +1,219 @@
 /* ============================================================================
    CHRONICLE - THE SCRIBE'S DESK
-   JavaScript for Screenplay Formatting Engine (Sprint 1: Foundation)
+   JavaScript for Screenplay Formatting Engine (Sprint 1.5: Chamber Transformation)
    
    "My tongue is the pen of a skillful writer" - Psalm 45:1
+   "To everything there is a season, and a time to every purpose" - Ecclesiastes 3:1
    ============================================================================ */
 
 // ============================================================================
-// THE SCRIBE ENGINE - Core Screenplay Formatting System
+// THE MODE TRANSFORMER - Structural Metamorphosis Between Chambers
+// ============================================================================
+
+class ModeTransformer {
+    constructor() {
+        this.currentMode = 'novelist'; // Default mode
+        this.novelistContent = ''; // Stored novelist content
+        this.screenplayContent = []; // Stored screenplay lines
+        this.writingArea = null;
+        
+        this.init();
+    }
+    
+    init() {
+        console.log('[Mode Transformer] Initializing chamber transformation system...');
+        this.writingArea = document.getElementById('writingArea');
+        
+        if (!this.writingArea) {
+            console.error('[Mode Transformer] Writing area not found');
+            return;
+        }
+        
+        // Detect initial mode from body class
+        if (document.body.classList.contains('mode-screenwriter')) {
+            this.currentMode = 'screenwriter';
+        }
+        
+        this.attachModeListeners();
+        console.log('[Mode Transformer] Initialized successfully');
+    }
+    
+    attachModeListeners() {
+        // Listen for mode switch button clicks
+        const novelistBtn = document.getElementById('switchNovelist');
+        const screenwriterBtn = document.getElementById('switchScreenwriter');
+        
+        if (novelistBtn) {
+            novelistBtn.addEventListener('click', () => {
+                console.log('[Mode Transformer] Switching to Novelist mode...');
+                this.transformToNovelist();
+            });
+        }
+        
+        if (screenwriterBtn) {
+            screenwriterBtn.addEventListener('click', () => {
+                console.log('[Mode Transformer] Switching to Screenwriter mode...');
+                this.transformToScreenwriter();
+            });
+        }
+    }
+    
+    // Transform to Novelist mode
+    transformToNovelist() {
+        if (this.currentMode === 'novelist') {
+            console.log('[Mode Transformer] Already in Novelist mode');
+            return;
+        }
+        
+        // 1. Store current screenplay content
+        this.saveScreenplayContent();
+        
+        // 2. Clear the writing area
+        this.writingArea.innerHTML = '';
+        
+        // 3. Restore novelist content (simple text)
+        if (this.novelistContent) {
+            this.writingArea.innerHTML = this.novelistContent;
+        } else {
+            // Initialize with placeholder
+            this.writingArea.innerHTML = '<p><br></p>';
+        }
+        
+        // 4. Update mode
+        this.currentMode = 'novelist';
+        
+        // 5. Disable screenplay-specific features
+        this.disableScreenplayFeatures();
+        
+        console.log('[Mode Transformer] Transformed to Novelist chamber');
+    }
+    
+    // Transform to Screenwriter mode
+    transformToScreenwriter() {
+        if (this.currentMode === 'screenwriter') {
+            console.log('[Mode Transformer] Already in Screenwriter mode');
+            return;
+        }
+        
+        // 1. Store current novelist content
+        this.novelistContent = this.writingArea.innerHTML;
+        
+        // 2. Clear the writing area
+        this.writingArea.innerHTML = '';
+        
+        // 3. Build screenplay structure
+        if (this.screenplayContent.length > 0) {
+            // Restore previous screenplay content
+            this.restoreScreenplayContent();
+        } else {
+            // Initialize fresh screenplay structure
+            this.initializeScreenplayStructure();
+        }
+        
+        // 4. Update mode
+        this.currentMode = 'screenwriter';
+        
+        // 5. Enable screenplay-specific features
+        this.enableScreenplayFeatures();
+        
+        console.log('[Mode Transformer] Transformed to Screenwriter chamber');
+    }
+    
+    // Initialize screenplay structure for first time
+    initializeScreenplayStructure() {
+        // Create the first line - always starts with The Decree (scene heading)
+        const firstLine = document.createElement('div');
+        firstLine.className = 'screenplay-line element-decree';
+        firstLine.contentEditable = 'true';
+        firstLine.innerHTML = '<br>'; // Empty but formatted line
+        
+        this.writingArea.appendChild(firstLine);
+        
+        // Focus on the first line
+        setTimeout(() => {
+            firstLine.focus();
+            
+            // Initialize the scribe engine for this line
+            if (window.scribeEngine) {
+                window.scribeEngine.setCurrentElement('decree');
+                window.scribeEngine.showElementIndicator();
+            }
+        }, 50);
+        
+        console.log('[Mode Transformer] Initialized screenplay structure with opening Decree');
+    }
+    
+    // Save screenplay content to memory
+    saveScreenplayContent() {
+        this.screenplayContent = [];
+        
+        const lines = this.writingArea.querySelectorAll('.screenplay-line');
+        lines.forEach(line => {
+            const elementClass = Array.from(line.classList).find(cls => cls.startsWith('element-'));
+            const elementType = elementClass ? elementClass.replace('element-', '') : 'vision';
+            
+            this.screenplayContent.push({
+                type: elementType,
+                content: line.innerHTML
+            });
+        });
+        
+        console.log(`[Mode Transformer] Saved ${this.screenplayContent.length} screenplay lines`);
+    }
+    
+    // Restore screenplay content from memory
+    restoreScreenplayContent() {
+        this.screenplayContent.forEach(lineData => {
+            const line = document.createElement('div');
+            line.className = `screenplay-line element-${lineData.type}`;
+            line.contentEditable = 'true';
+            line.innerHTML = lineData.content;
+            
+            this.writingArea.appendChild(line);
+        });
+        
+        console.log(`[Mode Transformer] Restored ${this.screenplayContent.length} screenplay lines`);
+        
+        // Focus on the last line
+        const lines = this.writingArea.querySelectorAll('.screenplay-line');
+        if (lines.length > 0) {
+            const lastLine = lines[lines.length - 1];
+            setTimeout(() => {
+                lastLine.focus();
+                
+                // Move cursor to end
+                const range = document.createRange();
+                const selection = window.getSelection();
+                range.selectNodeContents(lastLine);
+                range.collapse(false);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }, 50);
+        }
+    }
+    
+    // Enable screenplay-specific features
+    enableScreenplayFeatures() {
+        if (window.scribeEngine) {
+            window.scribeEngine.enable();
+        }
+    }
+    
+    // Disable screenplay-specific features
+    disableScreenplayFeatures() {
+        if (window.scribeEngine) {
+            window.scribeEngine.disable();
+        }
+    }
+    
+    // Get current mode
+    getCurrentMode() {
+        return this.currentMode;
+    }
+}
+
+// ============================================================================
+// THE SCRIBE ENGINE - Core Screenplay Formatting System (UPDATED)
 // ============================================================================
 
 class ScribeEngine {
@@ -21,13 +228,14 @@ class ScribeEngine {
             { id: 'transition', name: 'The Transition', hint: 'Scene Ending' }
         ];
         
-        this.currentElement = 'vision'; // Default starting element
+        this.currentElement = 'decree'; // Start with scene heading
         this.characterMemory = new Set(); // Remembered character names
         this.sceneLocations = new Set(); // Remembered locations
-        this.currentLine = null; // Current line being edited
         this.writingArea = null; // Reference to contenteditable div
         this.elementIndicator = null; // Visual indicator
         this.shortcutsVisible = false;
+        this.enabled = false; // Only active in screenwriter mode
+        this.boundHandlers = {}; // Store bound event handlers for cleanup
         
         this.init();
     }
@@ -45,10 +253,34 @@ class ScribeEngine {
         this.createToolbar();
         this.createElementIndicator();
         this.createShortcutsOverlay();
-        this.attachEventListeners();
         this.loadCharacterMemory();
         
+        // Check if we're starting in screenwriter mode
+        if (document.body.classList.contains('mode-screenwriter')) {
+            this.enable();
+        }
+        
         console.log('[Scribe Engine] Initialized successfully');
+    }
+    
+    // Enable screenplay features (called when entering screenwriter mode)
+    enable() {
+        if (this.enabled) return;
+        
+        console.log('[Scribe Engine] Enabling screenplay features...');
+        this.attachEventListeners();
+        this.showElementIndicator();
+        this.enabled = true;
+    }
+    
+    // Disable screenplay features (called when leaving screenwriter mode)
+    disable() {
+        if (!this.enabled) return;
+        
+        console.log('[Scribe Engine] Disabling screenplay features...');
+        this.detachEventListeners();
+        this.hideElementIndicator();
+        this.enabled = false;
     }
     
     // Create the screenplay toolbar
@@ -60,8 +292,8 @@ class ScribeEngine {
         scribeToolbar.className = 'scribe-toolbar screenwriter-only';
         scribeToolbar.innerHTML = `
             <select class="element-selector" id="elementSelector">
-                <option value="decree">The Decree (Scene Heading)</option>
-                <option value="vision" selected>The Vision (Action)</option>
+                <option value="decree" selected>The Decree (Scene Heading)</option>
+                <option value="vision">The Vision (Action)</option>
                 <option value="voice">The Voice (Character)</option>
                 <option value="whisper">The Whisper (Parenthetical)</option>
                 <option value="word">The Word (Dialogue)</option>
@@ -107,7 +339,7 @@ class ScribeEngine {
         indicator.id = 'elementIndicator';
         indicator.innerHTML = `
             <div class="element-indicator-content">
-                <div class="element-name">The Vision</div>
+                <div class="element-name">The Decree</div>
                 <div class="element-hint">Press TAB to cycle</div>
             </div>
         `;
@@ -172,81 +404,122 @@ class ScribeEngine {
         });
     }
     
-    // Attach event listeners
+    // Attach event listeners (only when enabled)
     attachEventListeners() {
         if (!this.writingArea) return;
         
-        // TAB key cycling
-        this.writingArea.addEventListener('keydown', (e) => {
-            // Only handle in screenwriter mode
-            if (!document.body.classList.contains('mode-screenwriter')) return;
-            
-            // TAB - cycle forward
-            if (e.key === 'Tab' && !e.shiftKey) {
-                e.preventDefault();
-                this.cycleElementForward();
-            }
-            
-            // Shift+TAB - cycle backward
-            if (e.key === 'Tab' && e.shiftKey) {
-                e.preventDefault();
-                this.cycleElementBackward();
-            }
-            
-            // ENTER - smart line break
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                this.handleEnterKey();
-            }
-            
-            // Keyboard shortcuts
-            if ((e.metaKey || e.ctrlKey)) {
-                switch(e.key) {
-                    case '1':
-                        e.preventDefault();
-                        this.setCurrentElement('decree');
-                        break;
-                    case '2':
-                        e.preventDefault();
-                        this.setCurrentElement('vision');
-                        break;
-                    case '3':
-                        e.preventDefault();
-                        this.setCurrentElement('voice');
-                        break;
-                    case '4':
-                        e.preventDefault();
-                        this.setCurrentElement('word');
-                        break;
-                    case '5':
-                        e.preventDefault();
-                        this.setCurrentElement('transition');
-                        break;
-                    case '/':
-                        e.preventDefault();
-                        this.toggleShortcuts();
-                        break;
-                }
-            }
-        });
+        // Create bound handlers (so we can remove them later)
+        this.boundHandlers.keydown = this.handleKeyDown.bind(this);
+        this.boundHandlers.input = this.handleInput.bind(this);
+        this.boundHandlers.focus = this.handleFocus.bind(this);
+        this.boundHandlers.blur = this.handleBlur.bind(this);
         
-        // Input detection for auto-formatting
-        this.writingArea.addEventListener('input', () => {
-            if (!document.body.classList.contains('mode-screenwriter')) return;
-            this.detectElementFromContent();
-        });
+        // Attach to writing area
+        this.writingArea.addEventListener('keydown', this.boundHandlers.keydown);
+        this.writingArea.addEventListener('input', this.boundHandlers.input);
+        this.writingArea.addEventListener('focus', this.boundHandlers.focus);
+        this.writingArea.addEventListener('blur', this.boundHandlers.blur);
         
-        // Show indicator when focused in screenwriter mode
-        this.writingArea.addEventListener('focus', () => {
-            if (document.body.classList.contains('mode-screenwriter')) {
-                this.showElementIndicator();
+        console.log('[Scribe Engine] Event listeners attached');
+    }
+    
+    // Detach event listeners (when disabled)
+    detachEventListeners() {
+        if (!this.writingArea || !this.boundHandlers.keydown) return;
+        
+        this.writingArea.removeEventListener('keydown', this.boundHandlers.keydown);
+        this.writingArea.removeEventListener('input', this.boundHandlers.input);
+        this.writingArea.removeEventListener('focus', this.boundHandlers.focus);
+        this.writingArea.removeEventListener('blur', this.boundHandlers.blur);
+        
+        console.log('[Scribe Engine] Event listeners detached');
+    }
+    
+    // Handle keydown events
+    handleKeyDown(e) {
+        // TAB - cycle forward
+        if (e.key === 'Tab' && !e.shiftKey) {
+            e.preventDefault();
+            this.cycleElementForward();
+        }
+        
+        // Shift+TAB - cycle backward
+        if (e.key === 'Tab' && e.shiftKey) {
+            e.preventDefault();
+            this.cycleElementBackward();
+        }
+        
+        // ENTER - smart line break
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.handleEnterKey();
+        }
+        
+        // Keyboard shortcuts
+        if ((e.metaKey || e.ctrlKey)) {
+            switch(e.key) {
+                case '1':
+                    e.preventDefault();
+                    this.setCurrentElement('decree');
+                    break;
+                case '2':
+                    e.preventDefault();
+                    this.setCurrentElement('vision');
+                    break;
+                case '3':
+                    e.preventDefault();
+                    this.setCurrentElement('voice');
+                    break;
+                case '4':
+                    e.preventDefault();
+                    this.setCurrentElement('word');
+                    break;
+                case '5':
+                    e.preventDefault();
+                    this.setCurrentElement('transition');
+                    break;
+                case '/':
+                    e.preventDefault();
+                    this.toggleShortcuts();
+                    break;
             }
-        });
+        }
+    }
+    
+    // Handle input events
+    handleInput() {
+        this.detectElementFromContent();
+    }
+    
+    // Handle focus events
+    handleFocus() {
+        this.showElementIndicator();
+    }
+    
+    // Handle blur events
+    handleBlur() {
+        setTimeout(() => this.hideElementIndicator(), 500);
+    }
+    
+    // Get current screenplay line
+    getCurrentLine() {
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return null;
         
-        // Hide indicator when unfocused
-        this.writingArea.addEventListener('blur', () => {
-            setTimeout(() => this.hideElementIndicator(), 500);
-        });
+        const range = selection.getRangeAt(0);
+        let currentNode = range.startContainer;
+        
+        // Traverse up to find the screenplay-line element
+        while (currentNode && currentNode !== this.writingArea) {
+            if (currentNode.nodeType === Node.ELEMENT_NODE && 
+                currentNode.classList && 
+                currentNode.classList.contains('screenplay-line')) {
+                return currentNode;
+            }
+            currentNode = currentNode.parentNode;
+        }
+        
+        return null;
     }
     
     // Cycle to next element
@@ -277,29 +550,12 @@ class ScribeEngine {
         this.updateElementIndicator();
         
         // Apply formatting to current line
-        this.applyCurrentElementFormat();
+        const currentLine = this.getCurrentLine();
+        if (currentLine) {
+            this.formatLineAsElement(currentLine, elementId);
+        }
         
         console.log(`[Scribe Engine] Element changed to: ${elementId}`);
-    }
-    
-    // Apply current element formatting
-    applyCurrentElementFormat() {
-        const selection = window.getSelection();
-        if (!selection.rangeCount) return;
-        
-        const range = selection.getRangeAt(0);
-        let currentNode = range.startContainer;
-        
-        // Find the line element
-        while (currentNode && currentNode !== this.writingArea) {
-            if (currentNode.nodeType === Node.ELEMENT_NODE && currentNode.classList) {
-                if (currentNode.classList.contains('screenplay-line')) {
-                    this.formatLineAsElement(currentNode, this.currentElement);
-                    break;
-                }
-            }
-            currentNode = currentNode.parentNode;
-        }
     }
     
     // Format a line as a specific element
@@ -324,58 +580,99 @@ class ScribeEngine {
     
     // Apply text transformations for element type
     applyElementTransformations(lineElement, elementId) {
-        const text = lineElement.textContent;
+        const text = lineElement.textContent.trim();
+        
+        // Don't transform empty lines
+        if (!text || text === '') return;
+        
+        let transformedText = text;
         
         switch(elementId) {
             case 'decree':
                 // Uppercase for scene headings
-                lineElement.textContent = text.toUpperCase();
+                transformedText = text.toUpperCase();
                 break;
                 
             case 'voice':
                 // Uppercase for character names
-                lineElement.textContent = text.toUpperCase();
+                transformedText = text.toUpperCase();
                 // Remember this character
                 this.rememberCharacter(text);
                 break;
                 
             case 'whisper':
-                // Lowercase for parentheticals (handled in CSS)
-                lineElement.textContent = text.toLowerCase();
+                // Lowercase for parentheticals
+                transformedText = text.toLowerCase();
                 break;
                 
             case 'transition':
                 // Uppercase for transitions
-                lineElement.textContent = text.toUpperCase();
+                transformedText = text.toUpperCase();
                 break;
         }
         
-        // Move cursor to end of line
-        this.moveCursorToEndOfLine(lineElement);
+        // Only update if text changed
+        if (transformedText !== text) {
+            const cursorPosition = this.getCursorPosition(lineElement);
+            lineElement.textContent = transformedText;
+            this.setCursorPosition(lineElement, cursorPosition);
+        }
+    }
+    
+    // Get cursor position within element
+    getCursorPosition(element) {
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return 0;
+        
+        const range = selection.getRangeAt(0);
+        const preCaretRange = range.cloneRange();
+        preCaretRange.selectNodeContents(element);
+        preCaretRange.setEnd(range.endContainer, range.endOffset);
+        
+        return preCaretRange.toString().length;
+    }
+    
+    // Set cursor position within element
+    setCursorPosition(element, position) {
+        const range = document.createRange();
+        const selection = window.getSelection();
+        
+        let charCount = 0;
+        let nodeStack = [element];
+        let node, foundStart = false;
+        
+        while (!foundStart && (node = nodeStack.pop())) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const nextCharCount = charCount + node.length;
+                if (position <= nextCharCount) {
+                    range.setStart(node, position - charCount);
+                    range.collapse(true);
+                    foundStart = true;
+                }
+                charCount = nextCharCount;
+            } else {
+                let i = node.childNodes.length;
+                while (i--) {
+                    nodeStack.push(node.childNodes[i]);
+                }
+            }
+        }
+        
+        selection.removeAllRanges();
+        selection.addRange(range);
     }
     
     // Detect element type from content
     detectElementFromContent() {
-        const selection = window.getSelection();
-        if (!selection.rangeCount) return;
+        const currentLine = this.getCurrentLine();
+        if (!currentLine) return;
         
-        const range = selection.getRangeAt(0);
-        let currentNode = range.startContainer;
+        const text = currentLine.textContent.trim();
+        const detectedElement = this.detectElementType(text);
         
-        // Find the line element
-        while (currentNode && currentNode !== this.writingArea) {
-            if (currentNode.nodeType === Node.ELEMENT_NODE && currentNode.classList) {
-                if (currentNode.classList.contains('screenplay-line')) {
-                    const text = currentNode.textContent.trim();
-                    const detectedElement = this.detectElementType(text);
-                    
-                    if (detectedElement && detectedElement !== this.currentElement) {
-                        this.setCurrentElement(detectedElement);
-                    }
-                    break;
-                }
-            }
-            currentNode = currentNode.parentNode;
+        if (detectedElement && detectedElement !== this.currentElement) {
+            // Auto-detect changed element type
+            this.setCurrentElement(detectedElement);
         }
     }
     
@@ -388,8 +685,8 @@ class ScribeEngine {
             return 'decree';
         }
         
-        // Character name detection (all caps, short)
-        if (/^[A-Z\s]{2,30}$/.test(text) && text.length < 30) {
+        // Character name detection (all caps, 2-30 chars)
+        if (/^[A-Z\s]{2,30}$/.test(text) && text.length <= 30) {
             return 'voice';
         }
         
@@ -410,34 +707,34 @@ class ScribeEngine {
     
     // Handle Enter key press
     handleEnterKey() {
-        const selection = window.getSelection();
-        if (!selection.rangeCount) return;
+        const currentLine = this.getCurrentLine();
         
         // Create new line
         const newLine = document.createElement('div');
         newLine.className = 'screenplay-line';
+        newLine.contentEditable = 'true';
         
         // Determine next logical element
         const nextElement = this.getNextLogicalElement();
         newLine.classList.add(`element-${nextElement}`);
         
-        // Insert at cursor
-        const range = selection.getRangeAt(0);
-        range.deleteContents();
-        range.insertNode(newLine);
-        
         // Add line break for spacing
-        const br = document.createElement('br');
-        newLine.appendChild(br);
+        newLine.innerHTML = '<br>';
         
-        // Move cursor to new line
-        range.setStartAfter(br);
-        range.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(range);
+        // Insert after current line
+        if (currentLine) {
+            currentLine.parentNode.insertBefore(newLine, currentLine.nextSibling);
+        } else {
+            this.writingArea.appendChild(newLine);
+        }
         
-        // Update current element
-        this.setCurrentElement(nextElement);
+        // Focus new line
+        setTimeout(() => {
+            newLine.focus();
+            
+            // Update current element
+            this.setCurrentElement(nextElement);
+        }, 10);
     }
     
     // Determine next logical element based on current
@@ -456,7 +753,7 @@ class ScribeEngine {
     
     // Show element indicator
     showElementIndicator() {
-        if (this.elementIndicator) {
+        if (this.elementIndicator && this.enabled) {
             this.elementIndicator.classList.add('active');
         }
     }
@@ -553,10 +850,8 @@ class ScribeEngine {
     
     // Show character picker modal
     showCharacterPicker() {
-        // This will be expanded in Sprint 2 with full character profile integration
         console.log('[Scribe Engine] Character picker - Coming in Sprint 2');
         
-        // For now, show remembered characters
         if (this.characterMemory.size === 0) {
             alert('No characters remembered yet. Type character names in VOICE element to remember them.');
             return;
@@ -565,77 +860,43 @@ class ScribeEngine {
         const characters = Array.from(this.characterMemory).join(', ');
         alert(`Remembered Characters:\n\n${characters}\n\n(Full character profiles coming in Sprint 2)`);
     }
-    
-    // Move cursor to end of line
-    moveCursorToEndOfLine(element) {
-        const range = document.createRange();
-        const selection = window.getSelection();
-        
-        range.selectNodeContents(element);
-        range.collapse(false);
-        selection.removeAllRanges();
-        selection.addRange(range);
-    }
-    
-    // Calculate page count (1 page ≈ 55 lines or 1 minute of screen time)
-    calculatePageCount() {
-        const lines = this.writingArea.querySelectorAll('.screenplay-line');
-        const lineCount = lines.length;
-        const estimatedPages = Math.ceil(lineCount / 55);
-        
-        // Update page display
-        const pageDisplay = document.querySelector('.page-number');
-        const totalDisplay = document.querySelector('.total-pages');
-        
-        if (pageDisplay) pageDisplay.textContent = '1'; // Current page (would need scroll detection)
-        if (totalDisplay) totalDisplay.textContent = estimatedPages.toString();
-        
-        return estimatedPages;
-    }
 }
 
 // ============================================================================
-// INITIALIZATION - Hook into Chronicle's existing system
+// INITIALIZATION - "In the beginning..."
 // ============================================================================
 
-// Global scribe engine instance
+// Global instances
+let modeTransformer = null;
 let scribeEngine = null;
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[Chronicle Scribe] DOM loaded, waiting for writing area...');
+    console.log('[Chronicle Scribe] DOM loaded, initializing systems...');
     
     // Wait for writing area to be available
     const checkWritingArea = setInterval(() => {
         const writingArea = document.getElementById('writingArea');
         if (writingArea) {
             clearInterval(checkWritingArea);
-            console.log('[Chronicle Scribe] Writing area found, initializing engine...');
+            console.log('[Chronicle Scribe] Writing area found, initializing...');
+            
+            // Initialize Mode Transformer first (foundation)
+            modeTransformer = new ModeTransformer();
+            
+            // Then initialize Scribe Engine (builds on transformer)
             scribeEngine = new ScribeEngine();
+            
+            console.log('[Chronicle Scribe] All systems initialized');
         }
     }, 100);
 });
 
-// Listen for mode switches
-document.addEventListener('click', (e) => {
-    // Mode switch buttons
-    if (e.target.closest('.mode-switch-btn')) {
-        const btn = e.target.closest('.mode-switch-btn');
-        const mode = btn.dataset.mode;
-        
-        setTimeout(() => {
-            if (mode === 'screenwriter' && scribeEngine) {
-                scribeEngine.showElementIndicator();
-                console.log('[Chronicle Scribe] Switched to screenwriter mode');
-            } else if (scribeEngine) {
-                scribeEngine.hideElementIndicator();
-                console.log('[Chronicle Scribe] Switched to novelist mode');
-            }
-        }, 100);
-    }
-});
+// Make scribeEngine globally accessible
+window.scribeEngine = scribeEngine;
+window.modeTransformer = modeTransformer;
 
 // Export for use in other scripts
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ScribeEngine };
+    module.exports = { ScribeEngine, ModeTransformer };
 }
