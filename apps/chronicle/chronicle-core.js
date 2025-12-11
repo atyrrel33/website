@@ -1,16 +1,13 @@
 // ===================================
-// CHRONICLE - THE NOVEL SANCTUARY
-// A Sacred Space for Exploratory Writing
+// CHRONICLE CORE - The Foundation
+// "In the beginning, God created..."
+// - Genesis 1:1
 // ===================================
 
 const ChronicleApp = {
-    // Current user: 'tyrrel' or 'trevor'
     currentUser: 'tyrrel',
-    
-    // Current space
     currentSpace: 'desk',
     
-    // Current scene being worked on
     currentScene: {
         id: 'scene-001',
         title: 'Opening Scene',
@@ -20,7 +17,6 @@ const ChronicleApp = {
         author: 'tyrrel'
     },
     
-    // Current session
     currentSession: {
         id: null,
         startTime: null,
@@ -31,13 +27,11 @@ const ChronicleApp = {
         active: false
     },
     
-    // Settings
     settings: {
         writingFont: 'Crimson Text',
         autoSaveInterval: 3000
     },
     
-    // Timers
     autoSaveTimer: null,
     sessionTimer: null,
     sessionStartTime: null
@@ -48,30 +42,96 @@ const ChronicleApp = {
 // ===================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c✍️ Chronicle - The Novel Sanctuary', 'font-size: 20px; font-weight: bold; color: #C9A961;');
+    console.log('%c✏️ Chronicle - The Novel Sanctuary', 'font-size: 20px; font-weight: bold; color: #C9A961;');
     console.log('%c"Pour out your heart like water"', 'font-size: 12px; font-style: italic; color: #b8b3aa;');
     
     initializeApp();
-    setupEventListeners();
-    detectSession();
-    loadSavedData();
-    startCustomCursor();
 });
 
 function initializeApp() {
-    console.log('Initializing Chronicle...');
+    console.log('🔥 Initializing Chronicle...');
     
-    // Apply writing font
-    applyWritingFont();
+    // Critical: Make app visible immediately
+    const appContainer = document.querySelector('.app-container');
+    if (appContainer) {
+        appContainer.style.opacity = '1';
+        appContainer.style.visibility = 'visible';
+    }
+    
+    // Load saved user preference
+    const savedUser = localStorage.getItem('chronicle_current_user') || 'tyrrel';
+    switchUser(savedUser);
+    
+    // Apply saved settings
+    loadSettings();
+    
+    // Load saved scene
+    loadLastScene();
+    
+    // Setup all event listeners
+    setupEventListeners();
+    
+    // Detect and handle session
+    detectSession();
     
     // Start session timer
     startSessionTimer();
     
-    console.log('Chronicle initialized - May your words flow with divine grace');
+    // Initialize custom cursor
+    startCustomCursor();
+    
+    // Ensure Desk is visible
+    ensureDeskVisible();
+    
+    console.log('✅ Chronicle initialized successfully');
+}
+
+function ensureDeskVisible() {
+    // Force the Desk workspace to be visible
+    const deskWorkspace = document.getElementById('desk');
+    if (deskWorkspace) {
+        deskWorkspace.classList.add('active');
+        deskWorkspace.style.display = 'block';
+        deskWorkspace.style.opacity = '1';
+        deskWorkspace.style.transform = 'translateY(0)';
+    }
+    
+    // Ensure Desk nav tab is active
+    const deskTab = document.querySelector('[data-space="desk"]');
+    if (deskTab) {
+        deskTab.classList.add('active');
+    }
+    
+    ChronicleApp.currentSpace = 'desk';
 }
 
 // ===================================
-// SESSION DETECTION
+// USER SWITCHING
+// ===================================
+
+function switchUser(userName) {
+    ChronicleApp.currentUser = userName;
+    
+    // Update body class
+    document.body.classList.remove('user-tyrrel', 'user-trevor');
+    document.body.classList.add(`user-${userName}`);
+    
+    // Update button states
+    document.querySelectorAll('.user-switch-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.user === userName) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Save preference
+    localStorage.setItem('chronicle_current_user', userName);
+    
+    console.log(`👤 Workspace: ${userName === 'tyrrel' ? 'Tyrrel (Gold)' : 'Trevor (Teal)'}`);
+}
+
+// ===================================
+// SESSION MANAGEMENT
 // ===================================
 
 function detectSession() {
@@ -79,10 +139,10 @@ function detectSession() {
     const twoHoursAgo = Date.now() - (2 * 60 * 60 * 1000);
     
     if (!lastActivity || parseInt(lastActivity) < twoHoursAgo) {
-        console.log('New session detected - Inviting prayer...');
+        console.log('🕊️ New session detected');
         startNewSession();
     } else {
-        console.log('Continuing previous session...');
+        console.log('📖 Continuing previous session');
         continueSession();
     }
 }
@@ -102,8 +162,6 @@ function startNewSession() {
     
     saveCurrentSession();
     updateSessionIndicator();
-    
-    console.log('New session started:', sessionId);
 }
 
 function continueSession() {
@@ -111,10 +169,10 @@ function continueSession() {
     if (savedSession) {
         ChronicleApp.currentSession = JSON.parse(savedSession);
         ChronicleApp.currentSession.active = true;
+    } else {
+        startNewSession();
     }
-    
     updateSessionIndicator();
-    console.log('Session continued');
 }
 
 function saveCurrentSession() {
@@ -122,16 +180,12 @@ function saveCurrentSession() {
     localStorage.setItem('chronicle_current_session', JSON.stringify(ChronicleApp.currentSession));
 }
 
-// ===================================
-// SESSION TIMER
-// ===================================
-
 function startSessionTimer() {
     ChronicleApp.sessionStartTime = Date.now();
     
     ChronicleApp.sessionTimer = setInterval(() => {
         updateSessionIndicator();
-    }, 60000);
+    }, 60000); // Update every minute
 }
 
 function updateSessionIndicator() {
@@ -151,74 +205,39 @@ function updateSessionIndicator() {
 }
 
 // ===================================
-// USER SWITCHING
-// ===================================
-
-function switchUser(userName) {
-    ChronicleApp.currentUser = userName;
-    
-    document.body.classList.remove('user-tyrrel', 'user-trevor');
-    document.body.classList.add(`user-${userName}`);
-    
-    document.querySelectorAll('.user-switch-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.user === userName) {
-            btn.classList.add('active');
-        }
-    });
-    
-    if (ChronicleApp.currentScene.content === '') {
-        ChronicleApp.currentScene.author = userName;
-    }
-    
-    ChronicleApp.currentSession.user = userName;
-    saveCurrentSession();
-    
-    localStorage.setItem('chronicle_current_user', userName);
-    
-    console.log(`Workspace inscribed by: ${userName === 'tyrrel' ? 'Tyrrel (Gold)' : 'Trevor (Teal)'}`);
-}
-
-// ===================================
 // EVENT LISTENERS
 // ===================================
 
 function setupEventListeners() {
     // User switcher
-    const switchTyrrel = document.getElementById('switchTyrrel');
-    const switchTrevor = document.getElementById('switchTrevor');
+    const tyrrelBtn = document.getElementById('switchTyrrel');
+    const trevorBtn = document.getElementById('switchTrevor');
     
-    if (switchTyrrel) switchTyrrel.addEventListener('click', () => switchUser('tyrrel'));
-    if (switchTrevor) switchTrevor.addEventListener('click', () => switchUser('trevor'));
+    if (tyrrelBtn) tyrrelBtn.addEventListener('click', () => switchUser('tyrrel'));
+    if (trevorBtn) trevorBtn.addEventListener('click', () => switchUser('trevor'));
     
     // Navigation tabs
     document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', () => switchSpace(tab.dataset.space));
+        tab.addEventListener('click', () => {
+            const space = tab.dataset.space;
+            if (space) switchSpace(space);
+        });
     });
     
     // Prayer button
     const prayerBtn = document.getElementById('prayerBtn');
-    if (prayerBtn) prayerBtn.addEventListener('click', openPrayerModal);
+    if (prayerBtn) {
+        prayerBtn.addEventListener('click', openPrayerModal);
+    }
     
     // Prayer modal controls
-    const closePrayerModal = document.getElementById('closePrayerModal');
+    const closePrayer = document.getElementById('closePrayerModal');
     const skipPrayer = document.getElementById('skipPrayer');
     const offerPrayer = document.getElementById('offerPrayer');
     
-    if (closePrayerModal) closePrayerModal.addEventListener('click', closePrayerModalFunc);
-    if (skipPrayer) skipPrayer.addEventListener('click', closePrayerModalFunc);
+    if (closePrayer) closePrayer.addEventListener('click', closePrayerModal);
+    if (skipPrayer) skipPrayer.addEventListener('click', closePrayerModal);
     if (offerPrayer) offerPrayer.addEventListener('click', handlePrayerSubmit);
-    
-    // Writing tools
-    const fontSelector = document.getElementById('fontSelector');
-    const focusModeBtn = document.getElementById('focusModeBtn');
-    const referenceBtn = document.getElementById('referenceBtn');
-    const closePanelBtn = document.getElementById('closePanelBtn');
-    
-    if (fontSelector) fontSelector.addEventListener('change', changeFontFamily);
-    if (focusModeBtn) focusModeBtn.addEventListener('click', toggleFocusMode);
-    if (referenceBtn) referenceBtn.addEventListener('click', toggleReferencePanel);
-    if (closePanelBtn) closePanelBtn.addEventListener('click', toggleReferencePanel);
     
     // Writing surface
     const writingSurface = document.getElementById('writingSurface');
@@ -229,13 +248,40 @@ function setupEventListeners() {
     
     // Scene title
     const sceneTitle = document.getElementById('sceneTitle');
-    if (sceneTitle) sceneTitle.addEventListener('input', updateSceneTitle);
+    if (sceneTitle) {
+        sceneTitle.addEventListener('input', updateSceneTitle);
+    }
     
+    // Font selector
+    const fontSelector = document.getElementById('fontSelector');
+    if (fontSelector) {
+        fontSelector.addEventListener('change', changeFontFamily);
+    }
+    
+    // Focus mode button
+    const focusBtn = document.getElementById('focusModeBtn');
+    if (focusBtn) {
+        focusBtn.addEventListener('click', toggleFocusMode);
+    }
+    
+    // Reference panel button
+    const referenceBtn = document.getElementById('referenceBtn');
+    if (referenceBtn) {
+        referenceBtn.addEventListener('click', toggleReferencePanel);
+    }
+    
+    const closePanel = document.getElementById('closePanelBtn');
+    if (closePanel) {
+        closePanel.addEventListener('click', toggleReferencePanel);
+    }
+    
+    // Keyboard shortcuts
     setupKeyboardShortcuts();
 }
 
 function setupKeyboardShortcuts() {
     document.addEventListener('keydown', (e) => {
+        // Cmd/Ctrl + S: Save
         if ((e.ctrlKey || e.metaKey) && e.key === 's') {
             e.preventDefault();
             saveCurrentScene();
@@ -243,32 +289,69 @@ function setupKeyboardShortcuts() {
             setTimeout(hideSavingIndicator, 1000);
         }
         
+        // Cmd/Ctrl + P: Prayer
         if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
             e.preventDefault();
             openPrayerModal();
         }
         
+        // Cmd/Ctrl + Shift + F: Focus mode
         if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'F') {
             e.preventDefault();
             toggleFocusMode();
         }
         
+        // Cmd/Ctrl + R: Reference panel
         if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
             e.preventDefault();
             toggleReferencePanel();
         }
         
+        // Escape: Close modals/exit focus mode
         if (e.key === 'Escape') {
             const activeModal = document.querySelector('.modal.active');
             if (activeModal) {
                 activeModal.classList.remove('active');
             }
-            
             if (document.body.classList.contains('focus-mode')) {
                 toggleFocusMode();
             }
         }
     });
+}
+
+// ===================================
+// SPACE NAVIGATION
+// ===================================
+
+function switchSpace(spaceName) {
+    console.log(`📍 Switching to: ${spaceName}`);
+    
+    ChronicleApp.currentSpace = spaceName;
+    
+    // Update nav tabs
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.dataset.space === spaceName) {
+            tab.classList.add('active');
+        }
+    });
+    
+    // Update workspaces
+    document.querySelectorAll('.workspace').forEach(workspace => {
+        workspace.classList.remove('active');
+    });
+    
+    const targetWorkspace = document.getElementById(spaceName);
+    if (targetWorkspace) {
+        targetWorkspace.classList.add('active');
+        // Force visibility
+        targetWorkspace.style.display = 'block';
+        targetWorkspace.style.opacity = '1';
+        targetWorkspace.style.transform = 'translateY(0)';
+    }
+    
+    localStorage.setItem('chronicle_current_space', spaceName);
 }
 
 // ===================================
@@ -282,10 +365,6 @@ function handleWritingInput(e) {
     ChronicleApp.currentScene.lastModified = new Date();
     
     updateWordCount();
-    
-    const sessionStartWords = ChronicleApp.currentSession.sessionStartWords || 0;
-    ChronicleApp.currentSession.wordsWritten = ChronicleApp.currentScene.wordCount - sessionStartWords;
-    
     triggerAutoSave();
 }
 
@@ -325,49 +404,8 @@ function applyWritingFont() {
     }
 }
 
-// ===================================
-// NAVIGATION
-// ===================================
-
-function switchSpace(spaceName) {
-    ChronicleApp.currentSpace = spaceName;
-    
-    document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.dataset.space === spaceName) {
-            tab.classList.add('active');
-        }
-    });
-    
-    document.querySelectorAll('.workspace').forEach(workspace => {
-        workspace.classList.remove('active');
-    });
-    
-    const targetWorkspace = document.getElementById(spaceName);
-    if (targetWorkspace) {
-        targetWorkspace.classList.add('active');
-    }
-    
-    localStorage.setItem('chronicle_current_space', spaceName);
-}
-
-// ===================================
-// TOOLBAR ACTIONS
-// ===================================
-
 function toggleFocusMode() {
     document.body.classList.toggle('focus-mode');
-    
-    const isActive = document.body.classList.contains('focus-mode');
-    const displayValue = isActive ? 'none' : 'flex';
-    
-    document.querySelector('.app-header').style.display = displayValue;
-    document.querySelector('.main-nav').style.display = displayValue;
-    document.querySelector('.writing-toolbar').style.display = displayValue;
-    
-    if (isActive) {
-        document.getElementById('referencePanel')?.classList.remove('active');
-    }
 }
 
 function toggleReferencePanel() {
@@ -393,7 +431,7 @@ function openPrayerModal() {
     }
 }
 
-function closePrayerModalFunc() {
+function closePrayerModal() {
     const modal = document.getElementById('prayerModal');
     if (modal) modal.classList.remove('active');
 }
@@ -414,7 +452,7 @@ function handlePrayerSubmit() {
         
         prayerText.value = '';
     }
-    closePrayerModalFunc();
+    closePrayerModal();
 }
 
 // ===================================
@@ -424,10 +462,14 @@ function handlePrayerSubmit() {
 function triggerAutoSave() {
     showSavingIndicator();
     
-    setTimeout(() => {
+    if (ChronicleApp.autoSaveTimer) {
+        clearTimeout(ChronicleApp.autoSaveTimer);
+    }
+    
+    ChronicleApp.autoSaveTimer = setTimeout(() => {
         saveCurrentScene();
         hideSavingIndicator();
-    }, 500);
+    }, 1000);
 }
 
 function showSavingIndicator() {
@@ -442,7 +484,6 @@ function hideSavingIndicator() {
 
 function saveCurrentScene() {
     const scenes = JSON.parse(localStorage.getItem('chronicle_scenes') || '[]');
-    
     const existingIndex = scenes.findIndex(s => s.id === ChronicleApp.currentScene.id);
     
     if (existingIndex >= 0) {
@@ -453,42 +494,31 @@ function saveCurrentScene() {
     
     localStorage.setItem('chronicle_scenes', JSON.stringify(scenes));
     saveCurrentSession();
-    
-    console.log('Scene saved:', ChronicleApp.currentScene.title);
+}
+
+// ===================================
+// SETTINGS & DATA LOADING
+// ===================================
+
+function loadSettings() {
+    const saved = localStorage.getItem('chronicle_settings');
+    if (saved) {
+        ChronicleApp.settings = { ...ChronicleApp.settings, ...JSON.parse(saved) };
+    }
+    applyWritingFont();
 }
 
 function saveSettings() {
     localStorage.setItem('chronicle_settings', JSON.stringify(ChronicleApp.settings));
 }
 
-// ===================================
-// DATA LOADING
-// ===================================
-
-function loadSavedData() {
-    const savedUser = localStorage.getItem('chronicle_current_user');
-    if (savedUser) {
-        switchUser(savedUser);
-    } else {
-        switchUser('tyrrel');
-    }
-    
-    const savedSettings = localStorage.getItem('chronicle_settings');
-    if (savedSettings) {
-        ChronicleApp.settings = { ...ChronicleApp.settings, ...JSON.parse(savedSettings) };
-    }
-    
-    const savedSpace = localStorage.getItem('chronicle_current_space');
-    if (savedSpace) {
-        switchSpace(savedSpace);
-    }
-    
+function loadLastScene() {
     const scenes = JSON.parse(localStorage.getItem('chronicle_scenes') || '[]');
     if (scenes.length > 0) {
-        const sortedScenes = scenes.sort((a, b) => 
+        const sorted = scenes.sort((a, b) => 
             new Date(b.lastModified) - new Date(a.lastModified)
         );
-        ChronicleApp.currentScene = sortedScenes[0];
+        ChronicleApp.currentScene = sorted[0];
         
         const writingSurface = document.getElementById('writingSurface');
         const sceneTitle = document.getElementById('sceneTitle');
@@ -501,12 +531,6 @@ function loadSavedData() {
         }
         
         updateWordCount();
-        ChronicleApp.currentSession.sessionStartWords = ChronicleApp.currentScene.wordCount;
-    }
-    
-    const fontSelector = document.getElementById('fontSelector');
-    if (fontSelector) {
-        fontSelector.value = ChronicleApp.settings.writingFont;
     }
 }
 
@@ -516,6 +540,8 @@ function loadSavedData() {
 
 function startCustomCursor() {
     const cursor = document.getElementById('custom-cursor');
+    if (!cursor) return;
+    
     let lastTrailTime = 0;
     const trailInterval = 25;
     
@@ -530,11 +556,9 @@ function startCustomCursor() {
         }
     });
     
-    const interactiveElements = document.querySelectorAll(
-        'button, input, textarea, select, .nav-tab'
-    );
-    
-    interactiveElements.forEach(el => {
+    // Cursor interactions
+    const interactives = document.querySelectorAll('button, input, textarea, select, .nav-tab, .tool-btn');
+    interactives.forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursor.style.transform = 'scale(1.6)';
         });
@@ -555,12 +579,12 @@ function createCursorTrail(x, y) {
 }
 
 // ===================================
-// CONSOLE MESSAGE
+// GLOBAL EXPORTS
 // ===================================
-
-console.log('%c"Write down the revelation and make it plain on tablets"', 'font-size: 12px; font-style: italic; color: #b8b3aa;');
-console.log('%cHabakkuk 2:2', 'font-size: 10px; color: #8B7355;');
 
 window.ChronicleApp = ChronicleApp;
 window.switchUser = switchUser;
 window.saveCurrentScene = saveCurrentScene;
+
+console.log('%c"Write down the revelation and make it plain on tablets"', 'font-size: 11px; font-style: italic; color: #b8b3aa;');
+console.log('%cHabakkuk 2:2', 'font-size: 10px; color: #8B7355;');
