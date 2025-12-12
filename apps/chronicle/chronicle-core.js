@@ -597,7 +597,9 @@ function createCursorTrail(x, y) {
 
 window.ChronicleApp = ChronicleApp;
 window.switchUser = switchUser;
+window.switchSpace = switchSpace;
 window.saveCurrentScene = saveCurrentScene;
+window.countWords = countWords;
 
 console.log('%c"Write down the revelation and make it plain on tablets"', 'font-size: 11px; font-style: italic; color: #b8b3aa;');
 console.log('%cHabakkuk 2:2', 'font-size: 10px; color: #8B7355;');
