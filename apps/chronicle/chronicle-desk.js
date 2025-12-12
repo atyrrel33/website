@@ -201,16 +201,7 @@ const ChronicleDesk = {
     
     loadActs() {
         this.acts = JSON.parse(localStorage.getItem('chronicle_acts') || '[]');
-        if (this.acts.length === 0) {
-            // Create default structure for Joseph story
-            this.acts = [
-                { id: 'act-1', name: 'Act I: The Dreamer', order: 1 },
-                { id: 'act-2', name: 'Act II: The Pit', order: 2 },
-                { id: 'act-3', name: 'Act III: The Palace', order: 3 }
-            ];
-            this.saveActs();
-        }
-    },
+        },
     
     loadChapters() {
         this.chapters = JSON.parse(localStorage.getItem('chronicle_chapters') || '[]');
@@ -261,6 +252,10 @@ const ChronicleDesk = {
                 <button class="new-item-option" onclick="console.log('🔵 New Scene button clicked'); try { ChronicleDesk.createNewScene(); } catch(e) { console.error('Scene creation error:', e); alert('Error: ' + e.message); }">
                     <strong>New Scene</strong>
                     <small>A narrative moment or passage</small>
+                </button>
+                <button class="new-item-option" onclick="console.log('🔵 New Act button clicked'); try { ChronicleDesk.createNewAct(); } catch(e) { console.error('Act creation error:', e); alert('Error: ' + e.message); }">
+                    <strong>New Act</strong>
+                    <small>Major story division (Act I, II, III)</small>
                 </button>
                 <button class="new-item-option" onclick="console.log('🔵 New Chapter button clicked'); try { ChronicleDesk.createNewChapter(); } catch(e) { console.error('Chapter creation error:', e); alert('Error: ' + e.message); }">
                     <strong>New Chapter</strong>
@@ -389,6 +384,31 @@ createNewScene() {
         console.log('✨ New scene created:', newScene.title);
     },
     
+    createNewAct() {
+        const actName = prompt('Act name:', `Act ${this.acts.length + 1}`);
+        if (!actName) return;
+        
+        const newAct = {
+            id: `act-${Date.now()}`,
+            name: actName,
+            order: this.acts.length + 1,
+            createdAt: new Date().toISOString()
+        };
+        
+        this.acts.push(newAct);
+        this.saveActs();
+        
+        console.log('📜 New act created:', actName);
+        alert(`Act "${actName}" created! You can now assign chapters and scenes to this act.`);
+        
+        // Close modal
+        let modal = document.getElementById('newItemModal');
+        if (modal) modal.classList.remove('active');
+        
+        // Refresh scene switcher to show new act
+        this.populateSceneSwitcher();
+    },
+
     createNewChapter() {
         const chapterName = prompt('Chapter name:', `Chapter ${this.chapters.length + 1}`);
         if (!chapterName) return;
