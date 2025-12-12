@@ -40,14 +40,12 @@
 
 .writing-toolbar {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-md) var(--spacing-xl);
+    flex-direction: column;  /* ADDED - stack rows vertically */
+    padding: 0;  /* CHANGED - rows have their own padding */
     background: linear-gradient(180deg, 
         rgba(53, 53, 48, 0.95) 0%, 
         rgba(42, 40, 34, 0.9) 100%);
     border-bottom: 2px solid rgba(139, 115, 85, 0.25);
-    gap: var(--spacing-md);
     backdrop-filter: blur(20px);
     z-index: 50;
     position: relative;
@@ -82,6 +80,20 @@
     align-items: center;
 }
 
+/* Toolbar Rows */
+.toolbar-top-row,
+.toolbar-bottom-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-xl);
+    gap: var(--spacing-md);
+    width: 100%;
+}
+
+.toolbar-top-row {
+    border-bottom: 1px solid rgba(139, 115, 85, 0.15);
+}
 /* ===================================
    FONT SELECTOR - Typography Choice
    =================================== */
@@ -1095,7 +1107,8 @@ body.focus-mode .writing-surface::before {
         color: black;
         max-width: 100%;
     }
-}/* ===================================
+}
+/* ===================================
    McKEE SCENE METADATA PANEL
    =================================== */
 
