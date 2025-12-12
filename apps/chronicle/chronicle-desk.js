@@ -413,7 +413,7 @@ createNewScene() {
         let modal = document.getElementById('newItemModal');
         if (!modal) {
         modal = this.createNewItemModal();
-    d   ocument.body.appendChild(modal);
+        document.body.appendChild(modal);
 }
         if (modal) modal.classList.remove('active');
     },
