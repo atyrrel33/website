@@ -1201,6 +1201,98 @@ body.focus-mode .writing-surface::before {
 }
 
 /* ===================================
+   NEW ITEM MODAL - Creation Gateway
+   "In the beginning, God created..." - Genesis 1:1
+   =================================== */
+
+.new-item-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) 0;
+}
+
+.new-item-option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.15) 0%, 
+        rgba(44, 95, 95, 0.08) 100%);
+    border: 2px solid rgba(44, 95, 95, 0.3);
+    border-radius: 8px;
+    cursor: none;
+    transition: all var(--transition-medium);
+    text-align: left;
+    width: 100%;
+}
+
+.new-item-option:hover {
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.25) 0%, 
+        rgba(44, 95, 95, 0.15) 100%);
+    border-color: var(--teal);
+    transform: translateX(8px);
+    box-shadow: 0 4px 16px rgba(44, 95, 95, 0.3);
+}
+
+.new-item-option strong {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+}
+
+.new-item-option small {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    color: #d8d3ca;
+    line-height: 1.4;
+    opacity: 0.85;
+}
+
+/* Second option - Chapter (Gold) */
+.new-item-option:nth-child(2) {
+    background: linear-gradient(135deg, 
+        rgba(201, 169, 97, 0.15) 0%, 
+        rgba(201, 169, 97, 0.08) 100%);
+    border-color: rgba(201, 169, 97, 0.3);
+}
+
+.new-item-option:nth-child(2):hover {
+    background: linear-gradient(135deg, 
+        rgba(201, 169, 97, 0.25) 0%, 
+        rgba(201, 169, 97, 0.15) 100%);
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(201, 169, 97, 0.3);
+}
+
+.new-item-option:nth-child(2) strong {
+    color: var(--gold);
+}
+
+/* Third option - Beat (Burgundy) */
+.new-item-option:nth-child(3) {
+    background: linear-gradient(135deg, 
+        rgba(114, 47, 55, 0.15) 0%, 
+        rgba(114, 47, 55, 0.08) 100%);
+    border-color: rgba(114, 47, 55, 0.3);
+}
+
+.new-item-option:nth-child(3):hover {
+    background: linear-gradient(135deg, 
+        rgba(114, 47, 55, 0.25) 0%, 
+        rgba(114, 47, 55, 0.15) 100%);
+    border-color: var(--burgundy);
+    box-shadow: 0 4px 16px rgba(114, 47, 55, 0.3);
+}
+
+.new-item-option:nth-child(3) strong {
+    color: var(--burgundy);
+}
+/* ===================================
    SCROLLBAR REFINEMENT
    =================================== */
 
