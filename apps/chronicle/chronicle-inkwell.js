@@ -303,49 +303,105 @@ const InkwellApp = {
         this.switchView('start');
     },
     
-    // Save Fragment
-    saveFragment() {
-        const titleInput = document.getElementById('fragmentTitleInput');
-        const destinationRadios = document.querySelectorAll('input[name="fragmentDestination"]');
-        
-        let title = titleInput ? titleInput.value.trim() : '';
-        let destination = 'inkwell';
-        
-        // Get selected destination
-        destinationRadios.forEach(radio => {
-            if (radio.checked) {
-                destination = radio.value;
-            }
-        });
-        
-        // Generate title if empty
-        if (!title) {
-            title = `Fragment ${new Date().toLocaleString()}`;
+ // Save Fragment (ENHANCED with Desk conversion)
+saveFragment() {
+    const titleInput = document.getElementById('fragmentTitleInput');
+    const destinationRadios = document.querySelectorAll('input[name="fragmentDestination"]');
+    
+    let title = titleInput ? titleInput.value.trim() : '';
+    let destination = 'inkwell';
+    
+    // Get selected destination
+    destinationRadios.forEach(radio => {
+        if (radio.checked) {
+            destination = radio.value;
         }
-        
-        // Create fragment object
-        const fragment = {
-            id: `fragment-${Date.now()}`,
-            title: title,
-            content: this.currentFragment,
-            createdAt: new Date().toISOString(),
-            duration: this.selectedTimer,
-            author: ChronicleApp.currentUser,
-            destination: destination,
-            wordCount: this.countWords(this.currentFragment)
-        };
-        
-        // Save to storage
-        const fragments = this.loadFragments();
-        fragments.unshift(fragment); // Add to beginning
-        localStorage.setItem(this.fragmentsKey, JSON.stringify(fragments));
-        
-        console.log('✅ Fragment saved:', title);
-        
-        // Close modal and switch to history
-        this.closeSaveModal();
-        this.switchView('history');
-    },
+    });
+    
+    // Generate title if empty
+    if (!title) {
+        title = `Fragment ${new Date().toLocaleString()}`;
+    }
+    
+    // DESTINATION: Convert to Scene
+    if (destination === 'scene') {
+        this.convertFragmentToScene(title);
+        return;
+    }
+    
+    // DESTINATION: Keep as Fragment
+    const fragment = {
+        id: `fragment-${Date.now()}`,
+        title: title,
+        content: this.currentFragment,
+        createdAt: new Date().toISOString(),
+        duration: this.selectedTimer,
+        author: ChronicleApp.currentUser,
+        destination: destination,
+        wordCount: this.countWords(this.currentFragment)
+    };
+    
+    // Save to storage
+    const fragments = this.loadFragments();
+    fragments.unshift(fragment);
+    localStorage.setItem(this.fragmentsKey, JSON.stringify(fragments));
+    
+    console.log('✅ Fragment saved:', title);
+    
+    // Close modal and switch to history
+    this.closeSaveModal();
+    this.switchView('history');
+},
+
+// NEW: Convert Fragment to Desk Scene
+convertFragmentToScene(title) {
+    console.log('🔄 Converting fragment to scene...');
+    
+    // Create new scene in Desk
+    const newScene = {
+        id: `scene-${Date.now()}`,
+        type: 'scene',
+        title: title,
+        content: this.currentFragment,
+        wordCount: this.countWords(this.currentFragment),
+        author: ChronicleApp.currentUser,
+        createdAt: new Date().toISOString(),
+        lastModified: new Date().toISOString(),
+        actId: ChronicleDesk.acts[0]?.id || null,
+        chapterId: null,
+        status: 'draft',
+        notes: ['Converted from Inkwell fragment'],
+        themes: [],
+        mckeeData: {
+            structureElement: '',
+            purpose: '',
+            forces: [],
+            lastUpdated: new Date().toISOString()
+        }
+    };
+    
+    // Add to Desk scenes
+    ChronicleDesk.scenes.push(newScene);
+    ChronicleDesk.currentSceneId = newScene.id;
+    ChronicleDesk.saveScenes();
+    ChronicleDesk.populateSceneSwitcher();
+    
+    // Close Inkwell
+    this.close();
+    
+    // Switch to Desk
+    const deskTab = document.querySelector('[data-space="desk"]');
+    if (deskTab) deskTab.click();
+    
+    // Load the new scene
+    ChronicleDesk.displayScene(newScene);
+    McKeeSystem.loadSceneMetadata();
+    
+    // Show success message
+    alert(`✨ Fragment "${title}" converted to scene!\n\nNow open in The Desk for editing.`);
+    
+    console.log('✅ Fragment converted to scene:', newScene.title);
+},
     
     // Load Fragments from Storage
     loadFragments() {
@@ -364,8 +420,7 @@ const InkwellApp = {
         const filtered = searchTerm
             ? fragments.filter(f => 
                 f.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                f.content.toLowerCase().includes(searchTerm.toLowerCase())
-              )
+                f.content.toLowerCase().includes(searchTerm.toLowerCase()) )
             : fragments;
         
         if (filtered.length === 0) {

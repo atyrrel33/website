@@ -170,6 +170,56 @@
                     </button>
                 </div>
             </div>
+                    <!-- McKee Scene Metadata Panel -->
+        <div class="scene-metadata-panel" id="sceneMetadataPanel">
+            <div class="metadata-header">
+                <h4>Scene Structure</h4>
+                <button class="collapse-metadata" id="collapseMetadata">−</button>
+            </div>
+            <div class="metadata-body">
+                <div class="metadata-field">
+                    <label>Story Element:</label>
+                    <select class="metadata-select" id="sceneStructureElement">
+                        <option value="">Not Set</option>
+                        <option value="opening">Opening Image</option>
+                        <option value="inciting">Inciting Incident</option>
+                        <option value="lockin">Lock-In / First Act Climax</option>
+                        <option value="complications">Progressive Complications</option>
+                        <option value="midpoint">Midpoint Reversal</option>
+                        <option value="crisis">Crisis / Dark Night</option>
+                        <option value="climax">Climax</option>
+                        <option value="resolution">Resolution</option>
+                        <option value="closing">Closing Image</option>
+                    </select>
+                </div>
+                <div class="metadata-field">
+                    <label>Forces of Antagonism:</label>
+                    <div class="force-checkboxes">
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="internal" class="force-check">
+                            <span>Internal</span>
+                        </label>
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="personal" class="force-check">
+                            <span>Personal</span>
+                        </label>
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="extrapersonal" class="force-check">
+                            <span>Extra-Personal</span>
+                        </label>
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="environmental" class="force-check">
+                            <span>Environmental</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="metadata-field">
+                    <label>Scene Purpose:</label>
+                    <input type="text" class="metadata-input" id="scenePurpose" 
+                        placeholder="What does this scene accomplish?">
+                </div>
+            </div>
+        </div>
             
             <!-- Bottom Row: Text Formatting -->
             <div class="toolbar-bottom-row">
@@ -575,6 +625,7 @@
     
     <script src="chronicle-core.js"></script>
     <script src="chronicle-desk.js"></script>
+    <script src="chronicle-mckee.js"></script>
     <script src="chronicle-inkwell.js"></script>              
 </body>
 </html>
