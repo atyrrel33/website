@@ -34,7 +34,23 @@ const ChronicleApp = {
     
     autoSaveTimer: null,
     sessionTimer: null,
-    sessionStartTime: null
+    sessionStartTime: null,
+    
+    // ===================================
+    // UTILITY METHODS (NOW ATTACHED TO CHRONICLEAPP)
+    // ===================================
+    
+    countWords(text) {
+        if (!text || text.trim() === '') return 0;
+        return text.trim().split(/\s+/).length;
+    },
+    
+    updateWordCount() {
+        const countNumber = document.querySelector('.count-number');
+        if (countNumber) {
+            countNumber.textContent = this.currentScene.wordCount || 0;
+        }
+    }
 };
 
 // ===================================
@@ -70,7 +86,6 @@ function initializeApp() {
     
     // Setup all event listeners
     setupEventListeners();
-
     
     // Detect and handle session
     detectSession();
@@ -326,7 +341,7 @@ function setupKeyboardShortcuts() {
 // ===================================
 
 function switchSpace(spaceName) {
-    console.log(`📍 Switching to: ${spaceName}`);
+    console.log(`🔀 Switching to: ${spaceName}`);
     
     ChronicleApp.currentSpace = spaceName;
     
@@ -362,10 +377,10 @@ function switchSpace(spaceName) {
 function handleWritingInput(e) {
     const content = e.target.innerText;
     ChronicleApp.currentScene.content = content;
-    ChronicleApp.currentScene.wordCount = countWords(content);
+    ChronicleApp.currentScene.wordCount = ChronicleApp.countWords(content);
     ChronicleApp.currentScene.lastModified = new Date();
     
-    updateWordCount();
+    ChronicleApp.updateWordCount();
     triggerAutoSave();
 }
 
@@ -373,18 +388,6 @@ function handlePaste(e) {
     e.preventDefault();
     const text = e.clipboardData.getData('text/plain');
     document.execCommand('insertText', false, text);
-}
-
-function countWords(text) {
-    if (!text || text.trim() === '') return 0;
-    return text.trim().split(/\s+/).length;
-}
-
-function updateWordCount() {
-    const countNumber = document.querySelector('.count-number');
-    if (countNumber) {
-        countNumber.textContent = ChronicleApp.currentScene.wordCount;
-    }
 }
 
 function updateSceneTitle(e) {
@@ -531,7 +534,7 @@ function loadLastScene() {
             sceneTitle.value = ChronicleApp.currentScene.title || '';
         }
         
-        updateWordCount();
+        ChronicleApp.updateWordCount();
     }
 }
 
