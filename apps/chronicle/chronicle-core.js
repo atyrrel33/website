@@ -34,23 +34,7 @@ const ChronicleApp = {
     
     autoSaveTimer: null,
     sessionTimer: null,
-    sessionStartTime: null,
-    
-    // ===================================
-    // UTILITY METHODS (NOW ATTACHED TO CHRONICLEAPP)
-    // ===================================
-    
-    countWords(text) {
-        if (!text || text.trim() === '') return 0;
-        return text.trim().split(/\s+/).length;
-    },
-    
-    updateWordCount() {
-        const countNumber = document.querySelector('.count-number');
-        if (countNumber) {
-            countNumber.textContent = this.currentScene.wordCount || 0;
-        }
-    }
+    sessionStartTime: null
 };
 
 // ===================================
@@ -341,7 +325,7 @@ function setupKeyboardShortcuts() {
 // ===================================
 
 function switchSpace(spaceName) {
-    console.log(`🔀 Switching to: ${spaceName}`);
+    console.log(`🏛️ Switching to: ${spaceName}`);
     
     ChronicleApp.currentSpace = spaceName;
     
@@ -367,6 +351,19 @@ function switchSpace(spaceName) {
         targetWorkspace.style.transform = 'translateY(0)';
     }
     
+    // INITIALIZE SECTIONS ON FIRST VISIT
+    if (spaceName === 'archive' && window.ChronicleArchive && !window.ChronicleArchive.initialized) {
+        setTimeout(() => {
+            window.ChronicleArchive.init();
+        }, 100);
+    }
+    
+    if (spaceName === 'covenant' && window.ChronicleCovent && !window.ChronicleCovent.initialized) {
+        setTimeout(() => {
+            window.ChronicleCovent.init();
+        }, 100);
+    }
+    
     localStorage.setItem('chronicle_current_space', spaceName);
 }
 
@@ -377,10 +374,10 @@ function switchSpace(spaceName) {
 function handleWritingInput(e) {
     const content = e.target.innerText;
     ChronicleApp.currentScene.content = content;
-    ChronicleApp.currentScene.wordCount = ChronicleApp.countWords(content);
+    ChronicleApp.currentScene.wordCount = countWords(content);
     ChronicleApp.currentScene.lastModified = new Date();
     
-    ChronicleApp.updateWordCount();
+    updateWordCount();
     triggerAutoSave();
 }
 
@@ -388,6 +385,18 @@ function handlePaste(e) {
     e.preventDefault();
     const text = e.clipboardData.getData('text/plain');
     document.execCommand('insertText', false, text);
+}
+
+function countWords(text) {
+    if (!text || text.trim() === '') return 0;
+    return text.trim().split(/\s+/).length;
+}
+
+function updateWordCount() {
+    const countNumber = document.querySelector('.count-number');
+    if (countNumber) {
+        countNumber.textContent = ChronicleApp.currentScene.wordCount;
+    }
 }
 
 function updateSceneTitle(e) {
@@ -534,7 +543,7 @@ function loadLastScene() {
             sceneTitle.value = ChronicleApp.currentScene.title || '';
         }
         
-        ChronicleApp.updateWordCount();
+        updateWordCount();
     }
 }
 
