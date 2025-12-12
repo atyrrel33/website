@@ -318,10 +318,14 @@ createNewScene() {
                 </select>
             </div>
         `;
-        
-        const modal = document.getElementById('newItemModal');
+        // Ensure modal exists
+        let modal = document.getElementById('newItemModal');
+        if (!modal) {
+            modal = this.createNewItemModal();
+            document.body.appendChild(modal);
+        }
         const modalBody = modal.querySelector('.modal-body');
-        
+
         modalBody.innerHTML = `
             <button onclick="ChronicleDesk.showNewItemModal(); ChronicleDesk.createNewItemModal(); document.getElementById('newItemModal').querySelector('.modal-body').innerHTML = document.getElementById('newItemModal').querySelector('.modal-body').innerHTML" 
                     style="margin-bottom: 1rem; padding: 0.5rem 1rem; background: transparent; border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.75rem; cursor: pointer;">
@@ -336,7 +340,11 @@ createNewScene() {
     },
     
     finalizeNewScene() {
-        const modal = document.getElementById('newItemModal');
+        let modal = document.getElementById('newItemModal');
+        if (!modal) {
+        modal = this.createNewItemModal();
+        document.body.appendChild(modal);
+}
         const actSelect = document.getElementById('sceneActSelect');
         const chapterSelect = document.getElementById('sceneChapterSelect');
         
@@ -402,7 +410,11 @@ createNewScene() {
         alert(`Chapter "${chapterName}" created! New scenes can now be assigned to this chapter.`);
         
         // Close modal
-        const modal = document.getElementById('newItemModal');
+        let modal = document.getElementById('newItemModal');
+        if (!modal) {
+        modal = this.createNewItemModal();
+    d   ocument.body.appendChild(modal);
+}
         if (modal) modal.classList.remove('active');
     },
     
@@ -433,7 +445,11 @@ createNewScene() {
         alert(`Beat "${beatTitle}" saved!`);
         
         // Close modal
-        const modal = document.getElementById('newItemModal');
+        let modal = document.getElementById('newItemModal');
+        if (!modal) {
+        modal = this.createNewItemModal();
+        document.body.appendChild(modal);
+}
         if (modal) modal.classList.remove('active');
         
         this.populateSceneSwitcher();
