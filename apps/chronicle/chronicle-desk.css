@@ -316,6 +316,142 @@
 }
 
 /* ===================================
+   SAVE SCENE BUTTON
+   =================================== */
+
+.save-scene-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: 2px solid;
+    border-radius: 6px;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+    background: linear-gradient(135deg, 
+        rgba(201, 169, 97, 0.2) 0%, 
+        rgba(201, 169, 97, 0.1) 100%);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.save-scene-btn:hover {
+    background: linear-gradient(135deg, 
+        rgba(201, 169, 97, 0.3) 0%, 
+        rgba(201, 169, 97, 0.2) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.3);
+}
+
+.save-scene-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* ===================================
+   FORMAT GROUPS - Organized Instruments
+   =================================== */
+
+.format-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 0 var(--spacing-sm);
+}
+
+.format-group-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--brown-warm);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-right: var(--spacing-xs);
+    opacity: 0.8;
+}
+
+/* ===================================
+   FORMAT BUTTONS - Text Styling
+   =================================== */
+
+.format-btn {
+    width: 32px;
+    height: 32px;
+    background: rgba(26, 20, 16, 0.5);
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: all var(--transition-fast);
+}
+
+.format-btn svg {
+    width: 15px;
+    height: 15px;
+    stroke: #8a8580;
+    fill: none;
+    stroke-width: 2;
+    transition: stroke var(--transition-fast);
+}
+
+.format-btn:hover {
+    background: rgba(42, 40, 34, 0.8);
+    border-color: var(--gold);
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.2);
+}
+
+.format-btn:hover svg {
+    stroke: var(--gold);
+}
+
+.format-btn.active {
+    background: rgba(201, 169, 97, 0.2);
+    border-color: var(--gold);
+}
+
+.format-btn.active svg {
+    stroke: var(--gold);
+}
+
+/* ===================================
+   FONT SIZE SELECTOR
+   =================================== */
+
+.font-size-selector {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: rgba(26, 20, 16, 0.7);
+    border: 1px solid rgba(139, 115, 85, 0.4);
+    border-radius: 6px;
+    color: #e8e3da;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    cursor: none;
+    transition: all var(--transition-fast);
+    min-width: 110px;
+}
+
+.font-size-selector:hover {
+    border-color: var(--gold);
+    background: rgba(26, 20, 16, 0.85);
+}
+
+.font-size-selector:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 16px rgba(201, 169, 97, 0.3);
+}
+
+.font-size-selector option {
+    background: var(--stone-deep);
+    color: #e8e3da;
+}
+/* ===================================
    ACTION BUTTONS - New Scene & Export
    =================================== */
 
@@ -1127,6 +1263,10 @@ body.focus-mode .writing-surface::before {
     z-index: 150;
     transition: all var(--transition-medium);
 }
+.scene-metadata-panel.dragging {
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8);
+    z-index: 200;
+}
 
 .scene-metadata-panel.collapsed .metadata-body {
     display: none;
@@ -1142,6 +1282,8 @@ body.focus-mode .writing-surface::before {
         rgba(42, 40, 34, 0.9) 100%);
     border-bottom: 2px solid rgba(139, 115, 85, 0.3);
     border-radius: 8px 8px 0 0;
+    cursor: move;
+    user-select: none;
 }
 
 .metadata-header h4 {

@@ -87,14 +87,23 @@ const McKeeSystem = {
         }
     },
 
-    // Initialize McKee system
-    init() {
-        console.log('📖 McKee System initializing...');
-        this.setupMetadataPanel();
-        this.loadSceneMetadata();
-        console.log('✅ McKee System ready');
+    // Drag state
+    dragState: {
+        isDragging: false,
+        startX: 0,
+        startY: 0,
+        offsetX: 0,
+        offsetY: 0
     },
 
+    // Initialize McKee system
+    init() {
+            console.log('📖 McKee System initializing...');
+            this.setupMetadataPanel();
+            this.setupDraggable();  // ADD THIS LINE
+            this.loadSceneMetadata();
+            console.log('✅ McKee System ready');
+        },
     // Setup metadata panel interactions
     setupMetadataPanel() {
         const panel = document.getElementById('sceneMetadataPanel');
@@ -126,6 +135,87 @@ const McKeeSystem = {
         forceChecks.forEach(check => {
             check.addEventListener('change', () => this.saveSceneMetadata());
         });
+    },
+
+    
+    // Setup draggable functionality
+    setupDraggable() {
+        const panel = document.getElementById('sceneMetadataPanel');
+        const header = panel?.querySelector('.metadata-header');
+        
+        if (!panel || !header) return;
+
+        header.addEventListener('mousedown', (e) => {
+            // Don't drag if clicking the collapse button
+            if (e.target.closest('.collapse-metadata')) return;
+
+            this.dragState.isDragging = true;
+            this.dragState.startX = e.clientX;
+            this.dragState.startY = e.clientY;
+            
+            const rect = panel.getBoundingClientRect();
+            this.dragState.offsetX = this.dragState.startX - rect.left;
+            this.dragState.offsetY = this.dragState.startY - rect.top;
+
+            panel.classList.add('dragging');
+            document.body.style.userSelect = 'none';
+
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!this.dragState.isDragging) return;
+
+            const newX = e.clientX - this.dragState.offsetX;
+            const newY = e.clientY - this.dragState.offsetY;
+
+            // Get viewport dimensions
+            const maxX = window.innerWidth - panel.offsetWidth;
+            const maxY = window.innerHeight - panel.offsetHeight;
+
+            // Constrain to viewport
+            const constrainedX = Math.max(0, Math.min(newX, maxX));
+            const constrainedY = Math.max(0, Math.min(newY, maxY));
+
+            panel.style.left = constrainedX + 'px';
+            panel.style.top = constrainedY + 'px';
+            panel.style.right = 'auto'; // Remove right positioning when dragging
+
+            e.preventDefault();
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (!this.dragState.isDragging) return;
+
+            this.dragState.isDragging = false;
+            panel.classList.remove('dragging');
+            document.body.style.userSelect = '';
+
+            // Save position to localStorage
+            const rect = panel.getBoundingClientRect();
+            localStorage.setItem('mckee-panel-position', JSON.stringify({
+                left: rect.left,
+                top: rect.top
+            }));
+        });
+
+        // Load saved position
+        this.loadPanelPosition(panel);
+    },
+
+    // Load saved panel position
+    loadPanelPosition(panel) {
+        const savedPosition = localStorage.getItem('mckee-panel-position');
+        if (savedPosition) {
+            try {
+                const { left, top } = JSON.parse(savedPosition);
+                panel.style.left = left + 'px';
+                panel.style.top = top + 'px';
+                panel.style.right = 'auto';
+            } catch (e) {
+                console.error('Failed to load panel position:', e);
+            }
+        }
     },
 
     // Load metadata for current scene
