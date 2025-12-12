@@ -1351,9 +1351,12 @@ body.focus-mode .writing-surface::before {
     border: 2px solid rgba(139, 115, 85, 0.4);
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(8px);
+    will-change: transform;
     z-index: 150;
     transition: all var(--transition-medium);
+    contain: layout style paint;
+    transform: translateZ(0);
 }
 .scene-metadata-panel.dragging {
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8);
@@ -1410,6 +1413,9 @@ body.focus-mode .writing-surface::before {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .metadata-field {

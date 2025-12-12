@@ -282,19 +282,73 @@ const ChronicleDesk = {
     // SCENE CREATION
     // ===================================
     
-    createNewScene() {
+createNewScene() {
         console.log('🆕 Creating new scene...');
         
-        // Close modal
+        // Show organization prompt
+        this.showSceneOrganizationPrompt();
+    },
+    
+    showSceneOrganizationPrompt() {
+        const actOptions = this.acts.map(act => 
+            `<option value="${act.id}">${act.name}</option>`
+        ).join('');
+        
+        const chapterOptions = this.chapters.map(ch => {
+            const act = this.acts.find(a => a.id === ch.actId);
+            return `<option value="${ch.id}">${act ? act.name + ' → ' : ''}${ch.name}</option>`;
+        }).join('');
+        
+        const promptHTML = `
+            <div style="margin: 1.5rem 0;">
+                <label style="display: block; font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--gold); margin-bottom: 0.5rem; letter-spacing: 0.1em;">
+                    WHERE SHALL THIS SCENE DWELL?
+                </label>
+                <select id="sceneActSelect" style="width: 100%; padding: 0.75rem; background: rgba(26, 20, 16, 0.9); border: 1px solid rgba(139, 115, 85, 0.4); border-radius: 6px; color: #e8e3da; font-family: 'Crimson Text', serif; font-size: 1rem; margin-bottom: 1rem;">
+                    <option value="">Unorganized (decide later)</option>
+                    ${actOptions}
+                </select>
+                
+                <label style="display: block; font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--teal); margin-bottom: 0.5rem; letter-spacing: 0.1em;">
+                    WITHIN WHICH CHAPTER? (OPTIONAL)
+                </label>
+                <select id="sceneChapterSelect" style="width: 100%; padding: 0.75rem; background: rgba(26, 20, 16, 0.9); border: 1px solid rgba(139, 115, 85, 0.4); border-radius: 6px; color: #e8e3da; font-family: 'Crimson Text', serif; font-size: 1rem;">
+                    <option value="">No chapter</option>
+                    ${chapterOptions}
+                </select>
+            </div>
+        `;
+        
         const modal = document.getElementById('newItemModal');
-        if (modal) modal.classList.remove('active');
+        const modalBody = modal.querySelector('.modal-body');
+        
+        modalBody.innerHTML = `
+            <button onclick="ChronicleDesk.showNewItemModal(); ChronicleDesk.createNewItemModal(); document.getElementById('newItemModal').querySelector('.modal-body').innerHTML = document.getElementById('newItemModal').querySelector('.modal-body').innerHTML" 
+                    style="margin-bottom: 1rem; padding: 0.5rem 1rem; background: transparent; border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.75rem; cursor: pointer;">
+                ← Back
+            </button>
+            ${promptHTML}
+            <button onclick="ChronicleDesk.finalizeNewScene()" 
+                    style="width: 100%; padding: 1rem; background: linear-gradient(135deg, rgba(201, 169, 97, 0.2), rgba(44, 95, 95, 0.2)); border: 2px solid var(--gold); border-radius: 8px; color: var(--gold); font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.1em; cursor: pointer; margin-top: 1rem;">
+                CREATE SCENE
+            </button>
+        `;
+    },
+    
+    finalizeNewScene() {
+        const modal = document.getElementById('newItemModal');
+        const actSelect = document.getElementById('sceneActSelect');
+        const chapterSelect = document.getElementById('sceneChapterSelect');
+        
+        // Close modal
+        modal.classList.remove('active');
         
         // Save current scene first
         if (this.currentSceneId) {
             this.saveCurrentScene();
         }
         
-        // Generate new scene
+        // Generate new scene with chosen organization
         const newScene = {
             id: `scene-${Date.now()}`,
             type: 'scene',
@@ -304,8 +358,8 @@ const ChronicleDesk = {
             author: ChronicleApp.currentUser,
             createdAt: new Date().toISOString(),
             lastModified: new Date().toISOString(),
-            actId: this.acts[0]?.id || null,
-            chapterId: null,
+            actId: actSelect ? actSelect.value || null : null,
+            chapterId: chapterSelect ? chapterSelect.value || null : null,
             status: 'draft',
             notes: [],
             themes: []
@@ -383,6 +437,47 @@ const ChronicleDesk = {
         if (modal) modal.classList.remove('active');
         
         this.populateSceneSwitcher();
+    },
+    // ===================================
+    // SCENE MOVEMENT & REORGANIZATION
+    // ===================================
+    
+    moveCurrentSceneToAct(actId) {
+        if (!this.currentSceneId) {
+            alert('No scene is currently selected');
+            return;
+        }
+        
+        const sceneIndex = this.scenes.findIndex(s => s.id === this.currentSceneId);
+        if (sceneIndex === -1) return;
+        
+        this.scenes[sceneIndex].actId = actId || null;
+        this.scenes[sceneIndex].lastModified = new Date().toISOString();
+        
+        this.saveScenes();
+        this.populateSceneSwitcher();
+        
+        const actName = actId ? this.acts.find(a => a.id === actId)?.name : 'Unorganized';
+        console.log(`📦 Scene moved to: ${actName}`);
+    },
+    
+    moveCurrentSceneToChapter(chapterId) {
+        if (!this.currentSceneId) {
+            alert('No scene is currently selected');
+            return;
+        }
+        
+        const sceneIndex = this.scenes.findIndex(s => s.id === this.currentSceneId);
+        if (sceneIndex === -1) return;
+        
+        this.scenes[sceneIndex].chapterId = chapterId || null;
+        this.scenes[sceneIndex].lastModified = new Date().toISOString();
+        
+        this.saveScenes();
+        this.populateSceneSwitcher();
+        
+        const chapterName = chapterId ? this.chapters.find(c => c.id === chapterId)?.name : 'No chapter';
+        console.log(`📦 Scene moved to: ${chapterName}`);
     },
     
     // ===================================
@@ -514,6 +609,30 @@ const ChronicleDesk = {
         if (!sceneSwitcher) return;
         
         sceneSwitcher.innerHTML = '';
+        // Also populate movement dropdowns
+        const moveToActSelect = document.getElementById('moveSceneToAct');
+        const moveToChapterSelect = document.getElementById('moveSceneToChapter');
+        
+        if (moveToActSelect) {
+            moveToActSelect.innerHTML = '<option value="">Move to Act...</option>';
+            this.acts.forEach(act => {
+                const option = document.createElement('option');
+                option.value = act.id;
+                option.textContent = act.name;
+                moveToActSelect.appendChild(option);
+            });
+        }
+        
+        if (moveToChapterSelect) {
+            moveToChapterSelect.innerHTML = '<option value="">Move to Chapter...</option><option value="null">Remove from Chapter</option>';
+            this.chapters.forEach(chapter => {
+                const act = this.acts.find(a => a.id === chapter.actId);
+                const option = document.createElement('option');
+                option.value = chapter.id;
+                option.textContent = (act ? act.name + ' → ' : '') + chapter.name;
+                moveToChapterSelect.appendChild(option);
+            });
+        }
         
         if (this.scenes.length === 0) {
             const option = document.createElement('option');

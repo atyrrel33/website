@@ -117,6 +117,17 @@
                     <select class="scene-switcher" id="sceneSwitcher">
                         <option value="">Loading scenes...</option>
                     </select>
+                    <div class="scene-movement-controls" style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                        <select id="moveSceneToAct" onchange="if(this.value) { ChronicleDesk.moveCurrentSceneToAct(this.value); this.value=''; }" 
+                                style="flex: 1; padding: 0.4rem; background: rgba(26, 20, 16, 0.8); border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: #e8e3da; font-family: 'Crimson Text', serif; font-size: 0.85rem;">
+                            <option value="">Move to Act...</option>
+                        </select>
+                        <select id="moveSceneToChapter" onchange="if(this.value !== '') { ChronicleDesk.moveCurrentSceneToChapter(this.value || null); this.value=''; }" 
+                                style="flex: 1; padding: 0.4rem; background: rgba(26, 20, 16, 0.8); border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: #e8e3da; font-family: 'Crimson Text', serif; font-size: 0.85rem;">
+                            <option value="">Move to Chapter...</option>
+                            <option value="null">Remove from Chapter</option>
+                        </select>
+                    </div>
                     <!-- New Scene Button -->
                     <button class="new-scene-btn" id="newSceneBtn" title="Start New Scene (Ctrl+N)">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -286,56 +297,57 @@
                 </div>
             </div>
         </div>
-                    <!-- McKee Scene Metadata Panel -->
-            <div class="scene-metadata-panel" id="sceneMetadataPanel">
-                <div class="metadata-header">
-                    <h4>Scene Structure</h4>
-                    <button class="collapse-metadata" id="collapseMetadata">−</button>
+
+                <!-- McKee Scene Metadata Panel -->
+        <div class="scene-metadata-panel" id="sceneMetadataPanel">
+            <div class="metadata-header">
+                <h4>Scene Structure</h4>
+                <button class="collapse-metadata" id="collapseMetadata">−</button>
+            </div>
+            <div class="metadata-body">
+                <div class="metadata-field">
+                    <label>Story Element:</label>
+                    <select class="metadata-select" id="sceneStructureElement">
+                        <option value="">Not Set</option>
+                        <option value="opening">Opening Image</option>
+                        <option value="inciting">Inciting Incident</option>
+                        <option value="lockin">Lock-In / First Act Climax</option>
+                        <option value="complications">Progressive Complications</option>
+                        <option value="midpoint">Midpoint Reversal</option>
+                        <option value="crisis">Crisis / Dark Night</option>
+                        <option value="climax">Climax</option>
+                        <option value="resolution">Resolution</option>
+                        <option value="closing">Closing Image</option>
+                    </select>
                 </div>
-                <div class="metadata-body">
-                    <div class="metadata-field">
-                        <label>Story Element:</label>
-                        <select class="metadata-select" id="sceneStructureElement">
-                            <option value="">Not Set</option>
-                            <option value="opening">Opening Image</option>
-                            <option value="inciting">Inciting Incident</option>
-                            <option value="lockin">Lock-In / First Act Climax</option>
-                            <option value="complications">Progressive Complications</option>
-                            <option value="midpoint">Midpoint Reversal</option>
-                            <option value="crisis">Crisis / Dark Night</option>
-                            <option value="climax">Climax</option>
-                            <option value="resolution">Resolution</option>
-                            <option value="closing">Closing Image</option>
-                        </select>
+                <div class="metadata-field">
+                    <label>Forces of Antagonism:</label>
+                    <div class="force-checkboxes">
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="internal" class="force-check">
+                            <span>Internal</span>
+                        </label>
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="personal" class="force-check">
+                            <span>Personal</span>
+                        </label>
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="extrapersonal" class="force-check">
+                            <span>Extra-Personal</span>
+                        </label>
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="environmental" class="force-check">
+                            <span>Environmental</span>
+                        </label>
                     </div>
-                    <div class="metadata-field">
-                        <label>Forces of Antagonism:</label>
-                        <div class="force-checkboxes">
-                            <label class="force-checkbox">
-                                <input type="checkbox" value="internal" class="force-check">
-                                <span>Internal</span>
-                            </label>
-                            <label class="force-checkbox">
-                                <input type="checkbox" value="personal" class="force-check">
-                                <span>Personal</span>
-                            </label>
-                            <label class="force-checkbox">
-                                <input type="checkbox" value="extrapersonal" class="force-check">
-                                <span>Extra-Personal</span>
-                            </label>
-                            <label class="force-checkbox">
-                                <input type="checkbox" value="environmental" class="force-check">
-                                <span>Environmental</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="metadata-field">
-                        <label>Scene Purpose:</label>
-                        <input type="text" class="metadata-input" id="scenePurpose" 
-                            placeholder="What does this scene accomplish?">
-                    </div>
+                </div>
+                <div class="metadata-field">
+                    <label>Scene Purpose:</label>
+                    <input type="text" class="metadata-input" id="scenePurpose" 
+                        placeholder="What does this scene accomplish?">
                 </div>
             </div>
+        </div>
                     <!-- Writing Area with Reference Panel -->
                     <div class="writing-area-container">
                         <div class="writing-editor">

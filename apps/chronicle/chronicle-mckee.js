@@ -166,20 +166,23 @@ const McKeeSystem = {
         document.addEventListener('mousemove', (e) => {
             if (!this.dragState.isDragging) return;
 
-            const newX = e.clientX - this.dragState.offsetX;
-            const newY = e.clientY - this.dragState.offsetY;
+            // Use requestAnimationFrame for smooth 60fps updates
+            requestAnimationFrame(() => {
+                const newX = e.clientX - this.dragState.offsetX;
+                const newY = e.clientY - this.dragState.offsetY;
 
-            // Get viewport dimensions
-            const maxX = window.innerWidth - panel.offsetWidth;
-            const maxY = window.innerHeight - panel.offsetHeight;
+                // Get viewport dimensions
+                const maxX = window.innerWidth - panel.offsetWidth;
+                const maxY = window.innerHeight - panel.offsetHeight;
 
-            // Constrain to viewport
-            const constrainedX = Math.max(0, Math.min(newX, maxX));
-            const constrainedY = Math.max(0, Math.min(newY, maxY));
+                // Constrain to viewport
+                const constrainedX = Math.max(0, Math.min(newX, maxX));
+                const constrainedY = Math.max(0, Math.min(newY, maxY));
 
-            panel.style.left = constrainedX + 'px';
-            panel.style.top = constrainedY + 'px';
-            panel.style.right = 'auto'; // Remove right positioning when dragging
+                panel.style.left = constrainedX + 'px';
+                panel.style.top = constrainedY + 'px';
+                panel.style.right = 'auto';
+            });
 
             e.preventDefault();
         });
