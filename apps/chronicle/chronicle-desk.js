@@ -250,29 +250,29 @@ const ChronicleDesk = {
         modal.className = 'modal';
         
         modal.innerHTML = `
-            <div class="modal-content">
-                <button class="modal-close" onclick="document.getElementById('newItemModal').classList.remove('active')">×</button>
-                <div class="modal-header">
-                    <h2>Begin Something New</h2>
-                    <p>What shall you create?</p>
-                </div>
-                <div class="modal-body">
-                    <div class="new-item-options">
-                        <button class="new-item-option" onclick="ChronicleDesk.createNewScene()">
-                            <strong>New Scene</strong>
-                            <small>A narrative moment or passage</small>
-                        </button>
-                        <button class="new-item-option" onclick="ChronicleDesk.createNewChapter()">
-                            <strong>New Chapter</strong>
-                            <small>Group multiple scenes together</small>
-                        </button>
-                        <button class="new-item-option" onclick="ChronicleDesk.createNewBeat()">
-                            <strong>New Beat</strong>
-                            <small>Quick note or story fragment</small>
-                        </button>
-                    </div>
-                </div>
+    <div class="modal-content">
+        <button class="modal-close" onclick="document.getElementById('newItemModal').classList.remove('active')">×</button>
+        <div class="modal-header">
+            <h2>Begin Something New</h2>
+            <p>What shall you create?</p>
+        </div>
+        <div class="modal-body">
+            <div class="new-item-options">
+                <button class="new-item-option" onclick="console.log('🔵 New Scene button clicked'); try { ChronicleDesk.createNewScene(); } catch(e) { console.error('Scene creation error:', e); alert('Error: ' + e.message); }">
+                    <strong>New Scene</strong>
+                    <small>A narrative moment or passage</small>
+                </button>
+                <button class="new-item-option" onclick="console.log('🔵 New Chapter button clicked'); try { ChronicleDesk.createNewChapter(); } catch(e) { console.error('Chapter creation error:', e); alert('Error: ' + e.message); }">
+                    <strong>New Chapter</strong>
+                    <small>Group multiple scenes together</small>
+                </button>
+                <button class="new-item-option" onclick="console.log('🔵 New Beat button clicked'); try { ChronicleDesk.createNewBeat(); } catch(e) { console.error('Beat creation error:', e); alert('Error: ' + e.message); }">
+                    <strong>New Beat</strong>
+                    <small>Quick note or story fragment</small>
+                </button>
             </div>
+        </div>
+    </div>
         `;
         
         return modal;
@@ -743,8 +743,19 @@ const ChronicleDesk = {
     }
 };
 
-// Don't auto-initialize - let chronicle-core.js call init()
-console.log('✍️ Chronicle Desk module loaded');
-
-// Make available globally
+// Make available globally FIRST
 window.ChronicleDesk = ChronicleDesk;
+
+// Then self-initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('📖 ChronicleDesk initializing via DOMContentLoaded...');
+        ChronicleDesk.init();
+    });
+} else {
+    // DOM already loaded (script is deferred or async)
+    console.log('📖 ChronicleDesk initializing immediately...');
+    ChronicleDesk.init();
+}
+
+console.log('✍️ Chronicle Desk module loaded and ready');
