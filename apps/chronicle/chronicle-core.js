@@ -70,9 +70,7 @@ function initializeApp() {
     
     // Setup all event listeners
     setupEventListeners();
-    
-      // ✨ ADD THIS SINGLE LINE:
-    if (typeof ChronicleDesk !== 'undefined') ChronicleDesk.init();
+
     
     // Detect and handle session
     detectSession();
