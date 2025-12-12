@@ -1243,8 +1243,9 @@ window.ChronicleCovent = ChronicleCovent;
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize when switching to Covenant
     document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            if (e.target.dataset.space === 'covenant') {
+        tab.addEventListener('click', () => {
+            // Use 'tab' from closure, not e.target (which could be child elements)
+            if (tab.dataset.space === 'covenant') {
                 setTimeout(() => {
                     ChronicleCovent.init();
                 }, 100);
@@ -1252,6 +1253,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
 console.log('📜 Chronicle Covenant module loaded');
 console.log('"Unless the LORD builds the house, the builders labor in vain" - Psalm 127:1');
