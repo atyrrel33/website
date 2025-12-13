@@ -364,11 +364,11 @@ function switchSpace(spaceName) {
         }, 100);
     }
     
-    if (spaceName === 'covenant' && window.ChronicleConvenant && !window.ChronicleConvenant.initialized) {
+    if (spaceName === 'covenant' && window.ChronicleCovenant && !window.ChronicleCovenant.initialized) {
         setTimeout(() => {
             try {
                 console.log('📜 Initializing Covenant...');
-                window.ChronicleConvenant.init();
+                window.ChronicleCovenant.init();
             } catch (error) {
                 console.error('❌ Covenant initialization failed:', error);
                 alert('The Covenant could not be opened. Please refresh the page.\n\nError: ' + error.message);

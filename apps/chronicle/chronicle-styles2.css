@@ -963,17 +963,3 @@ body {
     padding: var(--spacing-xl);
     background: transparent;
 }
-
-/* ===================================
-   ARCHIVE/COVENANT/ALTAR CONTAINERS
-   =================================== */
-
-.archive-container,
-.covenant-container,
-.altar-container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-3xl);
-}

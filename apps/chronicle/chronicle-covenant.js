@@ -1247,7 +1247,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.dataset.space === 'covenant') {
                 setTimeout(() => {
                     try {
-                        ChronicleConvenant.init();
+                        ChronicleCovenant.init();
                     } catch (error) {
                         console.error('❌ Covenant failed to initialize:', error);
                     }
