@@ -321,9 +321,9 @@ createNewScene() {
         }
         const modalBody = modal.querySelector('.modal-body');
 
-        modalBody.innerHTML = `
-            <button onclick="ChronicleDesk.showNewItemModal(); ChronicleDesk.createNewItemModal(); document.getElementById('newItemModal').querySelector('.modal-body').innerHTML = document.getElementById('newItemModal').querySelector('.modal-body').innerHTML" 
-                    style="margin-bottom: 1rem; padding: 0.5rem 1rem; background: transparent; border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.75rem; cursor: pointer;">
+modalBody.innerHTML = `
+            <button onclick="ChronicleDesk.returnToNewItemMenu()" 
+                    style="margin-bottom: 1rem; padding: 0.5rem 1rem; background: transparent; border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease;">
                 ← Back
             </button>
             ${promptHTML}
@@ -382,6 +382,34 @@ createNewScene() {
         }
         
         console.log('✨ New scene created:', newScene.title);
+    },
+    
+    returnToNewItemMenu() {
+        console.log('← Returning to main menu...');
+        const modal = document.getElementById('newItemModal');
+        if (!modal) return;
+        
+        const modalBody = modal.querySelector('.modal-body');
+        modalBody.innerHTML = `
+            <div class="new-item-options">
+                <button class="new-item-option" onclick="console.log('🔵 New Scene button clicked'); try { ChronicleDesk.createNewScene(); } catch(e) { console.error('Scene creation error:', e); alert('Error: ' + e.message); }">
+                    <strong>New Scene</strong>
+                    <small>A narrative moment or passage</small>
+                </button>
+                <button class="new-item-option" onclick="console.log('🔵 New Act button clicked'); try { ChronicleDesk.createNewAct(); } catch(e) { console.error('Act creation error:', e); alert('Error: ' + e.message); }">
+                    <strong>New Act</strong>
+                    <small>Major story division (Act I, II, III)</small>
+                </button>
+                <button class="new-item-option" onclick="console.log('🔵 New Chapter button clicked'); try { ChronicleDesk.createNewChapter(); } catch(e) { console.error('Chapter creation error:', e); alert('Error: ' + e.message); }">
+                    <strong>New Chapter</strong>
+                    <small>Group multiple scenes together</small>
+                </button>
+                <button class="new-item-option" onclick="console.log('🔵 New Beat button clicked'); try { ChronicleDesk.createNewBeat(); } catch(e) { console.error('Beat creation error:', e); alert('Error: ' + e.message); }">
+                    <strong>New Beat</strong>
+                    <small>Quick note or story fragment</small>
+                </button>
+            </div>
+        `;
     },
     
     createNewAct() {

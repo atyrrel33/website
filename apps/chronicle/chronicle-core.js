@@ -356,24 +356,30 @@ function switchSpace(spaceName) {
         setTimeout(() => {
             try {
                 console.log('📚 Initializing Archive...');
+                console.log('📊 Archive workspace visible?', targetWorkspace ? 'YES' : 'NO');
+                console.log('📊 Archive container in DOM?', document.querySelector('#archive .archive-container') ? 'YES' : 'NO');
                 window.ChronicleArchive.init();
             } catch (error) {
                 console.error('❌ Archive initialization failed:', error);
+                console.error('Full error:', error);
                 alert('The Archive could not be opened. Please refresh the page.\n\nError: ' + error.message);
             }
-        }, 100);
+        }, 250);
     }
     
     if (spaceName === 'covenant' && window.ChronicleCovenant && !window.ChronicleCovenant.initialized) {
         setTimeout(() => {
             try {
                 console.log('📜 Initializing Covenant...');
+                console.log('📊 Covenant workspace visible?', targetWorkspace ? 'YES' : 'NO');
+                console.log('📊 Covenant container in DOM?', document.querySelector('#covenant .covenant-container') ? 'YES' : 'NO');
                 window.ChronicleCovenant.init();
             } catch (error) {
                 console.error('❌ Covenant initialization failed:', error);
+                console.error('Full error:', error);
                 alert('The Covenant could not be opened. Please refresh the page.\n\nError: ' + error.message);
             }
-        }, 100);
+        }, 250);
     }
     
     // Desk doesn't need special handling here since it auto-initializes
