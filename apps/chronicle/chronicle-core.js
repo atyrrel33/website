@@ -367,21 +367,32 @@ function switchSpace(spaceName) {
         }, 250);
     }
     
-    if (spaceName === 'covenant' && window.ChronicleCovenant && !window.ChronicleCovenant.initialized) {
-        setTimeout(() => {
-            try {
-                console.log('📜 Initializing Covenant...');
-                console.log('📊 Covenant workspace visible?', targetWorkspace ? 'YES' : 'NO');
-                console.log('📊 Covenant container in DOM?', document.querySelector('#covenant .covenant-container') ? 'YES' : 'NO');
-                window.ChronicleCovenant.init();
-            } catch (error) {
-                console.error('❌ Covenant initialization failed:', error);
-                console.error('Full error:', error);
-                alert('The Covenant could not be opened. Please refresh the page.\n\nError: ' + error.message);
-            }
-        }, 250);
+if (spaceName === 'covenant') {
+        // FORCE VISIBILITY IMMEDIATELY
+        const covenantSection = document.getElementById('covenant');
+        if (covenantSection) {
+            covenantSection.style.display = 'block';
+            covenantSection.style.opacity = '1';
+            covenantSection.style.visibility = 'visible';
+            covenantSection.style.transform = 'translateY(0)';
+            console.log('✅ Covenant section made visible');
+        }
+        
+        // Initialize if not already done
+        if (window.ChronicleCovenant && !window.ChronicleCovenant.initialized) {
+            setTimeout(() => {
+                try {
+                    console.log('📜 Initializing Covenant...');
+                    window.ChronicleCovenant.init();
+                } catch (error) {
+                    console.error('❌ Covenant initialization failed:', error);
+                    alert('The Covenant could not be opened. Please refresh the page.\n\nError: ' + error.message);
+                }
+            }, 100);
+        } else if (window.ChronicleCovenant && window.ChronicleCovenant.initialized) {
+            console.log('📜 Covenant already initialized, just showing it');
+        }
     }
-    
     // Desk doesn't need special handling here since it auto-initializes
     if (spaceName === 'desk' && window.ChronicleDesk && !window.ChronicleDesk.initialized) {
         setTimeout(() => {
