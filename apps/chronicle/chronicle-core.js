@@ -351,21 +351,45 @@ function switchSpace(spaceName) {
         targetWorkspace.style.transform = 'translateY(0)';
     }
     
-    // INITIALIZE SECTIONS ON FIRST VISIT
+    // INITIALIZE SECTIONS ON FIRST VISIT - WITH ERROR PROTECTION
     if (spaceName === 'archive' && window.ChronicleArchive && !window.ChronicleArchive.initialized) {
         setTimeout(() => {
-            window.ChronicleArchive.init();
+            try {
+                console.log('📚 Initializing Archive...');
+                window.ChronicleArchive.init();
+            } catch (error) {
+                console.error('❌ Archive initialization failed:', error);
+                alert('The Archive could not be opened. Please refresh the page.\n\nError: ' + error.message);
+            }
         }, 100);
     }
     
-    if (spaceName === 'covenant' && window.ChronicleCovent && !window.ChronicleCovent.initialized) {
+    if (spaceName === 'covenant' && window.ChronicleConvenant && !window.ChronicleConvenant.initialized) {
         setTimeout(() => {
-            window.ChronicleCovent.init();
+            try {
+                console.log('📜 Initializing Covenant...');
+                window.ChronicleConvenant.init();
+            } catch (error) {
+                console.error('❌ Covenant initialization failed:', error);
+                alert('The Covenant could not be opened. Please refresh the page.\n\nError: ' + error.message);
+            }
+        }, 100);
+    }
+    
+    // Desk doesn't need special handling here since it auto-initializes
+    if (spaceName === 'desk' && window.ChronicleDesk && !window.ChronicleDesk.initialized) {
+        setTimeout(() => {
+            try {
+                console.log('📖 Initializing Desk...');
+                window.ChronicleDesk.init();
+            } catch (error) {
+                console.error('❌ Desk initialization failed:', error);
+                alert('The Desk could not be opened. Please refresh the page.\n\nError: ' + error.message);
+            }
         }, 100);
     }
     
     localStorage.setItem('chronicle_current_space', spaceName);
-}
 
 // ===================================
 // WRITING FUNCTIONALITY

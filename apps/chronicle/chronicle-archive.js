@@ -1113,7 +1113,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Use 'tab' from closure, not e.target
             if (tab.dataset.space === 'archive') {
                 setTimeout(() => {
-                    ChronicleArchive.init();
+                    try {
+                        ChronicleArchive.init();
+                    } catch (error) {
+                        console.error('❌ Archive failed to initialize:', error);
+                    }
                 }, 100);
             }
         });

@@ -901,16 +901,31 @@ createNewScene() {
 // Make available globally FIRST
 window.ChronicleDesk = ChronicleDesk;
 
-// Then self-initialize when DOM is ready
+// Then self-initialize when DOM is ready - WITH ERROR HANDLING
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('📖 ChronicleDesk initializing via DOMContentLoaded...');
-        ChronicleDesk.init();
+        try {
+            console.log('📖 ChronicleDesk initializing via DOMContentLoaded...');
+            ChronicleDesk.init();
+        } catch (error) {
+            console.error('❌ ChronicleDesk initialization failed:', error);
+            console.log('⚠️ Other sections remain available');
+            // Mark as failed but don't block other functionality
+            ChronicleDesk.initialized = false;
+            ChronicleDesk.initializationError = error.message;
+        }
     });
 } else {
-    // DOM already loaded (script is deferred or async)
-    console.log('📖 ChronicleDesk initializing immediately...');
-    ChronicleDesk.init();
+    // DOM already loaded
+    try {
+        console.log('📖 ChronicleDesk initializing immediately...');
+        ChronicleDesk.init();
+    } catch (error) {
+        console.error('❌ ChronicleDesk initialization failed:', error);
+        console.log('⚠️ Other sections remain available');
+        ChronicleDesk.initialized = false;
+        ChronicleDesk.initializationError = error.message;
+    }
 }
 
-console.log('✍️ Chronicle Desk module loaded and ready');
+console.log('✏️ Chronicle Desk module loaded and ready');

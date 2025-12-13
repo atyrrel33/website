@@ -9,7 +9,7 @@
 // - Structure Validation
 // ===================================
 
-const ChronicleCovent = {
+const ChronicleCovenant = {
     // Current state
     currentView: 'beatsheet', // beatsheet, timeline, pacing, characters, themes
     selectedSceneId: null,
@@ -380,11 +380,11 @@ const ChronicleCovent = {
                             <span class="act-column-stats">${actScenes.length} scenes • ${wordCount.toLocaleString()} words</span>
                         </div>
                         <div class="act-column-content" 
-                             data-act-id="${act.id}"
-                             ondragover="ChronicleCovent.handleDragOver(event)"
-                             ondrop="ChronicleCovent.handleDrop(event)">
+                            data-act-id="${act.id}"
+                            ondragover="ChronicleCovenant.handleDragOver(event)"
+                            ondrop="ChronicleCovenant.handleDrop(event)">
                             ${actScenes.map(scene => this.renderSceneCard(scene)).join('')}
-                            <div class="add-scene-card" onclick="ChronicleCovent.createSceneInAct('${act.id}')">
+                            <div class="add-scene-card" onclick="ChronicleCovenant.createSceneInAct('${act.id}')">
                                 + Add Scene
                             </div>
                         </div>
@@ -402,9 +402,9 @@ const ChronicleCovent = {
                             <span class="act-column-stats">${orphanScenes.length} scenes</span>
                         </div>
                         <div class="act-column-content" 
-                             data-act-id="unassigned"
-                             ondragover="ChronicleCovent.handleDragOver(event)"
-                             ondrop="ChronicleCovent.handleDrop(event)">
+                            data-act-id="unassigned"
+                            ondragover="ChronicleCovenant.handleDragOver(event)"
+                            ondrop="ChronicleCovenant.handleDrop(event)">
                             ${orphanScenes.map(scene => this.renderSceneCard(scene)).join('')}
                         </div>
                     </div>
@@ -427,12 +427,12 @@ const ChronicleCovent = {
         
         return `
             <div class="scene-card" 
-                 data-scene-id="${scene.id}"
-                 data-mckee="${mckeeElement}"
-                 draggable="true"
-                 onclick="ChronicleCovent.selectScene('${scene.id}')"
-                 ondragstart="ChronicleCovent.handleDragStart(event)"
-                 ondragend="ChronicleCovent.handleDragEnd(event)">
+                data-scene-id="${scene.id}"
+                data-mckee="${mckeeElement}"
+                draggable="true"
+                onclick="ChronicleCovenant.selectScene('${scene.id}')"
+                ondragstart="ChronicleCovenant.handleDragStart(event)"
+                ondragend="ChronicleCovenant.handleDragEnd(event)">
                 <div class="scene-card-header">
                     <span class="scene-card-title">${scene.title || 'Untitled Scene'}</span>
                     ${mckeeElement ? `<span class="scene-card-badge">${this.getMcKeeLabel(mckeeElement)}</span>` : ''}
@@ -531,7 +531,7 @@ const ChronicleCovent = {
                             ${actScenes.map(scene => {
                                 const num = sceneNumber++;
                                 return `
-                                    <div class="timeline-scene-item" onclick="ChronicleCovent.selectScene('${scene.id}')">
+                                    <div class="timeline-scene-item" onclick="ChronicleCovenant.selectScene('${scene.id}')">
                                         <span class="timeline-scene-number">${num}</span>
                                         <div class="timeline-scene-info">
                                             <div class="timeline-scene-title">${scene.title || 'Untitled'}</div>
@@ -594,7 +594,7 @@ const ChronicleCovent = {
             
             html += `
                 <div class="act-group" data-act-id="${act.id}">
-                    <div class="act-header" onclick="ChronicleCovent.toggleActGroup('${act.id}')">
+                    <div class="act-header" onclick="ChronicleCovenant.toggleActGroup('${act.id}')">
                         <div>
                             <span class="act-title">${act.name}</span>
                             <span class="act-stats">${actScenes.length} scenes</span>
@@ -610,7 +610,7 @@ const ChronicleCovent = {
                 
                 html += `
                     <div class="chapter-group" data-chapter-id="${chapter.id}">
-                        <div class="chapter-header" onclick="ChronicleCovent.toggleChapterGroup('${chapter.id}')">
+                        <div class="chapter-header" onclick="ChronicleCovenant.toggleChapterGroup('${chapter.id}')">
                             <span class="chapter-title">${chapter.name}</span>
                         </div>
                         <div class="chapter-content">
@@ -654,9 +654,9 @@ const ChronicleCovent = {
         
         return `
             <div class="scene-item ${isSelected ? 'selected' : ''}" 
-                 data-scene-id="${scene.id}"
-                 data-mckee="${mckeeElement}"
-                 onclick="ChronicleCovent.selectScene('${scene.id}')">
+                data-scene-id="${scene.id}"
+                data-mckee="${mckeeElement}"
+                onclick="ChronicleCovenant.selectScene('${scene.id}')">
                 <span class="scene-title">${scene.title || 'Untitled'}</span>
                 <span class="scene-words">${(scene.wordCount || 0).toLocaleString()}</span>
             </div>
@@ -756,10 +756,10 @@ const ChronicleCovent = {
             </div>
             
             <div class="detail-actions">
-                <button class="detail-action-btn primary" onclick="ChronicleCovent.openSceneInDesk('${scene.id}')">
+                <button class="detail-action-btn primary" onclick="ChronicleCovenant.openSceneInDesk('${scene.id}')">
                     Edit in Desk
                 </button>
-                <button class="detail-action-btn" onclick="ChronicleCovent.showMoveSceneOptions('${scene.id}')">
+                <button class="detail-action-btn" onclick="ChronicleCovenant.showMoveSceneOptions('${scene.id}')">
                     Move to...
                 </button>
             </div>
@@ -1203,7 +1203,7 @@ const ChronicleCovent = {
 };
 
 // Stub methods for Sprint 2 views (implemented in analysis file)
-ChronicleCovent.renderPacingView = function(container) {
+ChronicleCovenant.renderPacingView = function(container) {
     container.innerHTML = `
         <div class="pacing-view active">
             <div class="beat-sheet-empty">
@@ -1214,7 +1214,7 @@ ChronicleCovent.renderPacingView = function(container) {
     `;
 };
 
-ChronicleCovent.renderCharactersView = function(container) {
+ChronicleCovenant.renderCharactersView = function(container) {
     container.innerHTML = `
         <div class="characters-view active">
             <div class="beat-sheet-empty">
@@ -1225,7 +1225,7 @@ ChronicleCovent.renderCharactersView = function(container) {
     `;
 };
 
-ChronicleCovent.renderThemesView = function(container) {
+ChronicleCovenant.renderThemesView = function(container) {
     container.innerHTML = `
         <div class="themes-view active">
             <div class="beat-sheet-empty">
@@ -1237,17 +1237,20 @@ ChronicleCovent.renderThemesView = function(container) {
 };
 
 // Make globally available
-window.ChronicleCovent = ChronicleCovent;
+window.ChronicleCovenant = ChronicleCovenant;
 
 // Initialize when DOM ready and when Covenant tab is clicked
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize when switching to Covenant
     document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            // Use 'tab' from closure, not e.target (which could be child elements)
-            if (tab.dataset.space === 'covenant') {
+        tab.addEventListener('click', (e) => {
+            if (e.target.dataset.space === 'covenant') {
                 setTimeout(() => {
-                    ChronicleCovent.init();
+                    try {
+                        ChronicleConvenant.init();
+                    } catch (error) {
+                        console.error('❌ Covenant failed to initialize:', error);
+                    }
                 }, 100);
             }
         });

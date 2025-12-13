@@ -29,8 +29,8 @@ const CovenantAnalysis = {
     // ===================================
     
     renderPacingView(container) {
-        const scenes = ChronicleCovent.getScenes();
-        const acts = ChronicleCovent.getActs();
+        const scenes = ChronicleCovenant.getScenes();
+        const acts = ChronicleCovenant.getActs();
         
         let html = `<div class="pacing-view active">`;
         
@@ -122,8 +122,8 @@ const CovenantAnalysis = {
                 if (actIndex < acts.length - 1) {
                     actDividers += `
                         <line x1="${dividerX}" y1="${padding.top}" 
-                              x2="${dividerX}" y2="${padding.top + chartHeight}"
-                              stroke="${this.colors.gridLine}" stroke-width="2" stroke-dasharray="5,5"/>
+                            x2="${dividerX}" y2="${padding.top + chartHeight}"
+                            stroke="${this.colors.gridLine}" stroke-width="2" stroke-dasharray="5,5"/>
                     `;
                 }
                 
@@ -131,8 +131,8 @@ const CovenantAnalysis = {
                 const labelX = (currentX + dividerX) / 2;
                 actDividers += `
                     <text x="${labelX}" y="${height - 10}" 
-                          text-anchor="middle" class="chart-axis-label"
-                          fill="${this.colors.primary}">${act.name}</text>
+                        text-anchor="middle" class="chart-axis-label"
+                        fill="${this.colors.primary}">${act.name}</text>
                 `;
                 
                 currentX = dividerX;
@@ -149,26 +149,26 @@ const CovenantAnalysis = {
                 
                 <!-- Y-axis label -->
                 <text x="15" y="${height/2}" transform="rotate(-90 15 ${height/2})" 
-                      text-anchor="middle" class="chart-axis-label" fill="${this.colors.neutral}">
+                    text-anchor="middle" class="chart-axis-label" fill="${this.colors.neutral}">
                     Words / Tension
                 </text>
                 
                 <!-- Word count line (smooth curve) -->
                 <path d="M ${wordPoints.join(' L ')}" 
-                      fill="none" 
-                      stroke="${this.colors.secondary}" 
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"/>
+                    fill="none" 
+                    stroke="${this.colors.secondary}" 
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
                 
                 <!-- Tension line (smooth curve) -->
                 <path d="M ${tensionPoints.join(' L ')}" 
-                      fill="none" 
-                      stroke="${this.colors.tertiary}" 
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-dasharray="8,4"/>
+                    fill="none" 
+                    stroke="${this.colors.tertiary}" 
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-dasharray="8,4"/>
                 
                 <!-- Data points for words -->
                 ${sortedScenes.map((scene, i) => {
@@ -188,7 +188,7 @@ const CovenantAnalysis = {
         for (let i = 0; i <= steps; i++) {
             const y = padding.top + (i / steps) * chartHeight;
             lines += `<line x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}" 
-                           stroke="${this.colors.gridLine}" stroke-width="1"/>`;
+                        stroke="${this.colors.gridLine}" stroke-width="1"/>`;
         }
         
         return lines;
@@ -249,7 +249,7 @@ const CovenantAnalysis = {
         // Act balance
         acts.forEach(act => {
             const actWords = scenes.filter(s => s.actId === act.id)
-                                   .reduce((sum, s) => sum + (s.wordCount || 0), 0);
+                                .reduce((sum, s) => sum + (s.wordCount || 0), 0);
             const percentage = Math.round((actWords / totalWords) * 100);
             
             if (percentage < 15 && totalWords > 1000) {
@@ -306,7 +306,7 @@ const CovenantAnalysis = {
     },
     
     showSceneTooltip(sceneId) {
-        ChronicleCovent.selectScene(sceneId);
+        ChronicleCovenant.selectScene(sceneId);
     },
     
     // ===================================
@@ -315,7 +315,7 @@ const CovenantAnalysis = {
     
     renderCharactersView(container) {
         const characters = this.getCharacters();
-        const scenes = ChronicleCovent.getScenes();
+        const scenes = ChronicleCovenant.getScenes();
         
         let html = `<div class="characters-view active">`;
         
@@ -414,7 +414,7 @@ const CovenantAnalysis = {
                 <div class="character-appearances">
                     ${appearances.map(scene => `
                         <div class="character-appearance-item" 
-                             onclick="ChronicleCovent.selectScene('${scene.id}')">
+                            onclick="ChronicleCovenant.selectScene('${scene.id}')">
                             ${scene.title || 'Untitled'} 
                             <small style="color: #8a8580;">(${(scene.wordCount || 0).toLocaleString()} words)</small>
                         </div>
@@ -449,8 +449,8 @@ const CovenantAnalysis = {
     
     renderThemesView(container) {
         const themes = this.getThemes();
-        const scenes = ChronicleCovent.getScenes();
-        const acts = ChronicleCovent.getActs();
+        const scenes = ChronicleCovenant.getScenes();
+        const acts = ChronicleCovenant.getActs();
         
         let html = `<div class="themes-view active">`;
         
@@ -534,7 +534,7 @@ const CovenantAnalysis = {
                 
                 html += `
                     <div class="theme-heatmap-cell theme-heat-${intensity}" 
-                         title="${theme.name} in ${act.name}: ${themeCount}/${actScenes.length} scenes">
+                        title="${theme.name} in ${act.name}: ${themeCount}/${actScenes.length} scenes">
                     </div>
                 `;
             });
@@ -579,8 +579,8 @@ const CovenantAnalysis = {
     // ===================================
     
     renderConflictView(container) {
-        const scenes = ChronicleCovent.getScenes();
-        const acts = ChronicleCovent.getActs();
+        const scenes = ChronicleCovenant.getScenes();
+        const acts = ChronicleCovenant.getActs();
         
         // Count forces by act
         const forceData = this.analyzeConflictForces(scenes, acts);
@@ -779,16 +779,16 @@ const CovenantAnalysis = {
     }
 };
 
-// Override the stub methods in ChronicleCovent with actual implementations
-ChronicleCovent.renderPacingView = function(container) {
+// Override the stub methods in ChronicleCovenant with actual implementations
+ChronicleCovenant.renderPacingView = function(container) {
     CovenantAnalysis.renderPacingView(container);
 };
 
-ChronicleCovent.renderCharactersView = function(container) {
+ChronicleCovenant.renderCharactersView = function(container) {
     CovenantAnalysis.renderCharactersView(container);
 };
 
-ChronicleCovent.renderThemesView = function(container) {
+ChronicleCovenant.renderThemesView = function(container) {
     CovenantAnalysis.renderThemesView(container);
 };
 
