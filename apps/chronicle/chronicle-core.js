@@ -80,10 +80,63 @@ function initializeApp() {
     // Initialize custom cursor
     startCustomCursor();
     
-    // Ensure Desk is visible
+    // ===================================
+    // INITIALIZE ALL WORKSPACES ON LOAD
+    // ===================================
+    
+    console.log('🏗️ Initializing all workspaces...');
+    
+    // Initialize The Desk
+    if (window.ChronicleDesk) {
+        try {
+            console.log('📖 Initializing The Desk...');
+            window.ChronicleDesk.init();
+            console.log('✅ The Desk initialized');
+        } catch (error) {
+            console.error('❌ Desk initialization failed:', error);
+        }
+    }
+    
+    // Initialize The Covenant
+    if (window.ChronicleCovenant) {
+        try {
+            console.log('📜 Initializing The Covenant...');
+            window.ChronicleCovenant.init();
+            console.log('✅ The Covenant initialized');
+        } catch (error) {
+            console.error('❌ Covenant initialization failed:', error);
+            console.error('Error details:', error.message, error.stack);
+        }
+    } else {
+        console.warn('⚠️ ChronicleCovenant not found - script may not be loaded');
+    }
+    
+    // Initialize The Archive
+    if (window.ChronicleArchive) {
+        try {
+            console.log('📚 Initializing The Archive...');
+            window.ChronicleArchive.init();
+            console.log('✅ The Archive initialized');
+        } catch (error) {
+            console.error('❌ Archive initialization failed:', error);
+        }
+    }
+    
+    // Initialize The Inkwell
+    if (window.ChronicleInkwell) {
+        try {
+            console.log('🖋️ Initializing The Inkwell...');
+            window.ChronicleInkwell.init();
+            console.log('✅ The Inkwell initialized');
+        } catch (error) {
+            console.error('❌ Inkwell initialization failed:', error);
+        }
+    }
+    
+    // Ensure Desk is visible as starting workspace
     ensureDeskVisible();
     
-    console.log('✅ Chronicle initialized successfully');
+    console.log('✅ Chronicle initialized successfully - all workspaces ready');
 }
 
 function ensureDeskVisible() {
