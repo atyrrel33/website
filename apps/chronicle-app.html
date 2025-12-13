@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronicle - A Story Sanctuary </title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="chronicle-styles2.css">
+    <link rel="stylesheet" href="chronicle-desk.css">
+    <link rel="stylesheet" href="chronicle-inkwell.css">
+    <link rel="stylesheet" href="chronicle-covenant.css">
+    <link rel="stylesheet" href="chronicle-archive.css">
+</head>
+<body class="mode-novelist user-tyrrel">
+    <!-- Custom Flame Cursor -->
+    <div id="custom-cursor">
+        <div class="cursor-core"></div>
+    </div>
+    <!-- Inkwell Tab - Always visible on left edge -->
+    <div class="inkwell-tab" id="inkwellTab">
+        <svg class="inkwell-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+            <path d="M2 2l7.586 7.586"/>
+            <circle cx="11" cy="11" r="2"/>
+        </svg>
+        <span class="inkwell-tab-text">Inkwell</span>
+    </div>
+    <!-- Session Indicator (shows which session we're in) -->
+    <div class="session-indicator" id="sessionIndicator">
+        <span class="session-badge">Session Active</span>
+        <span class="session-time" id="sessionTime">0m</span>
+    </div>
+
+    <!-- Main Application Container -->
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1 class="app-title">Chronicle</h1>
+                <p class="app-subtitle">A Story Sanctuary</p>
+            </div>
+            <div class="header-center">
+                
+                <!-- User Switcher - Iron Sharpens Iron -->
+                <div class="user-switcher">
+                    <button class="user-switch-btn tyrrel active" id="switchTyrrel" data-user="tyrrel">
+                        Tyrrel
+                    </button>
+                    <button class="user-switch-btn trevor" id="switchTrevor" data-user="trevor">
+                        Trevor
+                    </button>
+                </div>
+                
+                <div class="project-name" id="projectName">Joseph: A Modern Story</div>
+            </div>
+            <div class="header-right">
+                <button class="prayer-btn" id="prayerBtn" title="Begin with Prayer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L12 7M12 7C10.5 7 9 8 9 9.5C9 11 10.5 12 12 12C13.5 12 15 11 15 9.5C15 8 13.5 7 12 7ZM12 12L12 22M8 22L16 22"/>
+                    </svg>
+                </button>
+                <div class="collaborators">
+                    <div class="collaborator" data-name="Tyrrel" title="Tyrrel">T</div>
+                    <div class="collaborator" data-name="Trevor" title="Trevor">T</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="main-nav">
+            <button class="nav-tab active" data-space="desk">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                <span>The Desk</span>
+            </button>
+            <button class="nav-tab" data-space="archive">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span>The Archive</span>
+            </button>
+            <button class="nav-tab" data-space="covenant">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>
+                </svg>
+                <span>The Covenant</span>
+            </button>
+            <button class="nav-tab" data-space="altar">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L12 7"/>
+                    <path d="M12 7C10.5 7 9 8 9 9.5C9 11 10.5 12 12 12C13.5 12 15 11 15 9.5C15 8 13.5 7 12 7Z"/>
+                    <path d="M12 12L12 22"/>
+                    <path d="M8 22L16 22"/>
+                    <circle cx="12" cy="7" r="8" opacity="0.2"/>
+                </svg>
+                <span>The Altar</span>
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- SPACE 1: THE DESK (Active Writing) -->
+            <section class="workspace active" id="desk">
+                <div class="desk-container">
+        <!-- Writing Toolbar -->
+        <div class="writing-toolbar">
+            <!-- Top Row: Scene Management -->
+            <div class="toolbar-top-row">
+                <div class="toolbar-left">
+                    <!-- Scene Switcher -->
+                    <select class="scene-switcher" id="sceneSwitcher">
+                        <option value="">Loading scenes...</option>
+                    </select>
+                    <div class="scene-movement-controls" style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                        <select id="moveSceneToAct" onchange="if(this.value) { ChronicleDesk.moveCurrentSceneToAct(this.value); this.value=''; }" 
+                                style="flex: 1; padding: 0.4rem; background: rgba(26, 20, 16, 0.8); border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: #e8e3da; font-family: 'Crimson Text', serif; font-size: 0.85rem;">
+                            <option value="">Move to Act...</option>
+                        </select>
+                        <select id="moveSceneToChapter" onchange="if(this.value !== '') { ChronicleDesk.moveCurrentSceneToChapter(this.value || null); this.value=''; }" 
+                                style="flex: 1; padding: 0.4rem; background: rgba(26, 20, 16, 0.8); border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: #e8e3da; font-family: 'Crimson Text', serif; font-size: 0.85rem;">
+                            <option value="">Move to Chapter...</option>
+                            <option value="null">Remove from Chapter</option>
+                        </select>
+                    </div>
+                    <!-- New Scene Button -->
+                    <button class="new-scene-btn" id="newSceneBtn" title="Start New Scene (Ctrl+N)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        <span>New</span>
+                    </button>
+                    <!-- Save Scene Button -->
+                    <button class="save-scene-btn" id="saveSceneBtn" title="Save Scene (Ctrl+S)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                            <polyline points="17 21 17 13 7 13 7 21"/>
+                            <polyline points="7 3 7 8 15 8"/>
+                        </svg>
+                        <span>Save</span>
+                    </button>
+                </div>
+                
+                <div class="toolbar-center">
+                    <!-- Scene Title -->
+                    <div class="scene-title-input">
+                        <input type="text" id="sceneTitle" placeholder="Scene Title" value="Opening Scene">
+                    </div>
+                </div>
+                
+                <div class="toolbar-right">
+                    <button class="tool-btn" id="focusModeBtn" title="Focus Mode (Ctrl+Shift+F)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <rect x="7" y="7" width="10" height="10" rx="1"/>
+                        </svg>
+                    </button>
+                    <button class="tool-btn" id="referenceBtn" title="Toggle Reference Panel (Ctrl+R)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                            <path d="M8 7h8M8 11h8"/>
+                        </svg>
+                    </button>
+                    <div class="word-count" id="wordCount">
+                        <span class="count-number">0</span>
+                        <span class="count-label novelist-label">words</span>
+                    </div>
+                    <button class="tool-btn export-scene-btn" id="exportSceneBtn" title="Export Scene (Ctrl+E)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Bottom Row: Text Formatting -->
+            <div class="toolbar-bottom-row">
+                <div class="format-group">
+                    <span class="format-group-label">Font</span>
+                    <select class="font-selector" id="fontSelector">
+                        <optgroup label="Serif Fonts">
+                            <option value="Crimson Text" selected>Crimson Text</option>
+                            <option value="Libre Baskerville">Libre Baskerville</option>
+                            <option value="Lora">Lora</option>
+                            <option value="Georgia">Georgia</option>
+                        </optgroup>
+                        <optgroup label="Handwriting Fonts">
+                            <option value="Caveat">Caveat</option>
+                            <option value="Dancing Script">Dancing Script</option>
+                            <option value="Pacifico">Pacifico</option>
+                        </optgroup>
+                    </select>
+                    <select class="font-size-selector" id="fontSizeSelector">
+                        <option value="1rem">Small</option>
+                        <option value="1.25rem" selected>Medium</option>
+                        <option value="1.5rem">Large</option>
+                        <option value="1.75rem">X-Large</option>
+                        <option value="2rem">XX-Large</option>
+                    </select>
+                </div>
+                
+                <div class="format-group">
+                    <span class="format-group-label">Format</span>
+                    <button class="tool-btn format-btn" id="boldBtn" title="Bold (Ctrl+B)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/>
+                            <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/>
+                        </svg>
+                    </button>
+                    <button class="tool-btn format-btn" id="italicBtn" title="Italic (Ctrl+I)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="19" y1="4" x2="10" y2="4"/>
+                            <line x1="14" y1="20" x2="5" y2="20"/>
+                            <line x1="15" y1="4" x2="9" y2="20"/>
+                        </svg>
+                    </button>
+                    <button class="tool-btn format-btn" id="underlineBtn" title="Underline (Ctrl+U)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/>
+                            <line x1="4" y1="21" x2="20" y2="21"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="format-group">
+                    <span class="format-group-label">Lists</span>
+                    <button class="tool-btn format-btn" id="bulletListBtn" title="Bullet List">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6"/>
+                            <line x1="8" y1="12" x2="21" y2="12"/>
+                            <line x1="8" y1="18" x2="21" y2="18"/>
+                            <line x1="3" y1="6" x2="3.01" y2="6"/>
+                            <line x1="3" y1="12" x2="3.01" y2="12"/>
+                            <line x1="3" y1="18" x2="3.01" y2="18"/>
+                        </svg>
+                    </button>
+                    <button class="tool-btn format-btn" id="numberedListBtn" title="Numbered List">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="10" y1="6" x2="21" y2="6"/>
+                            <line x1="10" y1="12" x2="21" y2="12"/>
+                            <line x1="10" y1="18" x2="21" y2="18"/>
+                            <path d="M4 6h1v4M4 10h2M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="format-group">
+                    <span class="format-group-label">Size</span>
+                    <button class="tool-btn format-btn" id="increaseFontBtn" title="Increase Font Size">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                    </button>
+                    <button class="tool-btn format-btn" id="decreaseFontBtn" title="Decrease Font Size">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="format-group">
+                    <span class="format-group-label">Align</span>
+                    <button class="tool-btn format-btn" id="alignLeftBtn" title="Align Left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="17" y1="10" x2="3" y2="10"/>
+                            <line x1="21" y1="6" x2="3" y2="6"/>
+                            <line x1="21" y1="14" x2="3" y2="14"/>
+                            <line x1="17" y1="18" x2="3" y2="18"/>
+                        </svg>
+                    </button>
+                    <button class="tool-btn format-btn" id="alignCenterBtn" title="Align Center">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="10" x2="6" y2="10"/>
+                            <line x1="21" y1="6" x2="3" y2="6"/>
+                            <line x1="21" y1="14" x2="3" y2="14"/>
+                            <line x1="18" y1="18" x2="6" y2="18"/>
+                        </svg>
+                    </button>
+                    <button class="tool-btn format-btn" id="alignRightBtn" title="Align Right">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="21" y1="10" x2="7" y2="10"/>
+                            <line x1="21" y1="6" x2="3" y2="6"/>
+                            <line x1="21" y1="14" x2="3" y2="14"/>
+                            <line x1="21" y1="18" x2="7" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+                <!-- McKee Scene Metadata Panel -->
+        <div class="scene-metadata-panel" id="sceneMetadataPanel">
+            <div class="metadata-header">
+                <h4>Scene Structure</h4>
+                <button class="collapse-metadata" id="collapseMetadata">−</button>
+            </div>
+            <div class="metadata-body">
+                <div class="metadata-field">
+                    <label>Story Element:</label>
+                    <select class="metadata-select" id="sceneStructureElement">
+                        <option value="">Not Set</option>
+                        <option value="opening">Opening Image</option>
+                        <option value="inciting">Inciting Incident</option>
+                        <option value="lockin">Lock-In / First Act Climax</option>
+                        <option value="complications">Progressive Complications</option>
+                        <option value="midpoint">Midpoint Reversal</option>
+                        <option value="crisis">Crisis / Dark Night</option>
+                        <option value="climax">Climax</option>
+                        <option value="resolution">Resolution</option>
+                        <option value="closing">Closing Image</option>
+                    </select>
+                </div>
+                <div class="metadata-field">
+                    <label>Forces of Antagonism:</label>
+                    <div class="force-checkboxes">
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="internal" class="force-check">
+                            <span>Internal</span>
+                        </label>
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="personal" class="force-check">
+                            <span>Personal</span>
+                        </label>
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="extrapersonal" class="force-check">
+                            <span>Extra-Personal</span>
+                        </label>
+                        <label class="force-checkbox">
+                            <input type="checkbox" value="environmental" class="force-check">
+                            <span>Environmental</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="metadata-field">
+                    <label>Scene Purpose:</label>
+                    <input type="text" class="metadata-input" id="scenePurpose" 
+                        placeholder="What does this scene accomplish?">
+                </div>
+            </div>
+        </div>
+                    <!-- Writing Area with Reference Panel -->
+                    <div class="writing-area-container">
+                        <div class="writing-editor">
+                            <div class="editor-wrapper" id="editorWrapper">
+                                <div contenteditable="true" 
+                                    class="writing-surface novelist-surface" 
+                                    id="writingSurface"
+                                    data-novelist-placeholder="Begin writing your story... Let the narrative flow organically, discovering your characters as you write."
+                                        ></div>
+                            </div>
+                        </div>
+                        <!-- Joseph App Reference Panel (Toggle) -->
+                        <aside class="reference-panel" id="referencePanel">
+                            <div class="panel-header">
+                                <h3>Joseph App Reference</h3>
+                                <button class="close-panel" id="closePanelBtn">×</button>
+                            </div>
+                            <div class="panel-content">
+                                <div class="reference-section">
+                                    <h4>Plot Points</h4>
+                                    <div class="reference-item">
+                                        <strong>The Favorite Son</strong>
+                                        <p>Jacob favors Joseph, giving him the coat of many colors. Brothers grow jealous.</p>
+                                    </div>
+                                    <div class="reference-item">
+                                        <strong>The Dreams</strong>
+                                        <p>Joseph dreams of his family bowing to him. His brothers' hatred intensifies.</p>
+                                    </div>
+                                    <div class="reference-item">
+                                        <strong>The Betrayal</strong>
+                                        <p>Brothers throw Joseph into the pit, then sell him to Midianite traders.</p>
+                                    </div>
+                                </div>
+                                <div class="reference-section">
+                                    <h4>Themes</h4>
+                                    <div class="theme-tag">Providence</div>
+                                    <div class="theme-tag">Betrayal</div>
+                                    <div class="theme-tag">Forgiveness</div>
+                                    <div class="theme-tag">Identity</div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+
+                    <!-- Auto-save Indicator -->
+                    <div class="autosave-indicator" id="autosaveIndicator">
+                        <span class="saving-text">Saving...</span>
+                        <span class="saved-text">All changes saved</span>
+                    </div>
+                </div>
+            </section>
+    <!-- THE INKWELL PANEL -->
+    <div class="inkwell-panel" id="inkwellPanel">
+        <!-- Header -->
+        <div class="inkwell-header">
+            <div class="inkwell-title-row">
+                <div class="inkwell-title">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                        <path d="M2 2l7.586 7.586"/>
+                        <circle cx="11" cy="11" r="2"/>
+                    </svg>
+                    <h2>The Inkwell</h2>
+                </div>
+                <button class="inkwell-close" id="closeInkwell">×</button>
+            </div>
+            <p class="inkwell-subtitle">"Pour out what flows..."</p>
+            
+            <!-- View Tabs -->
+            <div class="inkwell-view-tabs">
+                <button class="inkwell-view-tab active" data-view="start">Start</button>
+                <button class="inkwell-view-tab" data-view="history">Fragments</button>
+            </div>
+        </div>
+        
+        <!-- Body -->
+        <div class="inkwell-body">
+            <!-- START VIEW -->
+            <div class="inkwell-start-view" id="startView">
+                <div class="inkwell-invitation">
+                    <p>Choose your sacred duration. When the flame dims, your outpouring is complete.</p>
+                </div>
+                
+                <div class="timer-options">
+                    <div class="timer-option" data-seconds="120">
+                        <span class="time">2</span>
+                        <span class="label">minutes</span>
+                    </div>
+                    <div class="timer-option selected" data-seconds="300">
+                        <span class="time">5</span>
+                        <span class="label">minutes</span>
+                    </div>
+                    <div class="timer-option" data-seconds="600">
+                        <span class="time">10</span>
+                        <span class="label">minutes</span>
+                    </div>
+                    <div class="timer-option" data-seconds="0">
+                        <span class="time">∞</span>
+                        <span class="label">no limit</span>
+                    </div>
+                </div>
+                
+                <button class="start-outpouring-btn" id="startOutpouring">
+                    Begin Outpouring
+                </button>
+            </div>
+            
+            <!-- WRITING VIEW -->
+            <div class="inkwell-writing-view" id="writingView">
+                <div class="inkwell-timer-display">
+                    <svg class="timer-flame" viewBox="0 0 100 140" fill="none">
+                        <path d="M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z" fill="url(#inkwellFlameGradient)">
+                            <animate attributeName="d" dur="2s" repeatCount="indefinite"
+                                values="M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z;
+                                        M50 10 C42 30, 45 50, 50 70 C58 50, 52 30, 50 10 Z;
+                                        M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z"/>
+                        </path>
+                        <defs>
+                            <linearGradient id="inkwellFlameGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ffcc88;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#ff9955;stop-opacity:0.9" />
+                                <stop offset="100%" style="stop-color:#d4a574;stop-opacity:0.6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="timer-text">5:00</div>
+                    <div class="timer-label">Time remaining</div>
+                </div>
+                
+                <textarea 
+                    class="inkwell-textarea" 
+                    id="inkwellTextarea"
+                    placeholder="Begin writing... let the words flow without judgment or structure. This is sacred space for raw creation."></textarea>
+                
+                <div class="inkwell-writing-actions">
+                    <button class="inkwell-action-btn extend" id="extendTime">
+                        Extend +2 min
+                    </button>
+                    <button class="inkwell-action-btn finish" id="finishOutpouring">
+                        Finish & Save
+                    </button>
+                </div>
+            </div>
+            
+            <!-- HISTORY VIEW -->
+            <div class="inkwell-history-view" id="historyView">
+                <div class="history-controls">
+                    <input 
+                        type="text" 
+                        class="history-search" 
+                        id="fragmentSearch"
+                        placeholder="Search fragments...">
+                    <button class="export-fragments-btn" id="exportFragments">Export</button>
+                    <button class="import-fragments-btn" id="importFragments">Import</button>
+                </div>
+                
+                <div class="fragments-list" id="fragmentsList">
+                    <!-- Fragments will be dynamically populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+            
+            <!-- SPACE 2: THE ARCHIVE (Organization & Retrieval) -->
+            <section class="workspace" id="archive">
+                <!-- Archive content will be dynamically generated by chronicle-archive.js -->
+            </section>
+            
+            <!-- SPACE 3: THE COVENANT (Structural Planning) -->
+            <section class="workspace" id="covenant">
+                <!-- Covenant content will be dynamically generated by chronicle-covenant.js -->
+            </section>
+            
+            <!-- SPACE 4: THE ALTAR (Reflection & Prayer) -->
+            <section class="workspace" id="altar">
+                <div class="altar-container">
+                    <div class="altar-coming-soon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L12 7"/>
+                            <path d="M12 7C10.5 7 9 8 9 9.5C9 11 10.5 12 12 12C13.5 12 15 11 15 9.5C15 8 13.5 7 12 7Z"/>
+                            <path d="M12 12L12 22"/>
+                            <path d="M8 22L16 22"/>
+                        </svg>
+                        <h2>The Altar</h2>
+                        <p>A sacred space for reflection and prayer</p>
+                        <p style="opacity: 0.7; margin-top: 1rem;">Coming in Phase 2</p>
+                    </div>
+                </div>
+            </section>
+        
+        </main>
+    <!-- Prayer Modal (unchanged for now) -->
+    <div class="modal" id="prayerModal">
+        <div class="modal-content prayer-modal">
+            <button class="modal-close" id="closePrayerModal">×</button>
+            <div class="modal-header">
+                <div class="prayer-flame-icon">
+                    <svg viewBox="0 0 100 140" fill="none">
+                        <path d="M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z" 
+                            fill="url(#modalFlameGradient)">
+                            <animate attributeName="d" 
+                                    dur="2s" 
+                                    repeatCount="indefinite"
+                                    values="M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z;
+                                            M50 10 C42 30, 45 50, 50 70 C58 50, 52 30, 50 10 Z;
+                                            M50 10 C45 30, 40 50, 50 70 C60 50, 55 30, 50 10 Z"/>
+                        </path>
+                        <defs>
+                            <linearGradient id="modalFlameGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ffcc88;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#ff9955;stop-opacity:0.9" />
+                                <stop offset="100%" style="stop-color:#d4a574;stop-opacity:0.6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h2>Begin with Prayer</h2>
+                <p>Take a moment to invite God into this work</p>
+            </div>
+            <div class="modal-body">
+                <textarea 
+                    id="prayerText"
+                    placeholder="Write a prayer or simply sit in silence..."
+                    rows="6"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" id="skipPrayer">Continue without prayer</button>
+                <button class="modal-btn primary" id="offerPrayer">Amen</button>
+            </div>
+        </div>
+    </div>
+    <!-- Save Fragment Modal -->
+    <div class="save-fragment-modal" id="saveFragmentModal">
+        <div class="save-fragment-content">
+            <h3>Preserve This Fragment</h3>
+            
+            <input 
+                type="text" 
+                class="fragment-title-input" 
+                id="fragmentTitleInput"
+                placeholder="Name this fragment...">
+            
+            <div class="fragment-destination">
+                <p>Where shall this fragment dwell?</p>
+                <div class="destination-options">
+                    <div class="destination-option">
+                        <input type="radio" name="fragmentDestination" value="inkwell" id="destInkwell" checked>
+                        <label for="destInkwell">The Inkwell (keep as fragment)</label>
+                    </div>
+                    <div class="destination-option">
+                        <input type="radio" name="fragmentDestination" value="scene" id="destScene">
+                        <label for="destScene">Convert to Scene (future feature)</label>
+                    </div>
+                    <div class="destination-option">
+                        <input type="radio" name="fragmentDestination" value="notes" id="destNotes">
+                        <label for="destNotes">Add to Character Notes (future feature)</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="save-fragment-actions">
+                <button class="cancel-save" id="cancelSaveFragment">Discard</button>
+                <button class="confirm-save" id="confirmSaveFragment">Save Fragment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Fragment Modal -->
+    <div class="view-fragment-modal" id="viewFragmentModal">
+        <div class="view-fragment-content">
+            <div class="view-fragment-header">
+                <h3>Fragment Title</h3>
+                <button class="close-view-fragment">×</button>
+            </div>
+            <div class="view-fragment-body">
+                Fragment content will appear here...
+            </div>
+            <div class="view-fragment-footer">
+                <div class="fragment-metadata">
+                    Date • Words • Author
+                </div>
+                <button class="export-single-btn">Export</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="importFragmentsInput" accept=".json" style="display: none;">
+
+    <!-- Release Animation Container -->
+    <div class="release-animation-container" id="releaseAnimation"></div>
+    
+    <script src="chronicle-core.js"></script>
+    <script src="chronicle-desk.js"></script>
+    <script src="chronicle-mckee.js"></script>
+    <script src="chronicle-inkwell.js"></script>
+    <script src="chronicle-covenant.js"></script>
+    <script src="chronicle-covenant-analysis.js"></script>   
+    <script src="chronicle-archive.js"></script>        
+</body>
+</html>
