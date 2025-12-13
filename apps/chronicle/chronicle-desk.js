@@ -568,7 +568,7 @@ createNewScene() {
         // Update scene data
         this.scenes[sceneIndex].content = writingSurface.innerHTML;
         this.scenes[sceneIndex].title = sceneTitle ? sceneTitle.value : this.scenes[sceneIndex].title;
-        this.scenes[sceneIndex].wordCount = ChronicleApp.countWords(writingSurface.innerText);
+        this.scenes[sceneIndex].wordCount = countWords(writingSurface.innerText);
         this.scenes[sceneIndex].lastModified = new Date().toISOString();
         this.scenes[sceneIndex].author = ChronicleApp.currentUser;
         
@@ -577,8 +577,7 @@ createNewScene() {
         
         // Update word count display
         ChronicleApp.currentScene = this.scenes[sceneIndex];
-        ChronicleApp.updateWordCount();
-        
+        updateWordCount();        
         console.log('💾 Scene saved:', this.scenes[sceneIndex].title);
     },
     
@@ -636,8 +635,8 @@ createNewScene() {
         
         // Update global state
         ChronicleApp.currentScene = scene;
-        ChronicleApp.currentScene.wordCount = ChronicleApp.countWords(writingSurface ? writingSurface.innerText : '');
-        ChronicleApp.updateWordCount();
+        ChronicleApp.currentScene.wordCount = countWords(writingSurface ? writingSurface.innerText : '');
+        updateWordCount();
     },
     
     populateSceneSwitcher() {
