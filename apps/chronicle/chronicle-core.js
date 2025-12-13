@@ -390,6 +390,7 @@ function switchSpace(spaceName) {
     }
     
     localStorage.setItem('chronicle_current_space', spaceName);
+}
 
 // ===================================
 // WRITING FUNCTIONALITY
@@ -624,6 +625,7 @@ window.switchUser = switchUser;
 window.switchSpace = switchSpace;
 window.saveCurrentScene = saveCurrentScene;
 window.countWords = countWords;
+window.updateWordCount = updateWordCount;
 
 console.log('%c"Write down the revelation and make it plain on tablets"', 'font-size: 11px; font-style: italic; color: #b8b3aa;');
 console.log('%cHabakkuk 2:2', 'font-size: 10px; color: #8B7355;');
