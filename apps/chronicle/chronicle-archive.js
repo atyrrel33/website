@@ -1105,24 +1105,5 @@ const ChronicleArchive = {
 // Make globally available
 window.ChronicleArchive = ChronicleArchive;
 
-// Initialize when DOM ready and when Archive tab is clicked
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize when switching to Archive
-    document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            // Use 'tab' from closure, not e.target
-            if (tab.dataset.space === 'archive') {
-                setTimeout(() => {
-                    try {
-                        ChronicleArchive.init();
-                    } catch (error) {
-                        console.error('❌ Archive failed to initialize:', error);
-                    }
-                }, 100);
-            }
-        });
-    });
-});
-
 console.log('📚 Chronicle Archive module loaded');
 console.log('"Store up for yourselves treasures in heaven" - Matthew 6:20');

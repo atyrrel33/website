@@ -1239,22 +1239,5 @@ ChronicleCovenant.renderThemesView = function(container) {
 // Make globally available
 window.ChronicleCovenant = ChronicleCovenant;
 
-// Initialize when DOM ready and when Covenant tab is clicked
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize when switching to Covenant
-    document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            if (e.target.dataset.space === 'covenant') {
-                setTimeout(() => {
-                    try {
-                        ChronicleCovenant.init();
-                    } catch (error) {
-                        console.error('❌ Covenant failed to initialize:', error);
-                    }
-                }, 100);
-            }
-        });
-    });
-});
 console.log('📜 Chronicle Covenant module loaded');
 console.log('"Unless the LORD builds the house, the builders labor in vain" - Psalm 127:1');
