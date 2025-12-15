@@ -1,21 +1,12 @@
 /* ===================================
-   THE COVENANT - Sprint 2 Styling
-   "The crucible for silver and the furnace for gold"
+   THE COVENANT - Complete Styling (Sprints 1-3)
+   "Write them on the tablet of your heart" - Proverbs 7:3
    Architectural Sanctuary Visualizations
    =================================== */
 
 /* ===================================
    COVENANT VIEW BUTTONS (TOOLBAR)
    =================================== */
-
-.covenant-toolbar {
-    display: flex;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
-    background: rgba(53, 53, 48, 0.9);
-    border-bottom: 1px solid rgba(139, 115, 85, 0.3);
-    flex-wrap: wrap;
-}
 
 .covenant-view-btn {
     padding: 0.75rem 1.25rem;
@@ -135,12 +126,6 @@
     font-size: 0.95rem;
 }
 
-.act-stats span {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
 .scene-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -220,7 +205,14 @@
    PACING GRAPH (SPRINT 2)
    =================================== */
 
-.pacing-graph-container {
+.pacing-graph-container,
+.character-arc-container,
+.theme-distribution-container,
+.structure-analysis-container,
+.character-registry-container,
+.location-catalog-container,
+.research-container,
+.symbolic-tracker-container {
     padding: 0;
 }
 
@@ -321,10 +313,6 @@
    CHARACTER ARC TRACKER (SPRINT 2)
    =================================== */
 
-.character-arc-container {
-    padding: 0;
-}
-
 .character-list {
     padding: 2rem;
     display: flex;
@@ -401,10 +389,6 @@
    THEME DISTRIBUTION (SPRINT 2)
    =================================== */
 
-.theme-distribution-container {
-    padding: 0;
-}
-
 .theme-heatmap {
     padding: 2rem;
     display: flex;
@@ -478,10 +462,6 @@
    STRUCTURE ANALYSIS (SPRINT 1)
    =================================== */
 
-.structure-analysis-container {
-    padding: 0;
-}
-
 .structure-checklist {
     padding: 2rem;
     display: flex;
@@ -541,6 +521,322 @@
     font-family: 'Crimson Text', serif;
     color: #722F37;
     font-style: italic;
+}
+
+/* ===================================
+   CHARACTER REGISTRY (SPRINT 3)
+   =================================== */
+
+.registry-grid {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.registry-character-card {
+    background: rgba(42, 40, 34, 0.9);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.registry-character-card:hover {
+    border-color: #C9A961;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201, 169, 97, 0.3);
+}
+
+.character-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: #C9A961;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.character-role {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1rem;
+    color: #2C5F5F;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+.character-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.character-stat {
+    background: rgba(53, 53, 48, 0.6);
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.stat-value-large {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: #C9A961;
+    font-weight: 700;
+}
+
+.stat-label-small {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.85rem;
+    color: #b8b3aa;
+    text-transform: uppercase;
+}
+
+.character-relationships {
+    margin-top: 1.5rem;
+}
+
+.relationship-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(53, 53, 48, 0.6);
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
+
+.relationship-arrow {
+    color: #C9A961;
+    font-size: 1.2rem;
+}
+
+.relationship-text {
+    font-family: 'Crimson Text', serif;
+    color: #e8e3da;
+}
+
+/* ===================================
+   LOCATION CATALOG (SPRINT 3)
+   =================================== */
+
+.location-grid {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.location-card {
+    background: rgba(42, 40, 34, 0.9);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.location-card:hover {
+    border-color: #2C5F5F;
+    box-shadow: 0 6px 20px rgba(44, 95, 95, 0.3);
+}
+
+.location-header {
+    padding: 1.5rem;
+    background: rgba(53, 53, 48, 0.9);
+    border-bottom: 2px solid rgba(139, 115, 85, 0.3);
+}
+
+.location-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    color: #2C5F5F;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+}
+
+.location-subtitle {
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    color: #b8b3aa;
+    font-style: italic;
+}
+
+.location-body {
+    padding: 1.5rem;
+}
+
+.location-description {
+    font-family: 'Crimson Text', serif;
+    color: #e8e3da;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.location-significance {
+    background: rgba(44, 95, 95, 0.15);
+    border-left: 3px solid #2C5F5F;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.location-significance strong {
+    color: #2C5F5F;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.03em;
+}
+
+.location-scenes {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    color: #8a8580;
+}
+
+/* ===================================
+   RESEARCH & PARALLELS (SPRINT 3)
+   =================================== */
+
+.research-grid {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.research-section {
+    background: rgba(42, 40, 34, 0.8);
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.research-section-header {
+    padding: 1.25rem 1.5rem;
+    background: rgba(53, 53, 48, 0.9);
+    border-bottom: 2px solid rgba(139, 115, 85, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.research-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: #722F37;
+    letter-spacing: 0.05em;
+}
+
+.research-section-body {
+    padding: 1.5rem;
+}
+
+.scripture-ref {
+    background: rgba(114, 47, 55, 0.15);
+    border-left: 3px solid #722F37;
+    padding: 1rem 1.25rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.scripture-verse {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    color: #e8e3da;
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+}
+
+.scripture-citation {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: #722F37;
+    letter-spacing: 0.05em;
+}
+
+.research-note {
+    background: rgba(53, 53, 48, 0.6);
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-family: 'Crimson Text', serif;
+    color: #e8e3da;
+    line-height: 1.6;
+}
+
+/* ===================================
+   SYMBOLIC TRACKER (SPRINT 3)
+   =================================== */
+
+.symbol-grid {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.symbol-card {
+    background: rgba(42, 40, 34, 0.9);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.symbol-card:hover {
+    border-color: #A89882;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 152, 130, 0.3);
+}
+
+.symbol-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.symbol-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    color: #A89882;
+    text-align: center;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.symbol-meaning {
+    font-family: 'Crimson Text', serif;
+    color: #e8e3da;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.symbol-appearances {
+    background: rgba(53, 53, 48, 0.6);
+    padding: 1rem;
+    border-radius: 6px;
+}
+
+.appearances-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: #A89882;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.appearance-tag {
+    display: inline-block;
+    padding: 0.4rem 0.75rem;
+    background: rgba(168, 152, 130, 0.2);
+    border: 1px solid rgba(168, 152, 130, 0.4);
+    border-radius: 4px;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.85rem;
+    color: #e8e3da;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 /* ===================================
@@ -614,5 +910,17 @@
     
     .theme-label {
         flex: 0 0 auto;
+    }
+    
+    .registry-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .location-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .symbol-grid {
+        grid-template-columns: 1fr;
     }
 }

@@ -1,6 +1,7 @@
-//* ===================================
+/* ===================================
    CHRONICLE - THE NOVEL SANCTUARY
    A Sacred Space for Prose & Poetry
+   "Let all things be done decently and in order" - 1 Corinthians 14:40
    =================================== */
 
 /* ===================================
@@ -181,8 +182,6 @@ body {
     flex-direction: column;
     background: linear-gradient(135deg, var(--stone-deep) 0%, var(--stone-medium) 50%, var(--stone-deep) 100%);
     position: relative;
-    opacity: 1 !important;
-    visibility: visible !important;
 }
 
 .app-container::before {
@@ -198,6 +197,7 @@ body {
         repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.02) 3px, rgba(255,255,255,0.02) 6px);
     opacity: 0.9;
     pointer-events: none;
+    z-index: 0;
 }
 
 /* ===================================
@@ -214,6 +214,7 @@ body {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(20px);
     z-index: 100;
+    position: relative;
 }
 
 .header-left {
@@ -391,6 +392,8 @@ body {
     border-bottom: 2px solid rgba(139, 115, 85, 0.3);
     padding: 0;
     backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 50;
 }
 
 .nav-tab {
@@ -470,67 +473,129 @@ body {
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+    background: linear-gradient(135deg, var(--stone-deep) 0%, var(--stone-medium) 50%, var(--stone-deep) 100%);
 }
 
 .workspace.active {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* ===================================
-   COMING SOON PLACEHOLDER
+   COVENANT WORKSPACE - BASE STRUCTURE
    =================================== */
 
-.coming-soon {
+.covenant-container {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: var(--spacing-xl);
+    background: linear-gradient(135deg, var(--stone-deep) 0%, var(--stone-medium) 50%, var(--stone-deep) 100%);
 }
 
-.coming-soon svg {
-    width: 100px;
-    height: 100px;
-    stroke: var(--gold);
-    margin-bottom: var(--spacing-lg);
-    opacity: 0.6;
-    animation: gentlePulse 3s ease-in-out infinite;
+.covenant-header {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: rgba(42, 40, 34, 0.95);
+    border-bottom: 2px solid rgba(139, 115, 85, 0.3);
+    backdrop-filter: blur(10px);
 }
 
-.coming-soon h2 {
+.covenant-title {
     font-family: 'Cinzel', serif;
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--gold);
-    margin-bottom: var(--spacing-md);
     letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-xs);
+}
+
+.covenant-subtitle {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1rem;
+    color: #b8b3aa;
+    font-style: italic;
+}
+
+.covenant-toolbar {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: rgba(53, 53, 48, 0.9);
+    border-bottom: 1px solid rgba(139, 115, 85, 0.3);
+    flex-wrap: wrap;
+}
+
+.covenant-main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.covenant-canvas {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--spacing-xl);
+    background: transparent;
+}
+
+.canvas-content {
+    min-height: 100%;
+}
+
+.covenant-details {
+    width: 350px;
+    background: rgba(42, 40, 34, 0.95);
+    border-left: 2px solid rgba(139, 115, 85, 0.3);
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.covenant-details.active {
+    display: flex;
+}
+
+.details-header {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: rgba(53, 53, 48, 0.9);
+    border-bottom: 1px solid rgba(139, 115, 85, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.details-header h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
-.coming-soon p {
-    font-family: 'Crimson Text', serif;
-    font-size: 1.3rem;
-    color: #b8b3aa;
-    font-style: italic;
-    max-width: 600px;
-    line-height: 1.8;
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #8a8580;
+    font-size: 1.5rem;
+    cursor: none;
+    transition: all var(--transition-fast);
 }
 
-@keyframes gentlePulse {
-    0%, 100% {
-        opacity: 0.4;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.7;
-        transform: scale(1.05);
-    }
+.close-btn:hover {
+    color: var(--burgundy);
+    transform: scale(1.2);
+}
+
+.details-content {
+    flex: 1;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
 }
 
 /* ===================================
@@ -582,152 +647,15 @@ body {
     line-height: 1.8;
 }
 
-/* ===================================
-   COVENANT WORKSPACE (BASIC VISIBILITY)
-   =================================== */
-
-.covenant-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(135deg, var(--stone-deep) 0%, var(--stone-medium) 50%, var(--stone-deep) 100%);
-}
-
-.covenant-header {
-    padding: var(--spacing-lg) var(--spacing-xl);
-    background: rgba(42, 40, 34, 0.95);
-    border-bottom: 2px solid rgba(139, 115, 85, 0.3);
-    backdrop-filter: blur(10px);
-}
-
-.covenant-title {
-    font-family: 'Cinzel', serif;
-    font-size: 2rem;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: var(--spacing-xs);
-}
-
-.covenant-subtitle {
-    font-family: 'Crimson Text', serif;
-    font-size: 1.1rem;
-    color: #b8b3aa;
-    font-style: italic;
-}
-
-.covenant-toolbar {
-    display: flex;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md) var(--spacing-xl);
-    background: rgba(53, 53, 48, 0.9);
-    border-bottom: 1px solid rgba(139, 115, 85, 0.3);
-}
-
-.covenant-view-btn {
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: rgba(42, 40, 34, 0.8);
-    border: 1px solid rgba(139, 115, 85, 0.3);
-    border-radius: 6px;
-    color: #8a8580;
-    font-family: 'Crimson Text', serif;
-    font-size: 0.95rem;
-    cursor: none;
-    transition: all var(--transition-medium);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-}
-
-.covenant-view-btn.active,
-.covenant-view-btn:hover {
-    background: rgba(139, 115, 85, 0.2);
-    border-color: var(--gold);
-    color: var(--gold);
-}
-
-.covenant-main {
-    flex: 1;
-    display: flex;
-    overflow: hidden;
-    position: relative;
-}
-
-.covenant-canvas {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: var(--spacing-xl);
-}
-
-.canvas-content {
-    min-height: 100%;
-}
-
-.covenant-loading {
-    text-align: center;
-    padding: var(--spacing-xl);
-    color: var(--gold);
-    font-family: 'Crimson Text', serif;
-    font-size: 1.2rem;
-    font-style: italic;
-}
-
-.covenant-details {
-    width: 350px;
-    background: rgba(42, 40, 34, 0.95);
-    border-left: 2px solid rgba(139, 115, 85, 0.3);
-    display: none;
-    flex-direction: column;
-}
-
-.covenant-details.active {
-    display: flex;
-}
-
-.details-header {
-    padding: var(--spacing-md) var(--spacing-lg);
-    background: rgba(53, 53, 48, 0.9);
-    border-bottom: 1px solid rgba(139, 115, 85, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.details-header h3 {
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    color: var(--gold);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.close-btn {
-    background: transparent;
-    border: none;
-    color: #8a8580;
-    font-size: 1.5rem;
-    cursor: none;
-    transition: all var(--transition-fast);
-}
-
-.close-btn:hover {
-    color: var(--burgundy);
-    transform: scale(1.2);
-}
-
-.details-content {
-    flex: 1;
-    padding: var(--spacing-lg);
-    overflow-y: auto;
-}
-
-.details-empty {
-    text-align: center;
-    color: #8a8580;
-    font-style: italic;
-    padding: var(--spacing-xl);
+@keyframes gentlePulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
 }
 
 /* ===================================
