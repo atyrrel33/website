@@ -1,7 +1,7 @@
 // ===================================
-// THE COVENANT - Complete (Sprints 1-3)
-// "Write them on the tablet of your heart" - Proverbs 7:3
-// Architectural Sanctuary for Story Structure
+// THE COVENANT - Purified (Sprints 1-2)
+// "Unless the LORD builds the house, the builders labor in vain" - Psalm 127:1
+// Structural Analysis & Elevation ONLY
 // ===================================
 
 const ChronicleCovenantWorkspace = {
@@ -11,19 +11,12 @@ const ChronicleCovenantWorkspace = {
     chapters: [],
     scenes: [],
     
-    // Sprint 3 Data Structures
-    characters: [],
-    locations: [],
-    researchNotes: [],
-    symbols: [],
-    
     // Initialize the Covenant workspace
     init() {
-        console.log('🏛️ Covenant Workspace (Sprints 1-3) initializing...');
+        console.log('🏛️ Covenant Workspace (Purified) initializing...');
         
-        // Load all data structures
+        // Load structure data from user's actual work
         this.loadStructureData();
-        this.loadDeepMetadata();
         
         // Setup event listeners
         this.setupEventListeners();
@@ -31,12 +24,12 @@ const ChronicleCovenantWorkspace = {
         // Render initial view (Beat Sheet)
         this.renderBeatSheet();
         
-        console.log('✅ Covenant Workspace ready with full depth');
+        console.log('✅ Covenant Workspace ready - structural analysis only');
     },
     
-    // Load Acts, Chapters, and Scenes
+    // Load Acts, Chapters, and Scenes from localStorage
     loadStructureData() {
-        // Load Acts
+        // Load Acts (3-act structure)
         const savedActs = localStorage.getItem('chronicle_acts');
         if (savedActs) {
             try {
@@ -50,7 +43,7 @@ const ChronicleCovenantWorkspace = {
             this.saveActs();
         }
         
-        // Load Chapters
+        // Load Chapters (user-created)
         const savedChapters = localStorage.getItem('chronicle_chapters');
         if (savedChapters) {
             try {
@@ -61,7 +54,7 @@ const ChronicleCovenantWorkspace = {
             }
         }
         
-        // Load Scenes
+        // Load Scenes (from The Desk)
         const savedScenes = localStorage.getItem('chronicle_scenes');
         if (savedScenes) {
             try {
@@ -75,68 +68,7 @@ const ChronicleCovenantWorkspace = {
         console.log(`📊 Loaded: ${this.acts.length} acts, ${this.chapters.length} chapters, ${this.scenes.length} scenes`);
     },
     
-    // Load Sprint 3 Deep Metadata
-    loadDeepMetadata() {
-        // Load Character Registry
-        const savedCharacters = localStorage.getItem('chronicle_character_registry');
-        if (savedCharacters) {
-            try {
-                this.characters = JSON.parse(savedCharacters);
-            } catch (e) {
-                console.error('Failed to load character registry:', e);
-                this.characters = this.createDefaultCharacters();
-            }
-        } else {
-            this.characters = this.createDefaultCharacters();
-            this.saveCharacters();
-        }
-        
-        // Load Location Catalog
-        const savedLocations = localStorage.getItem('chronicle_location_catalog');
-        if (savedLocations) {
-            try {
-                this.locations = JSON.parse(savedLocations);
-            } catch (e) {
-                console.error('Failed to load locations:', e);
-                this.locations = this.createDefaultLocations();
-            }
-        } else {
-            this.locations = this.createDefaultLocations();
-            this.saveLocations();
-        }
-        
-        // Load Research Notes
-        const savedResearch = localStorage.getItem('chronicle_research_notes');
-        if (savedResearch) {
-            try {
-                this.researchNotes = JSON.parse(savedResearch);
-            } catch (e) {
-                console.error('Failed to load research:', e);
-                this.researchNotes = this.createDefaultResearch();
-            }
-        } else {
-            this.researchNotes = this.createDefaultResearch();
-            this.saveResearch();
-        }
-        
-        // Load Symbolic Elements
-        const savedSymbols = localStorage.getItem('chronicle_symbolic_elements');
-        if (savedSymbols) {
-            try {
-                this.symbols = JSON.parse(savedSymbols);
-            } catch (e) {
-                console.error('Failed to load symbols:', e);
-                this.symbols = this.createDefaultSymbols();
-            }
-        } else {
-            this.symbols = this.createDefaultSymbols();
-            this.saveSymbols();
-        }
-        
-        console.log(`📚 Deep metadata loaded: ${this.characters.length} characters, ${this.locations.length} locations, ${this.symbols.length} symbols`);
-    },
-    
-    // Create default three-act structure
+    // Create default three-act structure (structural framework only)
     createDefaultActs() {
         return [
             {
@@ -144,164 +76,21 @@ const ChronicleCovenantWorkspace = {
                 number: 1,
                 title: 'Act I: Setup',
                 description: 'The ordinary world and inciting incident',
-                color: '#C9A961'
+                color: '#C9A961' // Gold
             },
             {
                 id: 'act-2',
                 number: 2,
                 title: 'Act II: Confrontation',
                 description: 'Progressive complications and midpoint reversal',
-                color: '#2C5F5F'
+                color: '#2C5F5F' // Teal
             },
             {
                 id: 'act-3',
                 number: 3,
                 title: 'Act III: Resolution',
                 description: 'Crisis, climax, and denouement',
-                color: '#722F37'
-            }
-        ];
-    },
-    
-    // Create default character registry for Joseph story
-    createDefaultCharacters() {
-        return [
-            {
-                id: 'char-joseph',
-                name: 'Joseph',
-                role: 'Protagonist',
-                description: 'The dreamer who rises from pit to palace',
-                appearances: 0,
-                relationships: [
-                    { to: 'Jacob', nature: 'Beloved son' },
-                    { to: 'Brothers', nature: 'Betrayed → Reconciled' }
-                ]
-            },
-            {
-                id: 'char-jacob',
-                name: 'Jacob',
-                role: 'Father Figure',
-                description: 'Patriarch who favors Joseph',
-                appearances: 0,
-                relationships: [
-                    { to: 'Joseph', nature: 'Favored son' }
-                ]
-            },
-            {
-                id: 'char-brothers',
-                name: 'The Brothers',
-                role: 'Antagonists → Transformed',
-                description: 'Envious siblings who sell Joseph into slavery',
-                appearances: 0,
-                relationships: [
-                    { to: 'Joseph', nature: 'Jealousy → Repentance' }
-                ]
-            }
-        ];
-    },
-    
-    // Create default location catalog
-    createDefaultLocations() {
-        return [
-            {
-                id: 'loc-canaan',
-                name: 'Canaan',
-                subtitle: 'The Land of Promise',
-                description: 'The ancestral home where Joseph begins his journey as the favored son.',
-                significance: 'Represents the ordinary world and established order before the call to adventure.',
-                sceneCount: 0
-            },
-            {
-                id: 'loc-pit',
-                name: 'The Pit',
-                subtitle: 'Descent into Darkness',
-                description: 'The dry cistern where Joseph is thrown by his brothers.',
-                significance: 'Symbol of death, betrayal, and the lowest point before transformation.',
-                sceneCount: 0
-            },
-            {
-                id: 'loc-egypt',
-                name: 'Egypt',
-                subtitle: 'Land of Trial and Elevation',
-                description: 'The foreign land where Joseph experiences slavery, prison, and eventual exaltation.',
-                significance: 'Represents the crucible of refinement and God\'s larger plan unfolding.',
-                sceneCount: 0
-            },
-            {
-                id: 'loc-palace',
-                name: 'Pharaoh\'s Palace',
-                subtitle: 'Seat of Power',
-                description: 'Where Joseph interprets dreams and becomes second-in-command.',
-                significance: 'The culmination of Joseph\'s rise - from pit to palace, demonstrating divine providence.',
-                sceneCount: 0
-            }
-        ];
-    },
-    
-    // Create default research notes
-    createDefaultResearch() {
-        return [
-            {
-                id: 'research-genesis-overview',
-                title: 'Genesis 37-50: The Joseph Narrative',
-                scripture: 'Genesis 37:3 - "Now Israel loved Joseph more than any of his other sons, because he had been born to him in his old age; and he made an ornate robe for him."',
-                citation: 'Genesis 37:3 (NIV)',
-                notes: 'The story of Joseph spans Genesis chapters 37-50, making it one of the longest continuous narratives in Genesis. It bridges the patriarchal narratives and the Exodus story.'
-            },
-            {
-                id: 'research-coat-symbolism',
-                title: 'The Coat of Many Colors',
-                scripture: 'Genesis 37:3',
-                citation: 'Genesis 37:3',
-                notes: 'The Hebrew term suggests a long-sleeved robe worn by royalty and the wealthy. It symbolized Jacob\'s favoritism and Joseph\'s special status, provoking his brothers\' jealousy.'
-            },
-            {
-                id: 'research-providence-theme',
-                title: 'Divine Providence Theme',
-                scripture: 'Genesis 50:20 - "You intended to harm me, but God intended it for good to accomplish what is now being done, the saving of many lives."',
-                citation: 'Genesis 50:20 (NIV)',
-                notes: 'The central theological theme: God\'s sovereignty working through human choices, both good and evil, to accomplish His purposes.'
-            }
-        ];
-    },
-    
-    // Create default symbolic elements
-    createDefaultSymbols() {
-        return [
-            {
-                id: 'symbol-coat',
-                icon: '👑',
-                name: 'The Coat',
-                meaning: 'Symbol of favor, identity, and the cost of being set apart. Stripped away in betrayal, representing loss of status and innocence.',
-                appearances: []
-            },
-            {
-                id: 'symbol-dreams',
-                icon: '✨',
-                name: 'The Dreams',
-                meaning: 'Divine revelation and prophetic insight. Joseph\'s gift becomes both his curse and his salvation.',
-                appearances: []
-            },
-            {
-                id: 'symbol-pit',
-                icon: '🕳️',
-                name: 'The Pit',
-                meaning: 'Death and rebirth. The descent that precedes elevation. Every hero must face the pit before the palace.',
-                appearances: []
-            },
-            {
-                id: 'symbol-cup',
-                icon: '🏆',
-                name: 'The Silver Cup',
-                meaning: 'Test of character and instrument of revelation. Used to bring Joseph\'s brothers to repentance.',
-                appearances: []
-            },
-            {
-                id: 'symbol-famine',
-                icon: '🌾',
-                name: 'Bread & Famine',
-                meaning: 'Physical and spiritual hunger. God\'s provision in the midst of scarcity. The means of reconciliation.',
-                appearances: []
+                color: '#722F37' // Burgundy
             }
         ];
     },
@@ -309,26 +98,6 @@ const ChronicleCovenantWorkspace = {
     // Save methods
     saveActs() {
         localStorage.setItem('chronicle_acts', JSON.stringify(this.acts));
-    },
-    
-    saveChapters() {
-        localStorage.setItem('chronicle_chapters', JSON.stringify(this.chapters));
-    },
-    
-    saveCharacters() {
-        localStorage.setItem('chronicle_character_registry', JSON.stringify(this.characters));
-    },
-    
-    saveLocations() {
-        localStorage.setItem('chronicle_location_catalog', JSON.stringify(this.locations));
-    },
-    
-    saveResearch() {
-        localStorage.setItem('chronicle_research_notes', JSON.stringify(this.researchNotes));
-    },
-    
-    saveSymbols() {
-        localStorage.setItem('chronicle_symbolic_elements', JSON.stringify(this.symbols));
     },
     
     // Setup all event listeners
@@ -386,18 +155,6 @@ const ChronicleCovenantWorkspace = {
             case 'themes':
                 this.renderThemeDistribution();
                 break;
-            case 'registry':
-                this.renderCharacterRegistry();
-                break;
-            case 'locations':
-                this.renderLocationCatalog();
-                break;
-            case 'research':
-                this.renderResearch();
-                break;
-            case 'symbols':
-                this.renderSymbolicTracker();
-                break;
             default:
                 this.renderBeatSheet();
         }
@@ -414,13 +171,13 @@ const ChronicleCovenantWorkspace = {
         if (this.scenes.length === 0) {
             canvas.innerHTML = `
                 <div class="covenant-empty-state">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 80px; height: 80px; margin-bottom: 1.5rem; opacity: 0.5;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 80px; height: 80px; margin-bottom: 1.5rem;">
                         <rect x="3" y="3" width="18" height="18" rx="2"/>
                         <path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>
                     </svg>
-                    <h3>No Scenes Yet</h3>
+                    <h3>The Canvas Awaits</h3>
                     <p>Begin your story at The Desk, and your scenes will appear here in their sacred architecture.</p>
-                    <p style="margin-top: 1rem; font-style: italic; opacity: 0.7;">
+                    <p style="margin-top: 1rem; font-style: italic; opacity: 0.7; font-size: 0.95rem;">
                         "Unless the LORD builds the house, the builders labor in vain" - Psalm 127:1
                     </p>
                 </div>
@@ -481,7 +238,7 @@ const ChronicleCovenantWorkspace = {
         html += '</div>';
         canvas.innerHTML = html;
         
-        // Attach click handlers
+        // Attach click handlers to scene cards
         document.querySelectorAll('.scene-card').forEach(card => {
             card.addEventListener('click', (e) => {
                 const sceneId = e.currentTarget.getAttribute('data-scene-id');
@@ -499,7 +256,7 @@ const ChronicleCovenantWorkspace = {
         if (!canvas) return;
         
         if (this.scenes.length === 0) {
-            canvas.innerHTML = this.getEmptyStateHTML('Pacing Analysis', 'Create scenes to visualize your story\'s rhythm and flow.');
+            canvas.innerHTML = this.getEmptyStateHTML('Pacing Analysis', 'Create scenes at The Desk to visualize your story\'s rhythm and flow.');
             return;
         }
         
@@ -509,7 +266,7 @@ const ChronicleCovenantWorkspace = {
             <div class="pacing-graph-container">
                 <div class="graph-header">
                     <h2>Pacing Analysis</h2>
-                    <p>"The crucible for silver and the furnace for gold, but the LORD tests the heart" - Proverbs 17:3</p>
+                    <p style="margin-top: 0.5rem;">"The crucible for silver and the furnace for gold" - Proverbs 17:3</p>
                 </div>
                 
                 <div class="pacing-stats">
@@ -534,7 +291,7 @@ const ChronicleCovenantWorkspace = {
                 </div>
                 
                 <div class="pacing-insights">
-                    <h3>Insights</h3>
+                    <h3>Structural Insights</h3>
                     ${this.generatePacingInsights(pacingData)}
                 </div>
             </div>
@@ -545,7 +302,7 @@ const ChronicleCovenantWorkspace = {
     
     calculatePacingData() {
         const totalWords = this.scenes.reduce((sum, scene) => sum + (scene.wordCount || 0), 0);
-        const avgWordsPerScene = Math.round(totalWords / this.scenes.length);
+        const avgWordsPerScene = totalWords > 0 ? Math.round(totalWords / this.scenes.length) : 0;
         
         const dataPoints = this.scenes.map((scene, index) => ({
             sceneNumber: index + 1,
@@ -559,8 +316,8 @@ const ChronicleCovenantWorkspace = {
             totalWords,
             avgWordsPerScene,
             dataPoints,
-            maxWords: Math.max(...dataPoints.map(d => d.wordCount)),
-            minWords: Math.min(...dataPoints.map(d => d.wordCount))
+            maxWords: dataPoints.length > 0 ? Math.max(...dataPoints.map(d => d.wordCount)) : 0,
+            minWords: dataPoints.length > 0 ? Math.min(...dataPoints.map(d => d.wordCount)) : 0
         };
     },
     
@@ -573,8 +330,8 @@ const ChronicleCovenantWorkspace = {
         const maxY = data.maxWords * 1.1;
         
         const points = data.dataPoints.map((point, index) => {
-            const x = padding + (index / (data.dataPoints.length - 1)) * width;
-            const y = padding + height - (point.wordCount / maxY) * height;
+            const x = padding + (index / (data.dataPoints.length - 1 || 1)) * width;
+            const y = padding + height - (point.wordCount / (maxY || 1)) * height;
             return { x, y, ...point };
         });
         
@@ -585,11 +342,13 @@ const ChronicleCovenantWorkspace = {
         const areaPath = `M ${padding} ${padding + height} L ${points.map(p => `${p.x} ${p.y}`).join(' L ')} L ${padding + width} ${padding + height} Z`;
         
         let svg = `
+            <!-- Grid lines -->
             <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${padding + height}" stroke="#8B7355" stroke-width="2"/>
             <line x1="${padding}" y1="${padding + height}" x2="${padding + width}" y2="${padding + height}" stroke="#8B7355" stroke-width="2"/>
             
+            <!-- Average line -->
             ${(() => {
-                const avgY = padding + height - (data.avgWordsPerScene / maxY) * height;
+                const avgY = padding + height - (data.avgWordsPerScene / (maxY || 1)) * height;
                 return `
                     <line x1="${padding}" y1="${avgY}" x2="${padding + width}" y2="${avgY}" 
                           stroke="#C9A961" stroke-width="1" stroke-dasharray="5,5" opacity="0.5"/>
@@ -599,9 +358,13 @@ const ChronicleCovenantWorkspace = {
                 `;
             })()}
             
+            <!-- Area fill -->
             <path d="${areaPath}" fill="url(#pacingGradient)" opacity="0.3"/>
+            
+            <!-- Line graph -->
             <path d="${linePath}" fill="none" stroke="#C9A961" stroke-width="3"/>
             
+            <!-- Data points -->
             ${points.map(p => {
                 const color = this.getMcKeeColor(p.mckeeStructure);
                 return `
@@ -611,6 +374,7 @@ const ChronicleCovenantWorkspace = {
                 `;
             }).join('')}
             
+            <!-- Gradient definition -->
             <defs>
                 <linearGradient id="pacingGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" style="stop-color:#C9A961;stop-opacity:0.8" />
@@ -625,24 +389,34 @@ const ChronicleCovenantWorkspace = {
     generatePacingInsights(data) {
         let insights = '<ul class="insight-list">';
         
+        if (data.dataPoints.length === 0) {
+            insights += '<li>No scenes to analyze yet.</li>';
+            insights += '</ul>';
+            return insights;
+        }
+        
         const longestScene = Math.max(...data.dataPoints.map(d => d.wordCount));
         const shortestScene = Math.min(...data.dataPoints.map(d => d.wordCount));
         const variance = longestScene - shortestScene;
         
         if (variance > data.avgWordsPerScene * 3) {
-            insights += '<li>⚠️ <strong>High variance detected</strong> - Some scenes are significantly longer than others. Consider balancing scene lengths for consistent pacing.</li>';
+            insights += '<li>⚠️ <strong>High variance detected</strong> - Some scenes are significantly longer than others. Consider whether this serves your pacing or creates imbalance.</li>';
         }
         
         const act2Scenes = data.dataPoints.filter(d => d.actId === 'act-2');
         const act2Words = act2Scenes.reduce((sum, s) => sum + s.wordCount, 0);
-        const act2Percentage = (act2Words / data.totalWords) * 100;
+        const act2Percentage = data.totalWords > 0 ? (act2Words / data.totalWords) * 100 : 0;
         
         if (act2Percentage < 40) {
-            insights += '<li>📖 <strong>Act II may be underdeveloped</strong> - The middle act should typically comprise 40-50% of your story.</li>';
+            insights += '<li>📖 <strong>Act II may need development</strong> - The middle act typically comprises 40-50% of the story. Currently: ' + Math.round(act2Percentage) + '%</li>';
         }
         
         if (data.dataPoints.length >= 20) {
-            insights += '<li>✅ <strong>Good structural foundation</strong> - You have substantial material to work with.</li>';
+            insights += '<li>✅ <strong>Substantial material</strong> - You have a solid foundation to work with.</li>';
+        }
+        
+        if (insights === '<ul class="insight-list">') {
+            insights += '<li>✨ <strong>Balanced structure</strong> - Your pacing appears well-distributed.</li>';
         }
         
         insights += '</ul>';
@@ -657,18 +431,19 @@ const ChronicleCovenantWorkspace = {
         const canvas = document.getElementById('canvas-content');
         if (!canvas) return;
         
+        // Extract characters from user's actual scenes
         const characters = this.extractCharacters();
         
         if (characters.length === 0) {
-            canvas.innerHTML = this.getEmptyStateHTML('Character Arc Tracker', 'Add character tags to your scenes to track their journeys.');
+            canvas.innerHTML = this.getEmptyStateHTML('Character Arc Tracker', 'Add character tags to your scenes (in The Desk or The Archive) to track their journeys across acts.');
             return;
         }
         
         let html = `
             <div class="character-arc-container">
                 <div class="graph-header">
-                    <h2>Character Arc Tracker</h2>
-                    <p>"Track each soul's journey across the narrative tapestry"</p>
+                    <h2>Character Distribution</h2>
+                    <p style="margin-top: 0.5rem;">Track each soul's journey across the narrative tapestry</p>
                 </div>
                 
                 <div class="character-list">
@@ -715,7 +490,7 @@ const ChronicleCovenantWorkspace = {
                 scene.characters.forEach(char => charSet.add(char));
             }
         });
-        return Array.from(charSet);
+        return Array.from(charSet).sort();
     },
     
     getCharacterAppearances(characterName) {
@@ -745,18 +520,19 @@ const ChronicleCovenantWorkspace = {
         const canvas = document.getElementById('canvas-content');
         if (!canvas) return;
         
+        // Extract themes from user's actual scenes
         const themes = this.extractThemes();
         
         if (themes.length === 0) {
-            canvas.innerHTML = this.getEmptyStateHTML('Theme Distribution', 'Add themes to your scenes to visualize how they weave through your story.');
+            canvas.innerHTML = this.getEmptyStateHTML('Theme Distribution', 'Add theme tags to your scenes (in The Desk or The Archive) to visualize how they weave through your story.');
             return;
         }
         
         let html = `
             <div class="theme-distribution-container">
                 <div class="graph-header">
-                    <h2>Theme Distribution Map</h2>
-                    <p>"Where your themes live across the narrative architecture"</p>
+                    <h2>Theme Distribution</h2>
+                    <p style="margin-top: 0.5rem;">Where your themes live across the narrative architecture</p>
                 </div>
                 
                 <div class="theme-heatmap">
@@ -769,13 +545,13 @@ const ChronicleCovenantWorkspace = {
                 <div class="theme-row">
                     <div class="theme-label">${theme}</div>
                     <div class="theme-cells">
-                        <div class="theme-cell" style="opacity: ${distribution.act1 / 100};" title="Act I: ${distribution.act1}%">
+                        <div class="theme-cell" style="opacity: ${Math.max(0.15, distribution.act1 / 100)};" title="Act I: ${distribution.act1}%">
                             <span class="cell-value">${distribution.act1}%</span>
                         </div>
-                        <div class="theme-cell" style="opacity: ${distribution.act2 / 100};" title="Act II: ${distribution.act2}%">
+                        <div class="theme-cell" style="opacity: ${Math.max(0.15, distribution.act2 / 100)};" title="Act II: ${distribution.act2}%">
                             <span class="cell-value">${distribution.act2}%</span>
                         </div>
-                        <div class="theme-cell" style="opacity: ${distribution.act3 / 100};" title="Act III: ${distribution.act3}%">
+                        <div class="theme-cell" style="opacity: ${Math.max(0.15, distribution.act3 / 100)};" title="Act III: ${distribution.act3}%">
                             <span class="cell-value">${distribution.act3}%</span>
                         </div>
                     </div>
@@ -803,7 +579,7 @@ const ChronicleCovenantWorkspace = {
                 scene.themes.forEach(theme => themeSet.add(theme));
             }
         });
-        return Array.from(themeSet);
+        return Array.from(themeSet).sort();
     },
     
     getThemeActDistribution(themeName) {
@@ -831,13 +607,14 @@ const ChronicleCovenantWorkspace = {
         const canvas = document.getElementById('canvas-content');
         if (!canvas) return;
         
+        // Analyze McKee structure elements from user's scenes
         const analysis = this.analyzeStructure();
         
         let html = `
             <div class="structure-analysis-container">
                 <div class="graph-header">
-                    <h2>Structure Analysis</h2>
-                    <p>"McKee's Essential Structural Elements"</p>
+                    <h2>McKee Structure Validation</h2>
+                    <p style="margin-top: 0.5rem;">Essential structural elements for narrative coherence</p>
                 </div>
                 
                 <div class="structure-checklist">
@@ -846,7 +623,7 @@ const ChronicleCovenantWorkspace = {
         const requiredElements = [
             { key: 'opening', label: 'Opening Image', act: 1 },
             { key: 'inciting', label: 'Inciting Incident', act: 1 },
-            { key: 'firstplot', label: 'First Plot Point', act: 1 },
+            { key: 'firstplotpoint', label: 'First Plot Point', act: 1 },
             { key: 'midpoint', label: 'Midpoint Reversal', act: 2 },
             { key: 'crisis', label: 'Crisis', act: 2 },
             { key: 'climax', label: 'Climax', act: 3 },
@@ -870,6 +647,11 @@ const ChronicleCovenantWorkspace = {
         
         html += `
                 </div>
+                <div class="structure-note">
+                    <p style="font-style: italic; color: #8a8580; text-align: center; padding: 1.5rem;">
+                        Assign McKee elements to your scenes in The Desk or The Archive to track structural completeness.
+                    </p>
+                </div>
             </div>
         `;
         
@@ -881,6 +663,7 @@ const ChronicleCovenantWorkspace = {
         
         this.scenes.forEach(scene => {
             if (scene.mckeeStructure) {
+                // Normalize the key for matching
                 const key = scene.mckeeStructure.toLowerCase().replace(/\s+/g, '');
                 if (!analysis[key]) {
                     analysis[key] = scene;
@@ -889,233 +672,6 @@ const ChronicleCovenantWorkspace = {
         });
         
         return analysis;
-    },
-    
-    // ===================================
-    // SPRINT 3: CHARACTER REGISTRY
-    // ===================================
-    
-    renderCharacterRegistry() {
-        const canvas = document.getElementById('canvas-content');
-        if (!canvas) return;
-        
-        // Update appearance counts
-        this.updateCharacterAppearances();
-        
-        let html = `
-            <div class="character-registry-container">
-                <div class="graph-header">
-                    <h2>Character Registry</h2>
-                    <p>"Deep profiles and relationship webs"</p>
-                </div>
-                
-                <div class="registry-grid">
-        `;
-        
-        this.characters.forEach(char => {
-            html += `
-                <div class="registry-character-card">
-                    <h3 class="character-name">${char.name}</h3>
-                    <div class="character-role">${char.role}</div>
-                    <p style="color: #b8b3aa; font-family: 'Crimson Text', serif; line-height: 1.6; margin-bottom: 1.5rem;">${char.description}</p>
-                    
-                    <div class="character-stats-grid">
-                        <div class="character-stat">
-                            <div class="stat-value-large">${char.appearances}</div>
-                            <div class="stat-label-small">Appearances</div>
-                        </div>
-                        <div class="character-stat">
-                            <div class="stat-value-large">${char.relationships.length}</div>
-                            <div class="stat-label-small">Relationships</div>
-                        </div>
-                    </div>
-                    
-                    <div class="character-relationships">
-                        <h4 style="font-family: 'Cinzel', serif; color: #C9A961; font-size: 1rem; margin-bottom: 0.75rem; letter-spacing: 0.05em;">RELATIONSHIPS</h4>
-                        ${char.relationships.map(rel => `
-                            <div class="relationship-item">
-                                <span class="relationship-arrow">→</span>
-                                <span class="relationship-text"><strong>${rel.to}</strong>: ${rel.nature}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        });
-        
-        html += `
-                </div>
-            </div>
-        `;
-        
-        canvas.innerHTML = html;
-    },
-    
-    updateCharacterAppearances() {
-        this.characters.forEach(char => {
-            const appearances = this.scenes.filter(scene => 
-                scene.characters && scene.characters.includes(char.name)
-            );
-            char.appearances = appearances.length;
-        });
-    },
-    
-    // ===================================
-    // SPRINT 3: LOCATION CATALOG
-    // ===================================
-    
-    renderLocationCatalog() {
-        const canvas = document.getElementById('canvas-content');
-        if (!canvas) return;
-        
-        // Update scene counts
-        this.updateLocationSceneCounts();
-        
-        let html = `
-            <div class="location-catalog-container">
-                <div class="graph-header">
-                    <h2>Location Catalog</h2>
-                    <p>"Settings and their sacred significance"</p>
-                </div>
-                
-                <div class="location-grid">
-        `;
-        
-        this.locations.forEach(loc => {
-            html += `
-                <div class="location-card">
-                    <div class="location-header">
-                        <h3 class="location-name">${loc.name}</h3>
-                        <div class="location-subtitle">${loc.subtitle}</div>
-                    </div>
-                    <div class="location-body">
-                        <p class="location-description">${loc.description}</p>
-                        <div class="location-significance">
-                            <strong>Significance:</strong> ${loc.significance}
-                        </div>
-                        <div class="location-scenes">
-                            📍 ${loc.sceneCount} scene${loc.sceneCount !== 1 ? 's' : ''} set here
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        html += `
-                </div>
-            </div>
-        `;
-        
-        canvas.innerHTML = html;
-    },
-    
-    updateLocationSceneCounts() {
-        this.locations.forEach(loc => {
-            const count = this.scenes.filter(scene => 
-                scene.location && scene.location === loc.name
-            ).length;
-            loc.sceneCount = count;
-        });
-    },
-    
-    // ===================================
-    // SPRINT 3: RESEARCH & PARALLELS
-    // ===================================
-    
-    renderResearch() {
-        const canvas = document.getElementById('canvas-content');
-        if (!canvas) return;
-        
-        let html = `
-            <div class="research-container">
-                <div class="graph-header">
-                    <h2>Research & Biblical Parallels</h2>
-                    <p>"Scripture references and theological grounding"</p>
-                </div>
-                
-                <div class="research-grid">
-        `;
-        
-        this.researchNotes.forEach(note => {
-            html += `
-                <div class="research-section">
-                    <div class="research-section-header">
-                        <h3 class="research-section-title">${note.title}</h3>
-                    </div>
-                    <div class="research-section-body">
-                        <div class="scripture-ref">
-                            <div class="scripture-verse">${note.scripture}</div>
-                            <div class="scripture-citation">— ${note.citation}</div>
-                        </div>
-                        <div class="research-note">
-                            ${note.notes}
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        html += `
-                </div>
-            </div>
-        `;
-        
-        canvas.innerHTML = html;
-    },
-    
-    // ===================================
-    // SPRINT 3: SYMBOLIC TRACKER
-    // ===================================
-    
-    renderSymbolicTracker() {
-        const canvas = document.getElementById('canvas-content');
-        if (!canvas) return;
-        
-        // Update appearances
-        this.updateSymbolAppearances();
-        
-        let html = `
-            <div class="symbolic-tracker-container">
-                <div class="graph-header">
-                    <h2>Symbolic Elements Tracker</h2>
-                    <p>"Motifs that weave through the narrative tapestry"</p>
-                </div>
-                
-                <div class="symbol-grid">
-        `;
-        
-        this.symbols.forEach(symbol => {
-            html += `
-                <div class="symbol-card">
-                    <div class="symbol-icon">${symbol.icon}</div>
-                    <h3 class="symbol-name">${symbol.name}</h3>
-                    <p class="symbol-meaning">${symbol.meaning}</p>
-                    <div class="symbol-appearances">
-                        <div class="appearances-title">Appears In:</div>
-                        ${symbol.appearances.length > 0 
-                            ? symbol.appearances.map(app => `<span class="appearance-tag">${app}</span>`).join('')
-                            : '<span style="font-style: italic; color: #8a8580;">Not yet tracked in scenes</span>'
-                        }
-                    </div>
-                </div>
-            `;
-        });
-        
-        html += `
-                </div>
-            </div>
-        `;
-        
-        canvas.innerHTML = html;
-    },
-    
-    updateSymbolAppearances() {
-        this.symbols.forEach(symbol => {
-            // This would ideally track which scenes reference each symbol
-            // For now, we'll initialize with empty arrays
-            // In a full implementation, scenes would have a 'symbols' array property
-            symbol.appearances = [];
-        });
     },
     
     // ===================================
@@ -1155,7 +711,7 @@ const ChronicleCovenantWorkspace = {
     getEmptyStateHTML(title, message) {
         return `
             <div class="covenant-empty-state">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 80px; height: 80px; margin-bottom: 1.5rem; opacity: 0.5;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 80px; height: 80px; margin-bottom: 1.5rem;">
                     <rect x="3" y="3" width="18" height="18" rx="2"/>
                     <path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>
                 </svg>
@@ -1174,7 +730,7 @@ const ChronicleCovenantWorkspace = {
         
         if (!detailsPanel || !detailsContent) return;
         
-        detailsContent.innerHTML = `
+        let detailsHTML = `
             <div class="scene-details">
                 <h4>${scene.title || 'Untitled Scene'}</h4>
                 <div class="detail-row">
@@ -1185,21 +741,40 @@ const ChronicleCovenantWorkspace = {
                     <span class="detail-label">Author:</span>
                     <span class="detail-value">${scene.author === 'tyrrel' ? 'Tyrrel' : 'Trevor'}</span>
                 </div>
-                ${scene.mckeeStructure ? `
-                    <div class="detail-row">
-                        <span class="detail-label">McKee Element:</span>
-                        <span class="detail-value">${scene.mckeeStructure}</span>
-                    </div>
-                ` : ''}
-                ${scene.characters && scene.characters.length > 0 ? `
-                    <div class="detail-row">
-                        <span class="detail-label">Characters:</span>
-                        <span class="detail-value">${scene.characters.join(', ')}</span>
-                    </div>
-                ` : ''}
+        `;
+        
+        if (scene.mckeeStructure) {
+            detailsHTML += `
+                <div class="detail-row">
+                    <span class="detail-label">McKee Element:</span>
+                    <span class="detail-value">${scene.mckeeStructure}</span>
+                </div>
+            `;
+        }
+        
+        if (scene.characters && scene.characters.length > 0) {
+            detailsHTML += `
+                <div class="detail-row">
+                    <span class="detail-label">Characters:</span>
+                    <span class="detail-value">${scene.characters.join(', ')}</span>
+                </div>
+            `;
+        }
+        
+        if (scene.themes && scene.themes.length > 0) {
+            detailsHTML += `
+                <div class="detail-row">
+                    <span class="detail-label">Themes:</span>
+                    <span class="detail-value">${scene.themes.join(', ')}</span>
+                </div>
+            `;
+        }
+        
+        detailsHTML += `
             </div>
         `;
         
+        detailsContent.innerHTML = detailsHTML;
         detailsPanel.classList.add('active');
     },
     
@@ -1214,4 +789,4 @@ const ChronicleCovenantWorkspace = {
 // Make globally available
 window.ChronicleCovenantWorkspace = ChronicleCovenantWorkspace;
 
-console.log('📜 Covenant workspace module loaded (Complete: Sprints 1-3)');
+console.log('📜 Covenant workspace module loaded (Purified - Sprints 1-2 only)');
