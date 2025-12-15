@@ -1,4 +1,4 @@
-/* ===================================
+//* ===================================
    CHRONICLE - THE NOVEL SANCTUARY
    A Sacred Space for Prose & Poetry
    =================================== */
@@ -589,11 +589,9 @@ body {
 .covenant-container {
     width: 100%;
     height: 100%;
-    display: flex !important;
+    display: flex;
     flex-direction: column;
     background: linear-gradient(135deg, var(--stone-deep) 0%, var(--stone-medium) 50%, var(--stone-deep) 100%);
-    opacity: 1 !important;
-    visibility: visible !important;
 }
 
 .covenant-header {
@@ -658,7 +656,8 @@ body {
 
 .covenant-canvas {
     flex: 1;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: var(--spacing-xl);
 }
 
