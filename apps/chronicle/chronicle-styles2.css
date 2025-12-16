@@ -9,23 +9,25 @@
    =================================== */
 
 :root {
-    /* Core Color Palette - The Tabernacle */
-    --cream-warm: #FAF7F2;
-    --cream-soft: #F5F1E8;
-    --brown-warm: #A89882;
-    --brown-accent: #8B7355;
-    --text-primary: #2d2d2d;
-    --text-secondary: #5a5a5a;
+    /* Core Color Palette - Deep Ancient Wood */
+    --cream-warm: #E8DCC8;
+    --cream-soft: #D4C4AC;
+    --brown-warm: #6B5542;
+    --brown-accent: #5A4A3A;
+    --text-primary: #e8e3da;
+    --text-secondary: #b8b3aa;
     
-    /* Stone Foundation */
-    --stone-deep: #2a2822;
-    --stone-medium: #3a3832;
-    --stone-light: #4a4840;
+    /* Deep Wood Foundation - Like the Tabernacle Beams */
+    --stone-deep: #1a140e;        /* Darkest base - almost black-brown */
+    --stone-medium: #2d2318;      /* Medium depth wood */
+    --stone-light: #3f3329;       /* Lighter wood grain */
+    --wood-dark: #1a140e;         /* Primary background */
+    --wood-grain: #2d2318;        /* Subtle grain overlay */
     
     /* Sacred Accents */
-    --teal: #2C5F5F;
-    --gold: #C9A961;
-    --burgundy: #722F37;
+    --teal: #3a7d7d;
+    --gold: #D4A574;
+    --burgundy: #8B3A42;
     
     /* Flame Colors */
     --ember-bright: #ff9955;
@@ -63,7 +65,7 @@ html, body {
 
 body {
     font-family: 'Crimson Text', Georgia, serif;
-    background: var(--stone-deep);
+    background: linear-gradient(135deg, #1a140e 0%, #221a14 50%, #1a140e 100%);
     color: #e8e3da;
     cursor: none;
     line-height: 1.6;
