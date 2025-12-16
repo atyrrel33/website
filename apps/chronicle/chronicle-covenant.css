@@ -10,7 +10,7 @@
 
 .covenant-header {
     padding: 1rem 2rem;
-    background: linear-gradient(180deg, rgba(250, 247, 242, 0.98), rgba(245, 241, 232, 0.95));
+    background: linear-gradient(135deg, #1a140e 0%, #221a14 50%, #1a140e 100%);
     border-bottom: 2px solid rgba(139, 115, 85, 0.4);
 }
 

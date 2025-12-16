@@ -75,6 +75,15 @@ const ChronicleDesk = {
                 this.saveCurrentSceneExplicitly();
             });
         }
+    const deleteSceneBtn = document.getElementById('deleteSceneBtn');
+        if (deleteSceneBtn) {
+            console.log('✔ Delete Scene button found');
+            deleteSceneBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('🗑️ Delete Scene clicked');
+                this.deleteCurrentScene();
+            });
+        }
         
         if (sceneSwitcher) {
             console.log('✓ Scene Switcher found');
@@ -219,6 +228,102 @@ const ChronicleDesk = {
     saveChapters() {
         localStorage.setItem('chronicle_chapters', JSON.stringify(this.chapters));
     },
+    // ===================================
+// DELETE FUNCTIONALITY
+// ===================================
+
+deleteScene(sceneId) {
+    if (!confirm('Delete this scene permanently? This cannot be undone.')) {
+        return false;
+    }
+    
+    console.log('🗑️ Deleting scene:', sceneId);
+    
+    // Remove from localStorage
+    localStorage.removeItem(`scene_${sceneId}`);
+    
+    // Remove from scenes array
+    this.scenes = this.scenes.filter(s => s.id !== sceneId);
+    this.saveScenes();
+    
+    // If it was the current scene, load another
+    if (this.currentSceneId === sceneId) {
+        this.currentSceneId = null;
+        this.loadMostRecentScene();
+    }
+    
+    // Refresh UI
+    this.populateSceneSwitcher();
+    
+    console.log('✅ Scene deleted');
+    return true;
+},
+
+deleteAct(actId) {
+    if (!confirm('Delete this Act and ALL its scenes? This cannot be undone.')) {
+        return false;
+    }
+    
+    console.log('🗑️ Deleting act:', actId);
+    
+    // Delete all scenes in this act
+    const scenesToDelete = this.scenes.filter(s => s.actId === actId);
+    scenesToDelete.forEach(scene => {
+        localStorage.removeItem(`scene_${scene.id}`);
+    });
+    
+    // Remove scenes from array
+    this.scenes = this.scenes.filter(s => s.actId !== actId);
+    
+    // Delete act
+    localStorage.removeItem(`act_${actId}`);
+    this.acts = this.acts.filter(a => a.id !== actId);
+    
+    this.saveScenes();
+    this.saveActs();
+    
+    console.log('✅ Act deleted with', scenesToDelete.length, 'scenes');
+    return true;
+},
+
+deleteChapter(chapterId) {
+    if (!confirm('Delete this Chapter? Scenes will become unchaptered.')) {
+        return false;
+    }
+    
+    console.log('🗑️ Deleting chapter:', chapterId);
+    
+    // Remove chapter assignment from scenes (don't delete the scenes)
+    this.scenes.forEach(scene => {
+        if (scene.chapterId === chapterId) {
+            scene.chapterId = null;
+            scene.chapterName = null;
+            localStorage.setItem(`scene_${scene.id}`, JSON.stringify(scene));
+        }
+    });
+    
+    // Delete chapter
+    localStorage.removeItem(`chapter_${chapterId}`);
+    this.chapters = this.chapters.filter(ch => ch.id !== chapterId);
+    
+    this.saveScenes();
+    this.saveChapters();
+    
+    console.log('✅ Chapter deleted');
+    return true;
+},
+
+// Quick delete button for current scene
+deleteCurrentScene() {
+    if (!this.currentSceneId) {
+        alert('No scene is currently loaded.');
+        return;
+    }
+    
+    if (this.deleteScene(this.currentSceneId)) {
+        // Success - UI already refreshed by deleteScene()
+    }
+},
     
     // ===================================
     // NEW ITEM MODAL
