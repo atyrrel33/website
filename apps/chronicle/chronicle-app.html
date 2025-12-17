@@ -119,17 +119,14 @@
                     <select class="scene-switcher" id="sceneSwitcher">
                         <option value="">Loading scenes...</option>
                     </select>
-                    <div class="scene-movement-controls" style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
-                        <select id="moveSceneToAct" onchange="if(this.value) { ChronicleDesk.moveCurrentSceneToAct(this.value); this.value=''; }" 
-                                style="flex: 1; padding: 0.4rem; background: rgba(26, 20, 16, 0.8); border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: #e8e3da; font-family: 'Crimson Text', serif; font-size: 0.85rem;">
-                            <option value="">Move to Act...</option>
-                        </select>
-                        <select id="moveSceneToChapter" onchange="if(this.value !== '') { ChronicleDesk.moveCurrentSceneToChapter(this.value || null); this.value=''; }" 
-                                style="flex: 1; padding: 0.4rem; background: rgba(26, 20, 16, 0.8); border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: #e8e3da; font-family: 'Crimson Text', serif; font-size: 0.85rem;">
-                            <option value="">Move to Chapter...</option>
-                            <option value="null">Remove from Chapter</option>
-                        </select>
-                    </div>
+<!-- NEW BEAT BUTTON - Primary action -->
+                    <button class="new-scene-btn" id="newBeatBtn" title="Create New Beat" style="background: linear-gradient(135deg, rgba(201, 169, 97, 0.3) 0%, rgba(201, 169, 97, 0.2) 100%); border-color: var(--gold); color: var(--gold);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        <span>New Beat</span>
+                    </button>
                     <!-- New Scene Button -->
                     <button class="new-scene-btn" id="newSceneBtn" title="Start New Scene (Ctrl+N)">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -360,6 +357,100 @@
                 </div>
             </div>
         </div>
+        </div><!-- end scene-metadata-panel -->
+        
+        <!-- Scene Creation Modal -->
+        <div class="modal" id="sceneMetadataModal" style="display: none;">
+            <div class="modal-content" style="max-width: 600px;">
+                <div class="modal-header">
+                    <h3>Create Scene from Beats</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="sceneTitle">Scene Title *</label>
+                        <input type="text" id="sceneTitle" class="form-input" placeholder="Enter scene title" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="sceneAct">Act *</label>
+                            <select id="sceneAct" class="form-select">
+                                <option value="act-1">Act I: Setup</option>
+                                <option value="act-2">Act II: Confrontation</option>
+                                <option value="act-3">Act III: Resolution</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sceneChapter">Chapter</label>
+                            <select id="sceneChapter" class="form-select">
+                                <option value="">No chapter</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sceneCharacters">Characters</label>
+                        <select id="sceneCharacters" class="form-select" multiple size="4">
+                            <!-- Populated from ChronicleData.characters -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sceneLocation">Location</label>
+                        <select id="sceneLocation" class="form-select">
+                            <option value="">No specific location</option>
+                            <!-- Populated from ChronicleData.locations -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="sceneMckee">McKee Element</label>
+                            <select id="sceneMckee" class="form-select">
+                                <option value="">None</option>
+                                <option value="Opening Image">Opening Image</option>
+                                <option value="Inciting Incident">Inciting Incident</option>
+                                <option value="First Plot Point">First Plot Point</option>
+                                <option value="Midpoint Reversal">Midpoint Reversal</option>
+                                <option value="Crisis">Crisis</option>
+                                <option value="Climax">Climax</option>
+                                <option value="Resolution">Resolution</option>
+                                <option value="Denouement">Denouement</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sceneStatus">Status</label>
+                            <select id="sceneStatus" class="form-select">
+                                <option value="draft">Draft</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="polished">Polished</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sceneConflict">Conflict Type</label>
+                        <select id="sceneConflict" class="form-select">
+                            <option value="">None</option>
+                            <option value="internal">Internal</option>
+                            <option value="interpersonal">Interpersonal</option>
+                            <option value="social">Social</option>
+                            <option value="environmental">Environmental</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="scenePurpose">Scene Purpose</label>
+                        <textarea id="scenePurpose" class="form-textarea" rows="2" 
+                                placeholder="What does this scene accomplish in the story?"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelSceneMetadata">Cancel</button>
+                    <button class="btn btn-primary" id="saveSceneMetadata">Create Scene</button>
+                </div>
+            </div>
+        </div>
                     <!-- Writing Area with Reference Panel -->
                     <div class="writing-area-container">
                         <div class="writing-editor">
@@ -371,6 +462,29 @@
                                         ></div>
                             </div>
                         </div>
+                        
+                        <!-- Beat Selection Sidebar -->
+                        <aside class="beat-sidebar" id="beatSidebar">
+                            <div class="beat-sidebar-header">
+                                <h4 class="beat-sidebar-title">Orphaned Beats</h4>
+                                <p class="beat-selection-count" id="selectedBeatCount">None selected</p>
+                                <div class="beat-selection-controls">
+                                    <button class="beat-control-btn" id="selectAllBeats">Select All</button>
+                                    <button class="beat-control-btn" id="clearBeatSelection">Clear</button>
+                                </div>
+                            </div>
+                            <div class="beat-list" id="beatList">
+                                <!-- Beats will be populated here -->
+                            </div>
+                            <button class="save-as-scene-btn" id="saveAsSceneBtn" disabled>
+                                Save Selected as Scene
+                            </button>
+                        </aside>
+                        
+                        <!-- Beat Sidebar Toggle Button -->
+                        <button class="beat-sidebar-toggle" id="toggleBeatSidebar">◀</button>
+                        
+                    </div><!-- end writing-editor -->
                         <!-- Joseph App Reference Panel (Toggle) -->
                         <aside class="reference-panel" id="referencePanel">
                             <div class="panel-header">
