@@ -38,7 +38,7 @@
     display: flex;
     gap: 0.75rem;
     padding: 0.875rem 2rem;
-    background: linear-gradient(180deg, rgba(245, 241, 232, 0.95), rgba(240, 236, 227, 0.9));
+    background: linear-gradient(180deg, rgba(42, 40, 34, 0.95), rgba(34, 29, 24, 0.9));
     border-bottom: 2px solid rgba(139, 115, 85, 0.3);
     flex-wrap: wrap;
 }
@@ -100,8 +100,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     padding: 2rem;
-    background: linear-gradient(135deg, rgba(250, 247, 242, 0.6) 0%, rgba(245, 241, 232, 0.7) 50%, rgba(250, 247, 242, 0.6) 100%);
-}
+background: linear-gradient(135deg, rgba(42, 40, 34, 0.6) 0%, rgba(34, 29, 24, 0.7) 50%, rgba(42, 40, 34, 0.6) 100%);}
 
 .canvas-content {
     min-height: 100%;
@@ -222,7 +221,7 @@
 }
 
 .scene-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(53, 53, 48, 0.95);
     border: 1px solid rgba(139, 115, 85, 0.3);
     border-radius: 6px;
     padding: 1.25rem;
