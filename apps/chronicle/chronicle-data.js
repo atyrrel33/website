@@ -355,7 +355,9 @@ const ChronicleData = {
     getOrphanedBeats() {
         const sceneBeats = new Set();
         this.scenes.forEach(scene => {
-            scene.beatIds.forEach(beatId => sceneBeats.add(beatId));
+            if (scene.beatIds && Array.isArray(scene.beatIds)) {
+                scene.beatIds.forEach(beatId => sceneBeats.add(beatId));
+            }
         });
         
         return this.beats.filter(beat => !sceneBeats.has(beat.id));

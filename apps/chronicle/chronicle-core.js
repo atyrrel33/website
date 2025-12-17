@@ -1,58 +1,101 @@
-// ===================================
-// CHRONICLE CORE - The Foundation
-// "In the beginning, God created..."
-// - Genesis 1:1
-// ===================================
+/**
+ * ════════════════════════════════════════════════════════════════════════════
+ * CHRONICLE CORE: THE SACRED ORCHESTRATOR
+ * The Foundation That Unifies All Workspaces
+ * ════════════════════════════════════════════════════════════════════════════
+ * 
+ * "In the beginning, God created the heavens and the earth."
+ * — Genesis 1:1
+ * 
+ * This module serves as the central orchestrator for The Chronicle application,
+ * managing workspace transitions, user authentication, global settings, and
+ * coordinating between the ChronicleData module and individual workspaces.
+ * 
+ * ARCHITECTURE PRINCIPLES:
+ * 1. ChronicleData is the single source of truth for all story data
+ * 2. ChronicleCore orchestrates workspace initialization and transitions
+ * 3. Each workspace (Desk, Archive, Covenant) operates independently
+ * 4. All cross-workspace communication flows through ChronicleData events
+ * 5. Settings and user preferences persist globally
+ * 
+ * @version 2.0.0
+ * @date December 17, 2024
+ * @authors Tyrrel & Trevor
+ */
 
-const ChronicleApp = {
+const ChronicleCore = {
+    // ═══════════════════════════════════════════════════════════════════════
+    // APPLICATION STATE
+    // ═══════════════════════════════════════════════════════════════════════
+    
     currentUser: 'tyrrel',
-    currentSpace: 'desk',
+    currentSpace: null,
     
-    currentScene: {
-        id: 'scene-001',
-        title: 'Opening Scene',
-        content: '',
-        wordCount: 0,
-        lastModified: new Date(),
-        author: 'tyrrel'
+    // Workspace modules (lazy loaded)
+    workspaces: {
+        desk: null,
+        archive: null,
+        covenant: null,
+        inkwell: null
     },
     
-    currentSession: {
-        id: null,
-        startTime: null,
-        user: 'tyrrel',
-        prayerOffered: false,
-        wordsWritten: 0,
-        scenesWorked: [],
-        active: false
-    },
-    
+    // Global settings
     settings: {
         writingFont: 'Crimson Text',
-        autoSaveInterval: 3000
+        autoSaveInterval: 3000,
+        theme: 'dark',
+        showWordCount: true,
+        showCharacterCards: true
     },
     
-    autoSaveTimer: null,
-    sessionTimer: null,
-    sessionStartTime: null
-};
-
-// ===================================
-// INITIALIZATION
-// ===================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c✍️ Chronicle - The Novel Sanctuary', 'font-size: 20px; font-weight: bold; color: #C9A961;');
-    console.log('%c"Pour out your heart like water"', 'font-size: 12px; font-style: italic; color: #b8b3aa;');
+    // ═══════════════════════════════════════════════════════════════════════
+    // INITIALIZATION
+    // ═══════════════════════════════════════════════════════════════════════
     
-    initializeApp();
-});
-
-function initializeApp() {
-    console.log('🔥 Initializing Chronicle...');
+    /**
+     * Initialize the entire Chronicle application
+     * Called on DOMContentLoaded
+     */
+    init() {
+        console.log('%c✝️ Chronicle - The Novel Sanctuary', 'font-size: 20px; font-weight: bold; color: #C9A961;');
+        console.log('%c"Pour out your heart like water" — Lamentations 2:19', 'font-size: 12px; font-style: italic; color: #b8b3aa;');
+        
+        try {
+            // Step 1: Make app visible immediately
+            this.showAppContainer();
+            
+            // Step 2: Initialize the data layer (single source of truth)
+            console.log('📜 Initializing ChronicleData...');
+            ChronicleData.init();
+            
+            // Step 3: Load user preferences
+            this.loadUserPreferences();
+            
+            // Step 4: Load global settings
+            this.loadSettings();
+            
+            // Step 5: Setup global event listeners
+            this.setupGlobalListeners();
+            
+            // Step 6: Initialize navigation
+            this.initializeNavigation();
+            
+            // Step 7: Load the last active workspace (or default to Desk)
+            const lastSpace = localStorage.getItem('chronicle_lastSpace') || 'desk';
+            this.switchSpace(lastSpace);
+            
+            console.log('✅ Chronicle Core: Initialization complete');
+            
+        } catch (error) {
+            console.error('❌ Chronicle Core: Initialization failed', error);
+            this.showErrorState('Failed to initialize Chronicle. Please refresh the page.');
+        }
+    },
     
-    try {
-        // Critical: Make app visible immediately
+    /**
+     * Make the app container visible
+     */
+    showAppContainer() {
         const appContainer = document.querySelector('.app-container');
         if (appContainer) {
             appContainer.style.opacity = '1';
@@ -61,833 +104,458 @@ function initializeApp() {
         } else {
             console.error('❌ App container not found!');
         }
-        
-        // Load saved user preference
-        const savedUser = localStorage.getItem('chronicle_current_user') || 'tyrrel';
-        console.log(`👤 Loading saved user: ${savedUser}`);
-        switchUser(savedUser);
-        
-        // Apply saved settings
-        console.log('⚙️ Loading settings...');
-        loadSettings();
-        
-        // Load saved scene
-        console.log('📄 Loading last scene...');
-        loadLastScene();
-        
-        // Setup all event listeners
-        console.log('🔌 Setting up event listeners...');
-        setupEventListeners();
-        
-        // Detect and handle session
-        console.log('🕊️ Detecting session...');
-        detectSession();
-        
-        // Start session timer
-        console.log('⏱️ Starting session timer...');
-        startSessionTimer();
-        
-        // Initialize custom cursor
-        console.log('🎯 Initializing custom cursor...');
-        startCustomCursor();
-        
-        // Ensure Desk is visible
-        console.log('✍️ Ensuring Desk is visible...');
-        ensureDeskVisible();
-        
-        // Module verification
-        console.log('📦 Verifying modules...');
-        verifyModules();
-        
-        console.log('✅ Chronicle initialized successfully');
-        
-    } catch (error) {
-        console.error('❌ Critical error during initialization:', error);
-        console.error('   Stack trace:', error.stack);
-        alert('Chronicle failed to initialize.\n\nError: ' + error.message + '\n\nPlease refresh the page.');
-    }
-}
-
-function verifyModules() {
-    const modules = {
-        'ChronicleDesk': window.ChronicleDesk,
-        'McKeeSystem': window.McKeeSystem,
-        'ChronicleInkwell': window.ChronicleInkwell,
-        'ChronicleCovenantWorkspace': window.ChronicleCovenantWorkspace
-    };
+    },
     
-    let allLoaded = true;
+    /**
+     * Load user preferences from localStorage
+     */
+    loadUserPreferences() {
+        const savedUser = localStorage.getItem('chronicle_currentUser') || 'tyrrel';
+        console.log(`👤 Loading user: ${savedUser}`);
+        this.switchUser(savedUser);
+    },
     
-    for (const [name, module] of Object.entries(modules)) {
-        if (module) {
-            console.log(`✅ ${name} module loaded`);
-        } else {
-            console.warn(`⚠️ ${name} module not found (may be optional)`);
-            if (name === 'ChronicleDesk' || name === 'McKeeSystem') {
-                allLoaded = false;
-                console.error(`❌ Critical module ${name} is missing!`);
+    /**
+     * Load global settings
+     */
+    loadSettings() {
+        try {
+            const savedSettings = localStorage.getItem('chronicle_settings');
+            if (savedSettings) {
+                this.settings = { ...this.settings, ...JSON.parse(savedSettings) };
             }
+            console.log('⚙️ Settings loaded:', this.settings);
+        } catch (error) {
+            console.warn('⚠️ Could not load settings:', error);
         }
-    }
+    },
     
-    if (!allLoaded) {
-        console.error('❌ Critical modules are missing. Some features may not work.');
-    }
-}
-
-function ensureDeskVisible() {
-    try {
-        // Force the Desk workspace to be visible
-        const deskWorkspace = document.getElementById('desk');
-        if (deskWorkspace) {
-            deskWorkspace.classList.add('active');
-            deskWorkspace.style.display = 'block';
-            deskWorkspace.style.opacity = '1';
-            deskWorkspace.style.transform = 'translateY(0)';
-            console.log('✅ Desk workspace is now visible');
-        } else {
-            console.error('❌ Desk workspace element not found!');
+    /**
+     * Save global settings
+     */
+    saveSettings() {
+        try {
+            localStorage.setItem('chronicle_settings', JSON.stringify(this.settings));
+            console.log('💾 Settings saved');
+        } catch (error) {
+            console.error('❌ Could not save settings:', error);
+        }
+    },
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // USER MANAGEMENT
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Switch between Tyrrel and Trevor
+     */
+    switchUser(user) {
+        if (user !== 'tyrrel' && user !== 'trevor') {
+            console.error('❌ Invalid user:', user);
+            return;
         }
         
-        // Ensure Desk nav tab is active
-        const deskTab = document.querySelector('[data-space="desk"]');
-        if (deskTab) {
-            deskTab.classList.add('active');
-            console.log('✅ Desk nav tab activated');
-        } else {
-            console.warn('⚠️ Desk nav tab not found');
+        this.currentUser = user;
+        ChronicleData.currentUser = user;
+        
+        // Save preference
+        localStorage.setItem('chronicle_currentUser', user);
+        
+        // Update UI
+        this.updateUserUI();
+        
+        console.log(`✅ Switched to ${user}`);
+    },
+    
+    /**
+     * Update UI elements for current user
+     */
+    updateUserUI() {
+        // Update toolbar buttons
+        const tyrrelBtn = document.querySelector('[data-user="tyrrel"]');
+        const trevorBtn = document.querySelector('[data-user="trevor"]');
+        
+        if (tyrrelBtn && trevorBtn) {
+            tyrrelBtn.classList.toggle('active', this.currentUser === 'tyrrel');
+            trevorBtn.classList.toggle('active', this.currentUser === 'trevor');
         }
         
-        ChronicleApp.currentSpace = 'desk';
-        
-    } catch (error) {
-        console.error('❌ Error in ensureDeskVisible:', error);
-        console.error('   Stack trace:', error.stack);
-    }
-}
-
-// ===================================
-// USER SWITCHING
-// ===================================
-
-function switchUser(userName) {
-    try {
-        console.log(`👤 Switching to user: ${userName}`);
-        
-        ChronicleApp.currentUser = userName;
-        
-        // Update body class
+        // Update body classes for theming
         document.body.classList.remove('user-tyrrel', 'user-trevor');
-        document.body.classList.add(`user-${userName}`);
+        document.body.classList.add(`user-${this.currentUser}`);
+    },
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // WORKSPACE MANAGEMENT
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Switch to a different workspace
+     */
+    switchSpace(spaceName) {
+        console.log(`🚪 Switching to: ${spaceName}`);
         
-        // Update button states
-        document.querySelectorAll('.user-switch-btn').forEach(btn => {
+        // Validate space name
+        const validSpaces = ['desk', 'archive', 'covenant', 'inkwell'];
+        if (!validSpaces.includes(spaceName)) {
+            console.error('❌ Invalid space:', spaceName);
+            return;
+        }
+        
+        // Hide all workspace containers
+        const workspaceContainers = document.querySelectorAll('.workspace-content');
+        workspaceContainers.forEach(container => {
+            container.style.display = 'none';
+        });
+        
+        // Update navigation UI
+        this.updateNavigationUI(spaceName);
+        
+        // Show the target workspace container
+        const targetContainer = document.getElementById(`${spaceName}-workspace`);
+        if (targetContainer) {
+            targetContainer.style.display = 'block';
+        } else {
+            console.error(`❌ Container not found: ${spaceName}-workspace`);
+            return;
+        }
+        
+        // Update current space
+        this.currentSpace = spaceName;
+        localStorage.setItem('chronicle_lastSpace', spaceName);
+        
+        // Initialize workspace if not already loaded
+        this.initializeWorkspace(spaceName);
+    },
+    
+    /**
+     * Initialize a specific workspace
+     */
+    initializeWorkspace(spaceName) {
+        // Add slight delay to allow CSS transitions
+        setTimeout(() => {
+            try {
+                switch(spaceName) {
+                    case 'desk':
+                        if (window.ChronicleDesk && !this.workspaces.desk) {
+                            console.log('📖 Initializing The Desk...');
+                            ChronicleDesk.init();
+                            this.workspaces.desk = ChronicleDesk;
+                        }
+                        break;
+                        
+                    case 'archive':
+                        if (window.ChronicleArchive && !this.workspaces.archive) {
+                            console.log('📚 Initializing The Archive...');
+                            ChronicleArchive.init();
+                            this.workspaces.archive = ChronicleArchive;
+                        }
+                        break;
+                        
+                    case 'covenant':
+                        if (window.ChronicleCovenenant && !this.workspaces.covenant) {
+                            console.log('📜 Initializing The Covenant...');
+                            ChronicleCovenenant.init();
+                            this.workspaces.covenant = ChronicleCovenenant;
+                        }
+                        break;
+                        
+                    case 'inkwell':
+                        if (window.ChronicleInkwell && !this.workspaces.inkwell) {
+                            console.log('🖋️ Initializing The Inkwell...');
+                            ChronicleInkwell.init();
+                            this.workspaces.inkwell = ChronicleInkwell;
+                        }
+                        break;
+                }
+                
+                console.log(`✅ ${spaceName} initialized`);
+                
+            } catch (error) {
+                console.error(`❌ ${spaceName} initialization failed:`, error);
+                console.error('   Stack trace:', error.stack);
+            }
+        }, 100); // Small delay for smooth transition
+    },
+    
+    /**
+     * Update navigation UI to reflect current workspace
+     */
+    updateNavigationUI(spaceName) {
+        const navButtons = document.querySelectorAll('.nav-button');
+        navButtons.forEach(btn => {
             btn.classList.remove('active');
-            if (btn.dataset.user === userName) {
+            if (btn.dataset.space === spaceName) {
                 btn.classList.add('active');
             }
         });
-        
-        // Save preference
-        localStorage.setItem('chronicle_current_user', userName);
-        
-        console.log(`✅ User switched to: ${userName === 'tyrrel' ? 'Tyrrel (Gold)' : 'Trevor (Teal)'}`);
-        
-    } catch (error) {
-        console.error('❌ Error switching user:', error);
-        console.error('   Stack trace:', error.stack);
-    }
-}
-
-// ===================================
-// SESSION MANAGEMENT
-// ===================================
-
-function detectSession() {
-    try {
-        const lastActivity = localStorage.getItem('chronicle_last_activity');
-        const twoHoursAgo = Date.now() - (2 * 60 * 60 * 1000);
-        
-        if (!lastActivity || parseInt(lastActivity) < twoHoursAgo) {
-            console.log('🕊️ New session detected');
-            startNewSession();
-        } else {
-            console.log('📖 Continuing previous session');
-            continueSession();
-        }
-    } catch (error) {
-        console.error('❌ Error detecting session:', error);
-        startNewSession();
-    }
-}
-
-function startNewSession() {
-    try {
-        const sessionId = `session-${Date.now()}`;
-        
-        ChronicleApp.currentSession = {
-            id: sessionId,
-            startTime: new Date().toISOString(),
-            user: ChronicleApp.currentUser,
-            prayerOffered: false,
-            wordsWritten: 0,
-            scenesWorked: [],
-            active: true
-        };
-        
-        saveCurrentSession();
-        updateSessionIndicator();
-        console.log(`✅ New session started: ${sessionId}`);
-        
-    } catch (error) {
-        console.error('❌ Error starting new session:', error);
-    }
-}
-
-function continueSession() {
-    try {
-        const savedSession = localStorage.getItem('chronicle_current_session');
-        if (savedSession) {
-            ChronicleApp.currentSession = JSON.parse(savedSession);
-            ChronicleApp.currentSession.active = true;
-            console.log(`✅ Continuing session: ${ChronicleApp.currentSession.id}`);
-        } else {
-            console.log('⚠️ No saved session found, starting new');
-            startNewSession();
-        }
-        updateSessionIndicator();
-    } catch (error) {
-        console.error('❌ Error continuing session:', error);
-        startNewSession();
-    }
-}
-
-function saveCurrentSession() {
-    try {
-        localStorage.setItem('chronicle_last_activity', Date.now().toString());
-        localStorage.setItem('chronicle_current_session', JSON.stringify(ChronicleApp.currentSession));
-    } catch (error) {
-        console.error('❌ Error saving session:', error);
-    }
-}
-
-function startSessionTimer() {
-    try {
-        ChronicleApp.sessionStartTime = Date.now();
-        
-        ChronicleApp.sessionTimer = setInterval(() => {
-            updateSessionIndicator();
-        }, 60000); // Update every minute
-        
-        console.log('✅ Session timer started');
-    } catch (error) {
-        console.error('❌ Error starting session timer:', error);
-    }
-}
-
-function updateSessionIndicator() {
-    try {
-        const indicator = document.getElementById('sessionTime');
-        if (!indicator) return;
-        
-        const elapsed = Date.now() - ChronicleApp.sessionStartTime;
-        const minutes = Math.floor(elapsed / 60000);
-        const hours = Math.floor(minutes / 60);
-        const remainingMinutes = minutes % 60;
-        
-        if (hours > 0) {
-            indicator.textContent = `${hours}h ${remainingMinutes}m`;
-        } else {
-            indicator.textContent = `${minutes}m`;
-        }
-    } catch (error) {
-        console.error('❌ Error updating session indicator:', error);
-    }
-}
-
-// ===================================
-// EVENT LISTENERS
-// ===================================
-
-function setupEventListeners() {
-    try {
-        console.log('🔌 Setting up core event listeners...');
-        
-        // User switcher
-        const tyrrelBtn = document.getElementById('switchTyrrel');
-        const trevorBtn = document.getElementById('switchTrevor');
-        
-        if (tyrrelBtn) {
-            tyrrelBtn.addEventListener('click', () => switchUser('tyrrel'));
-            console.log('✅ Tyrrel button listener added');
-        } else {
-            console.warn('⚠️ Tyrrel button not found');
-        }
-        
-        if (trevorBtn) {
-            trevorBtn.addEventListener('click', () => switchUser('trevor'));
-            console.log('✅ Trevor button listener added');
-        } else {
-            console.warn('⚠️ Trevor button not found');
-        }
-        
-        // Navigation tabs
-        const navTabs = document.querySelectorAll('.nav-tab');
-        console.log(`📍 Found ${navTabs.length} navigation tabs`);
-        
-        navTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const space = tab.dataset.space;
-                if (space) {
-                    console.log(`🔘 Nav tab clicked: ${space}`);
-                    switchSpace(space);
-                } else {
-                    console.warn('⚠️ Nav tab missing data-space attribute');
-                }
-            });
-        });
-        
-        // Prayer button
-        const prayerBtn = document.getElementById('prayerBtn');
-        if (prayerBtn) {
-            prayerBtn.addEventListener('click', openPrayerModal);
-            console.log('✅ Prayer button listener added');
-        } else {
-            console.warn('⚠️ Prayer button not found');
-        }
-        
-        // Prayer modal controls
-        const closePrayer = document.getElementById('closePrayerModal');
-        const skipPrayer = document.getElementById('skipPrayer');
-        const offerPrayer = document.getElementById('offerPrayer');
-        
-        if (closePrayer) closePrayer.addEventListener('click', closePrayerModal);
-        if (skipPrayer) skipPrayer.addEventListener('click', closePrayerModal);
-        if (offerPrayer) offerPrayer.addEventListener('click', handlePrayerSubmit);
-        
-        // Writing surface
-        const writingSurface = document.getElementById('writingSurface');
-        if (writingSurface) {
-            writingSurface.addEventListener('input', handleWritingInput);
-            writingSurface.addEventListener('paste', handlePaste);
-            console.log('✅ Writing surface listeners added');
-        } else {
-            console.warn('⚠️ Writing surface not found');
-        }
-        
-        // Scene title
-        const sceneTitle = document.getElementById('sceneTitle');
-        if (sceneTitle) {
-            sceneTitle.addEventListener('input', updateSceneTitle);
-            console.log('✅ Scene title listener added');
-        } else {
-            console.warn('⚠️ Scene title input not found');
-        }
-        
-        // Font selector
-        const fontSelector = document.getElementById('fontSelector');
-        if (fontSelector) {
-            fontSelector.addEventListener('change', changeFontFamily);
-        }
-        
-        // Focus mode button
-        const focusBtn = document.getElementById('focusModeBtn');
-        if (focusBtn) {
-            focusBtn.addEventListener('click', toggleFocusMode);
-        }
-        
-        // Reference panel toggle
-        const refToggle = document.getElementById('referencePanelToggle');
-        if (refToggle) {
-            refToggle.addEventListener('click', toggleReferencePanel);
-        }
-        
-        // Keyboard shortcuts
-        document.addEventListener('keydown', handleKeyboardShortcuts);
-        console.log('✅ Keyboard shortcuts listener added');
-        
-        console.log('✅ All core event listeners set up successfully');
-        
-    } catch (error) {
-        console.error('❌ Error setting up event listeners:', error);
-        console.error('   Stack trace:', error.stack);
-    }
-}
-
-function handleKeyboardShortcuts(e) {
-    try {
-        // Ctrl+S or Cmd+S to save
-        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-            e.preventDefault();
-            saveCurrentScene();
-            console.log('💾 Manual save triggered (Ctrl+S)');
-        }
-        
-        // Ctrl+N or Cmd+N for new scene (if in Desk)
-        if ((e.ctrlKey || e.metaKey) && e.key === 'n' && ChronicleApp.currentSpace === 'desk') {
-            e.preventDefault();
-            if (window.ChronicleDesk && window.ChronicleDesk.createNewScene) {
-                window.ChronicleDesk.createNewScene();
-                console.log('📄 New scene triggered (Ctrl+N)');
-            }
-        }
-    } catch (error) {
-        console.error('❌ Error in keyboard shortcut handler:', error);
-    }
-}
-
-// ===================================
-// SPACE NAVIGATION
-// ===================================
-
-function switchSpace(spaceName) {
-    console.log(`📖 Switching to workspace: ${spaceName}`);
+    },
     
-    try {
-        // Update app state
-        ChronicleApp.currentSpace = spaceName;
-        
-        // Update nav tabs
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.classList.remove('active');
-            if (tab.dataset.space === spaceName) {
-                tab.classList.add('active');
-            }
-        });
-        console.log(`✅ Nav tabs updated for: ${spaceName}`);
-        
-        // Update workspaces
-        document.querySelectorAll('.workspace').forEach(workspace => {
-            workspace.classList.remove('active');
-        });
-        
-        const targetWorkspace = document.getElementById(spaceName);
-        if (targetWorkspace) {
-            targetWorkspace.classList.add('active');
-            // Force visibility
-            targetWorkspace.style.display = 'block';
-            targetWorkspace.style.opacity = '1';
-            targetWorkspace.style.transform = 'translateY(0)';
-            console.log(`✅ Workspace ${spaceName} is now visible`);
-        } else {
-            console.error(`❌ Workspace element not found: ${spaceName}`);
-            alert(`The ${spaceName} workspace could not be found.\n\nPlease refresh the page.`);
-            return;
-        }
-        
-        // INITIALIZE COVENANT WORKSPACE
-        if (spaceName === 'covenant') {
-            console.log('🏛️ Covenant workspace requested');
-            
-            if (!window.ChronicleCovenantWorkspace) {
-                console.error('❌ ChronicleCovenantWorkspace module not loaded!');
-                console.error('   Expected: window.ChronicleCovenantWorkspace');
-                console.error('   Check that chronicle-covenant.js is included in HTML');
-                console.error('   Check that the script loaded without errors');
-                alert('The Covenant workspace module could not be found.\n\nPlease ensure:\n1. chronicle-covenant.js is in your files\n2. It is linked in chronicle-app.html\n3. There are no JavaScript errors\n\nCheck the console for details.');
-                return;
-            }
-            
-            setTimeout(() => {
-                try {
-                    console.log('📐 Initializing Covenant workspace...');
-                    window.ChronicleCovenantWorkspace.init();
-                    console.log('✅ Covenant workspace initialized successfully');
-                } catch (error) {
-                    console.error('❌ Covenant initialization failed:', error);
-                    console.error('   Stack trace:', error.stack);
-                    alert('The Covenant could not be opened.\n\nError: ' + error.message + '\n\nCheck the console for details.');
+    /**
+     * Initialize navigation button listeners
+     */
+    initializeNavigation() {
+        const navButtons = document.querySelectorAll('.nav-button[data-space]');
+        navButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const space = button.dataset.space;
+                if (space) {
+                    this.switchSpace(space);
                 }
-            }, 150);
-        }
+            });
+        });
         
-        // INITIALIZE DESK WORKSPACE
-        if (spaceName === 'desk') {
-            console.log('✍️ Desk workspace requested');
-            
-            if (!window.ChronicleDesk) {
-                console.error('❌ ChronicleDesk module not loaded!');
-                console.error('   Check that chronicle-desk.js is included in HTML');
-                return;
-            }
-            
-            if (!window.ChronicleDesk.initialized) {
-                setTimeout(() => {
-                    try {
-                        console.log('📖 Initializing Desk workspace...');
-                        window.ChronicleDesk.init();
-                        console.log('✅ Desk workspace initialized successfully');
-                    } catch (error) {
-                        console.error('❌ Desk initialization failed:', error);
-                        console.error('   Stack trace:', error.stack);
-                        alert('The Desk could not be opened.\n\nError: ' + error.message + '\n\nCheck the console for details.');
+        console.log('✅ Navigation initialized');
+    },
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // GLOBAL EVENT LISTENERS
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Setup global event listeners that apply across all workspaces
+     */
+    setupGlobalListeners() {
+        // User switcher buttons
+        const userButtons = document.querySelectorAll('[data-user]');
+        userButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const user = button.dataset.user;
+                if (user) {
+                    this.switchUser(user);
+                    
+                    // Notify all workspaces of user change
+                    Object.values(this.workspaces).forEach(workspace => {
+                        if (workspace && workspace.onUserChanged) {
+                            workspace.onUserChanged(user);
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Settings changes
+        document.addEventListener('settingChanged', (e) => {
+            this.settings[e.detail.setting] = e.detail.value;
+            this.saveSettings();
+        });
+        
+        // Listen for data changes from ChronicleData
+        ChronicleData.addListener((event, data) => {
+            console.log(`📡 Core received data event: ${event}`, data);
+            this.handleDataEvent(event, data);
+        });
+        
+        console.log('✅ Global listeners setup complete');
+    },
+    
+    /**
+     * Handle data events from ChronicleData
+     */
+    handleDataEvent(event, data) {
+        // Route data events to appropriate workspaces
+        switch(event) {
+            case 'beatCreated':
+            case 'beatUpdated':
+            case 'beatDeleted':
+                // Notify Desk and Archive
+                if (this.workspaces.desk && this.workspaces.desk.onDataChanged) {
+                    this.workspaces.desk.onDataChanged(event, data);
+                }
+                if (this.workspaces.archive && this.workspaces.archive.onDataChanged) {
+                    this.workspaces.archive.onDataChanged(event, data);
+                }
+                break;
+                
+            case 'sceneCreated':
+            case 'sceneUpdated':
+            case 'sceneDeleted':
+                // Notify all workspaces
+                Object.values(this.workspaces).forEach(workspace => {
+                    if (workspace && workspace.onDataChanged) {
+                        workspace.onDataChanged(event, data);
                     }
-                }, 150);
-            } else {
-                console.log('ℹ️ Desk already initialized');
-            }
+                });
+                break;
+                
+            case 'characterCreated':
+            case 'characterUpdated':
+            case 'characterDeleted':
+                // Notify Archive and Covenant
+                if (this.workspaces.archive && this.workspaces.archive.onDataChanged) {
+                    this.workspaces.archive.onDataChanged(event, data);
+                }
+                if (this.workspaces.covenant && this.workspaces.covenant.onDataChanged) {
+                    this.workspaces.covenant.onDataChanged(event, data);
+                }
+                break;
         }
-        
-        // ARCHIVE (placeholder)
-        if (spaceName === 'archive') {
-            console.log('📚 Archive workspace - Coming in future phase');
+    },
+    // ═══════════════════════════════════════════════════════════════════════
+    // ERROR HANDLING & UTILITIES
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Display error state to user
+     */
+    showErrorState(message) {
+        const appContainer = document.querySelector('.app-container');
+        if (appContainer) {
+            appContainer.innerHTML = `
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                    background: linear-gradient(135deg, #2C2620 0%, #1a1614 100%);
+                    color: #C9A961;
+                    font-family: 'Cinzel', serif;
+                    text-align: center;
+                    padding: 2rem;
+                ">
+                    <h1 style="font-size: 3rem; margin-bottom: 1rem;">⚠️</h1>
+                    <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Chronicle Error</h2>
+                    <p style="font-size: 1rem; color: #b8b3aa; max-width: 500px;">
+                        ${message}
+                    </p>
+                    <button onclick="location.reload()" style="
+                        margin-top: 2rem;
+                        padding: 0.75rem 2rem;
+                        background: linear-gradient(135deg, #C9A961 0%, #B4964F 100%);
+                        color: #2C2620;
+                        border: none;
+                        border-radius: 4px;
+                        font-family: 'Cinzel', serif;
+                        font-size: 1rem;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">
+                        Refresh Page
+                    </button>
+                </div>
+            `;
         }
-        
-        // ALTAR (placeholder)
-        if (spaceName === 'altar') {
-            console.log('🕊️ Altar workspace - Coming in future phase');
-        }
-        
-        // Save workspace preference
-        localStorage.setItem('chronicle_current_space', spaceName);
-        console.log(`💾 Saved current workspace: ${spaceName}`);
-        
-    } catch (error) {
-        console.error('❌ Critical error in switchSpace:', error);
-        console.error('   Stack trace:', error.stack);
-        alert('A critical error occurred while switching workspaces.\n\nError: ' + error.message + '\n\nPlease refresh the page.');
+    },
+    
+    /**
+     * Format timestamp for display
+     */
+    formatTimestamp(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+    },
+    
+    /**
+     * Format word count with commas
+     */
+    formatWordCount(count) {
+        return count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    
+    /**
+     * Calculate reading time in minutes
+     */
+    calculateReadingTime(wordCount) {
+        const wordsPerMinute = 200;
+        const minutes = Math.ceil(wordCount / wordsPerMinute);
+        return minutes === 1 ? '1 min' : `${minutes} min`;
+    },
+    
+    /**
+     * Generate unique ID with prefix
+     */
+    generateId(prefix = 'item') {
+        return `${prefix}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    },
+    
+    /**
+     * Debounce function for performance
+     */
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    },
+    
+    /**
+     * Deep clone object
+     */
+    deepClone(obj) {
+        return JSON.parse(JSON.stringify(obj));
     }
+};
+
+// ═══════════════════════════════════════════════════════════════════════
+// GLOBAL HELPER FUNCTIONS (for backwards compatibility)
+// ═══════════════════════════════════════════════════════════════════════
+
+/**
+ * Switch user (legacy support)
+ */
+function switchUser(user) {
+    ChronicleCore.switchUser(user);
 }
 
-// ===================================
-// WRITING FUNCTIONALITY
-// ===================================
-
-function handleWritingInput(e) {
-    try {
-        const content = e.target.innerText;
-        ChronicleApp.currentScene.content = content;
-        ChronicleApp.currentScene.wordCount = countWords(content);
-        ChronicleApp.currentScene.lastModified = new Date();
-        
-        updateWordCount();
-        triggerAutoSave();
-    } catch (error) {
-        console.error('❌ Error in writing input handler:', error);
-    }
+/**
+ * Switch workspace (legacy support)
+ */
+function switchSpace(space) {
+    ChronicleCore.switchSpace(space);
 }
 
-function handlePaste(e) {
-    try {
+// ═══════════════════════════════════════════════════════════════════════
+// APPLICATION BOOTSTRAP
+// ═══════════════════════════════════════════════════════════════════════
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    ChronicleCore.init();
+});
+
+// Handle visibility changes (pause/resume auto-save when tab hidden)
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        console.log('📴 Chronicle: Tab hidden, pausing activity');
+        // Could pause auto-save timers here
+    } else {
+        console.log('📱 Chronicle: Tab visible, resuming activity');
+        // Could resume auto-save timers here
+    }
+});
+
+// Handle before unload (warn about unsaved changes if needed)
+window.addEventListener('beforeunload', (e) => {
+    // Check if any workspace has unsaved changes
+    const hasUnsavedChanges = Object.values(ChronicleCore.workspaces).some(workspace => {
+        return workspace && workspace.hasUnsavedChanges && workspace.hasUnsavedChanges();
+    });
+    
+    if (hasUnsavedChanges) {
         e.preventDefault();
-        const text = e.clipboardData.getData('text/plain');
-        document.execCommand('insertText', false, text);
-    } catch (error) {
-        console.error('❌ Error handling paste:', error);
+        e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+        return e.returnValue;
     }
-}
+});
 
-function countWords(text) {
-    try {
-        if (!text || text.trim() === '') return 0;
-        return text.trim().split(/\s+/).length;
-    } catch (error) {
-        console.error('❌ Error counting words:', error);
-        return 0;
-    }
-}
-
-function updateWordCount() {
-    try {
-        const countNumber = document.querySelector('.count-number');
-        if (countNumber) {
-            countNumber.textContent = ChronicleApp.currentScene.wordCount;
-        }
-    } catch (error) {
-        console.error('❌ Error updating word count:', error);
-    }
-}
-
-function updateSceneTitle(e) {
-    try {
-        ChronicleApp.currentScene.title = e.target.value;
-        triggerAutoSave();
-    } catch (error) {
-        console.error('❌ Error updating scene title:', error);
-    }
-}
-
-function changeFontFamily(e) {
-    try {
-        ChronicleApp.settings.writingFont = e.target.value;
-        applyWritingFont();
-        saveSettings();
-        console.log(`✅ Font changed to: ${e.target.value}`);
-    } catch (error) {
-        console.error('❌ Error changing font:', error);
-    }
-}
-
-function applyWritingFont() {
-    try {
-        const writingSurface = document.getElementById('writingSurface');
-        if (writingSurface) {
-            writingSurface.style.fontFamily = ChronicleApp.settings.writingFont;
-        }
-    } catch (error) {
-        console.error('❌ Error applying font:', error);
-    }
-}
-
-function toggleFocusMode() {
-    try {
-        document.body.classList.toggle('focus-mode');
-        console.log('🎯 Focus mode toggled');
-    } catch (error) {
-        console.error('❌ Error toggling focus mode:', error);
-    }
-}
-
-function toggleReferencePanel() {
-    try {
-        const panel = document.getElementById('referencePanel');
-        const editor = document.querySelector('.writing-editor');
-        
-        if (panel && editor) {
-            panel.classList.toggle('active');
-            editor.classList.toggle('with-reference');
-            console.log('📚 Reference panel toggled');
-        }
-    } catch (error) {
-        console.error('❌ Error toggling reference panel:', error);
-    }
-}
-
-// ===================================
-// PRAYER MODAL
-// ===================================
-
-function openPrayerModal() {
-    try {
-        const modal = document.getElementById('prayerModal');
-        if (modal) {
-            modal.classList.add('active');
-            const prayerText = document.getElementById('prayerText');
-            if (prayerText) prayerText.focus();
-            console.log('🕊️ Prayer modal opened');
-        }
-    } catch (error) {
-        console.error('❌ Error opening prayer modal:', error);
-    }
-}
-
-function closePrayerModal() {
-    try {
-        const modal = document.getElementById('prayerModal');
-        if (modal) {
-            modal.classList.remove('active');
-            console.log('🕊️ Prayer modal closed');
-        }
-    } catch (error) {
-        console.error('❌ Error closing prayer modal:', error);
-    }
-}
-
-function handlePrayerSubmit() {
-    try {
-        const prayerText = document.getElementById('prayerText');
-        if (prayerText && prayerText.value.trim()) {
-            const prayers = JSON.parse(localStorage.getItem('chronicle_prayers') || '[]');
-            prayers.unshift({
-                date: new Date().toISOString(),
-                text: prayerText.value.trim(),
-                answered: false
-            });
-            localStorage.setItem('chronicle_prayers', JSON.stringify(prayers));
-            
-            ChronicleApp.currentSession.prayerOffered = true;
-            saveCurrentSession();
-            
-            console.log('🕊️ Prayer saved');
-            prayerText.value = '';
-        }
-        closePrayerModal();
-    } catch (error) {
-        console.error('❌ Error handling prayer submit:', error);
-    }
-}
-
-// ===================================
-// AUTO-SAVE
-// ===================================
-
-function triggerAutoSave() {
-    try {
-        showSavingIndicator();
-        
-        if (ChronicleApp.autoSaveTimer) {
-            clearTimeout(ChronicleApp.autoSaveTimer);
-        }
-        
-        ChronicleApp.autoSaveTimer = setTimeout(() => {
-            saveCurrentScene();
-            hideSavingIndicator();
-        }, 1000);
-    } catch (error) {
-        console.error('❌ Error triggering auto-save:', error);
-    }
-}
-
-function showSavingIndicator() {
-    try {
-        const indicator = document.getElementById('autosaveIndicator');
-        if (indicator) indicator.classList.add('saving');
-    } catch (error) {
-        console.error('❌ Error showing save indicator:', error);
-    }
-}
-
-function hideSavingIndicator() {
-    try {
-        const indicator = document.getElementById('autosaveIndicator');
-        if (indicator) indicator.classList.remove('saving');
-    } catch (error) {
-        console.error('❌ Error hiding save indicator:', error);
-    }
-}
-
-function saveCurrentScene() {
-    try {
-        const scenes = JSON.parse(localStorage.getItem('chronicle_scenes') || '[]');
-        const existingIndex = scenes.findIndex(s => s.id === ChronicleApp.currentScene.id);
-        
-        if (existingIndex >= 0) {
-            scenes[existingIndex] = { ...ChronicleApp.currentScene };
-        } else {
-            scenes.push({ ...ChronicleApp.currentScene });
-        }
-        
-        localStorage.setItem('chronicle_scenes', JSON.stringify(scenes));
-        saveCurrentSession();
-        console.log('💾 Scene saved');
-    } catch (error) {
-        console.error('❌ Error saving scene:', error);
-        alert('Failed to save your work!\n\nError: ' + error.message);
-    }
-}
-
-// ===================================
-// SETTINGS & DATA LOADING
-// ===================================
-
-function loadSettings() {
-    try {
-        const saved = localStorage.getItem('chronicle_settings');
-        if (saved) {
-            ChronicleApp.settings = { ...ChronicleApp.settings, ...JSON.parse(saved) };
-        }
-        applyWritingFont();
-        console.log('✅ Settings loaded');
-    } catch (error) {
-        console.error('❌ Error loading settings:', error);
-    }
-}
-
-function saveSettings() {
-    try {
-        localStorage.setItem('chronicle_settings', JSON.stringify(ChronicleApp.settings));
-        console.log('💾 Settings saved');
-    } catch (error) {
-        console.error('❌ Error saving settings:', error);
-    }
-}
-
-function loadLastScene() {
-    try {
-        const scenes = JSON.parse(localStorage.getItem('chronicle_scenes') || '[]');
-        if (scenes.length > 0) {
-            const sorted = scenes.sort((a, b) => 
-                new Date(b.lastModified) - new Date(a.lastModified)
-            );
-            ChronicleApp.currentScene = sorted[0];
-            
-            const writingSurface = document.getElementById('writingSurface');
-            const sceneTitle = document.getElementById('sceneTitle');
-            
-            if (writingSurface) {
-                writingSurface.innerText = ChronicleApp.currentScene.content || '';
-            }
-            if (sceneTitle) {
-                sceneTitle.value = ChronicleApp.currentScene.title || '';
-            }
-            
-            updateWordCount();
-            console.log(`✅ Loaded last scene: ${ChronicleApp.currentScene.title}`);
-        } else {
-            console.log('ℹ️ No saved scenes found');
-        }
-    } catch (error) {
-        console.error('❌ Error loading last scene:', error);
-    }
-}
-
-// ===================================
-// CUSTOM CURSOR
-// ===================================
-
-function startCustomCursor() {
-    try {
-        const cursor = document.getElementById('custom-cursor');
-        if (!cursor) {
-            console.warn('⚠️ Custom cursor element not found');
-            return;
-        }
-        
-        let lastTrailTime = 0;
-        const trailInterval = 25;
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            const now = Date.now();
-            if (now - lastTrailTime > trailInterval) {
-                createCursorTrail(e.clientX, e.clientY);
-                lastTrailTime = now;
-            }
-        });
-        
-        // Cursor interactions
-        const interactives = document.querySelectorAll('button, input, textarea, select, .nav-tab, .tool-btn');
-        interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(1.6)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-            });
-        });
-        
-        console.log('✅ Custom cursor initialized');
-    } catch (error) {
-        console.error('❌ Error initializing custom cursor:', error);
-    }
-}
-
-function createCursorTrail(x, y) {
-    try {
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        trail.style.left = x + 'px';
-        trail.style.top = y + 'px';
-        document.body.appendChild(trail);
-        
-        setTimeout(() => trail.remove(), 1500);
-    } catch (error) {
-        console.error('❌ Error creating cursor trail:', error);
-    }
-}
-
-// ===================================
-// GLOBAL EXPORTS
-// ===================================
-
-window.ChronicleApp = ChronicleApp;
-window.switchUser = switchUser;
-window.switchSpace = switchSpace;
-window.saveCurrentScene = saveCurrentScene;
-window.countWords = countWords;
-window.updateWordCount = updateWordCount;
-
-console.log('%c"Write down the revelation and make it plain on tablets"', 'font-size: 11px; font-style: italic; color: #b8b3aa;');
-console.log('%cHabakkuk 2:2', 'font-size: 10px; color: #8B7355;');
+// Log application info to console
+console.log('%c═══════════════════════════════════════════════', 'color: #C9A961');
+console.log('%cChronicle - The Novel Sanctuary', 'color: #C9A961; font-weight: bold; font-size: 16px');
+console.log('%cVersion 2.0.0 | December 2024', 'color: #b8b3aa; font-style: italic');
+console.log('%cBy Tyrrel & Trevor', 'color: #b8b3aa; font-style: italic');
+console.log('%c═══════════════════════════════════════════════', 'color: #C9A961');
