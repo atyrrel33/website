@@ -221,6 +221,20 @@
 .tool-btn:hover svg {
     stroke: var(--gold);
 }
+/* Active state for tool buttons (bold, italic, underline) */
+.tool-btn.active {
+    background: linear-gradient(135deg, var(--gold) 0%, #B39553 100%);
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(201, 169, 97, 0.4);
+}
+
+.tool-btn.active::before {
+    opacity: 0.3;
+}
+
+.tool-btn.active svg {
+    stroke: var(--stone-deep);
+}
 
 /* ===================================
    WORD COUNT DISPLAY - The Measure
@@ -536,6 +550,65 @@
     position: relative;
     z-index: 1;
 }
+/* ===================================
+   DELETE BUTTON - Matching Style
+   =================================== */
+
+.delete-scene-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: 2px solid;
+    border-radius: 6px;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, 
+        rgba(114, 47, 55, 0.2) 0%, 
+        rgba(114, 47, 55, 0.1) 100%);
+    border-color: var(--burgundy);
+    color: var(--burgundy);
+}
+
+.delete-scene-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(114, 47, 55, 0.3), 
+        rgba(114, 47, 55, 0.15));
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+}
+
+.delete-scene-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(114, 47, 55, 0.3);
+}
+
+.delete-scene-btn:hover::before {
+    opacity: 1;
+}
+
+.delete-scene-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    position: relative;
+    z-index: 1;
+}
+
+.delete-scene-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+}
 
 /* ===================================
    WRITING AREA - The Sacred Surface
@@ -618,6 +691,32 @@
     transition: all var(--transition-medium);
     position: relative;
 }
+/* ===================================
+   LIST STYLING - Proper Indentation
+   =================================== */
+
+.writing-surface ul,
+.writing-surface ol {
+    margin: 1rem 0;
+    padding-left: 2.5rem;
+}
+
+.writing-surface ol {
+    list-style-position: inside;
+}
+
+.writing-surface li {
+    margin-bottom: 0.5rem;
+    line-height: 1.8;
+}
+
+.writing-surface ul li {
+    padding-left: 0.5rem;
+}
+
+.writing-surface ol li {
+    padding-left: 0.5rem;
+}
 
 /* Paper texture simulation */
 .writing-surface::before {
@@ -629,19 +728,6 @@
     pointer-events: none;
     border-radius: 8px;
 }
-
-.writing-surface:focus {
-    background: linear-gradient(180deg, 
-        rgba(250, 247, 242, 0.12) 0%, 
-        rgba(250, 247, 242, 0.14) 100%);
-    border-left-color: var(--gold);
-    box-shadow: 
-        inset 0 2px 12px rgba(0, 0, 0, 0.35),
-        0 6px 24px rgba(0, 0, 0, 0.3),
-        -8px 0 24px rgba(201, 169, 97, 0.25),
-        0 0 40px rgba(201, 169, 97, 0.1);
-}
-
 /* Placeholder text */
 .writing-surface:empty::before {
     content: attr(data-novelist-placeholder);
@@ -1518,4 +1604,283 @@ body.focus-mode .writing-surface::before {
     .scene-metadata-panel {
         display: none; /* Hide on mobile - access via future modal */
     }
+}
+/* ═══════════════════════════════════════════════════════════════════════
+   BEAT SELECTION SIDEBAR - Sprint 1
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.beat-sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 320px;
+    background: linear-gradient(135deg, 
+        rgba(26, 20, 16, 0.98) 0%, 
+        rgba(34, 29, 24, 0.95) 100%);
+    border-left: 2px solid rgba(139, 115, 85, 0.3);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-medium);
+    backdrop-filter: blur(10px);
+}
+
+.beat-sidebar.hidden {
+    transform: translateX(100%);
+}
+
+/* Sidebar Header */
+.beat-sidebar-header {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: linear-gradient(180deg, 
+        rgba(42, 40, 34, 0.8) 0%, 
+        rgba(26, 20, 16, 0.6) 100%);
+    border-bottom: 1px solid rgba(139, 115, 85, 0.3);
+}
+
+.beat-sidebar-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin: 0 0 var(--spacing-sm) 0;
+    letter-spacing: 0.05em;
+}
+
+.beat-selection-controls {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+}
+
+.beat-control-btn {
+    flex: 1;
+    padding: var(--spacing-xs);
+    background: rgba(44, 95, 95, 0.2);
+    border: 1px solid rgba(44, 95, 95, 0.4);
+    border-radius: 4px;
+    color: var(--teal);
+    font-family: 'Crimson Text', serif;
+    font-size: 0.85rem;
+    cursor: none;
+    transition: all var(--transition-fast);
+}
+
+.beat-control-btn:hover {
+    background: rgba(44, 95, 95, 0.3);
+    border-color: var(--teal);
+    transform: translateY(-1px);
+}
+
+.selected-beat-count {
+    font-size: 0.9rem;
+    color: #b8b3aa;
+    margin-top: var(--spacing-xs);
+    font-family: 'Crimson Text', serif;
+}
+
+/* Beat List */
+.beat-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+}
+
+.beat-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.beat-list::-webkit-scrollbar-track {
+    background: rgba(26, 20, 16, 0.5);
+}
+
+.beat-list::-webkit-scrollbar-thumb {
+    background: rgba(139, 115, 85, 0.4);
+    border-radius: 4px;
+}
+
+.beat-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 115, 85, 0.6);
+}
+
+/* Empty State */
+.empty-beat-list {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: #8a8580;
+}
+
+.empty-beat-list p {
+    margin: var(--spacing-sm) 0;
+    font-family: 'Crimson Text', serif;
+}
+
+/* Beat List Item */
+.beat-list-item {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: linear-gradient(135deg, 
+        rgba(42, 40, 34, 0.6) 0%, 
+        rgba(34, 29, 24, 0.5) 100%);
+    border: 1px solid rgba(139, 115, 85, 0.2);
+    border-radius: 6px;
+    margin-bottom: var(--spacing-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.beat-list-item:hover {
+    background: linear-gradient(135deg, 
+        rgba(42, 40, 34, 0.8) 0%, 
+        rgba(34, 29, 24, 0.7) 100%);
+    border-color: var(--gold);
+    transform: translateX(-4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.beat-list-item.selected {
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.3) 0%, 
+        rgba(44, 95, 95, 0.2) 100%);
+    border-color: var(--teal);
+}
+
+.beat-checkbox {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 2px;
+}
+
+.beat-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--teal);
+    cursor: none;
+}
+
+.beat-preview {
+    flex: 1;
+    min-width: 0;
+}
+
+.beat-preview-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    color: #e8e3da;
+    line-height: 1.5;
+    margin-bottom: var(--spacing-xs);
+    word-wrap: break-word;
+}
+
+.beat-meta {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.beat-author {
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.beat-author.tyrrel {
+    background: rgba(201, 169, 97, 0.2);
+    color: var(--gold);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+}
+
+.beat-author.trevor {
+    background: rgba(44, 95, 95, 0.2);
+    color: var(--teal);
+    border: 1px solid rgba(44, 95, 95, 0.3);
+}
+
+.beat-date {
+    color: #8a8580;
+    font-family: 'Crimson Text', serif;
+}
+
+/* Sidebar Toggle Button */
+.beat-sidebar-toggle {
+    position: fixed;
+    right: 320px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 64px;
+    background: linear-gradient(135deg, 
+        rgba(26, 20, 16, 0.95) 0%, 
+        rgba(34, 29, 24, 0.9) 100%);
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    z-index: 99;
+    transition: all var(--transition-medium);
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+.beat-sidebar-toggle:hover {
+    background: linear-gradient(135deg, 
+        rgba(42, 40, 34, 0.95) 0%, 
+        rgba(34, 29, 24, 0.9) 100%);
+    border-color: var(--gold);
+}
+
+.beat-sidebar.hidden ~ .beat-sidebar-toggle {
+    right: 0;
+}
+
+/* Save Selected as Scene Button */
+.save-as-scene-btn {
+    margin: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.3) 0%, 
+        rgba(44, 95, 95, 0.2) 100%);
+    border: 2px solid var(--teal);
+    border-radius: 6px;
+    color: var(--teal);
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all var(--transition-medium);
+    text-align: center;
+}
+
+.save-as-scene-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, 
+        rgba(44, 95, 95, 0.4) 0%, 
+        rgba(44, 95, 95, 0.3) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 95, 95, 0.4);
+}
+
+.save-as-scene-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Beat Separator in Writing Surface */
+.writing-surface .beat-separator {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(139, 115, 85, 0.3) 50%, 
+        transparent 100%);
+    margin: var(--spacing-xl) 0;
 }

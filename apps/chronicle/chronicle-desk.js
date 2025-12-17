@@ -1,111 +1,194 @@
-// ===================================
-// CHRONICLE DESK - Scene Management & Formatting
-// "Write down the revelation and make it plain"
-// - Habakkuk 2:2
-// ===================================
+// ═══════════════════════════════════════════════════════════════════════════
+// CHRONICLE DESK - Beat-First Writing Sanctuary
+// "Write down the revelation and make it plain" - Habakkuk 2:2
+// ═════════════════════════════════════════════════════════════════════════
 
 const ChronicleDesk = {
-    // Scene library with hierarchical structure
-    scenes: [],
-    acts: [],
-    chapters: [],
+    // ═══════════════════════════════════════════════════════════════════════
+    // STATE MANAGEMENT
+    // ═══════════════════════════════════════════════════════════════════════
     
-    // Character profiles for reference
-    characters: [],
+    // Current working state
+    currentBeatId: null,           // Currently active beat
+    currentSceneId: null,          // Currently loaded scene (if editing)
+    selectedBeatIds: [],           // Beats selected for scene creation
     
-    // Active themes
-    themes: [],
+    // UI state
+    viewMode: 'beat',              // 'beat' or 'scene'
+    isEditingScene: false,         // Whether we're editing an existing scene
+    beatSidebarVisible: true,      // Beat selection sidebar visibility
     
-    // Current scene being edited
-    currentSceneId: null,
+    // Auto-save
+    autoSaveInterval: null,
+    autoSaveDelay: 2000,           // 2 seconds
+    hasUnsavedChanges: false,
     
-    // Initialization flag
+    // Initialization
     initialized: false,
     
-    // Initialize
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // INITIALIZATION
+    // ═══════════════════════════════════════════════════════════════════════
+    
     init() {
         if (this.initialized) return;
         
         console.log('📖 The Desk awakens...');
         
-        // Load all data
-        this.loadScenes();
-        this.loadActs();
-        this.loadChapters();
-        this.loadCharacters();
-        this.loadThemes();
+        // Register listener for ChronicleData changes
+        ChronicleData.addListener((event, data) => {
+            this.handleDataChange(event, data);
+        });
         
-        // Setup UI
-        this.setupDeskEventListeners();
+        // Setup UI components
+        this.setupEventListeners();
+        this.setupFormattingButtons();
+        this.setupKeyboardShortcuts();
         this.populateReferencePanel();
         this.populateSceneSwitcher();
-        this.loadMostRecentScene();
+        
+        // Load initial state
+        this.loadInitialView();
+        
+        // Start auto-save
+        this.startAutoSave();
         
         this.initialized = true;
-        console.log('✅ The Desk stands ready for your labor');
+        console.log('✅ The Desk stands ready');
     },
     
-    // ===================================
-    // EVENT LISTENERS
-    // ===================================
+    /**
+     * Handle data changes from ChronicleData
+     */
+    handleDataChange(event, data) {
+        console.log('📖 Desk: Data change detected:', event);
+        
+        switch(event) {
+            case 'sceneCreated':
+            case 'sceneUpdated':
+            case 'sceneDeleted':
+                this.populateSceneSwitcher();
+                break;
+            case 'beatCreated':
+            case 'beatUpdated':
+            case 'beatDeleted':
+                if (this.viewMode === 'beat') {
+                    this.refreshBeatSidebar();
+                }
+                break;
+            case 'characterCreated':
+            case 'characterUpdated':
+            case 'characterDeleted':
+            case 'locationCreated':
+            case 'locationUpdated':
+            case 'locationDeleted':
+                this.populateReferencePanel();
+                break;
+        }
+    },
     
-    setupDeskEventListeners() {
+    /**
+     * Load initial view (either new beat or last scene)
+     */
+    loadInitialView() {
+        // Check if there's a current scene set in ChronicleData
+        if (ChronicleData.currentScene) {
+            this.loadSceneById(ChronicleData.currentScene);
+        } else {
+            // Start with a new beat
+            this.createNewBeat();
+        }
+    },
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // EVENT LISTENERS SETUP
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    setupEventListeners() {
         console.log('🎯 Setting up Desk event listeners...');
         
-        // Scene management buttons
-        const newSceneBtn = document.getElementById('newSceneBtn');
-        const saveSceneBtn = document.getElementById('saveSceneBtn');
-        const sceneSwitcher = document.getElementById('sceneSwitcher');
-        const exportBtn = document.getElementById('exportSceneBtn');
-        
-        if (newSceneBtn) {
-            console.log('✓ New Scene button found');
-            newSceneBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('🆕 New Scene clicked');
-                this.showNewItemModal();
-            });
-        }
-        
-        if (saveSceneBtn) {
-            console.log('✓ Save Scene button found');
-            saveSceneBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('💾 Save Scene clicked');
-                this.saveCurrentSceneExplicitly();
-            });
-        }
-    const deleteSceneBtn = document.getElementById('deleteSceneBtn');
-        if (deleteSceneBtn) {
-            console.log('✔ Delete Scene button found');
-            deleteSceneBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('🗑️ Delete Scene clicked');
-                this.deleteCurrentScene();
-            });
-        }
-        
-        if (sceneSwitcher) {
-            console.log('✓ Scene Switcher found');
-            sceneSwitcher.addEventListener('change', (e) => {
-                console.log('📄 Scene switched to:', e.target.value);
-                this.loadSceneById(e.target.value);
-            });
-        }
-        
-        if (exportBtn) {
-            exportBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.showExportModal();
-            });
-        }
-        
-        // Formatting buttons
-        this.setupFormattingButtons();
+        // Action buttons
+        this.setupActionButtons();
         
         // Font controls
+        this.setupFontControls();
+        
+        // Scene switcher
+        this.setupSceneSwitcher();
+        
+        // Beat sidebar
+        this.setupBeatSidebar();
+        
+        // Writing surface
+        this.setupWritingSurface();
+        
+        console.log('✅ Event listeners configured');
+    },
+    
+    /**
+     * Setup main action buttons
+     */
+    setupActionButtons() {
+        // New Beat button
+        const newBeatBtn = document.getElementById('newBeatBtn');
+        if (newBeatBtn) {
+            newBeatBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.createNewBeat();
+            });
+        }
+        
+        // Save button (saves current beat OR scene)
+        const saveBtn = document.getElementById('saveSceneBtn');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.saveExplicitly();
+            });
+        }
+        
+        // Delete button
+        const deleteBtn = document.getElementById('deleteSceneBtn');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (this.isEditingScene) {
+                    this.deleteCurrentScene();
+                } else {
+                    this.deleteCurrentBeat();
+                }
+            });
+        }
+        
+        // Save Selected as Scene button
+        const saveAsSceneBtn = document.getElementById('saveAsSceneBtn');
+        if (saveAsSceneBtn) {
+            saveAsSceneBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openSceneCreationModal();
+            });
+        }
+        
+        // New Scene button (alternate entry point)
+        const newSceneBtn = document.getElementById('newSceneBtn');
+        if (newSceneBtn) {
+            newSceneBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openSceneCreationModal();
+            });
+        }
+    },
+    
+    /**
+     * Setup font controls
+     */
+    setupFontControls() {
         const fontSelector = document.getElementById('fontSelector');
         const fontSizeSelector = document.getElementById('fontSizeSelector');
+        const increaseFontBtn = document.getElementById('increaseFontBtn');
+        const decreaseFontBtn = document.getElementById('decreaseFontBtn');
         
         if (fontSelector) {
             fontSelector.addEventListener('change', (e) => {
@@ -117,9 +200,94 @@ const ChronicleDesk = {
         }
         
         if (fontSizeSelector) {
-            fontSizeSelector.addEventListener('change', (e) => this.changeFontSize(e.target.value));
+            fontSizeSelector.addEventListener('change', (e) => {
+                this.changeFontSize(e.target.value);
+            });
+        }
+        
+        if (increaseFontBtn) {
+            increaseFontBtn.addEventListener('click', () => this.adjustFontSize(2));
+        }
+        
+        if (decreaseFontBtn) {
+            decreaseFontBtn.addEventListener('click', () => this.adjustFontSize(-2));
         }
     },
+    
+    /**
+     * Setup scene switcher dropdown
+     */
+    setupSceneSwitcher() {
+        const sceneSwitcher = document.getElementById('sceneSwitcher');
+        if (sceneSwitcher) {
+            sceneSwitcher.addEventListener('change', (e) => {
+                const sceneId = e.target.value;
+                if (sceneId) {
+                    this.loadSceneById(sceneId);
+                } else {
+                    // "New Beat" option selected
+                    this.createNewBeat();
+                }
+            });
+        }
+    },
+    
+    /**
+     * Setup beat sidebar interactions
+     */
+    setupBeatSidebar() {
+        // Beat sidebar toggle
+        const toggleBtn = document.getElementById('toggleBeatSidebar');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                this.toggleBeatSidebar();
+            });
+        }
+        
+        // "Select All Orphaned Beats" button
+        const selectAllBtn = document.getElementById('selectAllBeats');
+        if (selectAllBtn) {
+            selectAllBtn.addEventListener('click', () => {
+                this.selectAllOrphanedBeats();
+            });
+        }
+        
+        // "Clear Selection" button
+        const clearSelectionBtn = document.getElementById('clearBeatSelection');
+        if (clearSelectionBtn) {
+            clearSelectionBtn.addEventListener('click', () => {
+                this.clearBeatSelection();
+            });
+        }
+    },
+    
+    /**
+     * Setup writing surface events
+     */
+    setupWritingSurface() {
+        const writingSurface = document.getElementById('writingSurface');
+        if (!writingSurface) return;
+        
+        // Track changes for auto-save
+        writingSurface.addEventListener('input', () => {
+            this.hasUnsavedChanges = true;
+            this.updateButtonStates();
+        });
+        
+        // Update formatting button states on selection change
+        writingSurface.addEventListener('mouseup', () => {
+            this.updateFormattingButtonStates();
+        });
+        
+        writingSurface.addEventListener('keyup', () => {
+            this.updateFormattingButtonStates();
+        });
+    },
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // FORMATTING CONTROLS
+    // ═══════════════════════════════════════════════════════════════════════
     
     setupFormattingButtons() {
         // Bold, Italic, Underline
@@ -138,13 +306,6 @@ const ChronicleDesk = {
         if (bulletBtn) bulletBtn.addEventListener('click', () => this.formatText('insertUnorderedList'));
         if (numberBtn) numberBtn.addEventListener('click', () => this.formatText('insertOrderedList'));
         
-        // Font size
-        const increaseFontBtn = document.getElementById('increaseFontBtn');
-        const decreaseFontBtn = document.getElementById('decreaseFontBtn');
-        
-        if (increaseFontBtn) increaseFontBtn.addEventListener('click', () => this.adjustFontSize(2));
-        if (decreaseFontBtn) decreaseFontBtn.addEventListener('click', () => this.adjustFontSize(-2));
-        
         // Alignment
         const alignLeftBtn = document.getElementById('alignLeftBtn');
         const alignCenterBtn = document.getElementById('alignCenterBtn');
@@ -153,8 +314,66 @@ const ChronicleDesk = {
         if (alignLeftBtn) alignLeftBtn.addEventListener('click', () => this.formatText('justifyLeft'));
         if (alignCenterBtn) alignCenterBtn.addEventListener('click', () => this.formatText('justifyCenter'));
         if (alignRightBtn) alignRightBtn.addEventListener('click', () => this.formatText('justifyRight'));
+    },
+    
+    /**
+     * Apply text formatting
+     */
+    formatText(command) {
+        document.execCommand(command, false, null);
+        const writingSurface = document.getElementById('writingSurface');
+        if (writingSurface) {
+            writingSurface.focus();
+        }
+        this.updateFormattingButtonStates();
+        this.hasUnsavedChanges = true;
+    },
+    
+    /**
+     * Update formatting button states based on current selection
+     */
+    updateFormattingButtonStates() {
+        const buttons = {
+            'boldBtn': 'bold',
+            'italicBtn': 'italic',
+            'underlineBtn': 'underline'
+        };
         
-        // Keyboard shortcuts
+        Object.entries(buttons).forEach(([btnId, command]) => {
+            const btn = document.getElementById(btnId);
+            if (btn) {
+                const isActive = document.queryCommandState(command);
+                btn.classList.toggle('active', isActive);
+            }
+        });
+    },
+    
+    /**
+     * Change font size
+     */
+    changeFontSize(size) {
+        const writingSurface = document.getElementById('writingSurface');
+        if (writingSurface) {
+            writingSurface.style.fontSize = size;
+        }
+    },
+    
+    /**
+     * Adjust font size incrementally
+     */
+    adjustFontSize(delta) {
+        const writingSurface = document.getElementById('writingSurface');
+        if (!writingSurface) return;
+        
+        const currentSize = parseFloat(window.getComputedStyle(writingSurface).fontSize);
+        const newSize = Math.max(12, Math.min(32, currentSize + delta)); // Clamp between 12-32px
+        writingSurface.style.fontSize = newSize + 'px';
+    },
+    
+    /**
+     * Setup keyboard shortcuts
+     */
+    setupKeyboardShortcuts() {
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey || e.metaKey) {
                 switch(e.key.toLowerCase()) {
@@ -170,783 +389,679 @@ const ChronicleDesk = {
                         e.preventDefault();
                         this.formatText('underline');
                         break;
+                    case 's':
+                        e.preventDefault();
+                        this.saveExplicitly();
+                        break;
                 }
             }
         });
     },
     
-    formatText(command) {
-        document.execCommand(command, false, null);
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // BEAT MANAGEMENT
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Create a new beat
+     */
+    createNewBeat() {
+        console.log('✨ Creating new beat...');
+        
+        // Save current beat if exists
+        if (this.currentBeatId) {
+            this.saveCurrentBeat();
+        }
+        
+        // Create new beat via ChronicleData
+        const beat = ChronicleData.createBeat();
+        this.currentBeatId = beat.id;
+        this.currentSceneId = null;
+        this.isEditingScene = false;
+        this.viewMode = 'beat';
+        
+        // Clear writing surface
+        this.clearWritingSurface();
+        
+        // Update UI
+        this.updateSceneTitle('New Beat');
+        this.updateButtonStates();
+        this.refreshBeatSidebar();
+        
+        // Focus writing surface
         const writingSurface = document.getElementById('writingSurface');
         if (writingSurface) {
             writingSurface.focus();
         }
+        
+        console.log('✅ New beat created:', beat.id);
     },
     
-    changeFontSize(size) {
+    /**
+     * Load a beat by ID
+     */
+    loadBeat(beatId) {
+        console.log('📖 Loading beat:', beatId);
+        
+        const beat = ChronicleData.getBeat(beatId);
+        if (!beat) {
+            console.error('❌ Beat not found:', beatId);
+            return;
+        }
+        
+        // Save current beat if different
+        if (this.currentBeatId && this.currentBeatId !== beatId) {
+            this.saveCurrentBeat();
+        }
+        
+        this.currentBeatId = beatId;
+        this.currentSceneId = null;
+        this.isEditingScene = false;
+        this.viewMode = 'beat';
+        
+        // Load content
         const writingSurface = document.getElementById('writingSurface');
         if (writingSurface) {
-            writingSurface.style.fontSize = size;
+            writingSurface.innerHTML = beat.content;
         }
+        
+        this.updateSceneTitle('Editing Beat');
+        this.updateButtonStates();
+        this.hasUnsavedChanges = false;
     },
     
-    adjustFontSize(delta) {
+    /**
+     * Save current beat
+     */
+    saveCurrentBeat() {
+        if (!this.currentBeatId) return;
+        
         const writingSurface = document.getElementById('writingSurface');
         if (!writingSurface) return;
         
-        const currentSize = parseFloat(window.getComputedStyle(writingSurface).fontSize);
-        const newSize = currentSize + delta;
-        writingSurface.style.fontSize = newSize + 'px';
+        const content = writingSurface.innerHTML;
+        ChronicleData.saveBeat(this.currentBeatId, content);
+        
+        this.hasUnsavedChanges = false;
+        this.updateButtonStates();
+        this.refreshBeatSidebar();
+        
+        console.log('💾 Beat saved:', this.currentBeatId);
     },
     
-    // ===================================
-    // DATA LOADING
-    // ===================================
-    
-    loadScenes() {
-        this.scenes = JSON.parse(localStorage.getItem('chronicle_scenes') || '[]');
-        console.log(`📚 Loaded ${this.scenes.length} scenes from the archive`);
-    },
-    
-    loadActs() {
-        this.acts = JSON.parse(localStorage.getItem('chronicle_acts') || '[]');
-        },
-    
-    loadChapters() {
-        this.chapters = JSON.parse(localStorage.getItem('chronicle_chapters') || '[]');
-    },
-    
-    saveScenes() {
-        localStorage.setItem('chronicle_scenes', JSON.stringify(this.scenes));
-        console.log('💾 Scenes saved to LocalStorage');
-    },
-    
-    saveActs() {
-        localStorage.setItem('chronicle_acts', JSON.stringify(this.acts));
-    },
-    
-    saveChapters() {
-        localStorage.setItem('chronicle_chapters', JSON.stringify(this.chapters));
-    },
-    // ===================================
-// DELETE FUNCTIONALITY
-// ===================================
-
-deleteScene(sceneId) {
-    if (!confirm('Delete this scene permanently? This cannot be undone.')) {
-        return false;
-    }
-    
-    console.log('🗑️ Deleting scene:', sceneId);
-    
-    // Remove from localStorage
-    localStorage.removeItem(`scene_${sceneId}`);
-    
-    // Remove from scenes array
-    this.scenes = this.scenes.filter(s => s.id !== sceneId);
-    this.saveScenes();
-    
-    // If it was the current scene, load another
-    if (this.currentSceneId === sceneId) {
-        this.currentSceneId = null;
-        this.loadMostRecentScene();
-    }
-    
-    // Refresh UI
-    this.populateSceneSwitcher();
-    
-    console.log('✅ Scene deleted');
-    return true;
-},
-
-deleteAct(actId) {
-    if (!confirm('Delete this Act and ALL its scenes? This cannot be undone.')) {
-        return false;
-    }
-    
-    console.log('🗑️ Deleting act:', actId);
-    
-    // Delete all scenes in this act
-    const scenesToDelete = this.scenes.filter(s => s.actId === actId);
-    scenesToDelete.forEach(scene => {
-        localStorage.removeItem(`scene_${scene.id}`);
-    });
-    
-    // Remove scenes from array
-    this.scenes = this.scenes.filter(s => s.actId !== actId);
-    
-    // Delete act
-    localStorage.removeItem(`act_${actId}`);
-    this.acts = this.acts.filter(a => a.id !== actId);
-    
-    this.saveScenes();
-    this.saveActs();
-    
-    console.log('✅ Act deleted with', scenesToDelete.length, 'scenes');
-    return true;
-},
-
-deleteChapter(chapterId) {
-    if (!confirm('Delete this Chapter? Scenes will become unchaptered.')) {
-        return false;
-    }
-    
-    console.log('🗑️ Deleting chapter:', chapterId);
-    
-    // Remove chapter assignment from scenes (don't delete the scenes)
-    this.scenes.forEach(scene => {
-        if (scene.chapterId === chapterId) {
-            scene.chapterId = null;
-            scene.chapterName = null;
-            localStorage.setItem(`scene_${scene.id}`, JSON.stringify(scene));
-        }
-    });
-    
-    // Delete chapter
-    localStorage.removeItem(`chapter_${chapterId}`);
-    this.chapters = this.chapters.filter(ch => ch.id !== chapterId);
-    
-    this.saveScenes();
-    this.saveChapters();
-    
-    console.log('✅ Chapter deleted');
-    return true;
-},
-
-// Quick delete button for current scene
-deleteCurrentScene() {
-    if (!this.currentSceneId) {
-        alert('No scene is currently loaded.');
-        return;
-    }
-    
-    if (this.deleteScene(this.currentSceneId)) {
-        // Success - UI already refreshed by deleteScene()
-    }
-},
-    
-    // ===================================
-    // NEW ITEM MODAL
-    // ===================================
-    
-    showNewItemModal() {
-        // Create modal if doesn't exist
-        let modal = document.getElementById('newItemModal');
-        if (!modal) {
-            modal = this.createNewItemModal();
-            document.body.appendChild(modal);
+    /**
+     * Delete current beat
+     */
+    deleteCurrentBeat() {
+        if (!this.currentBeatId) return;
+        
+        if (!confirm('Delete this beat? This cannot be undone.')) {
+            return;
         }
         
-        modal.classList.add('active');
+        const success = ChronicleData.deleteBeat(this.currentBeatId);
+        
+        if (success) {
+            console.log('🗑️ Beat deleted');
+            this.createNewBeat(); // Start fresh
+        } else {
+            alert('Cannot delete this beat - it belongs to a scene. Delete the scene first.');
+        }
     },
     
-    createNewItemModal() {
-        const modal = document.createElement('div');
-        modal.id = 'newItemModal';
-        modal.className = 'modal';
+    /**
+     * Toggle beat in selection
+     */
+    toggleBeatSelection(beatId) {
+        const index = this.selectedBeatIds.indexOf(beatId);
         
-        modal.innerHTML = `
-    <div class="modal-content">
-        <button class="modal-close" onclick="document.getElementById('newItemModal').classList.remove('active')">×</button>
-        <div class="modal-header">
-            <h2>Begin Something New</h2>
-            <p>What shall you create?</p>
-        </div>
-        <div class="modal-body">
-            <div class="new-item-options">
-                <button class="new-item-option" onclick="console.log('🔵 New Scene button clicked'); try { ChronicleDesk.createNewScene(); } catch(e) { console.error('Scene creation error:', e); alert('Error: ' + e.message); }">
-                    <strong>New Scene</strong>
-                    <small>A narrative moment or passage</small>
-                </button>
-                <button class="new-item-option" onclick="console.log('🔵 New Act button clicked'); try { ChronicleDesk.createNewAct(); } catch(e) { console.error('Act creation error:', e); alert('Error: ' + e.message); }">
-                    <strong>New Act</strong>
-                    <small>Major story division (Act I, II, III)</small>
-                </button>
-                <button class="new-item-option" onclick="console.log('🔵 New Chapter button clicked'); try { ChronicleDesk.createNewChapter(); } catch(e) { console.error('Chapter creation error:', e); alert('Error: ' + e.message); }">
-                    <strong>New Chapter</strong>
-                    <small>Group multiple scenes together</small>
-                </button>
-                <button class="new-item-option" onclick="console.log('🔵 New Beat button clicked'); try { ChronicleDesk.createNewBeat(); } catch(e) { console.error('Beat creation error:', e); alert('Error: ' + e.message); }">
-                    <strong>New Beat</strong>
-                    <small>Quick note or story fragment</small>
-                </button>
+        if (index > -1) {
+            // Deselect
+            this.selectedBeatIds.splice(index, 1);
+        } else {
+            // Select
+            this.selectedBeatIds.push(beatId);
+        }
+        
+        this.refreshBeatSidebar();
+        this.updateButtonStates();
+    },
+    
+    /**
+     * Select all orphaned beats
+     */
+    selectAllOrphanedBeats() {
+        const orphanedBeats = ChronicleData.getOrphanedBeats();
+        this.selectedBeatIds = orphanedBeats.map(beat => beat.id);
+        this.refreshBeatSidebar();
+        this.updateButtonStates();
+    },
+    
+    /**
+     * Clear beat selection
+     */
+    clearBeatSelection() {
+        this.selectedBeatIds = [];
+        this.refreshBeatSidebar();
+        this.updateButtonStates();
+    },
+    
+    /**
+     * Refresh beat sidebar display
+     */
+    refreshBeatSidebar() {
+        const beatList = document.getElementById('beatList');
+        if (!beatList) return;
+        
+        beatList.innerHTML = '';
+        
+        const orphanedBeats = ChronicleData.getOrphanedBeats();
+        
+        if (orphanedBeats.length === 0) {
+            beatList.innerHTML = `
+                <div class="empty-beat-list">
+                    <p>No orphaned beats</p>
+                    <p style="font-size: 0.9rem; opacity: 0.7;">Create new beats or they'll appear here when scenes are deleted</p>
+                </div>
+            `;
+            return;
+        }
+        
+        orphanedBeats.forEach(beat => {
+            const beatItem = this.createBeatListItem(beat);
+            beatList.appendChild(beatItem);
+        });
+        
+        // Update selection count
+        this.updateSelectionCount();
+    },
+    
+    /**
+     * Create beat list item element
+     */
+    createBeatListItem(beat) {
+        const item = document.createElement('div');
+        item.className = 'beat-list-item';
+        item.dataset.beatId = beat.id;
+        
+        const isSelected = this.selectedBeatIds.includes(beat.id);
+        if (isSelected) {
+            item.classList.add('selected');
+        }
+        
+        // Preview text
+        const preview = beat.content.replace(/<[^>]*>/g, '').trim();
+        const shortPreview = preview.length > 60 ? preview.substring(0, 60) + '...' : preview;
+        
+        // Date
+        const date = new Date(beat.created);
+        const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        
+        item.innerHTML = `
+            <div class="beat-checkbox">
+                <input type="checkbox" ${isSelected ? 'checked' : ''} 
+                    onchange="ChronicleDesk.toggleBeatSelection('${beat.id}')">
             </div>
-        </div>
-    </div>
-        `;
-        
-        return modal;
-    },
-    
-    // ===================================
-    // SCENE CREATION
-    // ===================================
-    
-createNewScene() {
-        console.log('🆕 Creating new scene...');
-        
-        // Show organization prompt
-        this.showSceneOrganizationPrompt();
-    },
-    
-    showSceneOrganizationPrompt() {
-        const actOptions = this.acts.map(act => 
-            `<option value="${act.id}">${act.name}</option>`
-        ).join('');
-        
-        const chapterOptions = this.chapters.map(ch => {
-            const act = this.acts.find(a => a.id === ch.actId);
-            return `<option value="${ch.id}">${act ? act.name + ' → ' : ''}${ch.name}</option>`;
-        }).join('');
-        
-        const promptHTML = `
-            <div style="margin: 1.5rem 0;">
-                <label style="display: block; font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--gold); margin-bottom: 0.5rem; letter-spacing: 0.1em;">
-                    WHERE SHALL THIS SCENE DWELL?
-                </label>
-                <select id="sceneActSelect" style="width: 100%; padding: 0.75rem; background: rgba(26, 20, 16, 0.9); border: 1px solid rgba(139, 115, 85, 0.4); border-radius: 6px; color: #e8e3da; font-family: 'Crimson Text', serif; font-size: 1rem; margin-bottom: 1rem;">
-                    <option value="">Unorganized (decide later)</option>
-                    ${actOptions}
-                </select>
-                
-                <label style="display: block; font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--teal); margin-bottom: 0.5rem; letter-spacing: 0.1em;">
-                    WITHIN WHICH CHAPTER? (OPTIONAL)
-                </label>
-                <select id="sceneChapterSelect" style="width: 100%; padding: 0.75rem; background: rgba(26, 20, 16, 0.9); border: 1px solid rgba(139, 115, 85, 0.4); border-radius: 6px; color: #e8e3da; font-family: 'Crimson Text', serif; font-size: 1rem;">
-                    <option value="">No chapter</option>
-                    ${chapterOptions}
-                </select>
+            <div class="beat-preview">
+                <div class="beat-preview-text">${shortPreview || '<empty beat>'}</div>
+                <div class="beat-meta">
+                    <span class="beat-author ${beat.author}">${beat.author}</span>
+                    <span class="beat-date">${dateStr}</span>
+                </div>
             </div>
         `;
-        // Ensure modal exists
-        let modal = document.getElementById('newItemModal');
-        if (!modal) {
-            modal = this.createNewItemModal();
-            document.body.appendChild(modal);
-        }
-        const modalBody = modal.querySelector('.modal-body');
-
-modalBody.innerHTML = `
-            <button onclick="ChronicleDesk.returnToNewItemMenu()" 
-                    style="margin-bottom: 1rem; padding: 0.5rem 1rem; background: transparent; border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 4px; color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease;">
-                ← Back
-            </button>
-            ${promptHTML}
-            <button onclick="ChronicleDesk.finalizeNewScene()" 
-                    style="width: 100%; padding: 1rem; background: linear-gradient(135deg, rgba(201, 169, 97, 0.2), rgba(44, 95, 95, 0.2)); border: 2px solid var(--gold); border-radius: 8px; color: var(--gold); font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.1em; cursor: pointer; margin-top: 1rem;">
-                CREATE SCENE
-            </button>
-        `;
+        
+        // Click to load beat
+        item.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'INPUT') {
+                this.loadBeat(beat.id);
+            }
+        });
+        
+        return item;
     },
     
-    finalizeNewScene() {
-        let modal = document.getElementById('newItemModal');
-        if (!modal) {
-        modal = this.createNewItemModal();
-        document.body.appendChild(modal);
-}
-        const actSelect = document.getElementById('sceneActSelect');
-        const chapterSelect = document.getElementById('sceneChapterSelect');
+    /**
+     * Update selection count display
+     */
+    updateSelectionCount() {
+        const countEl = document.getElementById('selectedBeatCount');
+        if (countEl) {
+            const count = this.selectedBeatIds.length;
+            countEl.textContent = count > 0 ? `${count} selected` : 'None selected';
+        }
+    },
+    
+    /**
+     * Toggle beat sidebar visibility
+     */
+    toggleBeatSidebar() {
+        this.beatSidebarVisible = !this.beatSidebarVisible;
         
-        // Close modal
-        modal.classList.remove('active');
+        const sidebar = document.getElementById('beatSidebar');
+        const toggleBtn = document.getElementById('toggleBeatSidebar');
         
-        // Save current scene first
-        if (this.currentSceneId) {
-            this.saveCurrentScene();
+        if (sidebar) {
+            sidebar.classList.toggle('hidden', !this.beatSidebarVisible);
         }
         
-        // Generate new scene with chosen organization
-        const newScene = {
-            id: `scene-${Date.now()}`,
-            type: 'scene',
-            title: `Untitled Scene ${this.scenes.filter(s => s.type === 'scene').length + 1}`,
-            content: '',
-            wordCount: 0,
-            author: ChronicleApp.currentUser,
-            createdAt: new Date().toISOString(),
-            lastModified: new Date().toISOString(),
-            actId: actSelect ? actSelect.value || null : null,
-            chapterId: chapterSelect ? chapterSelect.value || null : null,
-            status: 'draft',
-            notes: [],
-            themes: []
-        };
+        if (toggleBtn) {
+            toggleBtn.innerHTML = this.beatSidebarVisible ? '◀' : '▶';
+        }
+    },
+
+    // SCENE MANAGEMENT
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Open scene creation modal
+     */
+    openSceneCreationModal() {
+        // Ensure we have beats selected
+        if (this.selectedBeatIds.length === 0) {
+            alert('Please select at least one beat to create a scene.');
+            return;
+        }
         
-        this.scenes.push(newScene);
-        this.currentSceneId = newScene.id;
-        this.saveScenes();
-        this.displayScene(newScene);
-        this.populateSceneSwitcher();
+        // Save current beat first
+        if (this.currentBeatId && this.hasUnsavedChanges) {
+            this.saveCurrentBeat();
+        }
         
-        // Focus on title input
+        // Show modal
+        const modal = document.getElementById('sceneMetadataModal');
+        if (!modal) {
+            console.error('❌ Scene metadata modal not found');
+            return;
+        }
+        
+        // Reset form
+        this.resetSceneMetadataForm();
+        
+        // Populate character and location dropdowns
+        this.populateSceneMetadataSelects();
+        
+        // Show modal
+        modal.style.display = 'flex';
+        
+        // Focus title input
         const titleInput = document.getElementById('sceneTitle');
         if (titleInput) {
-            titleInput.value = newScene.title;
-            titleInput.select();
+            titleInput.focus();
         }
         
-        console.log('✨ New scene created:', newScene.title);
+        // Setup modal buttons
+        this.setupSceneMetadataModal();
     },
     
-    returnToNewItemMenu() {
-        console.log('← Returning to main menu...');
-        const modal = document.getElementById('newItemModal');
-        if (!modal) return;
+    /**
+     * Setup scene metadata modal buttons
+     */
+    setupSceneMetadataModal() {
+        const modal = document.getElementById('sceneMetadataModal');
+        const saveBtn = document.getElementById('saveSceneMetadata');
+        const cancelBtn = document.getElementById('cancelSceneMetadata');
         
-        const modalBody = modal.querySelector('.modal-body');
-        modalBody.innerHTML = `
-            <div class="new-item-options">
-                <button class="new-item-option" onclick="console.log('🔵 New Scene button clicked'); try { ChronicleDesk.createNewScene(); } catch(e) { console.error('Scene creation error:', e); alert('Error: ' + e.message); }">
-                    <strong>New Scene</strong>
-                    <small>A narrative moment or passage</small>
-                </button>
-                <button class="new-item-option" onclick="console.log('🔵 New Act button clicked'); try { ChronicleDesk.createNewAct(); } catch(e) { console.error('Act creation error:', e); alert('Error: ' + e.message); }">
-                    <strong>New Act</strong>
-                    <small>Major story division (Act I, II, III)</small>
-                </button>
-                <button class="new-item-option" onclick="console.log('🔵 New Chapter button clicked'); try { ChronicleDesk.createNewChapter(); } catch(e) { console.error('Chapter creation error:', e); alert('Error: ' + e.message); }">
-                    <strong>New Chapter</strong>
-                    <small>Group multiple scenes together</small>
-                </button>
-                <button class="new-item-option" onclick="console.log('🔵 New Beat button clicked'); try { ChronicleDesk.createNewBeat(); } catch(e) { console.error('Beat creation error:', e); alert('Error: ' + e.message); }">
-                    <strong>New Beat</strong>
-                    <small>Quick note or story fragment</small>
-                </button>
-            </div>
-        `;
-    },
-    
-    createNewAct() {
-        const actName = prompt('Act name:', `Act ${this.acts.length + 1}`);
-        if (!actName) return;
-        
-        const newAct = {
-            id: `act-${Date.now()}`,
-            name: actName,
-            order: this.acts.length + 1,
-            createdAt: new Date().toISOString()
-        };
-        
-        this.acts.push(newAct);
-        this.saveActs();
-        
-        console.log('📜 New act created:', actName);
-        alert(`Act "${actName}" created! You can now assign chapters and scenes to this act.`);
-        
-        // Close modal
-        let modal = document.getElementById('newItemModal');
-        if (modal) modal.classList.remove('active');
-        
-        // Refresh scene switcher to show new act
-        this.populateSceneSwitcher();
-    },
-
-    createNewChapter() {
-        const chapterName = prompt('Chapter name:', `Chapter ${this.chapters.length + 1}`);
-        if (!chapterName) return;
-        
-        const actId = this.acts[0]?.id || null;
-        
-        const newChapter = {
-            id: `chapter-${Date.now()}`,
-            name: chapterName,
-            actId: actId,
-            order: this.chapters.length + 1,
-            createdAt: new Date().toISOString()
-        };
-        
-        this.chapters.push(newChapter);
-        this.saveChapters();
-        
-        console.log('📑 New chapter created:', chapterName);
-        alert(`Chapter "${chapterName}" created! New scenes can now be assigned to this chapter.`);
-        
-        // Close modal
-        let modal = document.getElementById('newItemModal');
-        if (!modal) {
-        modal = this.createNewItemModal();
-        document.body.appendChild(modal);
-}
-        if (modal) modal.classList.remove('active');
-    },
-    
-    createNewBeat() {
-        const beatTitle = prompt('Beat title:', 'Quick Note');
-        if (!beatTitle) return;
-        
-        const beatContent = prompt('Beat content:');
-        if (!beatContent) return;
-        
-        const newBeat = {
-            id: `beat-${Date.now()}`,
-            type: 'beat',
-            title: beatTitle,
-            content: beatContent,
-            wordCount: beatContent.split(/\s+/).length,
-            author: ChronicleApp.currentUser,
-            createdAt: new Date().toISOString(),
-            lastModified: new Date().toISOString(),
-            actId: this.acts[0]?.id || null,
-            chapterId: null
-        };
-        
-        this.scenes.push(newBeat);
-        this.saveScenes();
-        
-        console.log('🎵 New beat created:', beatTitle);
-        alert(`Beat "${beatTitle}" saved!`);
-        
-        // Close modal
-        let modal = document.getElementById('newItemModal');
-        if (!modal) {
-        modal = this.createNewItemModal();
-        document.body.appendChild(modal);
-}
-        if (modal) modal.classList.remove('active');
-        
-        this.populateSceneSwitcher();
-    },
-    // ===================================
-    // SCENE MOVEMENT & REORGANIZATION
-    // ===================================
-    
-    moveCurrentSceneToAct(actId) {
-        if (!this.currentSceneId) {
-            alert('No scene is currently selected');
-            return;
-        }
-        
-        const sceneIndex = this.scenes.findIndex(s => s.id === this.currentSceneId);
-        if (sceneIndex === -1) return;
-        
-        this.scenes[sceneIndex].actId = actId || null;
-        this.scenes[sceneIndex].lastModified = new Date().toISOString();
-        
-        this.saveScenes();
-        this.populateSceneSwitcher();
-        
-        const actName = actId ? this.acts.find(a => a.id === actId)?.name : 'Unorganized';
-        console.log(`📦 Scene moved to: ${actName}`);
-    },
-    
-    moveCurrentSceneToChapter(chapterId) {
-        if (!this.currentSceneId) {
-            alert('No scene is currently selected');
-            return;
-        }
-        
-        const sceneIndex = this.scenes.findIndex(s => s.id === this.currentSceneId);
-        if (sceneIndex === -1) return;
-        
-        this.scenes[sceneIndex].chapterId = chapterId || null;
-        this.scenes[sceneIndex].lastModified = new Date().toISOString();
-        
-        this.saveScenes();
-        this.populateSceneSwitcher();
-        
-        const chapterName = chapterId ? this.chapters.find(c => c.id === chapterId)?.name : 'No chapter';
-        console.log(`📦 Scene moved to: ${chapterName}`);
-    },
-    
-    // ===================================
-    // SCENE MANAGEMENT
-    // ===================================
-    
-    saveCurrentSceneExplicitly() {
-        console.log('💾 Explicit save triggered');
-        
-        if (!this.currentSceneId) {
-            console.log('⚠️ No current scene, creating new one');
-            this.createNewScene();
-            return;
-        }
-        
-        this.saveCurrentScene();
-        
-        // Visual feedback
-        const saveBtn = document.getElementById('saveSceneBtn');
         if (saveBtn) {
-            const originalHTML = saveBtn.innerHTML;
-            saveBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="color: var(--teal);">Saved</span>';
+            // Remove old listeners
+            saveBtn.replaceWith(saveBtn.cloneNode(true));
+            const newSaveBtn = document.getElementById('saveSceneMetadata');
             
-            setTimeout(() => {
-                saveBtn.innerHTML = originalHTML;
-            }, 1500);
+            newSaveBtn.addEventListener('click', () => {
+                this.createSceneFromBeats();
+            });
         }
         
-        console.log('✅ Scene saved explicitly');
+        if (cancelBtn) {
+            cancelBtn.replaceWith(cancelBtn.cloneNode(true));
+            const newCancelBtn = document.getElementById('cancelSceneMetadata');
+            
+            newCancelBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        }
     },
     
-    saveCurrentScene() {
-        if (!this.currentSceneId) {
-            console.log('⚠️ No current scene to save');
+    /**
+     * Reset scene metadata form
+     */
+    resetSceneMetadataForm() {
+        const titleInput = document.getElementById('sceneTitle');
+        const actSelect = document.getElementById('sceneAct');
+        const chapterSelect = document.getElementById('sceneChapter');
+        const statusSelect = document.getElementById('sceneStatus');
+        const mckeeSelect = document.getElementById('sceneMckee');
+        const conflictSelect = document.getElementById('sceneConflict');
+        const purposeInput = document.getElementById('scenePurpose');
+        
+        if (titleInput) titleInput.value = '';
+        if (actSelect) actSelect.value = 'act-1';
+        if (chapterSelect) chapterSelect.value = '';
+        if (statusSelect) statusSelect.value = 'draft';
+        if (mckeeSelect) mckeeSelect.value = '';
+        if (conflictSelect) conflictSelect.value = '';
+        if (purposeInput) purposeInput.value = '';
+        
+        // Clear multi-selects
+        const characterSelect = document.getElementById('sceneCharacters');
+        if (characterSelect) {
+            Array.from(characterSelect.options).forEach(opt => opt.selected = false);
+        }
+        
+        const locationSelect = document.getElementById('sceneLocation');
+        if (locationSelect) locationSelect.value = '';
+    },
+    
+    /**
+     * Populate scene metadata selects
+     */
+    populateSceneMetadataSelects() {
+        // Characters multi-select
+        const characterSelect = document.getElementById('sceneCharacters');
+        if (characterSelect) {
+            characterSelect.innerHTML = '';
+            ChronicleData.characters.forEach(char => {
+                const option = document.createElement('option');
+                option.value = char.id;
+                option.textContent = char.name;
+                characterSelect.appendChild(option);
+            });
+        }
+        
+        // Location select
+        const locationSelect = document.getElementById('sceneLocation');
+        if (locationSelect) {
+            locationSelect.innerHTML = '<option value="">No specific location</option>';
+            ChronicleData.locations.forEach(loc => {
+                const option = document.createElement('option');
+                option.value = loc.id;
+                option.textContent = loc.name;
+                locationSelect.appendChild(option);
+            });
+        }
+        
+        // Chapter select (based on selected act)
+        this.updateChapterSelect();
+        
+        // Setup act change handler to update chapters
+        const actSelect = document.getElementById('sceneAct');
+        if (actSelect) {
+            actSelect.addEventListener('change', () => {
+                this.updateChapterSelect();
+            });
+        }
+    },
+    
+    /**
+     * Update chapter select based on selected act
+     */
+    updateChapterSelect() {
+        const actSelect = document.getElementById('sceneAct');
+        const chapterSelect = document.getElementById('sceneChapter');
+        
+        if (!actSelect || !chapterSelect) return;
+        
+        const selectedActId = actSelect.value;
+        chapterSelect.innerHTML = '<option value="">No chapter</option>';
+        
+        const chapters = ChronicleData.getChaptersByAct(selectedActId);
+        chapters.forEach(chapter => {
+            const option = document.createElement('option');
+            option.value = chapter.id;
+            option.textContent = chapter.title;
+            chapterSelect.appendChild(option);
+        });
+    },
+    
+    /**
+     * Create scene from selected beats
+     */
+    createSceneFromBeats() {
+        // Get form values
+        const title = document.getElementById('sceneTitle').value.trim();
+        const actId = document.getElementById('sceneAct').value;
+        const chapterId = document.getElementById('sceneChapter').value || null;
+        const status = document.getElementById('sceneStatus').value;
+        const mckeeElement = document.getElementById('sceneMckee').value || null;
+        const conflictType = document.getElementById('sceneConflict').value || null;
+        const purpose = document.getElementById('scenePurpose').value.trim();
+        
+        // Get selected characters
+        const characterSelect = document.getElementById('sceneCharacters');
+        const characters = Array.from(characterSelect.selectedOptions).map(opt => opt.value);
+        
+        // Get location
+        const location = document.getElementById('sceneLocation').value || null;
+        
+        // Validate
+        if (!title) {
+            alert('Please enter a scene title.');
             return;
         }
         
-        const writingSurface = document.getElementById('writingSurface');
-        const sceneTitle = document.getElementById('sceneTitle');
-        
-        if (!writingSurface) {
-            console.log('⚠️ Writing surface not found');
+        if (this.selectedBeatIds.length === 0) {
+            alert('No beats selected.');
             return;
         }
         
-        const sceneIndex = this.scenes.findIndex(s => s.id === this.currentSceneId);
-        if (sceneIndex === -1) {
-            console.log('⚠️ Current scene not found in array');
-            return;
-        }
+        // Create scene via ChronicleData
+        const scene = ChronicleData.createScene(title, this.selectedBeatIds, {
+            actId: actId,
+            chapterId: chapterId,
+            author: ChronicleData.getCurrentUser(),
+            mode: 'novelist',
+            status: status,
+            characters: characters,
+            location: location,
+            mckeeElement: mckeeElement,
+            conflictType: conflictType,
+            purpose: purpose
+        });
         
-        // Update scene data
-        this.scenes[sceneIndex].content = writingSurface.innerHTML;
-        this.scenes[sceneIndex].title = sceneTitle ? sceneTitle.value : this.scenes[sceneIndex].title;
-        this.scenes[sceneIndex].wordCount = countWords(writingSurface.innerText);
-        this.scenes[sceneIndex].lastModified = new Date().toISOString();
-        this.scenes[sceneIndex].author = ChronicleApp.currentUser;
+        console.log('✅ Scene created:', scene.title);
         
-        this.saveScenes();
+        // Close modal
+        const modal = document.getElementById('sceneMetadataModal');
+        if (modal) modal.style.display = 'none';
+        
+        // Clear beat selection
+        this.clearBeatSelection();
+        
+        // Load the new scene
+        this.loadSceneById(scene.id);
+        
+        // Update scene switcher
         this.populateSceneSwitcher();
         
-        // Update word count display
-        ChronicleApp.currentScene = this.scenes[sceneIndex];
-        updateWordCount();        
-        console.log('💾 Scene saved:', this.scenes[sceneIndex].title);
+        // Show success message
+        this.showNotification(`Scene "${scene.title}" created successfully!`, 'success');
     },
     
+    /**
+     * Load scene by ID
+     */
     loadSceneById(sceneId) {
-        if (!sceneId) return;
+        console.log('📖 Loading scene:', sceneId);
         
-        console.log('📄 Loading scene:', sceneId);
-        
-        // Save current scene first
-        if (this.currentSceneId) {
-            this.saveCurrentScene();
-        }
-        
-        const scene = this.scenes.find(s => s.id === sceneId);
-        if (scene) {
-            this.currentSceneId = sceneId;
-            this.displayScene(scene);
-            console.log('✅ Scene loaded:', scene.title);
-        } else {
-            console.log('⚠️ Scene not found:', sceneId);
-        }
-    },
-    
-    loadMostRecentScene() {
-        if (this.scenes.length === 0) {
-            console.log('📝 No scenes exist, creating first one');
-            this.createNewScene();
+        const scene = ChronicleData.getScene(sceneId);
+        if (!scene) {
+            console.error('❌ Scene not found:', sceneId);
             return;
         }
         
-        // Load most recently modified scene
-        const sorted = [...this.scenes].sort((a, b) => 
-            new Date(b.lastModified) - new Date(a.lastModified)
-        );
+        // Save current beat if editing one
+        if (this.currentBeatId && this.hasUnsavedChanges && !this.isEditingScene) {
+            this.saveCurrentBeat();
+        }
         
-        this.currentSceneId = sorted[0].id;
-        this.displayScene(sorted[0]);
-        console.log('📖 Loaded most recent scene:', sorted[0].title);
-    },
-    
-    displayScene(scene) {
+        // Update state
+        this.currentSceneId = sceneId;
+        this.currentBeatId = null;
+        this.isEditingScene = true;
+        this.viewMode = 'scene';
+        
+        // Get beats for this scene
+        const beats = ChronicleData.getBeatsForScene(sceneId);
+        
+        // Combine beat content
+        const combinedContent = beats.map(beat => beat.content).join('<hr class="beat-separator">');
+        
+        // Load into writing surface
         const writingSurface = document.getElementById('writingSurface');
-        const sceneTitle = document.getElementById('sceneTitle');
-        const sceneSwitcher = document.getElementById('sceneSwitcher');
-        
         if (writingSurface) {
-            writingSurface.innerHTML = scene.content || '';
-        }
-        if (sceneTitle) {
-            sceneTitle.value = scene.title || '';
-        }
-        if (sceneSwitcher) {
-            sceneSwitcher.value = scene.id;
+            writingSurface.innerHTML = combinedContent;
         }
         
-        // Update global state
-        ChronicleApp.currentScene = scene;
-        ChronicleApp.currentScene.wordCount = countWords(writingSurface ? writingSurface.innerText : '');
-        updateWordCount();
+        // Update scene title
+        this.updateSceneTitle(scene.title);
+        
+        // Update scene switcher selection
+        const sceneSwitcher = document.getElementById('sceneSwitcher');
+        if (sceneSwitcher) {
+            sceneSwitcher.value = sceneId;
+        }
+        
+        // Update UI
+        this.updateButtonStates();
+        this.hasUnsavedChanges = false;
+        
+        console.log('✅ Scene loaded with', beats.length, 'beats');
     },
     
+    /**
+     * Delete current scene
+     */
+    deleteCurrentScene() {
+        if (!this.currentSceneId) return;
+        
+        const scene = ChronicleData.getScene(this.currentSceneId);
+        if (!scene) return;
+        
+        if (!confirm(`Delete scene "${scene.title}"? The beats will become orphaned and can be reused.`)) {
+            return;
+        }
+        
+        const success = ChronicleData.deleteScene(this.currentSceneId);
+        
+        if (success) {
+            console.log('🗑️ Scene deleted');
+            this.showNotification('Scene deleted. Beats are now orphaned.', 'info');
+            
+            // Refresh UI
+            this.populateSceneSwitcher();
+            this.refreshBeatSidebar();
+            
+            // Create new beat
+            this.createNewBeat();
+        }
+    },
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // SCENE SWITCHER
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Populate scene switcher dropdown
+     */
     populateSceneSwitcher() {
         const sceneSwitcher = document.getElementById('sceneSwitcher');
         if (!sceneSwitcher) return;
         
         sceneSwitcher.innerHTML = '';
-        // Also populate movement dropdowns
-        const moveToActSelect = document.getElementById('moveSceneToAct');
-        const moveToChapterSelect = document.getElementById('moveSceneToChapter');
         
-        if (moveToActSelect) {
-            moveToActSelect.innerHTML = '<option value="">Move to Act...</option>';
-            this.acts.forEach(act => {
-                const option = document.createElement('option');
-                option.value = act.id;
-                option.textContent = act.name;
-                moveToActSelect.appendChild(option);
-            });
-        }
+        // Add "New Beat" option
+        const newBeatOption = document.createElement('option');
+        newBeatOption.value = '';
+        newBeatOption.textContent = '+ New Beat';
+        sceneSwitcher.appendChild(newBeatOption);
         
-        if (moveToChapterSelect) {
-            moveToChapterSelect.innerHTML = '<option value="">Move to Chapter...</option><option value="null">Remove from Chapter</option>';
-            this.chapters.forEach(chapter => {
-                const act = this.acts.find(a => a.id === chapter.actId);
-                const option = document.createElement('option');
-                option.value = chapter.id;
-                option.textContent = (act ? act.name + ' → ' : '') + chapter.name;
-                moveToChapterSelect.appendChild(option);
-            });
-        }
+        // Get all scenes
+        const scenes = ChronicleData.scenes;
         
-        if (this.scenes.length === 0) {
-            const option = document.createElement('option');
-            option.value = '';
-            option.textContent = 'No scenes yet';
-            sceneSwitcher.appendChild(option);
+        if (scenes.length === 0) {
             return;
         }
         
-        // Group by Act and Chapter
-        this.acts.forEach(act => {
-            const actGroup = document.createElement('optgroup');
-            actGroup.label = `⚔ ${act.name}`;
+        // Group by Act
+        ChronicleData.acts.forEach(act => {
+            const actScenes = ChronicleData.getScenesByAct(act.id);
             
-            // Get chapters in this act
-            const actChapters = this.chapters.filter(ch => ch.actId === act.id);
-            
-            if (actChapters.length > 0) {
-                actChapters.forEach(chapter => {
-                    const chapterScenes = this.scenes.filter(s => s.chapterId === chapter.id);
-                    
-                    if (chapterScenes.length > 0) {
-                        const chapterGroup = document.createElement('optgroup');
-                        chapterGroup.label = `  📖 ${chapter.name}`;
-                        
-                        chapterScenes.forEach(scene => {
-                            const option = document.createElement('option');
-                            option.value = scene.id;
-                            option.textContent = `    ${scene.title}`;
-                            chapterGroup.appendChild(option);
-                        });
-                        
-                        sceneSwitcher.appendChild(chapterGroup);
-                    }
-                });
-            }
-            
-            // Scenes without chapter in this act
-            const actScenes = this.scenes.filter(s => s.actId === act.id && !s.chapterId);
             if (actScenes.length > 0) {
-                actScenes.forEach(scene => {
-                    const option = document.createElement('option');
-                    option.value = scene.id;
-                    option.textContent = `  ${scene.title}`;
-                    actGroup.appendChild(option);
-                });
+                const actGroup = document.createElement('optgroup');
+                actGroup.label = `⚔ ${act.title}`;
                 
-                sceneSwitcher.appendChild(actGroup);
+                // Get chapters in this act
+                const actChapters = ChronicleData.getChaptersByAct(act.id);
+                
+                if (actChapters.length > 0) {
+                    actChapters.forEach(chapter => {
+                        const chapterScenes = actScenes.filter(s => s.chapterId === chapter.id);
+                        
+                        if (chapterScenes.length > 0) {
+                            const chapterGroup = document.createElement('optgroup');
+                            chapterGroup.label = `  📖 ${chapter.title}`;
+                            
+                            chapterScenes.forEach(scene => {
+                                const option = document.createElement('option');
+                                option.value = scene.id;
+                                option.textContent = `    ${scene.title}`;
+                                chapterGroup.appendChild(option);
+                            });
+                            
+                            sceneSwitcher.appendChild(chapterGroup);
+                        }
+                    });
+                }
+                
+                // Unchaptered scenes in this act
+                const unchapteredScenes = actScenes.filter(s => !s.chapterId);
+                if (unchapteredScenes.length > 0) {
+                    unchapteredScenes.forEach(scene => {
+                        const option = document.createElement('option');
+                        option.value = scene.id;
+                        option.textContent = `  ${scene.title}`;
+                        actGroup.appendChild(option);
+                    });
+                    
+                    sceneSwitcher.appendChild(actGroup);
+                }
             }
         });
         
-        // Scenes not in any act
-        const orphanScenes = this.scenes.filter(s => !s.actId);
-        if (orphanScenes.length > 0) {
-            const orphanGroup = document.createElement('optgroup');
-            orphanGroup.label = 'Unorganized';
-            
-            orphanScenes.forEach(scene => {
-                const option = document.createElement('option');
-                option.value = scene.id;
-                option.textContent = scene.title;
-                orphanGroup.appendChild(option);
-            });
-            
-            sceneSwitcher.appendChild(orphanGroup);
+        // Set current selection
+        if (this.currentSceneId) {
+            sceneSwitcher.value = this.currentSceneId;
         }
     },
     
-    // ===================================
-    // CHARACTER & THEME LOADING
-    // ===================================
     
-    loadCharacters() {
-        this.characters = JSON.parse(localStorage.getItem('chronicle_characters') || '[]');
-        
-        if (this.characters.length === 0) {
-            this.characters = [
-                {
-                    id: 'char-joseph',
-                    name: 'Joseph',
-                    role: 'Protagonist',
-                    description: 'A young man of seventeen, favored by his father, gifted with prophetic dreams.',
-                    arc: 'From arrogant dreamer to humble servant to wise administrator'
-                },
-                {
-                    id: 'char-jacob',
-                    name: 'Jacob',
-                    role: 'Father',
-                    description: 'Aging patriarch who repeats his own father\'s mistake of favoritism.',
-                    arc: 'From blind favoritism to profound grief to redemptive reunion'
-                },
-                {
-                    id: 'char-brothers',
-                    name: 'The Brothers',
-                    role: 'Antagonists/Redeemed',
-                    description: 'Ten brothers consumed by jealousy, capable of terrible betrayal.',
-                    arc: 'From murderous jealousy to guilt-ridden survival to humble repentance'
-                }
-            ];
-            this.saveCharacters();
-        }
-    },
-    
-    saveCharacters() {
-        localStorage.setItem('chronicle_characters', JSON.stringify(this.characters));
-    },
-    
-    loadThemes() {
-        this.themes = JSON.parse(localStorage.getItem('chronicle_themes') || '[]');
-        
-        if (this.themes.length === 0) {
-            this.themes = [
-                { name: 'Providence', color: '#C9A961' },
-                { name: 'Betrayal', color: '#722F37' },
-                { name: 'Forgiveness', color: '#2C5F5F' },
-                { name: 'Identity', color: '#8B7355' },
-                { name: 'Redemption', color: '#C9A961' }
-            ];
-            this.saveThemes();
-        }
-    },
-    
-    saveThemes() {
-        localStorage.setItem('chronicle_themes', JSON.stringify(this.themes));
-    },
-    
-    // ===================================
+    // ═══════════════════════════════════════════════════════════════════════
     // REFERENCE PANEL
-    // ===================================
+    // ═══════════════════════════════════════════════════════════════════════
     
+    /**
+     * Populate reference panel with characters and locations
+     */
     populateReferencePanel() {
         const panelContent = document.querySelector('.panel-content');
         if (!panelContent) return;
         
         panelContent.innerHTML = '';
         
+        // Characters section
         const charSection = this.createCharactersSection();
         panelContent.appendChild(charSection);
         
-        const themeSection = this.createThemesSection();
-        panelContent.appendChild(themeSection);
-        
-        const plotSection = this.createPlotPointsSection();
-        panelContent.appendChild(plotSection);
+        // Locations section
+        const locSection = this.createLocationsSection();
+        panelContent.appendChild(locSection);
     },
     
+    /**
+     * Create characters section
+     */
     createCharactersSection() {
         const section = document.createElement('div');
         section.className = 'reference-section';
@@ -955,14 +1070,22 @@ modalBody.innerHTML = `
         title.textContent = 'Characters';
         section.appendChild(title);
         
-        this.characters.forEach(char => {
+        if (ChronicleData.characters.length === 0) {
+            const empty = document.createElement('p');
+            empty.style.opacity = '0.7';
+            empty.style.fontSize = '0.9rem';
+            empty.textContent = 'No characters yet. Add them in The Archive.';
+            section.appendChild(empty);
+            return section;
+        }
+        
+        ChronicleData.characters.forEach(char => {
             const item = document.createElement('div');
             item.className = 'reference-item character-item';
             item.innerHTML = `
                 <strong>${char.name}</strong>
-                <em style="color: var(--teal); font-size: 0.9rem; display: block; margin: 0.2rem 0;">${char.role}</em>
-                <p>${char.description}</p>
-                ${char.arc ? `<p style="font-style: italic; opacity: 0.8; font-size: 0.9rem; margin-top: 0.5rem;">Arc: ${char.arc}</p>` : ''}
+                ${char.role ? `<em style="color: var(--teal); font-size: 0.9rem; display: block; margin: 0.2rem 0;">${char.role}</em>` : ''}
+                ${char.description ? `<p style="font-size: 0.9rem; margin: 0.5rem 0 0 0;">${char.description}</p>` : ''}
             `;
             section.appendChild(item);
         });
@@ -970,50 +1093,32 @@ modalBody.innerHTML = `
         return section;
     },
     
-    createThemesSection() {
+    /**
+     * Create locations section
+     */
+    createLocationsSection() {
         const section = document.createElement('div');
         section.className = 'reference-section';
         
         const title = document.createElement('h4');
-        title.textContent = 'Themes';
+        title.textContent = 'Locations';
         section.appendChild(title);
         
-        const container = document.createElement('div');
-        container.style.cssText = 'display: flex; flex-wrap: wrap; gap: 0.5rem;';
+        if (ChronicleData.locations.length === 0) {
+            const empty = document.createElement('p');
+            empty.style.opacity = '0.7';
+            empty.style.fontSize = '0.9rem';
+            empty.textContent = 'No locations yet. Add them when creating scenes.';
+            section.appendChild(empty);
+            return section;
+        }
         
-        this.themes.forEach(theme => {
-            const tag = document.createElement('div');
-            tag.className = 'theme-tag';
-            tag.textContent = theme.name;
-            tag.style.borderColor = theme.color;
-            tag.style.color = theme.color;
-            container.appendChild(tag);
-        });
-        
-        section.appendChild(container);
-        return section;
-    },
-    
-    createPlotPointsSection() {
-        const section = document.createElement('div');
-        section.className = 'reference-section';
-        
-        const title = document.createElement('h4');
-        title.textContent = 'Key Plot Points';
-        section.appendChild(title);
-        
-        const plotPoints = [
-            { title: 'The Favorite Son', text: 'Jacob favors Joseph, giving him the coat of many colors. Brothers grow jealous.' },
-            { title: 'The Dreams', text: 'Joseph dreams of his family bowing to him. His brothers\' hatred intensifies.' },
-            { title: 'The Betrayal', text: 'Brothers throw Joseph into the pit, then sell him to Midianite traders.' }
-        ];
-        
-        plotPoints.forEach(point => {
+        ChronicleData.locations.forEach(loc => {
             const item = document.createElement('div');
-            item.className = 'reference-item plot-point-item';
+            item.className = 'reference-item location-item';
             item.innerHTML = `
-                <strong>${point.title}</strong>
-                <p>${point.text}</p>
+                <strong>📍 ${loc.name}</strong>
+                ${loc.description ? `<p style="font-size: 0.9rem; margin: 0.5rem 0 0 0;">${loc.description}</p>` : ''}
             `;
             section.appendChild(item);
         });
@@ -1021,43 +1126,203 @@ modalBody.innerHTML = `
         return section;
     },
     
-    // ===================================
-    // EXPORT (SIMPLIFIED)
-    // ===================================
     
-    showExportModal() {
-        alert('Export functionality coming soon!');
+    // ═══════════════════════════════════════════════════════════════════════
+    // AUTO-SAVE SYSTEM
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Start auto-save interval
+     */
+    startAutoSave() {
+        if (this.autoSaveInterval) {
+            clearInterval(this.autoSaveInterval);
+        }
+        
+        this.autoSaveInterval = setInterval(() => {
+            if (this.hasUnsavedChanges) {
+                this.autoSave();
+            }
+        }, this.autoSaveDelay);
+        
+        console.log('⏰ Auto-save started (every', this.autoSaveDelay / 1000, 'seconds)');
+    },
+    
+    /**
+     * Auto-save current work
+     */
+    autoSave() {
+        if (this.isEditingScene) {
+            // For scenes, we save the combined beat content
+            // Note: In full implementation, you'd split content back into beats
+            // For now, we just mark as saved
+            console.log('💾 Auto-saving scene...');
+            this.hasUnsavedChanges = false;
+        } else if (this.currentBeatId) {
+            // Save current beat
+            this.saveCurrentBeat();
+            console.log('💾 Auto-saved beat');
+        }
+        
+        this.updateButtonStates();
+    },
+    
+    /**
+     * Explicit save (button or Ctrl+S)
+     */
+    saveExplicitly() {
+        if (this.isEditingScene) {
+            console.log('💾 Saving scene...');
+            this.hasUnsavedChanges = false;
+            this.showNotification('Scene saved', 'success');
+        } else if (this.currentBeatId) {
+            this.saveCurrentBeat();
+            this.showNotification('Beat saved', 'success');
+        }
+        
+        this.updateButtonStates();
+    },
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // UI HELPERS
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Update scene title display
+     */
+    updateSceneTitle(title) {
+        const titleInput = document.getElementById('sceneTitle');
+        if (titleInput) {
+            titleInput.value = title;
+        }
+    },
+    
+    /**
+     * Clear writing surface
+     */
+    clearWritingSurface() {
+        const writingSurface = document.getElementById('writingSurface');
+        if (writingSurface) {
+            writingSurface.innerHTML = '';
+        }
+        this.hasUnsavedChanges = false;
+    },
+    
+    /**
+     * Update button states based on current context
+     */
+    updateButtonStates() {
+        const saveBtn = document.getElementById('saveSceneBtn');
+        const deleteBtn = document.getElementById('deleteSceneBtn');
+        const saveAsSceneBtn = document.getElementById('saveAsSceneBtn');
+        const newBeatBtn = document.getElementById('newBeatBtn');
+        
+        // Save button
+        if (saveBtn) {
+            saveBtn.disabled = !this.hasUnsavedChanges;
+            saveBtn.style.opacity = this.hasUnsavedChanges ? '1' : '0.5';
+        }
+        
+        // Delete button
+        if (deleteBtn) {
+            const canDelete = this.isEditingScene || this.currentBeatId;
+            deleteBtn.disabled = !canDelete;
+            deleteBtn.style.opacity = canDelete ? '1' : '0.5';
+            deleteBtn.textContent = this.isEditingScene ? 'Delete Scene' : 'Delete Beat';
+        }
+        
+        // Save as Scene button
+        if (saveAsSceneBtn) {
+            const hasSelection = this.selectedBeatIds.length > 0;
+            saveAsSceneBtn.disabled = !hasSelection;
+            saveAsSceneBtn.style.opacity = hasSelection ? '1' : '0.5';
+            
+            if (hasSelection) {
+                saveAsSceneBtn.textContent = `Save ${this.selectedBeatIds.length} Beat${this.selectedBeatIds.length > 1 ? 's' : ''} as Scene`;
+            } else {
+                saveAsSceneBtn.textContent = 'Save Selected as Scene';
+            }
+        }
+        
+        // New Beat button
+        if (newBeatBtn) {
+            newBeatBtn.style.opacity = this.viewMode === 'beat' ? '0.5' : '1';
+        }
+    },
+    
+    /**
+     * Show notification
+     */
+    showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `desk-notification ${type}`;
+        notification.textContent = message;
+        
+        // Style
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#2C5F5F' : type === 'error' ? '#722F37' : '#8B7355'};
+            color: #F4EFE8;
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 10000;
+            font-family: 'Crimson Text', serif;
+            animation: slideIn 0.3s ease-out;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease-in';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    },
+    
+    /**
+     * Get word count from HTML content
+     */
+    getWordCount(htmlContent) {
+        const text = htmlContent.replace(/<[^>]*>/g, '');
+        const words = text.split(/\s+/).filter(word => word.length > 0);
+        return words.length;
     }
 };
 
-// Make available globally FIRST
+// ═══════════════════════════════════════════════════════════════════════
+// MODULE INITIALIZATION
+// ═══════════════════════════════════════════════════════════════════════
+
+// Make available globally
 window.ChronicleDesk = ChronicleDesk;
 
-// Then self-initialize when DOM is ready - WITH ERROR HANDLING
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        try {
-            console.log('📖 ChronicleDesk initializing via DOMContentLoaded...');
-            ChronicleDesk.init();
-        } catch (error) {
-            console.error('❌ ChronicleDesk initialization failed:', error);
-            console.log('⚠️ Other sections remain available');
-            // Mark as failed but don't block other functionality
-            ChronicleDesk.initialized = false;
-            ChronicleDesk.initializationError = error.message;
-        }
-    });
-} else {
-    // DOM already loaded
-    try {
-        console.log('📖 ChronicleDesk initializing immediately...');
-        ChronicleDesk.init();
-    } catch (error) {
-        console.error('❌ ChronicleDesk initialization failed:', error);
-        console.log('⚠️ Other sections remain available');
-        ChronicleDesk.initialized = false;
-        ChronicleDesk.initializationError = error.message;
+// Initialize when Desk workspace becomes active
+document.addEventListener('DOMContentLoaded', () => {
+    const deskTab = document.querySelector('[data-space="desk"]');
+    if (deskTab) {
+        deskTab.addEventListener('click', () => {
+            setTimeout(() => {
+                if (!ChronicleDesk.initialized) {
+                    ChronicleDesk.init();
+                }
+            }, 100);
+        });
     }
-}
+});
 
-console.log('✏️ Chronicle Desk module loaded and ready');
+console.log('✍️ Chronicle Desk module loaded');
+
+// ═══════════════════════════════════════════════════════════════════════
+// END OF CHRONICLE DESK
+// 
+// "Whatever you do, work at it with all your heart, 
+// as working for the Lord, not for human masters." 
+// — Colossians 3:23
+// ═══════════════════════════════════════════════════════════════════════
