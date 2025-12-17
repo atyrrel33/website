@@ -1,8 +1,6 @@
 /* ========================================
-   THE ARCHIVE - Sacred Treasury Logic
-   "Store up treasures where moths do not destroy"
-   Sprint 1: Scene Library (Grid/List View, Search, Filters, Preview)
-   Sprint 2: Chapter Structure (Tree View, Drag-Drop, Chapter Management)
+   THE ARCHIVE - Scene Library & Structure Management
+   Sprint 1: Integrated with ChronicleData for cross-workspace intelligence
    ======================================== */
 
 const ChronicleArchive = {
@@ -13,12 +11,22 @@ const ChronicleArchive = {
     filters: {
         search: '',
         author: 'all',
-        status: 'all'
+        status: 'all',
+        character: 'all',
+        location: 'all'
     },
+    initialized: false,
     
     // Initialization
     init() {
-        console.log('✅ Archive: Initializing treasury...');
+        if (this.initialized) return;
+        
+        console.log('📚 Archive: Initializing...');
+        
+        // Register listener for ChronicleData changes
+        ChronicleData.addListener((event, data) => {
+            this.handleDataChange(event, data);
+        });
         
         // Set up event listeners
         this.setupChamberNavigation();
@@ -31,7 +39,45 @@ const ChronicleArchive = {
         this.loadChapterStructure();
         this.updateStats();
         
-        console.log('✅ Archive: Initialization complete');
+        this.initialized = true;
+        console.log('✅ Archive: Ready');
+    },
+    
+    // Handle data changes from other workspaces
+    handleDataChange(event, data) {
+        console.log('📚 Archive: Data change detected:', event);
+        
+        switch(event) {
+            case 'sceneCreated':
+            case 'sceneUpdated':
+            case 'sceneDeleted':
+            case 'beatCreated':
+            case 'beatUpdated':
+            case 'beatDeleted':
+                this.refreshCurrentView();
+                break;
+            case 'characterCreated':
+            case 'characterUpdated':
+            case 'characterDeleted':
+                this.updateCharacterFilter();
+                this.refreshCurrentView();
+                break;
+            case 'locationCreated':
+            case 'locationUpdated':
+            case 'locationDeleted':
+                this.updateLocationFilter();
+                this.refreshCurrentView();
+                break;
+        }
+    },
+    
+    refreshCurrentView() {
+        if (this.currentChamber === 'library') {
+            this.loadSceneLibrary();
+        } else if (this.currentChamber === 'structure') {
+            this.loadChapterStructure();
+        }
+        this.updateStats();
     },
     
     // ===== CHAMBER NAVIGATION =====
@@ -99,6 +145,8 @@ const ChronicleArchive = {
         const searchInput = document.getElementById('archiveSearch');
         const authorFilter = document.getElementById('authorFilter');
         const statusFilter = document.getElementById('statusFilter');
+        const characterFilter = document.getElementById('characterFilter');
+        const locationFilter = document.getElementById('locationFilter');
         
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
@@ -120,15 +168,67 @@ const ChronicleArchive = {
                 this.loadSceneLibrary();
             });
         }
+        
+        if (characterFilter) {
+            this.populateCharacterFilter();
+            characterFilter.addEventListener('change', (e) => {
+                this.filters.character = e.target.value;
+                this.loadSceneLibrary();
+            });
+        }
+        
+        if (locationFilter) {
+            this.populateLocationFilter();
+            locationFilter.addEventListener('change', (e) => {
+                this.filters.location = e.target.value;
+                this.loadSceneLibrary();
+            });
+        }
     },
     
-    // ===== SPRINT 1: SCENE LIBRARY =====
+    populateCharacterFilter() {
+        const filter = document.getElementById('characterFilter');
+        if (!filter) return;
+        
+        filter.innerHTML = '<option value="all">All Characters</option>';
+        
+        ChronicleData.characters.forEach(char => {
+            const option = document.createElement('option');
+            option.value = char.id;
+            option.textContent = char.name;
+            filter.appendChild(option);
+        });
+    },
+    
+    updateCharacterFilter() {
+        this.populateCharacterFilter();
+    },
+    
+    populateLocationFilter() {
+        const filter = document.getElementById('locationFilter');
+        if (!filter) return;
+        
+        filter.innerHTML = '<option value="all">All Locations</option>';
+        
+        ChronicleData.locations.forEach(loc => {
+            const option = document.createElement('option');
+            option.value = loc.id;
+            option.textContent = loc.name;
+            filter.appendChild(option);
+        });
+    },
+    
+    updateLocationFilter() {
+        this.populateLocationFilter();
+    },
+    
+    // ===== SCENE LIBRARY =====
     loadSceneLibrary() {
         const grid = document.getElementById('sceneLibraryGrid');
         if (!grid) return;
         
-        // Get all scenes
-        let scenes = this.getAllScenes();
+        // Get scenes from ChronicleData
+        let scenes = ChronicleData.scenes;
         
         // Apply filters
         scenes = this.applyFilters(scenes);
@@ -141,15 +241,19 @@ const ChronicleArchive = {
         
         // Empty state
         if (scenes.length === 0) {
+            const hasNoScenes = ChronicleData.scenes.length === 0;
             grid.innerHTML = `
                 <div class="empty-state" style="grid-column: 1 / -1;">
                     <div class="empty-state-icon">📚</div>
-                    <h3 class="empty-state-title">No Scenes Found</h3>
-                    <p class="empty-state-text">Begin writing in The Desk to populate your treasury</p>
+                    <h3 class="empty-state-title">${hasNoScenes ? 'No Scenes Yet' : 'No Scenes Match Your Filters'}</h3>
+                    <p class="empty-state-text">${hasNoScenes ? 'Begin writing in The Desk to populate your treasury' : 'Try adjusting your search or filter criteria'}</p>
                 </div>
             `;
             return;
         }
+        
+        // Sort by last modified (newest first)
+        scenes.sort((a, b) => b.modified - a.modified);
         
         // Render scene cards
         scenes.forEach(scene => {
@@ -158,32 +262,19 @@ const ChronicleArchive = {
         });
     },
     
-    getAllScenes() {
-        const scenes = [];
-        const sceneKeys = Object.keys(localStorage).filter(key => key.startsWith('scene_'));
-        
-        sceneKeys.forEach(key => {
-            try {
-                const scene = JSON.parse(localStorage.getItem(key));
-                scenes.push(scene);
-            } catch (e) {
-                console.warn('⚠️ Failed to parse scene:', key);
-            }
-        });
-        
-        // Sort by last modified (newest first)
-        scenes.sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
-        
-        return scenes;
-    },
-    
     applyFilters(scenes) {
         return scenes.filter(scene => {
-            // Search filter
+            // Search filter - search in title and beat content
             if (this.filters.search) {
                 const searchTerm = this.filters.search.toLowerCase();
                 const titleMatch = scene.title.toLowerCase().includes(searchTerm);
-                const contentMatch = scene.content.toLowerCase().includes(searchTerm);
+                
+                // Search in beat content
+                const beats = ChronicleData.getBeatsForScene(scene.id);
+                const contentMatch = beats.some(beat => 
+                    beat.content.toLowerCase().includes(searchTerm)
+                );
+                
                 if (!titleMatch && !contentMatch) return false;
             }
             
@@ -197,6 +288,18 @@ const ChronicleArchive = {
                 return false;
             }
             
+            // Character filter
+            if (this.filters.character !== 'all') {
+                if (!scene.characters || !scene.characters.includes(this.filters.character)) {
+                    return false;
+                }
+            }
+            
+            // Location filter
+            if (this.filters.location !== 'all' && scene.location !== this.filters.location) {
+                return false;
+            }
+            
             return true;
         });
     },
@@ -206,8 +309,19 @@ const ChronicleArchive = {
         card.className = 'scene-card';
         card.dataset.sceneId = scene.id;
         
+        // Get beats for this scene
+        const beats = ChronicleData.getBeatsForScene(scene.id);
+        const beatCount = beats.length;
+        
+        // Calculate word count from beats
+        const wordCount = beats.reduce((total, beat) => {
+            const text = beat.content.replace(/<[^>]*>/g, '');
+            const words = text.split(/\s+/).filter(word => word.length > 0);
+            return total + words.length;
+        }, 0);
+        
         // Format date
-        const lastModified = new Date(scene.lastModified);
+        const lastModified = new Date(scene.modified);
         const formattedDate = lastModified.toLocaleDateString('en-US', { 
             month: 'short', 
             day: 'numeric',
@@ -220,6 +334,16 @@ const ChronicleArchive = {
             'in-progress': 'In Progress',
             'polished': 'Polished'
         };
+        
+        // Get character names
+        const characterNames = scene.characters
+            .map(id => ChronicleData.getCharacter(id)?.name)
+            .filter(name => name)
+            .join(', ');
+        
+        // Get location name
+        const locationName = scene.location ? 
+            ChronicleData.getLocation(scene.location)?.name : null;
         
         card.innerHTML = `
             <div class="scene-card-header">
@@ -235,16 +359,31 @@ const ChronicleArchive = {
                         <span>${statusLabels[scene.status || 'draft']}</span>
                     </div>
                     <div class="meta-item word-count-badge">
-                        ${scene.wordCount || 0} words
+                        ${wordCount} words
                     </div>
                 </div>
                 <div class="meta-row">
                     <div class="meta-item">
                         📅 ${formattedDate}
                     </div>
-                    ${scene.act ? `<div class="meta-item">Act ${scene.act}</div>` : ''}
-                    ${scene.chapterName ? `<div class="meta-item">${scene.chapterName}</div>` : ''}
+                    <div class="meta-item">
+                        📝 ${beatCount} ${beatCount === 1 ? 'beat' : 'beats'}
+                    </div>
                 </div>
+                ${characterNames ? `
+                <div class="meta-row">
+                    <div class="meta-item" title="Characters">
+                        👥 ${characterNames}
+                    </div>
+                </div>
+                ` : ''}
+                ${locationName ? `
+                <div class="meta-row">
+                    <div class="meta-item" title="Location">
+                        📍 ${locationName}
+                    </div>
+                </div>
+                ` : ''}
             </div>
         `;
         
@@ -297,19 +436,59 @@ const ChronicleArchive = {
         // Show preview panel
         preview.classList.add('active');
         
+        // Get beats for this scene
+        const beats = ChronicleData.getBeatsForScene(scene.id);
+        
+        // Combine beat content with separators
+        let fullContent = beats.map((beat, index) => {
+            const text = beat.content.replace(/<[^>]*>/g, '');
+            return `[Beat ${index + 1}]\n${text}`;
+        }).join('\n\n---\n\n');
+        
         // Excerpt (first 500 characters)
-        const excerpt = scene.content.substring(0, 500) + (scene.content.length > 500 ? '...' : '');
+        const excerpt = fullContent.substring(0, 500) + (fullContent.length > 500 ? '...' : '');
+        
+        // Calculate word count
+        const wordCount = beats.reduce((total, beat) => {
+            const text = beat.content.replace(/<[^>]*>/g, '');
+            return total + text.split(/\s+/).filter(w => w.length > 0).length;
+        }, 0);
+        
+        // Get character names
+        const characterNames = scene.characters
+            .map(id => ChronicleData.getCharacter(id)?.name)
+            .filter(name => name);
+        
+        // Get location name
+        const locationName = scene.location ? 
+            ChronicleData.getLocation(scene.location)?.name : null;
         
         content.innerHTML = `
             <h4 style="font-family: 'Cinzel', serif; margin-top: 0; color: #3d2f1f;">
                 ${scene.title || 'Untitled Scene'}
             </h4>
             <div style="margin-bottom: 1rem; font-size: 0.9rem; color: #8b7355;">
-                <strong>${scene.wordCount || 0}</strong> words • 
+                <strong>${wordCount}</strong> words • 
+                <strong>${beats.length}</strong> ${beats.length === 1 ? 'beat' : 'beats'} •
                 <strong>${scene.author === 'tyrrel' ? 'Tyrrel' : 'Trevor'}</strong> •
                 ${scene.status ? scene.status.replace('-', ' ') : 'draft'}
             </div>
-            <div style="line-height: 1.8; white-space: pre-wrap;">
+            ${characterNames.length > 0 ? `
+            <div style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #8b7355;">
+                <strong>Characters:</strong> ${characterNames.join(', ')}
+            </div>
+            ` : ''}
+            ${locationName ? `
+            <div style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #8b7355;">
+                <strong>Location:</strong> ${locationName}
+            </div>
+            ` : ''}
+            ${scene.mckeeElement ? `
+            <div style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #8b7355;">
+                <strong>McKee Element:</strong> ${scene.mckeeElement}
+            </div>
+            ` : ''}
+            <div style="line-height: 1.8; white-space: pre-wrap; margin-top: 1rem;">
                 ${excerpt}
             </div>
         `;
@@ -339,6 +518,9 @@ const ChronicleArchive = {
     },
     
     openSceneInDesk(sceneId) {
+        // Set current scene in ChronicleData
+        ChronicleData.currentScene = sceneId;
+        
         // Switch to Desk workspace
         const deskTab = document.querySelector('[data-space="desk"]');
         if (deskTab) {
@@ -346,14 +528,16 @@ const ChronicleArchive = {
         }
         
         // Load the scene in Desk
-        if (window.ChronicleDesk) {
-            ChronicleDesk.loadScene(sceneId);
+        if (window.ChronicleDesk && window.ChronicleDesk.loadSceneById) {
+            setTimeout(() => {
+                ChronicleDesk.loadSceneById(sceneId);
+            }, 100);
         }
         
         console.log('✅ Opened scene in Desk:', sceneId);
     },
     
-    // ===== SPRINT 2: CHAPTER STRUCTURE =====
+    // ===== CHAPTER STRUCTURE =====
     loadChapterStructure() {
         const tree = document.getElementById('chapterStructureTree');
         if (!tree) return;
@@ -364,60 +548,71 @@ const ChronicleArchive = {
         const structure = this.buildStructure();
         
         // Render each act
-        for (let actNum = 1; actNum <= 3; actNum++) {
-            const actData = structure[actNum] || { chapters: {}, unchaptered: [] };
-            const actContainer = this.createActContainer(actNum, actData);
+        ChronicleData.acts.forEach(act => {
+            const actData = structure[act.id] || { chapters: {}, unchaptered: [] };
+            const actContainer = this.createActContainer(act, actData);
             tree.appendChild(actContainer);
-        }
+        });
     },
     
     buildStructure() {
-        const structure = {
-            1: { chapters: {}, unchaptered: [] },
-            2: { chapters: {}, unchaptered: [] },
-            3: { chapters: {}, unchaptered: [] }
-        };
+        const structure = {};
         
-        const scenes = this.getAllScenes();
+        // Initialize structure for each act
+        ChronicleData.acts.forEach(act => {
+            structure[act.id] = { chapters: {}, unchaptered: [] };
+        });
         
-        scenes.forEach(scene => {
-            const act = scene.act || 1;
+        // Organize scenes
+        ChronicleData.scenes.forEach(scene => {
+            const actId = scene.actId || 'act-1';
             
-            if (!structure[act]) {
-                structure[act] = { chapters: {}, unchaptered: [] };
+            if (!structure[actId]) {
+                structure[actId] = { chapters: {}, unchaptered: [] };
             }
             
             if (scene.chapterId) {
-                if (!structure[act].chapters[scene.chapterId]) {
-                    structure[act].chapters[scene.chapterId] = {
-                        name: scene.chapterName || 'Untitled Chapter',
+                if (!structure[actId].chapters[scene.chapterId]) {
+                    const chapter = ChronicleData.chapters.find(ch => ch.id === scene.chapterId);
+                    structure[actId].chapters[scene.chapterId] = {
+                        name: chapter ? chapter.title : 'Untitled Chapter',
                         scenes: []
                     };
                 }
-                structure[act].chapters[scene.chapterId].scenes.push(scene);
+                structure[actId].chapters[scene.chapterId].scenes.push(scene);
             } else {
-                structure[act].unchaptered.push(scene);
+                structure[actId].unchaptered.push(scene);
             }
         });
         
         return structure;
     },
     
-    createActContainer(actNum, actData) {
+    createActContainer(act, actData) {
         const container = document.createElement('div');
         container.className = 'act-container';
-        container.dataset.act = actNum;
+        container.dataset.actId = act.id;
         
         // Calculate stats
         const allScenes = [...Object.values(actData.chapters).flatMap(ch => ch.scenes), ...actData.unchaptered];
-        const totalWords = allScenes.reduce((sum, scene) => sum + (scene.wordCount || 0), 0);
+        
+        // Calculate total words from beats
+        const totalWords = allScenes.reduce((sum, scene) => {
+            const beats = ChronicleData.getBeatsForScene(scene.id);
+            const sceneWords = beats.reduce((beatSum, beat) => {
+                const text = beat.content.replace(/<[^>]*>/g, '');
+                return beatSum + text.split(/\s+/).filter(w => w.length > 0).length;
+            }, 0);
+            return sum + sceneWords;
+        }, 0);
+        
         const chapterCount = Object.keys(actData.chapters).length;
         
         // Header
         const header = document.createElement('div');
         header.className = 'act-header';
         header.innerHTML = `
-            <h3 class="act-title">Act ${actNum}</h3>
+            <h3 class="act-title">${act.title || `Act ${act.number}`}</h3>
             <div class="act-stats">
                 <span>${chapterCount} ${chapterCount === 1 ? 'Chapter' : 'Chapters'}</span>
                 <span>${allScenes.length} ${allScenes.length === 1 ? 'Scene' : 'Scenes'}</span>
@@ -439,13 +634,13 @@ const ChronicleArchive = {
         
         // Render chapters
         Object.entries(actData.chapters).forEach(([chapterId, chapterData]) => {
-            const chapterContainer = this.createChapterContainer(actNum, chapterId, chapterData);
+            const chapterContainer = this.createChapterContainer(act.id, chapterId, chapterData);
             content.appendChild(chapterContainer);
         });
         
         // Render unchaptered scenes
         if (actData.unchaptered.length > 0) {
-            const unchapteredContainer = this.createChapterContainer(actNum, null, {
+            const unchapteredContainer = this.createChapterContainer(act.id, null, {
                 name: 'Unchaptered Scenes',
                 scenes: actData.unchaptered
             });
@@ -457,7 +652,7 @@ const ChronicleArchive = {
         addBtn.className = 'add-chapter-btn';
         addBtn.innerHTML = '+ Add Chapter';
         addBtn.addEventListener('click', () => {
-            this.createNewChapter(actNum);
+            this.createNewChapter(act.id);
         });
         content.appendChild(addBtn);
         
@@ -466,13 +661,20 @@ const ChronicleArchive = {
         return container;
     },
     
-    createChapterContainer(actNum, chapterId, chapterData) {
+    createChapterContainer(actId, chapterId, chapterData) {
         const container = document.createElement('div');
         container.className = 'chapter-container';
         container.dataset.chapterId = chapterId || 'unchaptered';
         
-        // Calculate total words
-        const totalWords = chapterData.scenes.reduce((sum, scene) => sum + (scene.wordCount || 0), 0);
+        // Calculate total words from beats
+        const totalWords = chapterData.scenes.reduce((sum, scene) => {
+            const beats = ChronicleData.getBeatsForScene(scene.id);
+            const sceneWords = beats.reduce((beatSum, beat) => {
+                const text = beat.content.replace(/<[^>]*>/g, '');
+                return beatSum + text.split(/\s+/).filter(w => w.length > 0).length;
+            }, 0);
+            return sum + sceneWords;
+        }, 0);
         
         // Header
         const header = document.createElement('div');
@@ -518,12 +720,21 @@ const ChronicleArchive = {
         item.draggable = true;
         item.dataset.sceneId = scene.id;
         
+        // Calculate word count from beats
+        const beats = ChronicleData.getBeatsForScene(scene.id);
+        const wordCount = beats.reduce((total, beat) => {
+            const text = beat.content.replace(/<[^>]*>/g, '');
+            return total + text.split(/\s+/).filter(w => w.length > 0).length;
+        }, 0);
+        
         item.innerHTML = `
             <span class="drag-handle">⋮⋮</span>
             <div class="tree-scene-info">
                 <span class="tree-scene-title">${scene.title || 'Untitled'}</span>
                 <div class="tree-scene-meta">
-                    <span>${scene.wordCount || 0} words</span>
+                    <span>${wordCount} words</span>
+                    <span>•</span>
+                    <span>${beats.length} ${beats.length === 1 ? 'beat' : 'beats'}</span>
                     <span>•</span>
                     <span>${scene.author === 'tyrrel' ? 'Tyrrel' : 'Trevor'}</span>
                     <div class="status-indicator ${scene.status || 'draft'}"></div>
@@ -549,19 +760,12 @@ const ChronicleArchive = {
         return item;
     },
     
-    createNewChapter(actNum) {
-        const chapterId = 'chapter_' + Date.now();
+    createNewChapter(actId) {
         const chapterName = prompt('Enter chapter name:');
-        
         if (!chapterName) return;
         
-        // Store chapter metadata
-        localStorage.setItem(`chapter_${chapterId}`, JSON.stringify({
-            id: chapterId,
-            name: chapterName,
-            act: actNum,
-            created: new Date().toISOString()
-        }));
+        // Create chapter via ChronicleData
+        const chapter = ChronicleData.createChapter(chapterName, actId);
         
         // Reload structure
         this.loadChapterStructure();
@@ -570,45 +774,26 @@ const ChronicleArchive = {
     },
     
     renameChapter(chapterId, newName) {
-        const chapter = JSON.parse(localStorage.getItem(`chapter_${chapterId}`));
-        if (!chapter) return;
-        
-        chapter.name = newName;
-        localStorage.setItem(`chapter_${chapterId}`, JSON.stringify(chapter));
-        
-        // Update all scenes with this chapter
-        const scenes = this.getAllScenes();
-        scenes.forEach(scene => {
-            if (scene.chapterId === chapterId) {
-                scene.chapterName = newName;
-                localStorage.setItem(`scene_${scene.id}`, JSON.stringify(scene));
-            }
-        });
+        // Update chapter via ChronicleData
+        ChronicleData.updateChapter(chapterId, { title: newName });
         
         console.log('✅ Renamed chapter:', newName);
     },
     
     // ===== STATS =====
     updateStats() {
-        const scenes = this.getAllScenes();
-        
-        const totalScenes = scenes.length;
-        const totalWords = scenes.reduce((sum, scene) => sum + (scene.wordCount || 0), 0);
-        
-        // Count unique chapters
-        const chapters = new Set();
-        scenes.forEach(scene => {
-            if (scene.chapterId) chapters.add(scene.chapterId);
-        });
+        const stats = ChronicleData.getStats();
         
         // Update display
         const totalScenesEl = document.getElementById('totalScenes');
         const totalWordsEl = document.getElementById('totalWords');
         const totalChaptersEl = document.getElementById('totalChapters');
+        const totalBeatsEl = document.getElementById('totalBeats');
         
-        if (totalScenesEl) totalScenesEl.textContent = totalScenes;
-        if (totalWordsEl) totalWordsEl.textContent = totalWords.toLocaleString();
-        if (totalChaptersEl) totalChaptersEl.textContent = chapters.size;
+        if (totalScenesEl) totalScenesEl.textContent = stats.scenes.total;
+        if (totalWordsEl) totalWordsEl.textContent = stats.wordCount.toLocaleString();
+        if (totalChaptersEl) totalChaptersEl.textContent = ChronicleData.chapters.length;
+        if (totalBeatsEl) totalBeatsEl.textContent = stats.beats.total;
     }
 };
 
@@ -620,9 +805,11 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 if (!ChronicleArchive.initialized) {
                     ChronicleArchive.init();
-                    ChronicleArchive.initialized = true;
                 }
             }, 100);
         });
     }
 });
+
+// Make globally available
+window.ChronicleArchive = ChronicleArchive;
