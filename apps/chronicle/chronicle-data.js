@@ -76,8 +76,7 @@ const ChronicleData = {
         this.chapters = this.loadFromStorage('chronicle_chapters') || this.createDefaultChapters();
         this.acts = this.loadFromStorage('chronicle_acts') || this.createDefaultActs();
         this.sessions = this.loadFromStorage('chronicle_sessions') || [];
-        this.currentUser = this.loadFromStorage('chronicle_currentUser') || 'tyrrel';
-        
+        this.currentUser = localStorage.getItem('chronicle_currentUser') || 'tyrrel';        
         // Migrate old scene data if it exists
         this.migrateOldScenes();
         
@@ -240,8 +239,7 @@ const ChronicleData = {
         this.saveToStorage('chronicle_chapters', this.chapters);
         this.saveToStorage('chronicle_acts', this.acts);
         this.saveToStorage('chronicle_sessions', this.sessions);
-        this.saveToStorage('chronicle_currentUser', this.currentUser);
-        
+        localStorage.setItem('chronicle_currentUser', this.currentUser);        
         // Notify all listeners of data change
         this.notifyListeners('persist');
     },

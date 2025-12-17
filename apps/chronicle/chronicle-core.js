@@ -203,20 +203,22 @@ const ChronicleCore = {
         }
         
         // Hide all workspace containers
-        const workspaceContainers = document.querySelectorAll('.workspace-content');
+       // Hide all workspace containers
+        const workspaceContainers = document.querySelectorAll('.workspace');
         workspaceContainers.forEach(container => {
-            container.style.display = 'none';
+            container.classList.remove('active');
         });
         
         // Update navigation UI
         this.updateNavigationUI(spaceName);
         
         // Show the target workspace container
-        const targetContainer = document.getElementById(`${spaceName}-workspace`);
+// Show the target workspace container
+        const targetContainer = document.getElementById(spaceName);
         if (targetContainer) {
-            targetContainer.style.display = 'block';
+            targetContainer.classList.add('active');
         } else {
-            console.error(`❌ Container not found: ${spaceName}-workspace`);
+            console.error(`❌ Container not found: ${spaceName}`);
             return;
         }
         
