@@ -1,108 +1,82 @@
-// ===================================
-// THE COVENANT - Purified (Sprints 1-2)
-// "Unless the LORD builds the house, the builders labor in vain" - Psalm 127:1
-// Structural Analysis & Elevation ONLY
-// ===================================
+// ═══════════════════════════════════════════════════════════════════════════
+// THE COVENANT - Story Structure & McKee Analysis
+// "Write the vision; make it plain on tablets" - Habakkuk 2:2
+// ═══════════════════════════════════════════════════════════════════════════
+//
+// Sprint 1: Integrated with ChronicleData for beat-aware structural analysis
+// - Beat Sheet view (shows all beats across all scenes)
+// - Structure Analysis (Act distribution, McKee coverage, warnings)
+// - Real-time cross-workspace synchronization
+// - McKee element validation and warnings
+//
+// @version 2.0.0 (Sprint 1)
+// @date December 16, 2024
+// @authors Tyrrel & Trevor
+//
+// ═══════════════════════════════════════════════════════════════════════════
 
 const ChronicleCovenantWorkspace = {
-    currentView: 'beat-sheet',
-    selectedScene: null,
-    acts: [],
-    chapters: [],
-    scenes: [],
+    // ═══════════════════════════════════════════════════════════════════════
+    // STATE MANAGEMENT
+    // ═══════════════════════════════════════════════════════════════════════
     
-    // Initialize the Covenant workspace
+    currentView: 'beat-sheet',      // 'beat-sheet', 'structure', or 'pacing'
+    selectedSceneId: null,           // Currently selected scene for details
+    initialized: false,
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // INITIALIZATION
+    // ═══════════════════════════════════════════════════════════════════════
+    
     init() {
-        console.log('🏛️ Covenant Workspace (Purified) initializing...');
+        if (this.initialized) return;
         
-        // Load structure data from user's actual work
-        this.loadStructureData();
+        console.log('🛡️ The Covenant awakens...');
+        
+        // Register listener for ChronicleData changes
+        ChronicleData.addListener((event, data) => {
+            this.handleDataChange(event, data);
+        });
         
         // Setup event listeners
         this.setupEventListeners();
         
-        // Render initial view (Beat Sheet)
-        this.renderBeatSheet();
+        // Render initial view
+        this.renderCurrentView();
         
-        console.log('✅ Covenant Workspace ready - structural analysis only');
+        this.initialized = true;
+        console.log('✅ The Covenant stands ready for analysis');
     },
     
-    // Load Acts, Chapters, and Scenes from localStorage
-    loadStructureData() {
-        // Load Acts (3-act structure)
-        const savedActs = localStorage.getItem('chronicle_acts');
-        if (savedActs) {
-            try {
-                this.acts = JSON.parse(savedActs);
-            } catch (e) {
-                console.error('Failed to load acts:', e);
-                this.acts = this.createDefaultActs();
-            }
-        } else {
-            this.acts = this.createDefaultActs();
-            this.saveActs();
+    /**
+     * Handle data changes from ChronicleData
+     */
+    handleDataChange(event, data) {
+        console.log('🛡️ Covenant: Data change detected:', event);
+        
+        switch(event) {
+            case 'sceneCreated':
+            case 'sceneUpdated':
+            case 'sceneDeleted':
+            case 'beatCreated':
+            case 'beatUpdated':
+            case 'beatDeleted':
+                // Refresh current view when story data changes
+                this.renderCurrentView();
+                break;
         }
-        
-        // Load Chapters (user-created)
-        const savedChapters = localStorage.getItem('chronicle_chapters');
-        if (savedChapters) {
-            try {
-                this.chapters = JSON.parse(savedChapters);
-            } catch (e) {
-                console.error('Failed to load chapters:', e);
-                this.chapters = [];
-            }
-        }
-        
-        // Load Scenes (from The Desk)
-        const savedScenes = localStorage.getItem('chronicle_scenes');
-        if (savedScenes) {
-            try {
-                this.scenes = JSON.parse(savedScenes);
-            } catch (e) {
-                console.error('Failed to load scenes:', e);
-                this.scenes = [];
-            }
-        }
-        
-        console.log(`📊 Loaded: ${this.acts.length} acts, ${this.chapters.length} chapters, ${this.scenes.length} scenes`);
     },
     
-    // Create default three-act structure (structural framework only)
-    createDefaultActs() {
-        return [
-            {
-                id: 'act-1',
-                number: 1,
-                title: 'Act I: Setup',
-                description: 'The ordinary world and inciting incident',
-                color: '#C9A961' // Gold
-            },
-            {
-                id: 'act-2',
-                number: 2,
-                title: 'Act II: Confrontation',
-                description: 'Progressive complications and midpoint reversal',
-                color: '#2C5F5F' // Teal
-            },
-            {
-                id: 'act-3',
-                number: 3,
-                title: 'Act III: Resolution',
-                description: 'Crisis, climax, and denouement',
-                color: '#722F37' // Burgundy
-            }
-        ];
-    },
     
-    // Save methods
-    saveActs() {
-        localStorage.setItem('chronicle_acts', JSON.stringify(this.acts));
-    },
+    // ═══════════════════════════════════════════════════════════════════════
+    // EVENT LISTENERS
+    // ═══════════════════════════════════════════════════════════════════════
     
-    // Setup all event listeners
     setupEventListeners() {
-        // View button switching
+        console.log('🎯 Setting up Covenant event listeners...');
+        
+        // View switching buttons
         const viewBtns = document.querySelectorAll('.covenant-view-btn');
         viewBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -114,19 +88,21 @@ const ChronicleCovenantWorkspace = {
         });
         
         // Close details panel
-        const closeBtn = document.getElementById('closeDetails');
+        const closeBtn = document.getElementById('closeCovenantDetails');
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
                 this.hideDetails();
             });
         }
         
-        console.log('✅ Covenant event listeners attached');
+        console.log('✅ Covenant event listeners configured');
     },
     
-    // Switch between different views
+    /**
+     * Switch between different views
+     */
     switchView(viewName) {
-        console.log(`📊 Switching to view: ${viewName}`);
+        console.log('📊 Switching to view:', viewName);
         this.currentView = viewName;
         
         // Update active button
@@ -139,7 +115,14 @@ const ChronicleCovenantWorkspace = {
         }
         
         // Render appropriate view
-        switch(viewName) {
+        this.renderCurrentView();
+    },
+    
+    /**
+     * Render the current view
+     */
+    renderCurrentView() {
+        switch(this.currentView) {
             case 'beat-sheet':
                 this.renderBeatSheet();
                 break;
@@ -149,644 +132,970 @@ const ChronicleCovenantWorkspace = {
             case 'pacing':
                 this.renderPacingGraph();
                 break;
-            case 'characters':
-                this.renderCharacterArcs();
-                break;
-            case 'themes':
-                this.renderThemeDistribution();
-                break;
             default:
                 this.renderBeatSheet();
         }
     },
     
-    // ===================================
-    // SPRINT 1: BEAT SHEET VIEW
-    // ===================================
     
+    // ═══════════════════════════════════════════════════════════════════════
+    // BEAT SHEET VIEW
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Render beat sheet - visual cards of ALL beats across ALL scenes
+     */
     renderBeatSheet() {
-        const canvas = document.getElementById('canvas-content');
+        console.log('📋 Rendering Beat Sheet...');
+        
+        const canvas = document.getElementById('covenantCanvas');
         if (!canvas) return;
         
-        if (this.scenes.length === 0) {
-            canvas.innerHTML = `
-                <div class="covenant-empty-state">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 80px; height: 80px; margin-bottom: 1.5rem;">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/>
-                        <path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>
-                    </svg>
-                    <h3>The Canvas Awaits</h3>
-                    <p>Begin your story at The Desk, and your scenes will appear here in their sacred architecture.</p>
-                    <p style="margin-top: 1rem; font-style: italic; opacity: 0.7; font-size: 0.95rem;">
-                        "Unless the LORD builds the house, the builders labor in vain" - Psalm 127:1
-                    </p>
-                </div>
-            `;
+        canvas.innerHTML = '';
+        
+        // Get all scenes
+        const scenes = ChronicleData.scenes;
+        
+        if (scenes.length === 0) {
+            this.renderEmptyState(canvas, 'No scenes yet', 'Create scenes in The Desk to see your story structure');
             return;
         }
         
-        // Group scenes by Act
-        const scenesByAct = this.groupScenesByAct();
+        // Create beat grid container
+        const beatGrid = document.createElement('div');
+        beatGrid.className = 'beat-sheet-grid';
         
-        let html = '<div class="beat-sheet-container">';
-        
-        this.acts.forEach(act => {
-            const actScenes = scenesByAct[act.id] || [];
-            const totalWords = actScenes.reduce((sum, scene) => sum + (scene.wordCount || 0), 0);
+        // Group beats by act for visual organization
+        ChronicleData.acts.forEach(act => {
+            const actScenes = ChronicleData.getScenesByAct(act.id);
             
-            html += `
-                <div class="act-section" style="border-left: 4px solid ${act.color};">
-                    <div class="act-header">
-                        <h3 style="color: ${act.color};">${act.title}</h3>
-                        <div class="act-stats">
-                            <span>${actScenes.length} scenes</span>
-                            <span>${totalWords.toLocaleString()} words</span>
-                        </div>
+            if (actScenes.length > 0) {
+                // Act header
+                const actHeader = this.createActHeader(act, actScenes);
+                beatGrid.appendChild(actHeader);
+                
+                // Beats within this act's scenes
+                actScenes.forEach(scene => {
+                    const beats = ChronicleData.getBeatsForScene(scene.id);
+                    
+                    beats.forEach((beat, index) => {
+                        const beatCard = this.createBeatCard(beat, scene, index);
+                        beatGrid.appendChild(beatCard);
+                    });
+                });
+            }
+        });
+        
+        // Show orphaned beats (not in any scene)
+        const orphanedBeats = ChronicleData.getOrphanedBeats();
+        if (orphanedBeats.length > 0) {
+            const orphanSection = this.createOrphanedBeatsSection(orphanedBeats);
+            beatGrid.appendChild(orphanSection);
+        }
+        
+        canvas.appendChild(beatGrid);
+        
+        console.log('✅ Beat Sheet rendered with', this.getTotalBeatsCount(), 'beats');
+    },
+    
+    /**
+     * Create act header for beat sheet
+     */
+    createActHeader(act, scenes) {
+        const header = document.createElement('div');
+        header.className = 'beat-sheet-act-header';
+        header.dataset.actId = act.id;
+        
+        // Calculate stats
+        const totalBeats = scenes.reduce((sum, scene) => {
+            return sum + ChronicleData.getBeatsForScene(scene.id).length;
+        }, 0);
+        
+        const totalWords = scenes.reduce((sum, scene) => {
+            const beats = ChronicleData.getBeatsForScene(scene.id);
+            return sum + beats.reduce((beatSum, beat) => {
+                const text = beat.content.replace(/<[^>]*>/g, '');
+                return beatSum + text.split(/\s+/).filter(w => w.length > 0).length;
+            }, 0);
+        }, 0);
+        
+        header.innerHTML = `
+            <div class="act-header-title">
+                <span class="act-number">Act ${act.number}</span>
+                <span class="act-name">${act.title}</span>
+            </div>
+            <div class="act-header-stats">
+                <span>${scenes.length} ${scenes.length === 1 ? 'scene' : 'scenes'}</span>
+                <span>•</span>
+                <span>${totalBeats} ${totalBeats === 1 ? 'beat' : 'beats'}</span>
+                <span>•</span>
+                <span>${totalWords.toLocaleString()} words</span>
+            </div>
+        `;
+        
+        header.style.borderLeftColor = act.color || '#C9A961';
+        
+        return header;
+    },
+    
+    /**
+     * Create beat card for display
+     */
+    createBeatCard(beat, scene, beatIndex) {
+        const card = document.createElement('div');
+        card.className = 'beat-card';
+        card.dataset.beatId = beat.id;
+        card.dataset.sceneId = scene.id;
+        
+        // Get preview text
+        const preview = this.getPreviewText(beat.content, 120);
+        
+        // Get character names
+        const characterNames = this.getCharacterNames(scene.characters);
+        
+        // Word count
+        const wordCount = this.getWordCount(beat.content);
+        
+        // Format date
+        const date = new Date(beat.created);
+        const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        
+        card.innerHTML = `
+            <div class="beat-card-header">
+                <div class="beat-card-title">
+                    <span class="scene-title">${scene.title}</span>
+                    <span class="beat-number">Beat ${beatIndex + 1}</span>
+                </div>
+                <div class="beat-author-badge ${beat.author}">
+                    ${beat.author === 'tyrrel' ? 'T' : 'T'}
+                </div>
+            </div>
+            <div class="beat-card-preview">
+                ${preview}
+            </div>
+            <div class="beat-card-meta">
+                <div class="meta-row">
+                    <span class="word-count">${wordCount} words</span>
+                    <span class="beat-date">${dateStr}</span>
+                </div>
+                ${scene.mckeeElement ? `
+                <div class="meta-row">
+                    <span class="mckee-badge">${scene.mckeeElement}</span>
+                </div>
+                ` : ''}
+                ${characterNames.length > 0 ? `
+                <div class="meta-row characters">
+                    <span class="character-icon">👥</span>
+                    <span class="character-list">${characterNames.join(', ')}</span>
+                </div>
+                ` : ''}
+            </div>
+        `;
+        
+        // Click to show scene details
+        card.addEventListener('click', () => {
+            this.showSceneDetails(scene.id);
+        });
+        
+        return card;
+    },
+    
+    /**
+     * Create orphaned beats section
+     */
+    createOrphanedBeatsSection(orphanedBeats) {
+        const section = document.createElement('div');
+        section.className = 'orphaned-beats-section';
+        
+        const header = document.createElement('div');
+        header.className = 'orphaned-beats-header';
+        header.innerHTML = `
+            <h3>📦 Orphaned Beats</h3>
+            <p>These beats are not part of any scene yet. Organize them in The Desk.</p>
+        `;
+        section.appendChild(header);
+        
+        const grid = document.createElement('div');
+        grid.className = 'orphaned-beats-grid';
+        
+        orphanedBeats.forEach((beat, index) => {
+            const card = document.createElement('div');
+            card.className = 'beat-card orphaned';
+            card.dataset.beatId = beat.id;
+            
+            const preview = this.getPreviewText(beat.content, 100);
+            const wordCount = this.getWordCount(beat.content);
+            const date = new Date(beat.created);
+            const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            
+            card.innerHTML = `
+                <div class="beat-card-header">
+                    <div class="beat-card-title">
+                        <span class="beat-number">Orphan ${index + 1}</span>
                     </div>
-                    <div class="scene-cards">
+                    <div class="beat-author-badge ${beat.author}">
+                        ${beat.author === 'tyrrel' ? 'T' : 'T'}
+                    </div>
+                </div>
+                <div class="beat-card-preview">
+                    ${preview}
+                </div>
+                <div class="beat-card-meta">
+                    <span class="word-count">${wordCount} words</span>
+                    <span class="beat-date">${dateStr}</span>
+                </div>
             `;
             
-            if (actScenes.length === 0) {
-                html += `<div class="empty-act">No scenes in this act yet</div>`;
-            } else {
-                actScenes.forEach(scene => {
-                    const mckeeColor = this.getMcKeeColor(scene.mckeeStructure);
-                    const authorBadge = scene.author === 'tyrrel' ? '👤 T' : '👤 Tr';
-                    
-                    html += `
-                        <div class="scene-card" data-scene-id="${scene.id}" style="border-left: 3px solid ${mckeeColor};">
-                            <div class="scene-card-header">
-                                <span class="scene-number">Scene ${scene.sceneNumber || '?'}</span>
-                                <span class="scene-author" style="color: ${scene.author === 'tyrrel' ? '#C9A961' : '#2C5F5F'};">${authorBadge}</span>
-                            </div>
-                            <div class="scene-card-title">${scene.title || 'Untitled Scene'}</div>
-                            <div class="scene-card-meta">
-                                <span>${scene.wordCount || 0} words</span>
-                                ${scene.mckeeStructure ? `<span class="mckee-badge" style="background: ${mckeeColor};">${scene.mckeeStructure}</span>` : ''}
-                            </div>
-                        </div>
-                    `;
+            grid.appendChild(card);
+        });
+        
+        section.appendChild(grid);
+        return section;
+    },
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // STRUCTURE ANALYSIS VIEW
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Render structure analysis - act distribution, McKee coverage, warnings
+     */
+    renderStructureAnalysis() {
+        console.log('📊 Rendering Structure Analysis...');
+        
+        const canvas = document.getElementById('covenantCanvas');
+        if (!canvas) return;
+        
+        canvas.innerHTML = '';
+        
+        // Get stats
+        const stats = ChronicleData.getStats();
+        
+        // Create structure container
+        const structureContainer = document.createElement('div');
+        structureContainer.className = 'structure-analysis-container';
+        
+        // Overall stats section
+        const overallStats = this.createOverallStats(stats);
+        structureContainer.appendChild(overallStats);
+        
+        // Act distribution section
+        const actDistribution = this.createActDistribution();
+        structureContainer.appendChild(actDistribution);
+        
+        // McKee coverage section
+        const mckeeCoverage = this.createMckeeCoverage();
+        structureContainer.appendChild(mckeeCoverage);
+        
+        // Warnings section
+        const warnings = this.createStructuralWarnings();
+        structureContainer.appendChild(warnings);
+        
+        canvas.appendChild(structureContainer);
+        
+        console.log('✅ Structure Analysis rendered');
+    },
+    
+    /**
+     * Create overall stats card
+     */
+    createOverallStats(stats) {
+        const section = document.createElement('div');
+        section.className = 'structure-section overall-stats';
+        
+        section.innerHTML = `
+            <h3 class="structure-section-title">📊 Overall Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">${stats.scenes.total}</div>
+                    <div class="stat-label">Total Scenes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.beats.total}</div>
+                    <div class="stat-label">Total Beats</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.beats.orphaned}</div>
+                    <div class="stat-label">Orphaned Beats</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.wordCount.toLocaleString()}</div>
+                    <div class="stat-label">Total Words</div>
+                </div>
+                <div class="stat-card status-card draft">
+                    <div class="stat-value">${stats.scenes.draft}</div>
+                    <div class="stat-label">Draft</div>
+                </div>
+                <div class="stat-card status-card in-progress">
+                    <div class="stat-value">${stats.scenes.inProgress}</div>
+                    <div class="stat-label">In Progress</div>
+                </div>
+                <div class="stat-card status-card polished">
+                    <div class="stat-value">${stats.scenes.polished}</div>
+                    <div class="stat-label">Polished</div>
+                </div>
+            </div>
+        `;
+        
+        return section;
+    },
+    
+    /**
+     * Create act distribution breakdown
+     */
+    createActDistribution() {
+        const section = document.createElement('div');
+        section.className = 'structure-section act-distribution';
+        
+        const title = document.createElement('h3');
+        title.className = 'structure-section-title';
+        title.textContent = '⚔️ Act Distribution';
+        section.appendChild(title);
+        
+        const actGrid = document.createElement('div');
+        actGrid.className = 'act-distribution-grid';
+        
+        ChronicleData.acts.forEach(act => {
+            const actScenes = ChronicleData.getScenesByAct(act.id);
+            
+            // Calculate beats and words
+            let totalBeats = 0;
+            let totalWords = 0;
+            
+            actScenes.forEach(scene => {
+                const beats = ChronicleData.getBeatsForScene(scene.id);
+                totalBeats += beats.length;
+                
+                beats.forEach(beat => {
+                    const text = beat.content.replace(/<[^>]*>/g, '');
+                    totalWords += text.split(/\s+/).filter(w => w.length > 0).length;
+                });
+            });
+            
+            // Calculate percentage of total story
+            const stats = ChronicleData.getStats();
+            const beatPercentage = stats.beats.inScenes > 0 
+                ? Math.round((totalBeats / stats.beats.inScenes) * 100) 
+                : 0;
+            
+            const actCard = document.createElement('div');
+            actCard.className = 'act-card';
+            actCard.innerHTML = `
+                <div class="act-card-header" style="border-left-color: ${act.color};">
+                    <h4>Act ${act.number}</h4>
+                    <span class="act-title">${act.title}</span>
+                </div>
+                <div class="act-card-stats">
+                    <div class="act-stat">
+                        <span class="stat-value">${actScenes.length}</span>
+                        <span class="stat-label">Scenes</span>
+                    </div>
+                    <div class="act-stat">
+                        <span class="stat-value">${totalBeats}</span>
+                        <span class="stat-label">Beats</span>
+                    </div>
+                    <div class="act-stat">
+                        <span class="stat-value">${totalWords.toLocaleString()}</span>
+                        <span class="stat-label">Words</span>
+                    </div>
+                    <div class="act-stat">
+                        <span class="stat-value">${beatPercentage}%</span>
+                        <span class="stat-label">of Story</span>
+                    </div>
+                </div>
+                <div class="act-progress-bar">
+                    <div class="act-progress-fill" style="width: ${beatPercentage}%; background: ${act.color};"></div>
+                </div>
+            `;
+            
+            actGrid.appendChild(actCard);
+        });
+        
+        section.appendChild(actGrid);
+        return section;
+    },
+    
+// ═══════════════════════════════════════════════════════════════════════
+    /**
+    /**
+     * Create McKee coverage visualization
+     */
+    createMckeeCoverage() {
+        const section = document.createElement('div');
+        section.className = 'structure-section mckee-coverage';
+        
+        const title = document.createElement('h3');
+        title.className = 'structure-section-title';
+        title.textContent = '🎭 McKee Story Elements';
+        section.appendChild(title);
+        
+        // Get all used McKee elements from scenes
+        const usedElements = new Set();
+        ChronicleData.scenes.forEach(scene => {
+            if (scene.mckeeElement) {
+                usedElements.add(scene.mckeeElement);
+            }
+        });
+        
+        // Create grid of all McKee elements
+        const elementGrid = document.createElement('div');
+        elementGrid.className = 'mckee-element-grid';
+        
+        ChronicleData.mckeeElements.forEach(element => {
+            const isUsed = usedElements.has(element);
+            const scenes = ChronicleData.scenes.filter(s => s.mckeeElement === element);
+            
+            const elementCard = document.createElement('div');
+            elementCard.className = `mckee-element-card ${isUsed ? 'used' : 'missing'}`;
+            elementCard.innerHTML = `
+                <div class="element-name">${element}</div>
+                <div class="element-status">
+                    ${isUsed ? `
+                        <span class="status-badge used">✓ Used</span>
+                        <span class="scene-count">${scenes.length} ${scenes.length === 1 ? 'scene' : 'scenes'}</span>
+                    ` : `
+                        <span class="status-badge missing">✗ Missing</span>
+                    `}
+                </div>
+            `;
+            
+            // Click to filter beat sheet by this element
+            if (isUsed) {
+                elementCard.style.cursor = 'pointer';
+                elementCard.addEventListener('click', () => {
+                    this.filterByMckeeElement(element);
                 });
             }
             
-            html += `
-                    </div>
-                </div>
-            `;
+            elementGrid.appendChild(elementCard);
         });
         
-        html += '</div>';
-        canvas.innerHTML = html;
+        section.appendChild(elementGrid);
         
-        // Attach click handlers to scene cards
-        document.querySelectorAll('.scene-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                const sceneId = e.currentTarget.getAttribute('data-scene-id');
-                this.showSceneDetails(sceneId);
-            });
-        });
-    },
-    
-    // ===================================
-    // SPRINT 2: PACING GRAPH
-    // ===================================
-    
-    renderPacingGraph() {
-        const canvas = document.getElementById('canvas-content');
-        if (!canvas) return;
+        // Summary stats
+        const summary = document.createElement('div');
+        summary.className = 'mckee-summary';
+        const usedCount = usedElements.size;
+        const totalCount = ChronicleData.mckeeElements.length;
+        const percentage = Math.round((usedCount / totalCount) * 100);
         
-        if (this.scenes.length === 0) {
-            canvas.innerHTML = this.getEmptyStateHTML('Pacing Analysis', 'Create scenes at The Desk to visualize your story\'s rhythm and flow.');
-            return;
-        }
-        
-        const pacingData = this.calculatePacingData();
-        
-        let html = `
-            <div class="pacing-graph-container">
-                <div class="graph-header">
-                    <h2>Pacing Analysis</h2>
-                    <p style="margin-top: 0.5rem;">"The crucible for silver and the furnace for gold" - Proverbs 17:3</p>
-                </div>
-                
-                <div class="pacing-stats">
-                    <div class="stat-card">
-                        <div class="stat-value">${this.scenes.length}</div>
-                        <div class="stat-label">Total Scenes</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${pacingData.totalWords.toLocaleString()}</div>
-                        <div class="stat-label">Total Words</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${pacingData.avgWordsPerScene}</div>
-                        <div class="stat-label">Avg Words/Scene</div>
-                    </div>
-                </div>
-                
-                <div class="pacing-graph-canvas">
-                    <svg id="pacingGraphSVG" viewBox="0 0 1000 400" style="width: 100%; height: 400px;">
-                        ${this.renderPacingGraphSVG(pacingData)}
-                    </svg>
-                </div>
-                
-                <div class="pacing-insights">
-                    <h3>Structural Insights</h3>
-                    ${this.generatePacingInsights(pacingData)}
-                </div>
+        summary.innerHTML = `
+            <div class="summary-stat">
+                <span class="summary-value">${usedCount} / ${totalCount}</span>
+                <span class="summary-label">Elements Covered (${percentage}%)</span>
             </div>
         `;
+        section.appendChild(summary);
         
-        canvas.innerHTML = html;
+        return section;
     },
     
-    calculatePacingData() {
-        const totalWords = this.scenes.reduce((sum, scene) => sum + (scene.wordCount || 0), 0);
-        const avgWordsPerScene = totalWords > 0 ? Math.round(totalWords / this.scenes.length) : 0;
+    /**
+     * Create structural warnings
+     */
+    createStructuralWarnings() {
+        const section = document.createElement('div');
+        section.className = 'structure-section warnings-section';
         
-        const dataPoints = this.scenes.map((scene, index) => ({
-            sceneNumber: index + 1,
-            wordCount: scene.wordCount || 0,
-            title: scene.title,
-            actId: scene.actId,
-            mckeeStructure: scene.mckeeStructure
-        }));
+        const title = document.createElement('h3');
+        title.className = 'structure-section-title';
+        title.textContent = '⚠️ Structural Analysis';
+        section.appendChild(title);
         
-        return {
-            totalWords,
-            avgWordsPerScene,
-            dataPoints,
-            maxWords: dataPoints.length > 0 ? Math.max(...dataPoints.map(d => d.wordCount)) : 0,
-            minWords: dataPoints.length > 0 ? Math.min(...dataPoints.map(d => d.wordCount)) : 0
-        };
-    },
-    
-    renderPacingGraphSVG(data) {
-        if (data.dataPoints.length === 0) return '';
+        const warnings = this.analyzeStructure();
         
-        const padding = 50;
-        const width = 1000 - (padding * 2);
-        const height = 400 - (padding * 2);
-        const maxY = data.maxWords * 1.1;
-        
-        const points = data.dataPoints.map((point, index) => {
-            const x = padding + (index / (data.dataPoints.length - 1 || 1)) * width;
-            const y = padding + height - (point.wordCount / (maxY || 1)) * height;
-            return { x, y, ...point };
-        });
-        
-        const linePath = points.map((p, i) => 
-            `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
-        ).join(' ');
-        
-        const areaPath = `M ${padding} ${padding + height} L ${points.map(p => `${p.x} ${p.y}`).join(' L ')} L ${padding + width} ${padding + height} Z`;
-        
-        let svg = `
-            <!-- Grid lines -->
-            <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${padding + height}" stroke="#8B7355" stroke-width="2"/>
-            <line x1="${padding}" y1="${padding + height}" x2="${padding + width}" y2="${padding + height}" stroke="#8B7355" stroke-width="2"/>
-            
-            <!-- Average line -->
-            ${(() => {
-                const avgY = padding + height - (data.avgWordsPerScene / (maxY || 1)) * height;
-                return `
-                    <line x1="${padding}" y1="${avgY}" x2="${padding + width}" y2="${avgY}" 
-                          stroke="#C9A961" stroke-width="1" stroke-dasharray="5,5" opacity="0.5"/>
-                    <text x="${padding + width + 5}" y="${avgY + 5}" fill="#C9A961" font-size="12" font-family="Crimson Text">
-                        Avg: ${data.avgWordsPerScene}
-                    </text>
-                `;
-            })()}
-            
-            <!-- Area fill -->
-            <path d="${areaPath}" fill="url(#pacingGradient)" opacity="0.3"/>
-            
-            <!-- Line graph -->
-            <path d="${linePath}" fill="none" stroke="#C9A961" stroke-width="3"/>
-            
-            <!-- Data points -->
-            ${points.map(p => {
-                const color = this.getMcKeeColor(p.mckeeStructure);
-                return `
-                    <circle cx="${p.x}" cy="${p.y}" r="5" fill="${color}" stroke="#2a2822" stroke-width="2">
-                        <title>${p.title || 'Untitled'} - ${p.wordCount} words</title>
-                    </circle>
-                `;
-            }).join('')}
-            
-            <!-- Gradient definition -->
-            <defs>
-                <linearGradient id="pacingGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:#C9A961;stop-opacity:0.8" />
-                    <stop offset="100%" style="stop-color:#C9A961;stop-opacity:0.1" />
-                </linearGradient>
-            </defs>
-        `;
-        
-        return svg;
-    },
-    
-    generatePacingInsights(data) {
-        let insights = '<ul class="insight-list">';
-        
-        if (data.dataPoints.length === 0) {
-            insights += '<li>No scenes to analyze yet.</li>';
-            insights += '</ul>';
-            return insights;
-        }
-        
-        const longestScene = Math.max(...data.dataPoints.map(d => d.wordCount));
-        const shortestScene = Math.min(...data.dataPoints.map(d => d.wordCount));
-        const variance = longestScene - shortestScene;
-        
-        if (variance > data.avgWordsPerScene * 3) {
-            insights += '<li>⚠️ <strong>High variance detected</strong> - Some scenes are significantly longer than others. Consider whether this serves your pacing or creates imbalance.</li>';
-        }
-        
-        const act2Scenes = data.dataPoints.filter(d => d.actId === 'act-2');
-        const act2Words = act2Scenes.reduce((sum, s) => sum + s.wordCount, 0);
-        const act2Percentage = data.totalWords > 0 ? (act2Words / data.totalWords) * 100 : 0;
-        
-        if (act2Percentage < 40) {
-            insights += '<li>📖 <strong>Act II may need development</strong> - The middle act typically comprises 40-50% of the story. Currently: ' + Math.round(act2Percentage) + '%</li>';
-        }
-        
-        if (data.dataPoints.length >= 20) {
-            insights += '<li>✅ <strong>Substantial material</strong> - You have a solid foundation to work with.</li>';
-        }
-        
-        if (insights === '<ul class="insight-list">') {
-            insights += '<li>✨ <strong>Balanced structure</strong> - Your pacing appears well-distributed.</li>';
-        }
-        
-        insights += '</ul>';
-        return insights;
-    },
-    
-    // ===================================
-    // SPRINT 2: CHARACTER ARC TRACKER
-    // ===================================
-    
-    renderCharacterArcs() {
-        const canvas = document.getElementById('canvas-content');
-        if (!canvas) return;
-        
-        // Extract characters from user's actual scenes
-        const characters = this.extractCharacters();
-        
-        if (characters.length === 0) {
-            canvas.innerHTML = this.getEmptyStateHTML('Character Arc Tracker', 'Add character tags to your scenes (in The Desk or The Archive) to track their journeys across acts.');
-            return;
-        }
-        
-        let html = `
-            <div class="character-arc-container">
-                <div class="graph-header">
-                    <h2>Character Distribution</h2>
-                    <p style="margin-top: 0.5rem;">Track each soul's journey across the narrative tapestry</p>
-                </div>
-                
-                <div class="character-list">
-        `;
-        
-        characters.forEach(char => {
-            const appearances = this.getCharacterAppearances(char);
-            const actDistribution = this.getCharacterActDistribution(char, appearances);
-            
-            html += `
-                <div class="character-card">
-                    <div class="character-header">
-                        <h3>${char}</h3>
-                        <span class="appearance-count">${appearances.length} scenes</span>
-                    </div>
-                    <div class="act-distribution">
-                        <div class="act-bar">
-                            <div class="act-segment" style="width: ${actDistribution.act1}%; background: #C9A961;" title="Act I: ${actDistribution.act1}%"></div>
-                            <div class="act-segment" style="width: ${actDistribution.act2}%; background: #2C5F5F;" title="Act II: ${actDistribution.act2}%"></div>
-                            <div class="act-segment" style="width: ${actDistribution.act3}%; background: #722F37;" title="Act III: ${actDistribution.act3}%"></div>
-                        </div>
-                        <div class="act-labels">
-                            <span>Act I (${actDistribution.act1}%)</span>
-                            <span>Act II (${actDistribution.act2}%)</span>
-                            <span>Act III (${actDistribution.act3}%)</span>
-                        </div>
-                    </div>
+        if (warnings.length === 0) {
+            section.innerHTML += `
+                <div class="no-warnings">
+                    <span class="success-icon">✓</span>
+                    <p>Your story structure looks solid! All major McKee elements are covered.</p>
                 </div>
             `;
-        });
-        
-        html += `
-                </div>
-            </div>
-        `;
-        
-        canvas.innerHTML = html;
-    },
-    
-    extractCharacters() {
-        const charSet = new Set();
-        this.scenes.forEach(scene => {
-            if (scene.characters && Array.isArray(scene.characters)) {
-                scene.characters.forEach(char => charSet.add(char));
-            }
-        });
-        return Array.from(charSet).sort();
-    },
-    
-    getCharacterAppearances(characterName) {
-        return this.scenes.filter(scene => 
-            scene.characters && scene.characters.includes(characterName)
-        );
-    },
-    
-    getCharacterActDistribution(characterName, appearances) {
-        const act1 = appearances.filter(s => s.actId === 'act-1').length;
-        const act2 = appearances.filter(s => s.actId === 'act-2').length;
-        const act3 = appearances.filter(s => s.actId === 'act-3').length;
-        const total = appearances.length;
-        
-        return {
-            act1: total > 0 ? Math.round((act1 / total) * 100) : 0,
-            act2: total > 0 ? Math.round((act2 / total) * 100) : 0,
-            act3: total > 0 ? Math.round((act3 / total) * 100) : 0
-        };
-    },
-    
-    // ===================================
-    // SPRINT 2: THEME DISTRIBUTION
-    // ===================================
-    
-    renderThemeDistribution() {
-        const canvas = document.getElementById('canvas-content');
-        if (!canvas) return;
-        
-        // Extract themes from user's actual scenes
-        const themes = this.extractThemes();
-        
-        if (themes.length === 0) {
-            canvas.innerHTML = this.getEmptyStateHTML('Theme Distribution', 'Add theme tags to your scenes (in The Desk or The Archive) to visualize how they weave through your story.');
-            return;
+            return section;
         }
         
-        let html = `
-            <div class="theme-distribution-container">
-                <div class="graph-header">
-                    <h2>Theme Distribution</h2>
-                    <p style="margin-top: 0.5rem;">Where your themes live across the narrative architecture</p>
-                </div>
-                
-                <div class="theme-heatmap">
-        `;
+        const warningList = document.createElement('div');
+        warningList.className = 'warning-list';
         
-        themes.forEach(theme => {
-            const distribution = this.getThemeActDistribution(theme);
-            
-            html += `
-                <div class="theme-row">
-                    <div class="theme-label">${theme}</div>
-                    <div class="theme-cells">
-                        <div class="theme-cell" style="opacity: ${Math.max(0.15, distribution.act1 / 100)};" title="Act I: ${distribution.act1}%">
-                            <span class="cell-value">${distribution.act1}%</span>
-                        </div>
-                        <div class="theme-cell" style="opacity: ${Math.max(0.15, distribution.act2 / 100)};" title="Act II: ${distribution.act2}%">
-                            <span class="cell-value">${distribution.act2}%</span>
-                        </div>
-                        <div class="theme-cell" style="opacity: ${Math.max(0.15, distribution.act3 / 100)};" title="Act III: ${distribution.act3}%">
-                            <span class="cell-value">${distribution.act3}%</span>
-                        </div>
-                    </div>
+        warnings.forEach(warning => {
+            const warningItem = document.createElement('div');
+            warningItem.className = `warning-item ${warning.severity}`;
+            warningItem.innerHTML = `
+                <div class="warning-icon">${warning.severity === 'critical' ? '🔴' : warning.severity === 'warning' ? '🟡' : 'ℹ️'}</div>
+                <div class="warning-content">
+                    <div class="warning-title">${warning.title}</div>
+                    <div class="warning-description">${warning.description}</div>
+                    ${warning.suggestion ? `<div class="warning-suggestion">💡 ${warning.suggestion}</div>` : ''}
                 </div>
             `;
+            warningList.appendChild(warningItem);
         });
         
-        html += `
-                </div>
-                
-                <div class="theme-legend">
-                    <span>Lighter = Less emphasis</span>
-                    <span>Darker = More emphasis</span>
-                </div>
-            </div>
-        `;
-        
-        canvas.innerHTML = html;
+        section.appendChild(warningList);
+        return section;
     },
     
-    extractThemes() {
-        const themeSet = new Set();
-        this.scenes.forEach(scene => {
-            if (scene.themes && Array.isArray(scene.themes)) {
-                scene.themes.forEach(theme => themeSet.add(theme));
-            }
-        });
-        return Array.from(themeSet).sort();
-    },
-    
-    getThemeActDistribution(themeName) {
-        const scenesWithTheme = this.scenes.filter(scene => 
-            scene.themes && scene.themes.includes(themeName)
-        );
-        
-        const act1 = scenesWithTheme.filter(s => s.actId === 'act-1').length;
-        const act2 = scenesWithTheme.filter(s => s.actId === 'act-2').length;
-        const act3 = scenesWithTheme.filter(s => s.actId === 'act-3').length;
-        const total = scenesWithTheme.length;
-        
-        return {
-            act1: total > 0 ? Math.round((act1 / total) * 100) : 0,
-            act2: total > 0 ? Math.round((act2 / total) * 100) : 0,
-            act3: total > 0 ? Math.round((act3 / total) * 100) : 0
-        };
-    },
-    
-    // ===================================
-    // SPRINT 1: STRUCTURE ANALYSIS
-    // ===================================
-    
-    renderStructureAnalysis() {
-        const canvas = document.getElementById('canvas-content');
-        if (!canvas) return;
-        
-        // Analyze McKee structure elements from user's scenes
-        const analysis = this.analyzeStructure();
-        
-        let html = `
-            <div class="structure-analysis-container">
-                <div class="graph-header">
-                    <h2>McKee Structure Validation</h2>
-                    <p style="margin-top: 0.5rem;">Essential structural elements for narrative coherence</p>
-                </div>
-                
-                <div class="structure-checklist">
-        `;
-        
-        const requiredElements = [
-            { key: 'opening', label: 'Opening Image', act: 1 },
-            { key: 'inciting', label: 'Inciting Incident', act: 1 },
-            { key: 'firstplotpoint', label: 'First Plot Point', act: 1 },
-            { key: 'midpoint', label: 'Midpoint Reversal', act: 2 },
-            { key: 'crisis', label: 'Crisis', act: 2 },
-            { key: 'climax', label: 'Climax', act: 3 },
-            { key: 'resolution', label: 'Resolution', act: 3 }
-        ];
-        
-        requiredElements.forEach(elem => {
-            const found = analysis[elem.key];
-            const status = found ? '✅' : '⚠️';
-            const statusClass = found ? 'found' : 'missing';
-            
-            html += `
-                <div class="structure-item ${statusClass}">
-                    <span class="status-icon">${status}</span>
-                    <span class="element-name">${elem.label}</span>
-                    <span class="element-act">Act ${elem.act}</span>
-                    ${found ? `<span class="element-scene">${found.title}</span>` : '<span class="element-warning">Not assigned</span>'}
-                </div>
-            `;
-        });
-        
-        html += `
-                </div>
-                <div class="structure-note">
-                    <p style="font-style: italic; color: #8a8580; text-align: center; padding: 1.5rem;">
-                        Assign McKee elements to your scenes in The Desk or The Archive to track structural completeness.
-                    </p>
-                </div>
-            </div>
-        `;
-        
-        canvas.innerHTML = html;
-    },
-    
+    /**
+     * Analyze structure and return warnings
+     */
     analyzeStructure() {
-        const analysis = {};
+        const warnings = [];
+        const stats = ChronicleData.getStats();
         
-        this.scenes.forEach(scene => {
-            if (scene.mckeeStructure) {
-                // Normalize the key for matching
-                const key = scene.mckeeStructure.toLowerCase().replace(/\s+/g, '');
-                if (!analysis[key]) {
-                    analysis[key] = scene;
-                }
+        // Check if story exists at all
+        if (stats.scenes.total === 0) {
+            warnings.push({
+                severity: 'info',
+                title: 'No scenes yet',
+                description: 'Begin writing in The Desk to build your story structure.',
+                suggestion: null
+            });
+            return warnings;
+        }
+        
+        // Check for missing McKee elements
+        const usedElements = new Set();
+        ChronicleData.scenes.forEach(scene => {
+            if (scene.mckeeElement) {
+                usedElements.add(scene.mckeeElement);
             }
         });
         
-        return analysis;
-    },
-    
-    // ===================================
-    // HELPER METHODS
-    // ===================================
-    
-    groupScenesByAct() {
-        const groups = {
-            'act-1': [],
-            'act-2': [],
-            'act-3': []
-        };
+        const missingElements = ChronicleData.mckeeElements.filter(el => !usedElements.has(el));
         
-        this.scenes.forEach(scene => {
-            const actId = scene.actId || 'act-1';
-            if (groups[actId]) {
-                groups[actId].push(scene);
+        if (missingElements.length > 0) {
+            warnings.push({
+                severity: missingElements.length > 4 ? 'critical' : 'warning',
+                title: `Missing ${missingElements.length} McKee Elements`,
+                description: `Your story is missing: ${missingElements.join(', ')}`,
+                suggestion: 'Tag existing scenes with McKee elements or create new scenes to cover these story beats.'
+            });
+        }
+        
+        // Check act balance
+        const act1Beats = this.getActBeatCount('act-1');
+        const act2Beats = this.getActBeatCount('act-2');
+        const act3Beats = this.getActBeatCount('act-3');
+        const totalBeats = act1Beats + act2Beats + act3Beats;
+        
+        if (totalBeats > 0) {
+            const act2Percentage = (act2Beats / totalBeats) * 100;
+            
+            // Act 2 should ideally be ~50% of the story
+            if (act2Percentage < 35) {
+                warnings.push({
+                    severity: 'warning',
+                    title: 'Act II might be too short',
+                    description: `Act II contains only ${Math.round(act2Percentage)}% of your story. McKee recommends ~50%.`,
+                    suggestion: 'Consider developing more confrontation and complication in Act II.'
+                });
+            } else if (act2Percentage > 65) {
+                warnings.push({
+                    severity: 'warning',
+                    title: 'Act II might be too long',
+                    description: `Act II contains ${Math.round(act2Percentage)}% of your story. Consider tightening.`,
+                    suggestion: 'Some confrontation beats might work better in Act III.'
+                });
             }
-        });
+            
+            // Check Act I and III balance
+            const act1Percentage = (act1Beats / totalBeats) * 100;
+            const act3Percentage = (act3Beats / totalBeats) * 100;
+            
+            if (act1Percentage > 35) {
+                warnings.push({
+                    severity: 'info',
+                    title: 'Act I setup is extensive',
+                    description: `Act I contains ${Math.round(act1Percentage)}% of your story.`,
+                    suggestion: 'Ensure you reach the first plot point efficiently.'
+                });
+            }
+            
+            if (act3Percentage < 15 && totalBeats > 10) {
+                warnings.push({
+                    severity: 'warning',
+                    title: 'Act III resolution might be rushed',
+                    description: `Act III contains only ${Math.round(act3Percentage)}% of your story.`,
+                    suggestion: 'Give your climax and resolution adequate space to breathe.'
+                });
+            }
+        }
         
-        return groups;
+        // Check for orphaned beats
+        if (stats.beats.orphaned > 5) {
+            warnings.push({
+                severity: 'info',
+                title: `${stats.beats.orphaned} orphaned beats`,
+                description: 'You have many beats not organized into scenes.',
+                suggestion: 'Review orphaned beats in The Desk and organize them into scenes.'
+            });
+        }
+        
+        // Check draft vs polished ratio
+        if (stats.scenes.total > 5 && stats.scenes.polished === 0) {
+            warnings.push({
+                severity: 'info',
+                title: 'No polished scenes yet',
+                description: 'All scenes are still in draft or in-progress status.',
+                suggestion: 'Consider polishing your strongest scenes as reference points.'
+            });
+        }
+        
+        return warnings;
     },
     
-    getMcKeeColor(mckeeStructure) {
-        const colors = {
-            'Opening': '#C9A961',
-            'Inciting': '#ff9955',
-            'First Plot Point': '#2C5F5F',
-            'Midpoint': '#722F37',
-            'Crisis': '#d4a574',
-            'Climax': '#A89882',
-            'Resolution': '#8B7355'
-        };
-        return colors[mckeeStructure] || '#8a8580';
+    /**
+     * Get beat count for an act
+     */
+    getActBeatCount(actId) {
+        const scenes = ChronicleData.getScenesByAct(actId);
+        return scenes.reduce((sum, scene) => {
+            return sum + ChronicleData.getBeatsForScene(scene.id).length;
+        }, 0);
     },
     
-    getEmptyStateHTML(title, message) {
-        return `
-            <div class="covenant-empty-state">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 80px; height: 80px; margin-bottom: 1.5rem;">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/>
-                    <path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>
-                </svg>
-                <h3>${title}</h3>
-                <p>${message}</p>
-            </div>
+    /**
+     * Filter beat sheet by McKee element
+     */
+    filterByMckeeElement(element) {
+        // Switch to beat sheet view
+        this.currentView = 'beat-sheet';
+        this.renderBeatSheet();
+        
+        // Show notification
+        this.showNotification(`Showing scenes with: ${element}`, 'info');
+    },
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // PACING GRAPH VIEW
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Render pacing graph - visual representation of story progression
+     */
+    renderPacingGraph() {
+        console.log('📈 Rendering Pacing Graph...');
+        
+        const canvas = document.getElementById('covenantCanvas');
+        if (!canvas) return;
+        
+        canvas.innerHTML = '';
+        
+        const scenes = ChronicleData.scenes;
+        
+        if (scenes.length === 0) {
+            this.renderEmptyState(canvas, 'No scenes to visualize', 'Create scenes in The Desk to see pacing analysis');
+            return;
+        }
+        
+        // Create pacing container
+        const pacingContainer = document.createElement('div');
+        pacingContainer.className = 'pacing-graph-container';
+        
+        // Title
+        const title = document.createElement('h3');
+        title.className = 'pacing-title';
+        title.textContent = '📈 Story Pacing Visualization';
+        pacingContainer.appendChild(title);
+        
+        // Placeholder for future implementation
+        const placeholder = document.createElement('div');
+        placeholder.className = 'pacing-placeholder';
+        placeholder.innerHTML = `
+            <div class="placeholder-icon">📊</div>
+            <h4>Pacing Graph - Coming Soon</h4>
+            <p>This view will visualize story tension, stakes, and emotional intensity across your narrative arc.</p>
+            <p>Features in development:</p>
+            <ul>
+                <li>Visual tension curve based on conflict types</li>
+                <li>Stakes progression mapping</li>
+                <li>Character arc intersection points</li>
+                <li>McKee beat timing analysis</li>
+            </ul>
         `;
+        pacingContainer.appendChild(placeholder);
+        
+        canvas.appendChild(pacingContainer);
+        
+        console.log('ℹ️ Pacing Graph placeholder rendered');
     },
     
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // SCENE DETAILS PANEL
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Show scene details panel
+     */
     showSceneDetails(sceneId) {
-        const scene = this.scenes.find(s => s.id === sceneId);
+        const scene = ChronicleData.getScene(sceneId);
         if (!scene) return;
         
-        const detailsPanel = document.getElementById('covenant-details');
-        const detailsContent = document.getElementById('detailsContent');
+        this.selectedSceneId = sceneId;
+        
+        const detailsPanel = document.getElementById('covenantDetails');
+        const detailsContent = document.getElementById('covenantDetailsContent');
         
         if (!detailsPanel || !detailsContent) return;
         
-        let detailsHTML = `
-            <div class="scene-details">
-                <h4>${scene.title || 'Untitled Scene'}</h4>
-                <div class="detail-row">
-                    <span class="detail-label">Word Count:</span>
-                    <span class="detail-value">${scene.wordCount || 0}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Author:</span>
-                    <span class="detail-value">${scene.author === 'tyrrel' ? 'Tyrrel' : 'Trevor'}</span>
-                </div>
-        `;
+        // Get beats for this scene
+        const beats = ChronicleData.getBeatsForScene(sceneId);
         
-        if (scene.mckeeStructure) {
-            detailsHTML += `
-                <div class="detail-row">
-                    <span class="detail-label">McKee Element:</span>
-                    <span class="detail-value">${scene.mckeeStructure}</span>
-                </div>
-            `;
-        }
+        // Calculate total word count
+        const totalWords = beats.reduce((sum, beat) => {
+            return sum + this.getWordCount(beat.content);
+        }, 0);
         
-        if (scene.characters && scene.characters.length > 0) {
-            detailsHTML += `
-                <div class="detail-row">
-                    <span class="detail-label">Characters:</span>
-                    <span class="detail-value">${scene.characters.join(', ')}</span>
-                </div>
-            `;
-        }
+        // Get character names
+        const characterNames = this.getCharacterNames(scene.characters);
         
-        if (scene.themes && scene.themes.length > 0) {
-            detailsHTML += `
-                <div class="detail-row">
-                    <span class="detail-label">Themes:</span>
-                    <span class="detail-value">${scene.themes.join(', ')}</span>
-                </div>
-            `;
-        }
+        // Get location name
+        const locationName = scene.location ? 
+            ChronicleData.getLocation(scene.location)?.name : null;
         
-        detailsHTML += `
+        // Format date
+        const date = new Date(scene.modified);
+        const dateStr = date.toLocaleDateString('en-US', { 
+            month: 'long', 
+            day: 'numeric', 
+            year: 'numeric' 
+        });
+        
+        detailsContent.innerHTML = `
+            <div class="scene-details-header">
+                <h3>${scene.title}</h3>
+                <div class="scene-meta-badges">
+                    <span class="author-badge ${scene.author}">${scene.author}</span>
+                    <span class="status-badge ${scene.status}">${scene.status.replace('-', ' ')}</span>
+                </div>
+            </div>
+            
+            <div class="scene-details-stats">
+                <div class="detail-stat">
+                    <span class="stat-label">Beats:</span>
+                    <span class="stat-value">${beats.length}</span>
+                </div>
+                <div class="detail-stat">
+                    <span class="stat-label">Words:</span>
+                    <span class="stat-value">${totalWords.toLocaleString()}</span>
+                </div>
+                <div class="detail-stat">
+                    <span class="stat-label">Last Modified:</span>
+                    <span class="stat-value">${dateStr}</span>
+                </div>
+            </div>
+            
+            ${scene.mckeeElement ? `
+            <div class="scene-details-section">
+                <h4>McKee Element</h4>
+                <div class="mckee-badge large">${scene.mckeeElement}</div>
+            </div>
+            ` : ''}
+            
+            ${characterNames.length > 0 ? `
+            <div class="scene-details-section">
+                <h4>Characters</h4>
+                <div class="character-tags">
+                    ${characterNames.map(name => `<span class="character-tag">${name}</span>`).join('')}
+                </div>
+            </div>
+            ` : ''}
+            
+            ${locationName ? `
+            <div class="scene-details-section">
+                <h4>Location</h4>
+                <div class="location-name">📍 ${locationName}</div>
+            </div>
+            ` : ''}
+            
+            ${scene.purpose ? `
+            <div class="scene-details-section">
+                <h4>Scene Purpose</h4>
+                <p class="scene-purpose">${scene.purpose}</p>
+            </div>
+            ` : ''}
+            
+            <div class="scene-details-section beats-list">
+                <h4>Beats in This Scene (${beats.length})</h4>
+                ${beats.map((beat, index) => `
+                    <div class="beat-detail-item">
+                        <div class="beat-detail-header">
+                            <span class="beat-detail-number">Beat ${index + 1}</span>
+                            <span class="beat-detail-author ${beat.author}">${beat.author}</span>
+                        </div>
+                        <div class="beat-detail-preview">
+                            ${this.getPreviewText(beat.content, 200)}
+                        </div>
+                        <div class="beat-detail-meta">
+                            ${this.getWordCount(beat.content)} words
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div class="scene-details-actions">
+                <button class="action-btn primary" onclick="ChronicleCovenantWorkspace.openInDesk('${sceneId}')">
+                    Open in Desk
+                </button>
             </div>
         `;
         
-        detailsContent.innerHTML = detailsHTML;
+        // Show panel
         detailsPanel.classList.add('active');
     },
     
+    /**
+     * Hide scene details panel
+     */
     hideDetails() {
-        const detailsPanel = document.getElementById('covenant-details');
+        const detailsPanel = document.getElementById('covenantDetails');
         if (detailsPanel) {
             detailsPanel.classList.remove('active');
         }
+        this.selectedSceneId = null;
+    },
+    
+    /**
+     * Open scene in Desk
+     */
+    openInDesk(sceneId) {
+        // Set current scene in ChronicleData
+        ChronicleData.currentScene = sceneId;
+        
+        // Switch to Desk workspace
+        const deskTab = document.querySelector('[data-space="desk"]');
+        if (deskTab) {
+            deskTab.click();
+        }
+        
+        // Load the scene in Desk
+        if (window.ChronicleDesk && window.ChronicleDesk.loadSceneById) {
+            setTimeout(() => {
+                ChronicleDesk.loadSceneById(sceneId);
+            }, 100);
+        }
+        
+        console.log('✅ Opened scene in Desk:', sceneId);
+    },
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // UTILITY HELPERS
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Get preview text from HTML content
+     */
+    getPreviewText(htmlContent, maxLength = 100) {
+        const text = htmlContent.replace(/<[^>]*>/g, '').trim();
+        if (text.length <= maxLength) return text || '<empty>';
+        return text.substring(0, maxLength) + '...';
+    },
+    
+    /**
+     * Get word count from HTML content
+     */
+    getWordCount(htmlContent) {
+        const text = htmlContent.replace(/<[^>]*>/g, '');
+        const words = text.split(/\s+/).filter(word => word.length > 0);
+        return words.length;
+    },
+    
+    /**
+     * Get character names from IDs
+     */
+    getCharacterNames(characterIds) {
+        if (!characterIds || characterIds.length === 0) return [];
+        
+        return characterIds
+            .map(id => ChronicleData.getCharacter(id)?.name)
+            .filter(name => name);
+    },
+    
+    /**
+     * Get total beats count across all scenes
+     */
+    getTotalBeatsCount() {
+        return ChronicleData.scenes.reduce((sum, scene) => {
+            return sum + ChronicleData.getBeatsForScene(scene.id).length;
+        }, 0);
+    },
+    
+    /**
+     * Render empty state
+     */
+    renderEmptyState(container, title, message) {
+        container.innerHTML = `
+            <div class="covenant-empty-state">
+                <div class="empty-state-icon">🛡️</div>
+                <h3 class="empty-state-title">${title}</h3>
+                <p class="empty-state-message">${message}</p>
+            </div>
+        `;
+    },
+    
+    /**
+     * Show notification
+     */
+    showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `covenant-notification ${type}`;
+        notification.textContent = message;
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#2C5F5F' : type === 'error' ? '#722F37' : '#8B7355'};
+            color: #F4EFE8;
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 10000;
+            font-family: 'Crimson Text', serif;
+            animation: slideIn 0.3s ease-out;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease-in';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
     }
 };
 
-// Make globally available
+// ═══════════════════════════════════════════════════════════════════════
+// MODULE INITIALIZATION
+// ═══════════════════════════════════════════════════════════════════════
+
+// Make available globally
 window.ChronicleCovenantWorkspace = ChronicleCovenantWorkspace;
 
-console.log('📜 Covenant workspace module loaded (Purified - Sprints 1-2 only)');
+// Initialize when Covenant workspace becomes active
+document.addEventListener('DOMContentLoaded', () => {
+    const covenantTab = document.querySelector('[data-space="covenant"]');
+    if (covenantTab) {
+        covenantTab.addEventListener('click', () => {
+            setTimeout(() => {
+                if (!ChronicleCovenantWorkspace.initialized) {
+                    ChronicleCovenantWorkspace.init();
+                }
+            }, 100);
+        });
+    }
+});
+
+console.log('🛡️ Chronicle Covenant module loaded');
+
+// ═══════════════════════════════════════════════════════════════════════
+// END OF CHRONICLE COVENANT
+// 
+// "The LORD is my strength and my shield; my heart trusts in him,
+// and he helps me." — Psalm 28:7
+// ═══════════════════════════════════════════════════════════════════════
