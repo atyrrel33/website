@@ -1,660 +1,581 @@
-/* ========================================
-   CHRONICLE EXPORT SYSTEM
-   "Write down the revelation and make it plain on tablets"
-   - Habakkuk 2:2
-   
-   Comprehensive export capabilities:
-   - Plain text (TXT/MD)
-   - Beautiful PDFs with annotations
-   - Complete project backup (.chronicle)
-   - Cross-browser data transfer
-   ======================================== */
+// ═══════════════════════════════════════════════════════════════════════════
+// CHRONICLE EXPORT - Story Distribution & Preservation
+// "Go therefore and make disciples of all nations" - Matthew 28:19
+// ═══════════════════════════════════════════════════════════════════════════
+//
+// Export functionality for Chronicle stories
+// - TXT export with beats included
+// - Markdown export with structure
+// - PDF export with formatting
+// - Complete backup/restore
+//
+// @version 2.0.0 (Sprint 1)
+// @date December 17, 2024
+// @authors Tyrrel & Trevor
+//
+// ═══════════════════════════════════════════════════════════════════════════
 
-// Load jsPDF library dynamically
-const loadJsPDF = () => {
-    return new Promise((resolve, reject) => {
-        if (window.jspdf) {
-            resolve(window.jspdf);
+const ChronicleExport = {
+    // ═══════════════════════════════════════════════════════════════════════
+    // CORE DATA RETRIEVAL
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Get all scenes from ChronicleData
+     */
+    getScenes() {
+        return ChronicleData.scenes || [];
+    },
+    
+    /**
+     * Get beats for a specific scene
+     */
+    getBeatsForScene(sceneId) {
+        return ChronicleData.getBeatsForScene(sceneId) || [];
+    },
+    
+    /**
+     * Get character name by ID
+     */
+    getCharacterName(characterId) {
+        const character = ChronicleData.getCharacter(characterId);
+        return character ? character.name : null;
+    },
+    
+    /**
+     * Get location name by ID
+     */
+    getLocationName(locationId) {
+        const location = ChronicleData.getLocation(locationId);
+        return location ? location.name : null;
+    },
+    
+    /**
+     * Strip HTML tags from content
+     */
+    stripHTML(html) {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        return temp.textContent || temp.innerText || '';
+    },
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // TEXT EXPORT
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Export entire story as plain text
+     * "Let your words be few" - Ecclesiastes 5:2
+     */
+    exportToTXT() {
+        console.log('📝 Exporting to TXT...');
+        
+        const scenes = this.getScenes();
+        
+        if (scenes.length === 0) {
+            alert('No scenes to export. Create some scenes first!');
             return;
         }
         
-        const script = document.createElement('script');
-        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-        script.onload = () => resolve(window.jspdf);
-        script.onerror = reject;
-        document.head.appendChild(script);
-    });
-};
-
-const ChronicleExport = {
-    // Export formats
-    formats: {
-        TXT: 'text/plain',
-        MD: 'text/markdown',
-        JSON: 'application/json',
-        PDF: 'application/pdf'
-    },
-    
-    // ===================================
-    // MAIN EXPORT FUNCTION
-    // ===================================
-    
-    async exportProject(options = {}) {
-        const {
-            format = 'TXT',
-            includeAnalysis = false,
-            includeMetadata = true,
-            scenes = 'all', // 'all', 'current', or array of scene IDs
-            sortBy = 'structure' // 'structure' (Act/Chapter), 'chronological', 'author'
-        } = options;
+        // Build content
+        let content = '';
         
-        console.log(`📤 Exporting project as ${format}...`);
+        // Header
+        content += '═══════════════════════════════════════════════\n';
+        content += '  CHRONICLE EXPORT - Plain Text\n';
+        content += `  Exported: ${new Date().toLocaleString()}\n`;
+        content += '═══════════════════════════════════════════════\n\n';
         
-        try {
-            let content, filename, mimeType;
+        // Group by Act
+        ChronicleData.acts.forEach((act, actIndex) => {
+            const actScenes = ChronicleData.getScenesByAct(act.id);
             
-            switch(format) {
-                case 'TXT':
-                    ({ content, filename } = this.exportAsText(scenes, includeMetadata, sortBy));
-                    mimeType = this.formats.TXT;
-                    break;
+            if (actScenes.length > 0) {
+                content += '\n';
+                content += '═'.repeat(50) + '\n';
+                content += `${act.title.toUpperCase()}\n`;
+                content += '═'.repeat(50) + '\n\n';
+                
+                actScenes.forEach((scene, sceneIndex) => {
+                    // Scene header
+                    content += `SCENE ${actIndex + 1}.${sceneIndex + 1}: ${scene.title}\n`;
+                    content += `Author: ${scene.author} | Status: ${scene.status}\n`;
                     
-                case 'MD':
-                    ({ content, filename } = this.exportAsMarkdown(scenes, includeMetadata, sortBy));
-                    mimeType = this.formats.MD;
-                    break;
+                    // Scene metadata
+                    if (scene.characters && scene.characters.length > 0) {
+                        const characterNames = scene.characters
+                            .map(id => this.getCharacterName(id))
+                            .filter(name => name)
+                            .join(', ');
+                        if (characterNames) {
+                            content += `Characters: ${characterNames}\n`;
+                        }
+                    }
                     
-                case 'PDF':
-                    await this.exportAsPDF(scenes, includeAnalysis, includeMetadata, sortBy);
-                    return; // PDF handles its own download
+                    if (scene.location) {
+                        const locationName = this.getLocationName(scene.location);
+                        if (locationName) {
+                            content += `Location: ${locationName}\n`;
+                        }
+                    }
                     
-                case 'BACKUP':
-                    ({ content, filename } = this.exportFullBackup());
-                    mimeType = this.formats.JSON;
-                    break;
+                    if (scene.mckeeElement) {
+                        content += `McKee Element: ${scene.mckeeElement}\n`;
+                    }
                     
-                default:
-                    throw new Error(`Unknown format: ${format}`);
+                    content += '-'.repeat(50) + '\n\n';
+                    
+                    // Beats
+                    const beats = this.getBeatsForScene(scene.id);
+                    
+                    if (beats.length === 0) {
+                        content += '[Empty scene - no beats]\n\n';
+                    } else {
+                        beats.forEach((beat, beatIndex) => {
+                            if (beats.length > 1) {
+                                content += `[Beat ${beatIndex + 1}]\n`;
+                            }
+                            content += this.stripHTML(beat.content) + '\n\n';
+                        });
+                    }
+                    
+                    content += '\n';
+                });
             }
-            
-            this.downloadFile(content, filename, mimeType);
-            console.log('✅ Export complete:', filename);
-            
-        } catch (error) {
-            console.error('❌ Export failed:', error);
-            alert('Export failed: ' + error.message);
-        }
+        });
+        
+        // Footer
+        const stats = ChronicleData.getStats();
+        content += '\n═'.repeat(50) + '\n';
+        content += 'STORY STATISTICS\n';
+        content += '═'.repeat(50) + '\n';
+        content += `Total Scenes: ${stats.scenes.total}\n`;
+        content += `Total Beats: ${stats.beats.total}\n`;
+        content += `Total Words: ${stats.wordCount.toLocaleString()}\n`;
+        content += `Draft: ${stats.scenes.draft} | In Progress: ${stats.scenes.inProgress} | Polished: ${stats.scenes.polished}\n`;
+        
+        // Download
+        this.downloadFile(content, 'chronicle-export.txt', 'text/plain');
+        
+        console.log('✅ TXT export complete');
     },
     
-    // ===================================
-    // TEXT EXPORT
-    // ===================================
     
-    exportAsText(sceneFilter, includeMetadata, sortBy) {
-        const scenes = this.getFilteredScenes(sceneFilter, sortBy);
-        const projectName = localStorage.getItem('chronicle_project_name') || 'Joseph: A Modern Story';
+    // ═══════════════════════════════════════════════════════════════════════
+    // MARKDOWN EXPORT
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Export story as Markdown with structure
+     * "Write the vision; make it plain on tablets" - Habakkuk 2:2
+     */
+    exportToMarkdown() {
+        console.log('📝 Exporting to Markdown...');
+        
+        const scenes = this.getScenes();
+        
+        if (scenes.length === 0) {
+            alert('No scenes to export. Create some scenes first!');
+            return;
+        }
         
         let content = '';
         
         // Header
-        content += `${projectName.toUpperCase()}\n`;
-        content += '='.repeat(projectName.length) + '\n\n';
+        content += '# Chronicle Export\n\n';
+        content += `**Exported:** ${new Date().toLocaleString()}\n\n`;
+        content += '---\n\n';
         
-        if (includeMetadata) {
-            const totalWords = scenes.reduce((sum, s) => sum + (s.wordCount || 0), 0);
-            content += `Total Scenes: ${scenes.length}\n`;
-            content += `Total Words: ${totalWords.toLocaleString()}\n`;
-            content += `Exported: ${new Date().toLocaleDateString()}\n`;
-            content += `Authors: Tyrrel & Trevor\n`;
-            content += '\n' + '-'.repeat(60) + '\n\n';
-        }
+        // Table of Contents
+        content += '## Table of Contents\n\n';
         
-        // Scenes organized by structure
-        if (sortBy === 'structure') {
-            const structure = this.organizeByStructure(scenes);
-            
-            Object.entries(structure).forEach(([actNum, actData]) => {
-                content += `\n\n${'='.repeat(60)}\n`;
-                content += `ACT ${actNum}\n`;
-                content += `${'='.repeat(60)}\n\n`;
-                
-                // Chapters
-                Object.entries(actData.chapters).forEach(([chapterId, chapterData]) => {
-                    content += `\n--- ${chapterData.name} ---\n\n`;
-                    chapterData.scenes.forEach(scene => {
-                        content += this.formatSceneAsText(scene, includeMetadata);
-                    });
+        ChronicleData.acts.forEach((act, actIndex) => {
+            const actScenes = ChronicleData.getScenesByAct(act.id);
+            if (actScenes.length > 0) {
+                content += `${actIndex + 1}. [${act.title}](#${this.slugify(act.title)})\n`;
+                actScenes.forEach((scene, sceneIndex) => {
+                    content += `   ${actIndex + 1}.${sceneIndex + 1}. [${scene.title}](#${this.slugify(scene.title)})\n`;
                 });
-                
-                // Unchaptered scenes
-                if (actData.unchaptered.length > 0) {
-                    content += `\n--- Unchaptered Scenes ---\n\n`;
-                    actData.unchaptered.forEach(scene => {
-                        content += this.formatSceneAsText(scene, includeMetadata);
-                    });
-                }
-            });
-        } else {
-            // Simple chronological or by author
-            scenes.forEach(scene => {
-                content += this.formatSceneAsText(scene, includeMetadata);
-            });
-        }
-        
-        const filename = `${projectName.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.txt`;
-        
-        return { content, filename };
-    },
-    
-    formatSceneAsText(scene, includeMetadata) {
-        let text = '';
-        
-        if (includeMetadata) {
-            text += `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-            text += `${scene.title || 'Untitled Scene'}\n`;
-            text += `Author: ${scene.author === 'tyrrel' ? 'Tyrrel' : 'Trevor'} | `;
-            text += `Words: ${scene.wordCount || 0} | `;
-            text += `Status: ${scene.status || 'draft'}\n`;
-            text += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
-        } else {
-            text += `\n\n### ${scene.title || 'Untitled'}\n\n`;
-        }
-        
-        // Strip HTML formatting
-        const div = document.createElement('div');
-        div.innerHTML = scene.content || '';
-        text += div.textContent || div.innerText || '';
-        text += '\n\n';
-        
-        return text;
-    },
-    
-    // ===================================
-    // MARKDOWN EXPORT
-    // ===================================
-    
-    exportAsMarkdown(sceneFilter, includeMetadata, sortBy) {
-        const scenes = this.getFilteredScenes(sceneFilter, sortBy);
-        const projectName = localStorage.getItem('chronicle_project_name') || 'Joseph: A Modern Story';
-        
-        let content = `# ${projectName}\n\n`;
-        
-        if (includeMetadata) {
-            const totalWords = scenes.reduce((sum, s) => sum + (s.wordCount || 0), 0);
-            content += `**Total Scenes:** ${scenes.length}  \n`;
-            content += `**Total Words:** ${totalWords.toLocaleString()}  \n`;
-            content += `**Exported:** ${new Date().toLocaleDateString()}  \n`;
-            content += `**Authors:** Tyrrel & Trevor\n\n`;
-            content += '---\n\n';
-        }
-        
-        // Organize by structure
-        if (sortBy === 'structure') {
-            const structure = this.organizeByStructure(scenes);
-            
-            Object.entries(structure).forEach(([actNum, actData]) => {
-                content += `\n## Act ${actNum}\n\n`;
-                
-                Object.entries(actData.chapters).forEach(([chapterId, chapterData]) => {
-                    content += `\n### ${chapterData.name}\n\n`;
-                    chapterData.scenes.forEach(scene => {
-                        content += this.formatSceneAsMarkdown(scene, includeMetadata);
-                    });
-                });
-                
-                if (actData.unchaptered.length > 0) {
-                    content += `\n### Unchaptered Scenes\n\n`;
-                    actData.unchaptered.forEach(scene => {
-                        content += this.formatSceneAsMarkdown(scene, includeMetadata);
-                    });
-                }
-            });
-        } else {
-            scenes.forEach(scene => {
-                content += this.formatSceneAsMarkdown(scene, includeMetadata);
-            });
-        }
-        
-        const filename = `${projectName.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.md`;
-        
-        return { content, filename };
-    },
-    
-    formatSceneAsMarkdown(scene, includeMetadata) {
-        let md = '';
-        
-        if (includeMetadata) {
-            md += `\n#### ${scene.title || 'Untitled Scene'}\n\n`;
-            md += `> **Author:** ${scene.author === 'tyrrel' ? 'Tyrrel' : 'Trevor'} | `;
-            md += `**Words:** ${scene.wordCount || 0} | `;
-            md += `**Status:** ${scene.status || 'draft'}\n\n`;
-        } else {
-            md += `\n#### ${scene.title || 'Untitled'}\n\n`;
-        }
-        
-        const div = document.createElement('div');
-        div.innerHTML = scene.content || '';
-        md += div.textContent || div.innerText || '';
-        md += '\n\n';
-        
-        return md;
-    },
-    
-    // ===================================
-    // PDF EXPORT (WITH ANALYSIS)
-    // ===================================
-    
-    async exportAsPDF(sceneFilter, includeAnalysis, includeMetadata, sortBy) {
-        try {
-            const { jsPDF } = await loadJsPDF();
-            const doc = new jsPDF();
-            
-            const scenes = this.getFilteredScenes(sceneFilter, sortBy);
-            const projectName = localStorage.getItem('chronicle_project_name') || 'Joseph: A Modern Story';
-            
-            let yPos = 20;
-            const pageHeight = doc.internal.pageSize.height;
-            const margin = 20;
-            const lineHeight = 7;
-            const maxWidth = doc.internal.pageSize.width - (margin * 2);
-            
-            // Helper: Check if we need a new page
-            const checkPageBreak = (spaceNeeded = 20) => {
-                if (yPos + spaceNeeded > pageHeight - margin) {
-                    doc.addPage();
-                    yPos = 20;
-                    return true;
-                }
-                return false;
-            };
-            
-            // Title Page
-            doc.setFontSize(24);
-            doc.setFont(undefined, 'bold');
-            doc.text(projectName, doc.internal.pageSize.width / 2, yPos, { align: 'center' });
-            
-            yPos += 15;
-            doc.setFontSize(12);
-            doc.setFont(undefined, 'italic');
-            doc.text('A Chronicle Export', doc.internal.pageSize.width / 2, yPos, { align: 'center' });
-            
-            if (includeMetadata) {
-                yPos += 20;
-                doc.setFontSize(10);
-                doc.setFont(undefined, 'normal');
-                const totalWords = scenes.reduce((sum, s) => sum + (s.wordCount || 0), 0);
-                doc.text(`Total Scenes: ${scenes.length}`, margin, yPos);
-                yPos += 6;
-                doc.text(`Total Words: ${totalWords.toLocaleString()}`, margin, yPos);
-                yPos += 6;
-                doc.text(`Exported: ${new Date().toLocaleDateString()}`, margin, yPos);
-                yPos += 6;
-                doc.text(`Authors: Tyrrel & Trevor`, margin, yPos);
             }
-            
-            // New page for content
-            doc.addPage();
-            yPos = 20;
-            
-            // Content by structure
-            if (sortBy === 'structure') {
-                const structure = this.organizeByStructure(scenes);
-                
-                for (const [actNum, actData] of Object.entries(structure)) {
-                    checkPageBreak(30);
-                    
-                    // Act Header
-                    doc.setFontSize(18);
-                    doc.setFont(undefined, 'bold');
-                    doc.text(`ACT ${actNum}`, margin, yPos);
-                    yPos += 12;
-                    
-                    // Chapters
-                    for (const [chapterId, chapterData] of Object.entries(actData.chapters)) {
-                        checkPageBreak(20);
-                        
-                        doc.setFontSize(14);
-                        doc.setFont(undefined, 'bold');
-                        doc.text(chapterData.name, margin, yPos);
-                        yPos += 10;
-                        
-                        for (const scene of chapterData.scenes) {
-                            yPos = await this.addSceneToPDF(doc, scene, yPos, margin, maxWidth, lineHeight, checkPageBreak, includeMetadata, includeAnalysis);
-                        }
-                    }
-                    
-                    // Unchaptered
-                    if (actData.unchaptered.length > 0) {
-                        checkPageBreak(20);
-                        doc.setFontSize(14);
-                        doc.setFont(undefined, 'bold');
-                        doc.text('Unchaptered Scenes', margin, yPos);
-                        yPos += 10;
-                        
-                        for (const scene of actData.unchaptered) {
-                            yPos = await this.addSceneToPDF(doc, scene, yPos, margin, maxWidth, lineHeight, checkPageBreak, includeMetadata, includeAnalysis);
-                        }
-                    }
-                }
-            } else {
-                for (const scene of scenes) {
-                    yPos = await this.addSceneToPDF(doc, scene, yPos, margin, maxWidth, lineHeight, checkPageBreak, includeMetadata, includeAnalysis);
-                }
-            }
-            
-            // Save
-            const filename = `${projectName.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
-            doc.save(filename);
-            
-            console.log('✅ PDF exported:', filename);
-            
-        } catch (error) {
-            console.error('❌ PDF export failed:', error);
-            throw error;
-        }
-    },
-    
-    async addSceneToPDF(doc, scene, yPos, margin, maxWidth, lineHeight, checkPageBreak, includeMetadata, includeAnalysis) {
-        checkPageBreak(40);
-        
-        // Scene title
-        doc.setFontSize(12);
-        doc.setFont(undefined, 'bold');
-        doc.text(scene.title || 'Untitled Scene', margin, yPos);
-        yPos += 8;
-        
-        // Metadata
-        if (includeMetadata) {
-            doc.setFontSize(9);
-            doc.setFont(undefined, 'italic');
-            
-            // Author color
-            if (scene.author === 'tyrrel') {
-                doc.setTextColor(201, 169, 97); // Gold
-            } else {
-                doc.setTextColor(58, 125, 125); // Teal
-            }
-            
-            doc.text(`By ${scene.author === 'tyrrel' ? 'Tyrrel' : 'Trevor'}`, margin, yPos);
-            yPos += 6;
-            
-            doc.setTextColor(0, 0, 0); // Reset to black
-            doc.text(`${scene.wordCount || 0} words | Status: ${scene.status || 'draft'}`, margin, yPos);
-            yPos += 8;
-        }
-        
-        // Scene content
-        doc.setFontSize(11);
-        doc.setFont(undefined, 'normal');
-        
-        const div = document.createElement('div');
-        div.innerHTML = scene.content || '';
-        const text = div.textContent || div.innerText || '';
-        
-        const lines = doc.splitTextToSize(text, maxWidth);
-        for (const line of lines) {
-            checkPageBreak();
-            doc.text(line, margin, yPos);
-            yPos += lineHeight;
-        }
-        
-        // Analysis section
-        if (includeAnalysis && scene.mckeeData) {
-            yPos += 5;
-            checkPageBreak(30);
-            
-            doc.setFontSize(10);
-            doc.setFont(undefined, 'bold');
-            doc.setTextColor(114, 47, 55); // Burgundy
-            doc.text('Story Analysis:', margin, yPos);
-            yPos += 7;
-            
-            doc.setFont(undefined, 'normal');
-            doc.setTextColor(0, 0, 0);
-            doc.setFontSize(9);
-            
-            if (scene.mckeeData.storyValue) {
-                doc.text(`Value: ${scene.mckeeData.storyValue}`, margin + 5, yPos);
-                yPos += 6;
-            }
-            
-            if (scene.mckeeData.turningPoint) {
-                doc.text(`Turning Point: ${scene.mckeeData.turningPoint}`, margin + 5, yPos);
-                yPos += 6;
-            }
-            
-            if (scene.mckeeData.conflict) {
-                doc.text(`Conflict Level: ${scene.mckeeData.conflict}/10`, margin + 5, yPos);
-                yPos += 6;
-            }
-        }
-        
-        yPos += 10; // Space before next scene
-        return yPos;
-    },
-    
-    // ===================================
-    // FULL PROJECT BACKUP
-    // ===================================
-    
-    exportFullBackup() {
-        console.log('📦 Creating full project backup...');
-        
-        const backup = {
-            version: '1.0',
-            exported: new Date().toISOString(),
-            projectName: localStorage.getItem('chronicle_project_name') || 'Joseph: A Modern Story',
-            scenes: [],
-            acts: [],
-            chapters: [],
-            characters: [],
-            themes: [],
-            settings: {}
-        };
-        
-        // Get all scenes
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            
-            if (key.startsWith('scene_')) {
-                backup.scenes.push(JSON.parse(localStorage.getItem(key)));
-            } else if (key.startsWith('act_')) {
-                backup.acts.push(JSON.parse(localStorage.getItem(key)));
-            } else if (key.startsWith('chapter_')) {
-                backup.chapters.push(JSON.parse(localStorage.getItem(key)));
-            } else if (key.startsWith('character_')) {
-                backup.characters.push(JSON.parse(localStorage.getItem(key)));
-            } else if (key.startsWith('theme_')) {
-                backup.themes.push(JSON.parse(localStorage.getItem(key)));
-            } else if (key.startsWith('chronicle_')) {
-                backup.settings[key] = localStorage.getItem(key);
-            }
-        }
-        
-        const content = JSON.stringify(backup, null, 2);
-        const filename = `Chronicle_Backup_${new Date().toISOString().split('T')[0]}.chronicle`;
-        
-        console.log('✅ Backup created:', {
-            scenes: backup.scenes.length,
-            acts: backup.acts.length,
-            chapters: backup.chapters.length,
-            characters: backup.characters.length
         });
         
-        return { content, filename };
-    },
-    
-    // ===================================
-    // IMPORT/RESTORE
-    // ===================================
-    
-    async importBackup(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
+        content += '\n---\n\n';
+        
+        // Acts and Scenes
+        ChronicleData.acts.forEach((act, actIndex) => {
+            const actScenes = ChronicleData.getScenesByAct(act.id);
             
-            reader.onload = (e) => {
-                try {
-                    const backup = JSON.parse(e.target.result);
+            if (actScenes.length > 0) {
+                content += `## ${act.title}\n\n`;
+                
+                actScenes.forEach((scene, sceneIndex) => {
+                    content += `### ${actIndex + 1}.${sceneIndex + 1}. ${scene.title}\n\n`;
                     
-                    if (!backup.version || !backup.scenes) {
-                        throw new Error('Invalid backup file format');
+                    // Metadata as quote
+                    content += '> **Metadata**\n';
+                    content += `> - Author: ${scene.author}\n`;
+                    content += `> - Status: ${scene.status}\n`;
+                    
+                    if (scene.characters && scene.characters.length > 0) {
+                        const characterNames = scene.characters
+                            .map(id => this.getCharacterName(id))
+                            .filter(name => name);
+                        if (characterNames.length > 0) {
+                            content += `> - Characters: ${characterNames.join(', ')}\n`;
+                        }
                     }
                     
-                    // Confirm overwrite
-                    const confirmMsg = `This will restore:\n` +
-                        `- ${backup.scenes.length} scenes\n` +
-                        `- ${backup.acts.length} acts\n` +
-                        `- ${backup.chapters.length} chapters\n\n` +
-                        `Current data will be overwritten. Continue?`;
+                    if (scene.location) {
+                        const locationName = this.getLocationName(scene.location);
+                        if (locationName) {
+                            content += `> - Location: ${locationName}\n`;
+                        }
+                    }
                     
-                    if (!confirm(confirmMsg)) {
-                        reject(new Error('Import cancelled by user'));
+                    if (scene.mckeeElement) {
+                        content += `> - McKee Element: ${scene.mckeeElement}\n`;
+                    }
+                    
+                    content += '\n';
+                    
+                    // Beats
+                    const beats = this.getBeatsForScene(scene.id);
+                    
+                    if (beats.length === 0) {
+                        content += '*[Empty scene - no beats]*\n\n';
+                    } else {
+                        beats.forEach((beat, beatIndex) => {
+                            if (beats.length > 1) {
+                                content += `**Beat ${beatIndex + 1}:**\n\n`;
+                            }
+                            content += this.stripHTML(beat.content) + '\n\n';
+                        });
+                    }
+                    
+                    content += '---\n\n';
+                });
+            }
+        });
+        
+        // Statistics
+        const stats = ChronicleData.getStats();
+        content += '## Story Statistics\n\n';
+        content += `- **Total Scenes:** ${stats.scenes.total}\n`;
+        content += `- **Total Beats:** ${stats.beats.total}\n`;
+        content += `- **Total Words:** ${stats.wordCount.toLocaleString()}\n`;
+        content += `- **Draft:** ${stats.scenes.draft} | **In Progress:** ${stats.scenes.inProgress} | **Polished:** ${stats.scenes.polished}\n`;
+        
+        // Download
+        this.downloadFile(content, 'chronicle-export.md', 'text/markdown');
+        
+        console.log('✅ Markdown export complete');
+    },
+    
+    /**
+     * Create URL-friendly slug
+     */
+    slugify(text) {
+        return text
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-');
+    },
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // PDF EXPORT
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Export story as PDF
+     * "The letter kills, but the Spirit gives life" - 2 Corinthians 3:6
+     */
+    exportToPDF() {
+        console.log('📄 Exporting to PDF...');
+        
+        // Check if jsPDF is available
+        if (typeof window.jspdf === 'undefined') {
+            alert('PDF library not loaded. This feature requires jsPDF library.');
+            return;
+        }
+        
+        const scenes = this.getScenes();
+        
+        if (scenes.length === 0) {
+            alert('No scenes to export. Create some scenes first!');
+            return;
+        }
+        
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        let y = 20;
+        const lineHeight = 7;
+        const pageHeight = 280;
+        const margin = 20;
+        const maxWidth = 170;
+        
+        // Helper to add new page if needed
+        const checkPageBreak = (neededSpace = lineHeight) => {
+            if (y + neededSpace > pageHeight) {
+                doc.addPage();
+                y = 20;
+                return true;
+            }
+            return false;
+        };
+        
+        // Title
+        doc.setFontSize(24);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Chronicle Export', margin, y);
+        y += lineHeight * 2;
+        
+        // Date
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Exported: ${new Date().toLocaleString()}`, margin, y);
+        y += lineHeight * 3;
+        
+        // Acts and Scenes
+        ChronicleData.acts.forEach((act, actIndex) => {
+            const actScenes = ChronicleData.getScenesByAct(act.id);
+            
+            if (actScenes.length > 0) {
+                checkPageBreak(lineHeight * 3);
+                
+                // Act title
+                doc.setFontSize(16);
+                doc.setFont('helvetica', 'bold');
+                doc.text(act.title, margin, y);
+                y += lineHeight * 2;
+                
+                actScenes.forEach((scene, sceneIndex) => {
+                    checkPageBreak(lineHeight * 3);
+                    
+                    // Scene title
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${actIndex + 1}.${sceneIndex + 1}. ${scene.title}`, margin, y);
+                    y += lineHeight;
+                    
+                    // Metadata
+                    doc.setFontSize(9);
+                    doc.setFont('helvetica', 'italic');
+                    doc.text(`${scene.author} | ${scene.status}`, margin, y);
+                    y += lineHeight * 1.5;
+                    
+                    // Beats
+                    const beats = this.getBeatsForScene(scene.id);
+                    
+                    doc.setFontSize(10);
+                    doc.setFont('helvetica', 'normal');
+                    
+                    if (beats.length === 0) {
+                        doc.text('[Empty scene]', margin, y);
+                        y += lineHeight;
+                    } else {
+                        beats.forEach((beat, beatIndex) => {
+                            const text = this.stripHTML(beat.content);
+                            const lines = doc.splitTextToSize(text, maxWidth);
+                            
+                            lines.forEach(line => {
+                                checkPageBreak();
+                                doc.text(line, margin, y);
+                                y += lineHeight;
+                            });
+                            
+                            y += lineHeight * 0.5;
+                        });
+                    }
+                    
+                    y += lineHeight;
+                });
+            }
+        });
+        
+        // Save
+        doc.save('chronicle-export.pdf');
+        
+        console.log('✅ PDF export complete');
+    },
+    
+    
+    // ═══════════════════════════════════════════════════════════════════════
+    // BACKUP & RESTORE
+    // ═══════════════════════════════════════════════════════════════════════
+    
+    /**
+     * Export complete backup
+     * "Store up for yourselves treasures in heaven" - Matthew 6:20
+     */
+    exportBackup() {
+        console.log('💾 Creating backup...');
+        
+        // Get complete backup from ChronicleData
+        const backup = ChronicleData.exportAll();
+        
+        // Add export metadata
+        backup.exported = new Date().toISOString();
+        backup.version = '2.0.0';
+        backup.application = 'Chronicle';
+        
+        // Create JSON string
+        const json = JSON.stringify(backup, null, 2);
+        
+        // Download
+        const filename = `chronicle-backup-${new Date().toISOString().slice(0, 10)}.json`;
+        this.downloadFile(json, filename, 'application/json');
+        
+        console.log('✅ Backup created:', backup);
+        
+        // Show confirmation
+        alert(`✅ Backup created successfully!\n\nScenes: ${backup.scenes.length}\nBeats: ${backup.beats.length}\nCharacters: ${backup.characters.length}\nLocations: ${backup.locations.length}`);
+    },
+    
+    /**
+     * Import backup and restore data
+     * "I will restore to you the years that the swarming locust has eaten" - Joel 2:25
+     */
+    importBackup() {
+        console.log('📂 Importing backup...');
+        
+        // Create file input
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            
+            reader.onload = (event) => {
+                try {
+                    const backup = JSON.parse(event.target.result);
+                    
+                    // Validate backup
+                    if (!backup.scenes || !backup.beats) {
+                        alert('❌ Invalid backup file: Missing required data');
                         return;
                     }
                     
-                    // Clear existing data
-                    const keysToRemove = [];
-                    for (let i = 0; i < localStorage.length; i++) {
-                        const key = localStorage.key(i);
-                        if (key.startsWith('scene_') || key.startsWith('act_') || 
-                            key.startsWith('chapter_') || key.startsWith('character_') || 
-                            key.startsWith('theme_')) {
-                            keysToRemove.push(key);
-                        }
+                    // Confirm restore
+                    const confirm = window.confirm(
+                        `⚠️ WARNING: This will replace all current data!\n\n` +
+                        `Backup contains:\n` +
+                        `- ${backup.scenes.length} scenes\n` +
+                        `- ${backup.beats.length} beats\n` +
+                        `- ${backup.characters?.length || 0} characters\n` +
+                        `- ${backup.locations?.length || 0} locations\n\n` +
+                        `Continue with restore?`
+                    );
+                    
+                    if (!confirm) {
+                        console.log('Restore cancelled by user');
+                        return;
                     }
-                    keysToRemove.forEach(key => localStorage.removeItem(key));
                     
-                    // Restore data
-                    backup.scenes.forEach(scene => {
-                        localStorage.setItem(`scene_${scene.id}`, JSON.stringify(scene));
-                    });
+                    // Import via ChronicleData
+                    const success = ChronicleData.importAll(backup);
                     
-                    backup.acts.forEach(act => {
-                        localStorage.setItem(`act_${act.id}`, JSON.stringify(act));
-                    });
+                    if (success) {
+                        alert('✅ Backup restored successfully!\n\nPage will reload to apply changes.');
+                        location.reload();
+                    } else {
+                        alert('❌ Failed to restore backup. Please check the console for details.');
+                    }
                     
-                    backup.chapters.forEach(chapter => {
-                        localStorage.setItem(`chapter_${chapter.id}`, JSON.stringify(chapter));
-                    });
-                    
-                    backup.characters.forEach(char => {
-                        localStorage.setItem(`character_${char.id}`, JSON.stringify(char));
-                    });
-                    
-                    backup.themes.forEach(theme => {
-                        localStorage.setItem(`theme_${theme.id}`, JSON.stringify(theme));
-                    });
-                    
-                    Object.entries(backup.settings).forEach(([key, value]) => {
-                        localStorage.setItem(key, value);
-                    });
-                    
-                    console.log('✅ Backup restored successfully');
-                    resolve(backup);
-                    
-                    // Reload page to refresh UI
-                    alert('Backup restored successfully! The page will now reload.');
-                    window.location.reload();
-                    
-                } catch (error) {
-                    console.error('❌ Import failed:', error);
-                    reject(error);
+                } catch (err) {
+                    console.error('Import error:', err);
+                    alert('❌ Failed to parse backup file. Make sure it\'s a valid Chronicle backup.');
                 }
             };
             
-            reader.onerror = reject;
             reader.readAsText(file);
-        });
+        };
+        
+        input.click();
     },
     
-    // ===================================
-    // HELPER FUNCTIONS
-    // ===================================
     
-    getFilteredScenes(filter, sortBy) {
-        let scenes = [];
-        
-        // Get all scenes from localStorage
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key.startsWith('scene_')) {
-                scenes.push(JSON.parse(localStorage.getItem(key)));
-            }
-        }
-        
-        // Apply filter
-        if (filter === 'current' && ChronicleDesk.currentSceneId) {
-            scenes = scenes.filter(s => s.id === ChronicleDesk.currentSceneId);
-        } else if (Array.isArray(filter)) {
-            scenes = scenes.filter(s => filter.includes(s.id));
-        }
-        
-        // Sort
-        switch(sortBy) {
-            case 'chronological':
-                scenes.sort((a, b) => new Date(a.created) - new Date(b.created));
-                break;
-            case 'author':
-                scenes.sort((a, b) => a.author.localeCompare(b.author));
-                break;
-            case 'structure':
-                // Will be organized later by organizeByStructure()
-                scenes.sort((a, b) => {
-                    if (a.act !== b.act) return (a.act || 999) - (b.act || 999);
-                    if (a.chapterId !== b.chapterId) return (a.chapterId || '').localeCompare(b.chapterId || '');
-                    return (a.order || 0) - (b.order || 0);
-                });
-                break;
-        }
-        
-        return scenes;
-    },
+    // ═══════════════════════════════════════════════════════════════════════
+    // UTILITY METHODS
+    // ═══════════════════════════════════════════════════════════════════════
     
-    organizeByStructure(scenes) {
-        const structure = {};
-        
-        scenes.forEach(scene => {
-            const act = scene.act || 1;
-            const chapterId = scene.chapterId || null;
-            const chapterName = scene.chapterName || 'Untitled Chapter';
-            
-            if (!structure[act]) {
-                structure[act] = {
-                    chapters: {},
-                    unchaptered: []
-                };
-            }
-            
-            if (chapterId) {
-                if (!structure[act].chapters[chapterId]) {
-                    structure[act].chapters[chapterId] = {
-                        name: chapterName,
-                        scenes: []
-                    };
-                }
-                structure[act].chapters[chapterId].scenes.push(scene);
-            } else {
-                structure[act].unchaptered.push(scene);
-            }
-        });
-        
-        return structure;
-    },
-    
+    /**
+     * Download file helper
+     */
     downloadFile(content, filename, mimeType) {
         const blob = new Blob([content], { type: mimeType });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
         URL.revokeObjectURL(url);
+    },
+    
+    /**
+     * Setup export button listeners
+     */
+    setupExportButtons() {
+        // Export TXT button
+        const txtBtn = document.getElementById('exportTXT');
+        if (txtBtn) {
+            txtBtn.addEventListener('click', () => this.exportToTXT());
+        }
+        
+        // Export Markdown button
+        const mdBtn = document.getElementById('exportMarkdown');
+        if (mdBtn) {
+            mdBtn.addEventListener('click', () => this.exportToMarkdown());
+        }
+        
+        // Export PDF button
+        const pdfBtn = document.getElementById('exportPDF');
+        if (pdfBtn) {
+            pdfBtn.addEventListener('click', () => this.exportToPDF());
+        }
+        
+        // Backup button
+        const backupBtn = document.getElementById('exportBackup');
+        if (backupBtn) {
+            backupBtn.addEventListener('click', () => this.exportBackup());
+        }
+        
+        // Restore button
+        const restoreBtn = document.getElementById('importBackup');
+        if (restoreBtn) {
+            restoreBtn.addEventListener('click', () => this.importBackup());
+        }
+        
+        console.log('✅ Export buttons configured');
     }
 };
 
-// Initialize when page loads
+// ═══════════════════════════════════════════════════════════════════════
+// MODULE INITIALIZATION
+// ═══════════════════════════════════════════════════════════════════════
+
+// Make available globally
+window.ChronicleExport = ChronicleExport;
+
+// Setup export functionality when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('📤 Export system ready');
+    ChronicleExport.setupExportButtons();
 });
+
+console.log('📤 Chronicle Export module loaded');
+
+// ═══════════════════════════════════════════════════════════════════════
+// END OF CHRONICLE EXPORT
+// 
+// "Give, and it will be given to you. Good measure, pressed down,
+// shaken together, running over, will be put into your lap."
+// — Luke 6:38
+// ═══════════════════════════════════════════════════════════════════════
