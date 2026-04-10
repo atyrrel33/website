@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apps | Tyrrel Institute</title>
+  <title>Apps | Tyrrel Design Firm</title>
   <style>
-    /* Add your styling here - match your main site or keep simple */
     body {
       font-family: 'Jost', sans-serif;
       background: #0a0a0a;
@@ -16,6 +15,7 @@
       align-items: center;
       justify-content: center;
       padding: 2rem;
+      margin: 0;
     }
     h1 {
       font-weight: 200;
@@ -32,6 +32,8 @@
       text-decoration: none;
       letter-spacing: 2px;
       transition: all 0.3s ease;
+      text-align: center;
+      min-width: 200px;
     }
     .app-link:hover {
       border-color: rgba(220, 180, 80, 0.8);
@@ -43,23 +45,54 @@
       text-decoration: none;
       font-size: 0.9rem;
     }
+    
+    /* We hide the main content by default so it doesn't flash before the password prompt */
+    #secure-content {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
-    <script>
+
+  <script>
+    // Set your password here
+    const correctPassword = "access1990"; 
+    
+    // Prompt the user when the page loads
+    const userAttempt = prompt("Enter the password to access the Apps Directory:");
+
+    if (userAttempt === correctPassword) {
+      // If correct, unhide the content
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("secure-content").style.display = "flex";
+      });
+    } else {
+      // If wrong or cancelled, boot them back to the home page
+      alert("Incorrect password. Returning to home.");
+      window.location.href = "/"; 
+    }
   </script>
 
-  <h1>APPS</h1>
+  <div id="secure-content">
+    <h1>APPS</h1>
 
-  
-  <a href="/apps/joseph-landing/" class="app-link">
-    JOSEPH
-  </a>
+    <a href="/apps/joseph-landing/" class="app-link">
+      JOSEPH
+    </a>
+    
     <a href="/apps/Scriptorium.html" class="app-link">
-    SCRIPTORIUM
-  </a>
-  <!-- Add more apps here later -->
-  
-  <a href="/" class="back-link">Back to Home</a>
+      SCRIPTORIUM
+    </a>
+    
+    <a href="/apps/dennyaipitchtyrreldesignfirm.html" class="app-link">
+      DENNY'S PITCH
+    </a>
+
+    <a href="/" class="back-link">Back to Home</a>
+  </div>
+
 </body>
 </html>
