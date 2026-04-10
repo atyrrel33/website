@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tyrrel Design Firm — AI Agent Division Pitch Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dim: #8A6B2A;
+    --dark: #0A0A08;
+    --dark-2: #111110;
+    --dark-3: #1A1A17;
+    --dark-4: #232320;
+    --dark-5: #2E2E2A;
+    --text: #E8E4D8;
+    --text-dim: #9A9688;
+    --text-faint: #5A5A52;
+    --green: #1A472A;
+    --green-light: #2D6B42;
+    --red-accent: #8B3A3A;
+    --border: rgba(201, 168, 76, 0.15);
+    --border-bright: rgba(201, 168, 76, 0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(10,10,8,0.95), transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-tag {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(26,71,42,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-eyebrow-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-eyebrow-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-subtitle {
+    max-width: 560px;
+    font-size: 17px;
+    color: var(--text-dim);
+    line-height: 1.75;
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 48px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hero-meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .hero-meta-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .hero-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  }
+
+  /* SECTION BASE */
+  section {
+    padding: 100px 48px;
+    position: relative;
+  }
+
+  .section-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .section-intro {
+    max-width: 640px;
+    font-size: 16px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 64px;
+  }
+
+  /* OPPORTUNITY SECTION */
+  #opportunity {
+    background: var(--dark-2);
+  }
+
+  .opportunity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 64px;
+  }
+
+  .opp-card {
+    background: var(--dark-2);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .opp-card:hover { background: var(--dark-3); }
+
+  .opp-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.3s;
+  }
+
+  .opp-card:hover::before {
+    background: linear-gradient(to right, var(--gold), transparent);
+  }
+
+  .opp-stat {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 12px;
+    letter-spacing: -0.03em;
+  }
+
+  .opp-label {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .opp-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* THE PROBLEM */
+  #problem {
+    background: var(--dark-3);
+  }
+
+  .problem-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .problem-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .problem-item {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .problem-item:first-child { border-top: 1px solid var(--border); }
+
+  .problem-icon {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red-accent);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .problem-text strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .problem-text span {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .problem-quote {
+    background: var(--dark-4);
+    border-left: 3px solid var(--gold);
+    padding: 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--text);
+    position: sticky;
+    top: 120px;
+  }
+
+  .problem-quote cite {
+    display: block;
+    margin-top: 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-style: normal;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* DIFFERENTIATION */
+  #differentiation {
+    background: var(--dark);
+  }
+
+  .diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 80px;
+    font-size: 14px;
+  }
+
+  .diff-table th {
+    padding: 20px 24px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .diff-table th:nth-child(3) {
+    color: var(--gold);
+    background: rgba(201,168,76,0.04);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+
+  .diff-table td {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    vertical-align: top;
+  }
+
+  .diff-table td:first-child {
+    font-weight: 500;
+    color: var(--text);
+    font-size: 13px;
+  }
+
+  .diff-table td:nth-child(3) {
+    background: rgba(201,168,76,0.03);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .diff-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .diff-table tr:hover td:nth-child(3) { background: rgba(201,168,76,0.06); }
+
+  .check { color: var(--gold); font-size: 16px; }
+  .cross { color: var(--red-accent); font-size: 16px; }
+  .partial { color: var(--text-faint); font-size: 16px; }
+
+  /* THE METHOD */
+  #method {
+    background: var(--green);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #method::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, transparent 60%);
+  }
+
+  #method > * { position: relative; z-index: 1; }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    background: rgba(255,255,255,0.08);
+    margin-bottom: 64px;
+  }
+
+  .method-card {
+    background: rgba(0,0,0,0.4);
+    padding: 40px 28px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .method-card:hover { background: rgba(0,0,0,0.6); }
+
+  .method-s {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+
+  .method-name {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 8px;
+  }
+
+  .method-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+  }
+
+  .method-callout {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 40px 48px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .method-callout-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.3;
+  }
+
+  .method-callout-text {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+  }
+
+  /* PITCH ARCHITECTURE */
+  #pitch {
+    background: var(--dark-2);
+  }
+
+  .pitch-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 900px;
+  }
+
+  .pitch-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 40px;
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+    position: relative;
+  }
+
+  .pitch-step:last-child { border-bottom: none; }
+
+  .pitch-step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--dark-5);
+    line-height: 1;
+    position: relative;
+    top: -8px;
+  }
+
+  .pitch-step-active .pitch-step-num { color: var(--gold); }
+
+  .pitch-step-content {}
+
+  .pitch-step-phase {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .pitch-step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .pitch-step-body {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .pitch-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pitch-bullets li {
+    font-size: 14px;
+    color: var(--text-dim);
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .pitch-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 12px;
+  }
+
+  /* OBJECTIONS */
+  #objections {
+    background: var(--dark-3);
+  }
+
+  .objection-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .objection-card {
+    background: var(--dark-4);
+    border: 1px solid var(--border);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .objection-card:hover { border-color: var(--border-bright); }
+
+  .objection-q {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    line-height: 1.5;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .objection-q::before {
+    content: '"';
+    color: var(--gold);
+    font-size: 32px;
+    line-height: 0;
+    vertical-align: -12px;
+    margin-right: 4px;
+  }
+
+  .objection-a {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.8;
+    font-weight: 400;
+  }
+
+  .objection-tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    font-weight: 500;
+  }
+
+  /* PRICING */
+  #pricing {
+    background: var(--dark);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .pricing-card {
+    background: var(--dark-2);
+    padding: 48px 36px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .pricing-card:hover { background: var(--dark-3); }
+
+  .pricing-card.featured {
+    background: var(--dark-3);
+    border-top: 3px solid var(--gold);
+  }
+
+  .pricing-tier {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+  }
+
+  .pricing-card.featured .pricing-tier { color: var(--gold); }
+
+  .pricing-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .pricing-price {
+    font-size: 15px;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pricing-features li {
+    font-size: 13px;
+    color: var(--text-dim);
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .pricing-features li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 7px;
+    top: 5px;
+  }
+
+  /* THE VISION */
+  #vision {
+    background: var(--dark-2);
+    border-top: 1px solid var(--border);
+  }
+
+  .vision-statement {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .vision-statement .section-eyebrow {
+    justify-content: center;
+  }
+
+  .vision-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 48px;
+  }
+
+  .vision-quote em { color: var(--gold); font-style: normal; }
+
+  .vision-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+    text-align: left;
+  }
+
+  .vision-pillar {
+    padding: 32px;
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+  }
+
+  .vision-pillar-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+
+  .vision-pillar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .vision-pillar-body {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* INSIDER ADVANTAGE */
+  #insider {
+    background: var(--dark-4);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .insider-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .insider-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .insider-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px;
+    background: var(--dark-5);
+    border: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+
+  .insider-item:hover { border-color: var(--border-bright); }
+
+  .insider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .insider-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .insider-text span {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* CLOSING SECTION */
+  #close {
+    background: var(--dark);
+    text-align: center;
+    padding: 120px 48px;
+  }
+
+  .close-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .close-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .close-body {
+    max-width: 560px;
+    margin: 0 auto 48px;
+    font-size: 16px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .close-footer {
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .close-footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .close-footer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .opportunity-grid,
+    .problem-columns,
+    .objection-cards,
+    .pricing-grid,
+    .vision-pillars,
+    .insider-layout,
+    .method-grid { grid-template-columns: 1fr; }
+    .diff-table { font-size: 12px; }
+    .diff-table th, .diff-table td { padding: 14px 12px; }
+    .hero-meta { flex-wrap: wrap; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Tyrrel Design Firm</div>
+  <ul class="nav-links">
+    <li><a href="#opportunity">Opportunity</a></li>
+    <li><a href="#differentiation">Differentiation</a></li>
+    <li><a href="#method">The Method</a></li>
+    <li><a href="#pitch">The Pitch</a></li>
+    <li><a href="#objections">Objections</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <div class="nav-tag">AI Division — Pitch Brief / April 2026</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">
+    <div class="hero-eyebrow-line"></div>
+    <div class="hero-eyebrow-text">Tyrrel Design Holdings — AI Agent Division</div>
+  </div>
+  <h1 class="hero-title">The Human<br>in the<br><em>Machine.</em></h1>
+  <p class="hero-subtitle">Everyone else is selling a platform. We're delivering a presence — an agent built on conflict intelligence, human psychology, and a decade of methodology that actually works under pressure.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Pitch Date</span>
+      <span class="hero-meta-value">Tuesday, April 2026</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Target</span>
+      <span class="hero-meta-value">PayTomorrow LLC</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Stage</span>
+      <span class="hero-meta-value">Phase 1 — Proof of Concept</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Model</span>
+      <span class="hero-meta-value">Done-For-You AI Deployment</span>
+    </div>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<!-- OPPORTUNITY -->
+<section id="opportunity">
+  <div class="section-eyebrow">
+    <span class="section-number">01</span>
+    <span class="section-label">The Market Reality</span>
+  </div>
+  <h2 class="section-title">The <em>Opportunity</em><br>Is Hiding in Plain Sight</h2>
+  <p class="section-intro">Businesses across every sector are hemorrhaging money on BPO operations built for a pre-AI world. The tools exist to change that. The gap is someone who actually knows how to deploy them well.</p>
+
+  <div class="opportunity-grid fade-in">
+    <div class="opp-card">
+      <div class="opp-stat">$0.31</div>
+      <div class="opp-label">Max Cost Per Minute</div>
+      <div class="opp-desc">Full voice AI deployment — including ElevenLabs voice clone, telephony, and LLM — costs a fraction of a human BPO rep. The savings compound across thousands of calls per month.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-stat">24/7</div>
+      <div class="opp-label">Operational Coverage</div>
+      <div class="opp-desc">AI agents don't call in sick. They don't have bad days. They don't quit after two weeks. Every call gets the same calibrated, professional response — at 2am or 2pm.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-stat">80%</div>
+      <div class="opp-label">Calls Handled Autonomously</div>
+      <div class="opp-desc">Routine collections, scheduling, FAQs, status updates — the majority of call volume doesn't require a human. The agent handles it. The human handles what actually needs human judgment.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-stat">Zero</div>
+      <div class="opp-label">Technical Skill Required by Client</div>
+      <div class="opp-desc">We build it. We deploy it. We maintain it. The client gets a working system without needing to understand how it works. That's the model. Done-for-you, not do-it-yourself.</div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIDER ADVANTAGE -->
+<section id="insider">
+  <div class="section-eyebrow">
+    <span class="section-number">02</span>
+    <span class="section-label">The Inside Edge</span>
+  </div>
+  <div class="insider-layout">
+    <div>
+      <h2 class="section-title" style="margin-bottom:24px;">We're Not<br><em>Cold-Calling.</em><br>We Already Know<br>the Pain.</h2>
+      <p class="section-intro" style="margin-bottom:0;">The partner leading this pitch isn't pitching a stranger. He's already inside PayTomorrow. He knows exactly where the money is being wasted, which operations are friction-heavy, and what would make the people in that room say yes. That's not a sales advantage — that's a surgical advantage.</p>
+    </div>
+    <ul class="insider-list fade-in">
+      <li class="insider-item">
+        <div class="insider-dot"></div>
+        <div class="insider-text">
+          <strong>Knows the Cost Centers</strong>
+          <span>He knows what the BPO operation costs. He knows the line items. The pitch is built on real numbers, not estimates.</span>
+        </div>
+      </li>
+      <li class="insider-item">
+        <div class="insider-dot"></div>
+        <div class="insider-text">
+          <strong>Understands the Workflow</strong>
+          <span>He knows how calls are handled today — the handoffs, the failure points, where calls fall through the cracks.</span>
+        </div>
+      </li>
+      <li class="insider-item">
+        <div class="insider-dot"></div>
+        <div class="insider-text">
+          <strong>Knows the Decision-Makers</strong>
+          <span>He knows who in that room has budget authority and what they care about most. The pitch will speak directly to them.</span>
+        </div>
+      </li>
+      <li class="insider-item">
+        <div class="insider-dot"></div>
+        <div class="insider-text">
+          <strong>Has Credibility Already</strong>
+          <span>He doesn't have to earn trust from zero. He walks in with it. That's the difference between a cold pitch and a conversation.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- DIFFERENTIATION -->
+<section id="differentiation">
+  <div class="section-eyebrow">
+    <span class="section-number">03</span>
+    <span class="section-label">Why Us Over Everyone Else</span>
+  </div>
+  <h2 class="section-title">The Market Sells<br><em>Platforms.</em><br>We Deliver<br>Outcomes.</h2>
+  <p class="section-intro">The difference between us and every other AI voice provider isn't technical — it's philosophical. They give you a steering wheel. We drive the car, and we know every road.</p>
+
+  <table class="diff-table fade-in">
+    <thead>
+      <tr>
+        <th>Capability</th>
+        <th>Platform Providers<br><span style="font-size:9px;color:#3A3A35">(Bland, Vapi, Synthflow, etc.)</span></th>
+        <th>Tyrrel Design Firm AI</th>
+        <th>Traditional BPO</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Deployment Model</td>
+        <td>Self-serve, DIY setup</td>
+        <td>Done-for-you, fully managed</td>
+        <td>Human-staffed, you manage</td>
+      </tr>
+      <tr>
+        <td>Conflict Intelligence</td>
+        <td class="cross">✗ Generic AI responses</td>
+        <td class="check">✓ 5 S's framework embedded</td>
+        <td class="partial">~ Rep-dependent</td>
+      </tr>
+      <tr>
+        <td>Escalation Logic</td>
+        <td class="partial">~ Basic keyword triggers</td>
+        <td class="check">✓ Behavioral escalation design</td>
+        <td class="partial">~ Manager judgment</td>
+      </tr>
+      <tr>
+        <td>Voice Identity</td>
+        <td class="partial">~ Generic AI voice</td>
+        <td class="check">✓ Cloned from real human</td>
+        <td class="check">✓ Human, but inconsistent</td>
+      </tr>
+      <tr>
+        <td>Ongoing Refinement</td>
+        <td class="cross">✗ You tune it yourself</td>
+        <td class="check">✓ We monitor and improve it</td>
+        <td class="partial">~ Training cycles</td>
+      </tr>
+      <tr>
+        <td>Cost Structure</td>
+        <td class="partial">~ Low platform fee + your time</td>
+        <td class="check">✓ Predictable, outcome-based</td>
+        <td class="cross">✗ High, scales with headcount</td>
+      </tr>
+      <tr>
+        <td>Methodology Behind It</td>
+        <td class="cross">✗ None</td>
+        <td class="check">✓ 8+ years field-tested</td>
+        <td class="partial">~ Script-based</td>
+      </tr>
+      <tr>
+        <td>Who It's Built For</td>
+        <td>Tech teams with developers</td>
+        <td>Businesses that want results</td>
+        <td>Anyone with budget</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- THE METHOD -->
+<section id="method">
+  <div class="section-eyebrow">
+    <span class="section-number">04</span>
+    <span class="section-label">The Methodology</span>
+  </div>
+  <h2 class="section-title" style="color:white;">What Every Agent<br><em>Already Knows</em></h2>
+  <p class="section-intro" style="color:rgba(255,255,255,0.65);">The 5 S's of Handling Your Business is a conflict resolution framework developed through real-world application — not a boardroom, but correctional facilities, crisis response units, and high-stakes negotiation environments. It's been tested where failure has real consequences. Now it's the engine inside every agent we build.</p>
+
+  <div class="method-grid fade-in">
+    <div class="method-card">
+      <div class="method-s">S1</div>
+      <div class="method-name">Slow Down</div>
+      <div class="method-desc">Take control of the moment before the moment takes control of you. The agent is designed to de-escalate pace before anything else.</div>
+    </div>
+    <div class="method-card">
+      <div class="method-s">S2</div>
+      <div class="method-name">Size Up</div>
+      <div class="method-desc">What's really happening here? The agent reads tone, intent, and urgency — not just words — to understand what the caller actually needs.</div>
+    </div>
+    <div class="method-card">
+      <div class="method-s">S3</div>
+      <div class="method-name">Speak Smart</div>
+      <div class="method-desc">Keep everyone's dignity intact. The agent never embarrasses, never escalates unnecessarily, never speaks past what the situation requires.</div>
+    </div>
+    <div class="method-card">
+      <div class="method-s">S4</div>
+      <div class="method-name">Select a Move</div>
+      <div class="method-desc">Match the response to the situation, not the script. The agent selects the right path — continue, offer options, or transfer — based on what the moment requires.</div>
+    </div>
+    <div class="method-card">
+      <div class="method-s">S5</div>
+      <div class="method-name">Shut It Down</div>
+      <div class="method-desc">The call isn't over until it's actually resolved. Both parties should be able to walk away with some respect. The agent is designed to close cleanly.</div>
+    </div>
+  </div>
+
+  <div class="method-callout fade-in">
+    <div class="method-callout-label">Why this changes everything in collections and BPO.</div>
+    <div class="method-callout-text">Most AI agents fail in high-emotion calls because they're built on logic trees, not human psychology. When someone's angry about a payment, they don't want correct information — they want to feel heard before they'll listen to anything. The 5 S's framework solves exactly this. It's the difference between an agent that processes calls and one that actually resolves them.</div>
+  </div>
+</section>
+
+<!-- PITCH ARCHITECTURE -->
+<section id="pitch">
+  <div class="section-eyebrow">
+    <span class="section-number">05</span>
+    <span class="section-label">Tuesday's Pitch Architecture</span>
+  </div>
+  <h2 class="section-title">How the<br><em>Conversation</em><br>Should Flow</h2>
+  <p class="section-intro">Every pitch has a structure. This one moves from inside knowledge to external proof to a concrete offer. Your partner opens. You close.</p>
+
+  <div class="pitch-flow">
+    <div class="pitch-step pitch-step-active fade-in">
+      <div class="pitch-step-num">01</div>
+      <div class="pitch-step-content">
+        <div class="pitch-step-phase">Partner Opens — The Internal Frame</div>
+        <div class="pitch-step-title">Name the Cost They Already Know</div>
+        <div class="pitch-step-body">Your partner leads. He doesn't pitch technology — he names a problem the room already lives with. What does your current call operation cost per month? Per employee? What happens when a rep has a bad day on a collections call? He knows the answers because he's seen it. This isn't a question — it's a mirror.</div>
+        <ul class="pitch-bullets">
+          <li>Reference specific operational pain points (he knows them)</li>
+          <li>Put a number on it — cost per call, cost of turnover, cost of failed collections</li>
+          <li>Frame the status quo as a choice they're making, not just a situation they're in</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitch-step fade-in">
+      <div class="pitch-step-num">02</div>
+      <div class="pitch-step-content">
+        <div class="pitch-step-phase">Introduce the Shift — What's Now Possible</div>
+        <div class="pitch-step-title">Show What Changed in the Market</div>
+        <div class="pitch-step-body">Don't pitch AI in the abstract. Show them what's real right now. Play a demo call. Let them hear a voice agent handle a collections scenario — dispute, high emotion, warm transfer. The room will go quiet. That's the moment you're building toward.</div>
+        <ul class="pitch-bullets">
+          <li>Play a live or recorded demo — hearing it is the pitch, not the slides</li>
+          <li>Point out the escalation moment — show them the logic in action</li>
+          <li>Name the cost: $0.13–$0.31 per minute vs. what they're paying now</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitch-step fade-in">
+      <div class="pitch-step-num">03</div>
+      <div class="pitch-step-content">
+        <div class="pitch-step-phase">You Step In — The Architecture Play</div>
+        <div class="pitch-step-title">Here's What We Actually Build</div>
+        <div class="pitch-step-body">This is where you come in and the conversation shifts from "what is this" to "who builds this." You're not a reseller. You design the system from the ground up — the agent behavior, the voice, the escalation rules, the handoff logic. Walk them through the architecture. Make it visible. Make it feel like something they can touch.</div>
+        <ul class="pitch-bullets">
+          <li>Show the Master Clone Agent architecture diagram (your notebook sketch, made clean)</li>
+          <li>Walk through the escalation logic — dispute, high emotion, complex negotiation → warm transfer to human</li>
+          <li>Explain the methodology baked in — this isn't just an AI, it's trained conflict intelligence</li>
+          <li>Describe what ongoing partnership looks like — we don't deploy and disappear</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitch-step fade-in">
+      <div class="pitch-step-num">04</div>
+      <div class="pitch-step-content">
+        <div class="pitch-step-phase">Make the Ask — Specific and Concrete</div>
+        <div class="pitch-step-title">Propose a Pilot, Not a Contract</div>
+        <div class="pitch-step-body">Don't ask them to bet everything on Tuesday. Ask them for a 30-day pilot on one specific use case — inbound collections calls, or outbound payment reminders, or one route of BPO work. Give them a number. Give them a clear success metric. Make it easy to say yes.</div>
+        <ul class="pitch-bullets">
+          <li>Name one specific use case for the pilot</li>
+          <li>Propose a 30-day window with clear metrics — call resolution rate, escalation rate, cost per call</li>
+          <li>Put a number on what success looks like — and what you'll charge</li>
+          <li>The goal is a signed pilot agreement, not a signed enterprise contract</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pitch-step fade-in">
+      <div class="pitch-step-num">05</div>
+      <div class="pitch-step-content">
+        <div class="pitch-step-phase">The Close — Paint the Bigger Picture</div>
+        <div class="pitch-step-title">This Is Just the Beginning of What's Possible</div>
+        <div class="pitch-step-body">After the ask, before they answer — give them the vision. The pilot is one agent on one use case. What this grows into is a full agent infrastructure that handles the majority of their call volume at a fraction of current cost. You're not just solving a problem. You're redesigning how they operate.</div>
+        <ul class="pitch-bullets">
+          <li>Show them the roadmap — Phase 1 pilot → Phase 2 full deployment → Phase 3 multi-agent system</li>
+          <li>Connect it to their business outcomes, not AI features</li>
+          <li>Leave them with a one-page summary they can pass up the chain</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIONS -->
+<section id="objections">
+  <div class="section-eyebrow">
+    <span class="section-number">06</span>
+    <span class="section-label">Objection Handling</span>
+  </div>
+  <h2 class="section-title">Every Question<br><em>They Will Ask</em></h2>
+  <p class="section-intro">There are no surprising objections in this room. Prepare for every one of them before Tuesday. These are your answers.</p>
+
+  <div class="objection-cards fade-in">
+    <div class="objection-card">
+      <div class="objection-tag">Common</div>
+      <div class="objection-q">Why not just use one of the big AI platforms ourselves?</div>
+      <div class="objection-a">You could. But you'd need a developer to build it, a prompt engineer to tune it, and someone to manage it ongoing. That's time, overhead, and skill you don't have on payroll. We do all of that. You get the result without the build.</div>
+    </div>
+    <div class="objection-card">
+      <div class="objection-tag">Likely</div>
+      <div class="objection-q">What happens when the AI gets it wrong? A bad call could cost us a customer.</div>
+      <div class="objection-a">That's exactly why the escalation logic exists. The agent is designed to recognize the edge of its competence and transfer before it crosses it. It won't try to negotiate a dispute it can't resolve. It hands off and preserves the relationship. That's smarter than most reps.</div>
+    </div>
+    <div class="objection-card">
+      <div class="objection-tag">Expected</div>
+      <div class="objection-q">Is this FDCPA and TCPA compliant for collections calls?</div>
+      <div class="objection-a">Yes — and that compliance logic is built into the agent architecture. Required disclosures, opt-out handling, consent verification — all of it is designed in from the start, not bolted on. This is part of why you need a builder, not just a platform.</div>
+    </div>
+    <div class="objection-card">
+      <div class="objection-tag">Push Back</div>
+      <div class="objection-q">We already have a BPO vendor. Why switch?</div>
+      <div class="objection-a">You don't have to switch. Start with one route, one use case. Run it parallel. Let the numbers talk. If it performs — lower cost, equal or better resolution rate — the decision makes itself. We're not asking you to bet the operation on Tuesday.</div>
+    </div>
+    <div class="objection-card">
+      <div class="objection-tag">Technical</div>
+      <div class="objection-q">How do you integrate with our existing systems?</div>
+      <div class="objection-a">That's a discovery conversation, not a Tuesday blocker. For the pilot, integration requirements are minimal — we can work with your existing call routing. Deeper system integration is a Phase 2 conversation once the pilot proves value.</div>
+    </div>
+    <div class="objection-card">
+      <div class="objection-tag">The Real One</div>
+      <div class="objection-q">You two don't have an enterprise track record yet.</div>
+      <div class="objection-a">You're right — not in AI deployment. But the methodology behind this system has been tested in environments that would break most corporate training programs. The escalation logic works because it was built by someone who de-escalated in juvenile detention facilities and trained EMS crisis responders. That's not a resume line. That's proof of concept.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-eyebrow">
+    <span class="section-number">07</span>
+    <span class="section-label">Pricing Architecture</span>
+  </div>
+  <h2 class="section-title">What the<br><em>Conversation</em><br>Around Money<br>Looks Like</h2>
+  <p class="section-intro">Don't lead with a price sheet. Lead with the value, then anchor. These tiers are conversation starters — the pilot proposal is the real ask for Tuesday.</p>
+
+  <div class="pricing-grid fade-in">
+    <div class="pricing-card">
+      <div class="pricing-tier">Entry Point</div>
+      <div class="pricing-name">Pilot</div>
+      <div class="pricing-price">Custom — scoped per use case</div>
+      <ul class="pricing-features">
+        <li>One agent, one use case</li>
+        <li>30-day deployment window</li>
+        <li>Full build and configuration</li>
+        <li>Weekly performance reporting</li>
+        <li>Escalation logic design</li>
+        <li>The goal is proof, not profit</li>
+      </ul>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-tier">Phase 2 — The Real Play</div>
+      <div class="pricing-name">Deployment</div>
+      <div class="pricing-price">Monthly retainer + per-minute rate</div>
+      <ul class="pricing-features">
+        <li>Multi-agent system (per use case)</li>
+        <li>Master Clone Agent architecture</li>
+        <li>Full escalation logic suite</li>
+        <li>Voice cloning and identity design</li>
+        <li>Ongoing monitoring and tuning</li>
+        <li>Monthly performance review</li>
+        <li>System expansion as needed</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-tier">Long-Term</div>
+      <div class="pricing-name">Infrastructure</div>
+      <div class="pricing-price">Enterprise partnership model</div>
+      <ul class="pricing-features">
+        <li>Full call operation redesign</li>
+        <li>8-agent system build-out</li>
+        <li>Training for internal team</li>
+        <li>Methodology licensing</li>
+        <li>Dedicated support and iteration</li>
+        <li>ROI reporting and documentation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="background:var(--dark-3);border:1px solid var(--border);padding:40px 48px;max-width:700px;" class="fade-in">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">The Anchor Frame for Tuesday</div>
+    <p style="font-size:15px;color:var(--text-dim);line-height:1.8;">Don't open with your price. Open with theirs. Ask what they're currently paying per call, per rep, per month. Let that number sit in the room. Then show them $0.13–$0.31 per minute. The math does the selling. Your ask is just giving them permission to act on what the math already told them.</p>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision">
+  <div class="vision-statement">
+    <div class="section-eyebrow">
+      <span class="section-number">08</span>
+      <span class="section-label">The Bigger Picture</span>
+    </div>
+    <div class="vision-quote">
+      "Everyone else is selling the <em>wheel</em>.<br>We're building the <em>vehicle</em> — and we know where it needs to go."
+    </div>
+    <p style="font-size:16px;color:var(--text-dim);line-height:1.8;max-width:640px;margin:0 auto;">PayTomorrow is the proof of concept. Not just that the technology works — but that done-for-you AI deployment built on real human methodology is what the market actually needs. The platform providers will never serve this customer. They're not built to. We are.</p>
+
+    <div class="vision-pillars fade-in">
+      <div class="vision-pillar">
+        <div class="vision-pillar-num">PILLAR 01</div>
+        <div class="vision-pillar-title">Methodology First</div>
+        <div class="vision-pillar-body">The technology is the vehicle. The 5 S's framework is the driver. Every agent we build inherits a decade of conflict resolution intelligence that no platform provider can replicate.</div>
+      </div>
+      <div class="vision-pillar">
+        <div class="vision-pillar-num">PILLAR 02</div>
+        <div class="vision-pillar-title">Design, Not Deployment</div>
+        <div class="vision-pillar-body">We're not an AI reseller. We're a design firm that works in AI. The difference shows in every call — the pacing, the dignity, the judgment about when to transfer. That's craftsmanship, not configuration.</div>
+      </div>
+      <div class="vision-pillar">
+        <div class="vision-pillar-num">PILLAR 03</div>
+        <div class="vision-pillar-title">Service, Not Software</div>
+        <div class="vision-pillar-body">Platform providers ship code and move on. We stay in the relationship. We tune, improve, and grow the system as the client grows. That's a different business model — and a defensible one.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSE -->
+<section id="close">
+  <h2 class="close-title">Walk in<br>with <em>everything.</em><br>Leave them<br>with <em>no choice.</em></h2>
+  <p class="close-body">The room on Tuesday already knows something needs to change. Your partner already has the trust. You bring the architecture. The pitch isn't about convincing them AI works — it's about showing them you're the only people who know how to make it work for them.</p>
+  <div class="close-footer">
+    <div class="close-footer-brand">Tyrrel Design Firm — AI Division</div>
+    <div class="close-footer-meta">Pitch Brief · Phase 1 · April 2026 · Confidential</div>
+  </div>
+</section>
+
+<script>
+  // Intersection observer for fade-in animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
