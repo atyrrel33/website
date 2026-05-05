@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paraclete — AI Voice Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:   #09090A;
+    --black-2: #111112;
+    --black-3: #18181A;
+    --black-4: #222225;
+    --black-5: #2C2C30;
+    --green:   #1A472A;
+    --green-2: #234F30;
+    --green-glow: rgba(26,71,42,0.25);
+    --gold:    #C9A450;
+    --gold-2:  #E8C06A;
+    --gold-dim: #7A6030;
+    --ivory:   #E8E0D0;
+    --ivory-2: #B0A890;
+    --ivory-3: #6A6458;
+    --red:     #8B3030;
+    --border:  rgba(201,164,80,0.12);
+    --border-2: rgba(201,164,80,0.30);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--black);
+    color: var(--ivory);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+  /* ─── TYPOGRAPHY ─── */
+  .display {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.0;
+  }
+
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: linear-gradient(to bottom, rgba(9,9,10,0.97) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-logo-mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 18px;
+    background: var(--border-2);
+  }
+
+  .nav-partner {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ivory-3);
+  }
+
+  .nav-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ivory-3);
+  }
+
+  /* ─── PROGRESS BAR ─── */
+  #progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--green), var(--gold));
+    z-index: 200;
+    transition: width 0.1s linear;
+    width: 0%;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 120px 0;
+    position: relative;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .container-narrow {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* ─────────────────────────────────────────
+     SECTION 01 · HERO
+  ───────────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 0 80px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    right: -15%;
+    width: 60vw;
+    height: 60vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,71,42,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  #hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent 0%, var(--gold-dim) 40%, var(--gold-dim) 60%, transparent 100%);
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  }
+
+  .hero-eyebrow-line {
+    width: 36px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(120px, 18vw, 220px);
+    font-weight: 300;
+    line-height: 0.85;
+    color: var(--ivory);
+    letter-spacing: -0.04em;
+    animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+    position: relative;
+  }
+
+  .hero-number sup {
+    font-size: 0.28em;
+    vertical-align: super;
+    font-weight: 400;
+    color: var(--gold);
+  }
+
+  .hero-number .per {
+    font-size: 0.20em;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ivory-2);
+    display: block;
+    letter-spacing: 0.05em;
+    margin-top: 0.4em;
+  }
+
+  .hero-vs-block {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+    animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+  }
+
+  .hero-vs-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .hero-vs-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .hero-vs-value.current { color: var(--red); text-decoration: line-through; text-decoration-color: rgba(139,48,48,0.6); }
+  .hero-vs-value.new { color: var(--gold-2); }
+
+  .hero-vs-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ivory-3);
+  }
+
+  .hero-vs-separator {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-style: italic;
+    color: var(--ivory-3);
+  }
+
+  .hero-sub {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--ivory-2);
+    max-width: 540px;
+    line-height: 1.75;
+    margin-top: 40px;
+    animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+  }
+
+  .hero-scroll-hint span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ivory-3);
+  }
+
+  .scroll-arrow {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--ivory-3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-arrow svg {
+    width: 10px;
+    height: 10px;
+    fill: none;
+    stroke: var(--ivory-3);
+    stroke-width: 1.5;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  /* ─────────────────────────────────────────
+     SECTION 02 · COST CALCULATOR
+  ───────────────────────────────────────── */
+  #calculator {
+    background: var(--black-2);
+    padding: 80px 0;
+  }
+
+  .calc-inner {
+    background: var(--black-3);
+    border: 1px solid var(--border);
+    padding: 56px;
+  }
+
+  .calc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .calc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.1;
+    max-width: 380px;
+  }
+
+  .calc-title em { font-style: italic; color: var(--gold); }
+
+  .calc-description {
+    font-size: 14px;
+    color: var(--ivory-2);
+    max-width: 340px;
+    line-height: 1.75;
+  }
+
+  .calc-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+
+  .calc-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .calc-input-group label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .calc-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .calc-input-wrapper input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 2px;
+    background: var(--black-5);
+    outline: none;
+    cursor: pointer;
+    accent-color: var(--gold);
+  }
+
+  .calc-input-wrapper input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(201,164,80,0.5);
+  }
+
+  .calc-input-wrapper input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: pointer;
+    border: none;
+  }
+
+  .calc-value-display {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ivory);
+    min-width: 90px;
+    text-align: right;
+  }
+
+  .calc-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--black-5);
+    border: 1px solid var(--border);
+  }
+
+  .calc-result-cell {
+    background: var(--black-3);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .calc-result-cell.highlight {
+    background: var(--green);
+    border-top: 2px solid var(--gold);
+  }
+
+  .calc-result-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ivory-3);
+  }
+
+  .calc-result-cell.highlight .calc-result-label { color: rgba(232,224,208,0.65); }
+
+  .calc-result-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ivory);
+    transition: all 0.3s ease;
+  }
+
+  .calc-result-value.negative { color: var(--red); }
+  .calc-result-value.positive { color: var(--gold-2); }
+
+  .calc-result-sub {
+    font-size: 12px;
+    color: var(--ivory-3);
+    font-style: italic;
+  }
+
+  .calc-result-cell.highlight .calc-result-sub { color: rgba(232,224,208,0.65); }
+
+  /* ─────────────────────────────────────────
+     SECTION 03 · THE PARACLETE SHIFT
+  ───────────────────────────────────────── */
+  #shift {
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #shift::before {
+    content: '';
+    position: absolute;
+    left: -10%;
+    top: 20%;
+    width: 50vw;
+    height: 50vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,71,42,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .shift-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .shift-left {}
+
+  .shift-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 64px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  .shift-heading em {
+    display: block;
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .shift-body {
+    font-size: 15px;
+    color: var(--ivory-2);
+    line-height: 1.85;
+    margin-bottom: 40px;
+  }
+
+  .shift-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .shift-stat:last-child { border-bottom: none; }
+
+  .shift-stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--gold-2);
+    letter-spacing: -0.02em;
+  }
+
+  .shift-stat-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .shift-stat-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ivory);
+  }
+
+  .shift-stat-desc {
+    font-size: 13px;
+    color: var(--ivory-3);
+    font-style: italic;
+  }
+
+  .shift-right {
+    padding-top: 8px;
+  }
+
+  .shift-definition {
+    background: var(--black-3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 40px;
+    margin-bottom: 32px;
+  }
+
+  .shift-def-word {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .shift-def-etymology {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ivory-3);
+    margin-bottom: 16px;
+  }
+
+  .shift-def-text {
+    font-size: 15px;
+    color: var(--ivory-2);
+    line-height: 1.8;
+  }
+
+  .shift-model-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .shift-model-card {
+    background: var(--black-3);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.3s;
+  }
+
+  .shift-model-card:hover { border-color: var(--border-2); }
+
+  .shift-model-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .shift-model-icon.green { background: var(--green); }
+  .shift-model-icon.dim { background: var(--black-5); }
+
+  .shift-model-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  .shift-model-icon.dim svg { stroke: var(--ivory-3); }
+
+  .shift-model-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ivory);
+    margin-bottom: 2px;
+  }
+
+  .shift-model-text span {
+    font-size: 12px;
+    color: var(--ivory-3);
+  }
+
+  /* ─────────────────────────────────────────
+     SECTION 04 · THE ENGINE
+  ───────────────────────────────────────── */
+  #engine {
+    background: var(--green);
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #engine::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.35) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  #engine > * { position: relative; z-index: 1; }
+
+  .engine-inner {
+    display: grid;
+    grid-template-columns: 5fr 4fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .engine-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(201,164,80,0.3);
+    padding: 6px 14px;
+    margin-bottom: 32px;
+  }
+
+  .engine-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .engine-badge span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .engine-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 68px);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: white;
+    margin-bottom: 28px;
+  }
+
+  .engine-heading em {
+    display: block;
+    font-style: italic;
+    color: var(--gold-2);
+  }
+
+  .engine-body {
+    font-size: 17px;
+    color: rgba(232,224,208,0.80);
+    line-height: 1.85;
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+
+  .engine-proof {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid rgba(201,164,80,0.2);
+  }
+
+  .engine-proof-item {
+    padding: 22px 28px;
+    border-bottom: 1px solid rgba(201,164,80,0.15);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    transition: background 0.25s;
+  }
+
+  .engine-proof-item:last-child { border-bottom: none; }
+  .engine-proof-item:hover { background: rgba(0,0,0,0.25); }
+
+  .engine-proof-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .engine-proof-text {
+    font-size: 14px;
+    color: rgba(232,224,208,0.75);
+  }
+
+  /* Cycle graphic */
+  .engine-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .cycle-wrapper {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cycle-svg {
+    position: absolute;
+    inset: 0;
+    animation: spin 30s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .cycle-center {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cycle-center-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 88px;
+    font-weight: 300;
+    line-height: 0.85;
+    color: white;
+    letter-spacing: -0.04em;
+  }
+
+  .cycle-center-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(201,164,80,0.8);
+    margin-top: 10px;
+  }
+
+  .cycle-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: rgba(201,164,80,0.1);
+    border: 1px solid rgba(201,164,80,0.15);
+    margin-top: 24px;
+    width: 100%;
+  }
+
+  .cycle-step {
+    background: rgba(0,0,0,0.35);
+    padding: 18px 20px;
+    transition: background 0.25s;
+  }
+
+  .cycle-step:hover { background: rgba(0,0,0,0.55); }
+
+  .cycle-step-s {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--gold-2);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .cycle-step-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* ─────────────────────────────────────────
+     SECTION 05 · THE FAILSAFE
+  ───────────────────────────────────────── */
+  #failsafe {
+    padding: 120px 0;
+    background: var(--black-2);
+  }
+
+  .failsafe-header {
+    margin-bottom: 64px;
+    max-width: 600px;
+  }
+
+  .failsafe-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 60px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-top: 16px;
+    margin-bottom: 20px;
+  }
+
+  .failsafe-heading em { font-style: italic; color: var(--gold); }
+
+  .failsafe-intro {
+    font-size: 15px;
+    color: var(--ivory-2);
+    line-height: 1.8;
+  }
+
+  .failsafe-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 56px;
+  }
+
+  .failsafe-card {
+    background: var(--black-3);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .failsafe-card:hover { background: var(--black-4); }
+
+  .failsafe-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.3s;
+  }
+
+  .failsafe-card:hover::after {
+    background: linear-gradient(to right, var(--gold), transparent);
+  }
+
+  .failsafe-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .failsafe-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  .failsafe-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ivory);
+    margin-bottom: 14px;
+  }
+
+  .failsafe-card-body {
+    font-size: 14px;
+    color: var(--ivory-2);
+    line-height: 1.8;
+  }
+
+  .failsafe-compliance-bar {
+    background: var(--black-3);
+    border: 1px solid var(--border);
+    padding: 28px 36px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .compliance-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(201,164,80,0.1);
+    border: 1px solid rgba(201,164,80,0.25);
+    padding: 6px 14px;
+    flex-shrink: 0;
+  }
+
+  .compliance-desc {
+    font-size: 13px;
+    color: var(--ivory-2);
+    font-style: italic;
+  }
+
+  /* ─────────────────────────────────────────
+     SECTION 06 · COMPARISON TABLE
+  ───────────────────────────────────────── */
+  #comparison {
+    padding: 80px 0 120px;
+    background: var(--black);
+  }
+
+  .comparison-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 4.5vw, 56px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    margin-top: 14px;
+  }
+
+  .comparison-title em { font-style: italic; color: var(--gold); }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 48px;
+  }
+
+  .comparison-table th {
+    padding: 14px 20px;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ivory-3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-table th.highlight-col {
+    color: var(--gold);
+    background: rgba(201,164,80,0.05);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+
+  .comparison-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ivory-2);
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+
+  .comparison-table td:first-child {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ivory);
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  .comparison-table td.highlight-col {
+    background: rgba(201,164,80,0.04);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    color: var(--ivory);
+    font-weight: 600;
+  }
+
+  .comparison-table tr:hover td { background: rgba(255,255,255,0.01); }
+  .comparison-table tr:hover td.highlight-col { background: rgba(201,164,80,0.07); }
+
+  .check-mark { color: var(--gold); font-size: 16px; }
+  .x-mark { color: var(--red); font-size: 15px; opacity: 0.8; }
+  .maybe-mark { color: var(--ivory-3); font-size: 15px; }
+
+  /* ─────────────────────────────────────────
+     SECTION 07 · THE PILOT
+  ───────────────────────────────────────── */
+  #pilot {
+    background: var(--black-2);
+    padding: 120px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #pilot::before {
+    content: '';
+    position: absolute;
+    right: -5%;
+    bottom: -15%;
+    width: 55vw;
+    height: 55vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,71,42,0.15) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .pilot-inner {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .pilot-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6vw, 80px);
+    font-weight: 600;
+    line-height: 0.97;
+    letter-spacing: -0.03em;
+    margin-top: 18px;
+    margin-bottom: 36px;
+  }
+
+  .pilot-heading em {
+    display: block;
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .pilot-body {
+    font-size: 15px;
+    color: var(--ivory-2);
+    line-height: 1.85;
+    margin-bottom: 48px;
+    max-width: 480px;
+  }
+
+  .pilot-deliverables {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .pilot-deliverable {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 20px;
+    align-items: start;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.25s;
+  }
+
+  .pilot-deliverable:last-child { border-bottom: none; }
+  .pilot-deliverable:hover { background: var(--black-3); }
+
+  .pilot-deliverable-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    padding-top: 2px;
+  }
+
+  .pilot-deliverable-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ivory);
+    margin-bottom: 3px;
+  }
+
+  .pilot-deliverable-text span {
+    font-size: 12px;
+    color: var(--ivory-3);
+    font-style: italic;
+  }
+
+  .pilot-right {}
+
+  .pilot-cta-card {
+    background: var(--green);
+    border: 1px solid rgba(201,164,80,0.25);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pilot-cta-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.25) 0%, transparent 60%);
+  }
+
+  .pilot-cta-card > * { position: relative; }
+
+  .pilot-cta-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-2);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .pilot-cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.05;
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  .pilot-cta-body {
+    font-size: 14px;
+    color: rgba(232,224,208,0.75);
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+
+  .pilot-cta-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .pilot-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .pilot-metric-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--gold-2);
+    line-height: 1;
+  }
+
+  .pilot-metric-lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(232,224,208,0.55);
+  }
+
+  .pilot-cta-btn {
+    display: block;
+    width: 100%;
+    padding: 16px 28px;
+    background: var(--gold);
+    border: none;
+    color: var(--black);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+  }
+
+  .pilot-cta-btn:hover {
+    background: var(--gold-2);
+    transform: translateY(-1px);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--black);
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--gold);
+  }
+
+  .footer-partner {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ivory-3);
+  }
+
+  .footer-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ivory-3);
+  }
+
+  /* ─── DIVIDERS ─── */
+  .rule-gold {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+    border: none;
+    margin: 0;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 860px) {
+    nav { padding: 16px 24px; }
+    .container, .container-narrow { padding: 0 24px; }
+    section { padding: 80px 0; }
+    .shift-grid, .engine-inner, .pilot-inner { grid-template-columns: 1fr; gap: 48px; }
+    .failsafe-grid, .calc-controls, .comparison-table, .calc-results { grid-template-columns: 1fr; }
+    .cycle-wrapper { width: 240px; height: 240px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .hero-number { font-size: clamp(80px, 18vw, 140px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS -->
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg class="nav-logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="14" stroke="#C9A450" stroke-width="1"/>
+      <path d="M16 6 L16 26 M10 10 C10 10 13 13 16 13 C19 13 22 10 22 10" stroke="#C9A450" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+    <span class="nav-brand">Paraclete</span>
+    <div class="nav-divider"></div>
+    <span class="nav-partner">Tyrrel Design</span>
+  </div>
+  <div class="nav-right">PayTomorrow · Confidential · 2026</div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span class="label">AI Voice Operations — Pitch Brief</span>
+    </div>
+
+    <div class="hero-number">
+      <sup>$</sup>0.31
+      <span class="per">or less. Per minute. All in.</span>
+    </div>
+
+    <div class="hero-vs-block">
+      <div class="hero-vs-item">
+        <span class="hero-vs-value current" id="bpo-cost-display">$6.00+</span>
+        <span class="hero-vs-label">Current BPO — per minute</span>
+      </div>
+      <div class="hero-vs-separator">vs.</div>
+      <div class="hero-vs-item">
+        <span class="hero-vs-value new">$0.13–$0.31</span>
+        <span class="hero-vs-label">Paraclete AI — per minute</span>
+      </div>
+    </div>
+
+    <p class="hero-sub">That gap is your number. Everything below is the operating model that makes it real.</p>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <div class="scroll-arrow">
+      <svg viewBox="0 0 10 10"><path d="M5 2 L5 8 M2 5 L5 8 L8 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <span>Scroll to explore</span>
+  </div>
+</section>
+
+<hr class="rule-gold">
+
+<!-- ════════════════════════════════════════
+     CALCULATOR
+════════════════════════════════════════ -->
+<section id="calculator">
+  <div class="container">
+    <div class="calc-inner reveal">
+      <div class="calc-header">
+        <h2 class="calc-title">Run your <em>own numbers</em></h2>
+        <p class="calc-description">Adjust the inputs. The annual savings calculate in real time. This is the conversation your current vendor doesn't want you having.</p>
+      </div>
+
+      <div class="calc-controls">
+        <div class="calc-input-group">
+          <label>Monthly Call Volume (minutes)</label>
+          <div class="calc-input-wrapper">
+            <input type="range" id="call-volume" min="5000" max="200000" step="5000" value="50000">
+            <span class="calc-value-display mono" id="call-volume-display">50,000</span>
+          </div>
+        </div>
+        <div class="calc-input-group">
+          <label>Current Cost Per Minute ($)</label>
+          <div class="calc-input-wrapper">
+            <input type="range" id="current-cost" min="2" max="12" step="0.25" value="6.00">
+            <span class="calc-value-display mono" id="current-cost-display">$6.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-results">
+        <div class="calc-result-cell">
+          <span class="calc-result-label">Current Annual Spend</span>
+          <span class="calc-result-value negative" id="current-annual">$3.6M</span>
+          <span class="calc-result-sub">At your current rate</span>
+        </div>
+        <div class="calc-result-cell">
+          <span class="calc-result-label">Paraclete Annual Cost</span>
+          <span class="calc-result-value" id="paraclete-annual">$132K</span>
+          <span class="calc-result-sub">At $0.22/min blended avg</span>
+        </div>
+        <div class="calc-result-cell highlight">
+          <span class="calc-result-label">Estimated Annual Savings</span>
+          <span class="calc-result-value positive" id="savings-annual">$3.47M</span>
+          <span class="calc-result-sub">Based on 80% autonomous handling</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule-gold">
+
+<!-- ════════════════════════════════════════
+     THE PARACLETE SHIFT
+════════════════════════════════════════ -->
+<section id="shift">
+  <div class="container">
+    <div class="shift-grid">
+      <div class="shift-left">
+        <span class="label reveal">The Model</span>
+        <h2 class="shift-heading reveal reveal-delay-1">
+          We don't hand you software.
+          <em>We stand alongside.</em>
+        </h2>
+        <p class="shift-body reveal reveal-delay-2">
+          Paraclete is not a platform login. We build the agent, configure the escalation logic, tune the voice, monitor performance, and stay in the relationship. The AI handles volume. We handle everything that makes the AI work for your specific operation.
+        </p>
+
+        <div class="reveal reveal-delay-3">
+          <div class="shift-stat">
+            <span class="shift-stat-number">80%</span>
+            <div class="shift-stat-detail">
+              <span class="shift-stat-title">Call Volume — Autonomous</span>
+              <span class="shift-stat-desc">Routine collections, payment reminders, status updates. The agent handles it cleanly.</span>
+            </div>
+          </div>
+          <div class="shift-stat">
+            <span class="shift-stat-number">20%</span>
+            <div class="shift-stat-detail">
+              <span class="shift-stat-title">Warm Transferred to Human</span>
+              <span class="shift-stat-desc">Disputes, complex negotiations, high-emotion situations. Your best rep gets the call that needs them.</span>
+            </div>
+          </div>
+          <div class="shift-stat">
+            <span class="shift-stat-number">24/7</span>
+            <div class="shift-stat-detail">
+              <span class="shift-stat-title">Consistent Coverage</span>
+              <span class="shift-stat-desc">Every call gets the same calibrated, professional response. No bad days. No turnover gaps.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="shift-right reveal reveal-delay-2">
+        <div class="shift-definition">
+          <div class="shift-def-word">Paraclete</div>
+          <div class="shift-def-etymology">Greek: Paraklētos · "Called Alongside"</div>
+          <p class="shift-def-text">In ancient legal and military contexts, a Paraclete stood shoulder-to-shoulder with you — not waving from a distance, but inside the fight. That is the operating model. We are not a vendor. We are an operational partner with skin in the outcome.</p>
+        </div>
+
+        <div class="shift-model-cards">
+          <div class="shift-model-card">
+            <div class="shift-model-icon green">
+              <svg viewBox="0 0 16 16"><path d="M2 8 L6 12 L14 4"/></svg>
+            </div>
+            <div class="shift-model-text">
+              <strong>Done-For-You Build</strong>
+              <span>We configure, voice-clone, script, and deploy. You don't touch the back end.</span>
+            </div>
+          </div>
+          <div class="shift-model-card">
+            <div class="shift-model-icon green">
+              <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5 L8 9 L11 11"/></svg>
+            </div>
+            <div class="shift-model-text">
+              <strong>Ongoing Tuning</strong>
+              <span>Performance is monitored. The agent improves. We don't deploy and disappear.</span>
+            </div>
+          </div>
+          <div class="shift-model-card">
+            <div class="shift-model-icon dim">
+              <svg viewBox="0 0 16 16"><rect x="2" y="4" width="12" height="9" rx="1"/><path d="M5 4 L5 2 M11 4 L11 2"/></svg>
+            </div>
+            <div class="shift-model-text">
+              <strong>What You Don't Get</strong>
+              <span>A login, a tutorial video, and a ticket queue. That's the other guys.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule-gold">
+
+<!-- ════════════════════════════════════════
+     THE ENGINE
+════════════════════════════════════════ -->
+<section id="engine">
+  <div class="container">
+    <div class="engine-inner">
+      <div>
+        <div class="engine-badge reveal">
+          <span class="engine-badge-dot"></span>
+          <span>Proprietary IP · Conflict Resolution Framework</span>
+        </div>
+
+        <h2 class="engine-heading reveal reveal-delay-1">
+          The agent
+          <em>de-escalates
+          before it processes.</em>
+        </h2>
+
+        <p class="engine-body reveal reveal-delay-2">
+          Every Paraclete agent is built on a conflict resolution framework field-tested in correctional facilities and crisis response units. These are environments where the wrong word at the wrong moment has real consequences. The methodology was forged there — and it works everywhere else because of it.
+        </p>
+
+        <div class="engine-proof reveal reveal-delay-3">
+          <div class="engine-proof-item">
+            <div class="engine-proof-bullet"></div>
+            <span class="engine-proof-text">Most AI agents fail on high-emotion calls because they're built on logic trees. Logic trees don't work when someone is angry about a payment. Psychology does.</span>
+          </div>
+          <div class="engine-proof-item">
+            <div class="engine-proof-bullet"></div>
+            <span class="engine-proof-text">The framework trains the agent to read tone and intent — not just keywords — before selecting a response path.</span>
+          </div>
+          <div class="engine-proof-item">
+            <div class="engine-proof-bullet"></div>
+            <span class="engine-proof-text">8+ years of application across corporate L&D, juvenile justice populations, and crisis response teams. Not a boardroom theory.</span>
+          </div>
+          <div class="engine-proof-item">
+            <div class="engine-proof-bullet"></div>
+            <span class="engine-proof-text">The agent preserves caller dignity. When dignity is preserved, calls resolve. When calls resolve, you collect.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="engine-right reveal reveal-delay-3">
+        <div class="cycle-wrapper">
+          <svg class="cycle-svg" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="160" cy="160" r="148" stroke="rgba(201,164,80,0.15)" stroke-width="1" stroke-dasharray="6 10"/>
+            <circle cx="160" cy="160" r="120" stroke="rgba(201,164,80,0.08)" stroke-width="1"/>
+          </svg>
+          <div class="cycle-center">
+            <div class="cycle-center-number">5</div>
+            <div class="cycle-center-label">Step Cycle</div>
+          </div>
+        </div>
+
+        <div class="cycle-steps">
+          <div class="cycle-step">
+            <div class="cycle-step-s">S1</div>
+            <div class="cycle-step-name">Slow Down</div>
+          </div>
+          <div class="cycle-step">
+            <div class="cycle-step-s">S2</div>
+            <div class="cycle-step-name">Size Up</div>
+          </div>
+          <div class="cycle-step">
+            <div class="cycle-step-s">S3</div>
+            <div class="cycle-step-name">Speak Smart</div>
+          </div>
+          <div class="cycle-step">
+            <div class="cycle-step-s">S4</div>
+            <div class="cycle-step-name">Select a Move</div>
+          </div>
+          <div class="cycle-step" style="grid-column: 1 / -1;">
+            <div class="cycle-step-s">S5</div>
+            <div class="cycle-step-name">Shut It Down — cleanly, with respect intact</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule-gold">
+
+<!-- ════════════════════════════════════════
+     THE FAILSAFE
+════════════════════════════════════════ -->
+<section id="failsafe">
+  <div class="container">
+    <div class="failsafe-header">
+      <span class="label reveal">Risk Mitigation</span>
+      <h2 class="failsafe-heading reveal reveal-delay-1">
+        Where the agent
+        <em>knows its limit.</em>
+      </h2>
+      <p class="failsafe-intro reveal reveal-delay-2">The agent is not built to win every call. It is built to know when to hand the call off — before the situation gets worse. That judgment is not optional; it is engineered in from the start.</p>
+    </div>
+
+    <div class="failsafe-grid">
+      <div class="failsafe-card reveal">
+        <div class="failsafe-icon">
+          <svg viewBox="0 0 20 20"><path d="M10 2 L18 6 L18 14 L10 18 L2 14 L2 6 Z"/><path d="M10 8 L10 11 M10 13 L10 13.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="failsafe-card-title">Behavioral Escalation Logic</h3>
+        <p class="failsafe-card-body">The agent tracks sentiment, tone, and call patterns in real time. When a caller crosses into territory the AI cannot navigate effectively — genuine disputes, high emotion, legal complexity — the agent executes a warm transfer to a human rep, with full call context passed through. No dead air. No frustrated caller sitting on hold wondering what happened.</p>
+      </div>
+
+      <div class="failsafe-card reveal reveal-delay-1">
+        <div class="failsafe-icon">
+          <svg viewBox="0 0 20 20"><path d="M4 10 C4 6 7 3 10 3 C13 3 16 6 16 10 C16 14 13 17 10 17"/><path d="M10 7 L10 11 L13 11"/><path d="M4 13 L7 13 M4 13 L4 16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="failsafe-card-title">The Human Doesn't Lose the Call. They Inherit It.</h3>
+        <p class="failsafe-card-body">A warm transfer means your rep enters the call informed — they know what was said, what was attempted, and what the caller needs. The AI handled the intake. The human closes the deal. That is how the 80/20 split actually functions: complementary, not competitive.</p>
+      </div>
+
+      <div class="failsafe-card reveal reveal-delay-2">
+        <div class="failsafe-icon">
+          <svg viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="12" rx="1.5"/><path d="M7 4 L7 2 M13 4 L13 2 M3 8 L17 8"/><path d="M7 11 L9 13 L13 10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="failsafe-card-title">Monitoring, Not Set-and-Forget</h3>
+        <p class="failsafe-card-body">We review call performance, escalation rates, and resolution data on an ongoing basis. When the data shows something isn't working — a trigger phrase causing unnecessary transfers, a use case the agent handles better than expected — we tune it. The system gets smarter as it runs.</p>
+      </div>
+
+      <div class="failsafe-card reveal reveal-delay-3">
+        <div class="failsafe-icon">
+          <svg viewBox="0 0 20 20"><path d="M10 3 C10 3 5 6 5 11 C5 14.5 7.5 17 10 17 C12.5 17 15 14.5 15 11 C15 6 10 3 10 3Z"/><path d="M10 8 L10 13" stroke-linecap="round"/><circle cx="10" cy="15" r="0.5" fill="#C9A450"/></svg>
+        </div>
+        <h3 class="failsafe-card-title">Voice Identity Is Human, Not Synthetic</h3>
+        <p class="failsafe-card-body">The agent's voice is cloned from a real person — not generated from a generic AI voice library. Callers are not speaking to a robot. They are speaking to a consistent, professional presence that happens to be available at 2am and never has a bad day.</p>
+      </div>
+    </div>
+
+    <div class="failsafe-compliance-bar reveal">
+      <span class="compliance-tag">FDCPA · TCPA</span>
+      <span class="compliance-desc">Required disclosures, consent verification, and opt-out handling are built into the agent architecture from day one — not added as an afterthought. Compliance is structural, not a checkbox.</span>
+    </div>
+  </div>
+</section>
+
+<hr class="rule-gold">
+
+<!-- ════════════════════════════════════════
+     COMPARISON
+════════════════════════════════════════ -->
+<section id="comparison">
+  <div class="container">
+    <span class="label reveal">Why Not DIY</span>
+    <h2 class="comparison-title reveal reveal-delay-1">
+      The market sells a wheel.
+      <em>We drive the car.</em>
+    </h2>
+
+    <table class="comparison-table reveal reveal-delay-2">
+      <thead>
+        <tr>
+          <th>Capability</th>
+          <th>DIY Platforms<br><span style="font-size:8px;color:#3A3A3A">(Bland, Vapi, etc.)</span></th>
+          <th class="highlight-col">Paraclete + Tyrrel Design</th>
+          <th>Traditional BPO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Deployment</td>
+          <td>You configure it</td>
+          <td class="highlight-col">We build and run it</td>
+          <td>You manage the headcount</td>
+        </tr>
+        <tr>
+          <td>Conflict Intelligence</td>
+          <td><span class="x-mark">✕</span> Generic responses</td>
+          <td class="highlight-col"><span class="check-mark">✓</span> 5 S's framework embedded</td>
+          <td><span class="maybe-mark">~</span> Rep-dependent</td>
+        </tr>
+        <tr>
+          <td>Escalation Logic</td>
+          <td><span class="maybe-mark">~</span> Keyword triggers</td>
+          <td class="highlight-col"><span class="check-mark">✓</span> Behavioral design</td>
+          <td><span class="maybe-mark">~</span> Manager judgment</td>
+        </tr>
+        <tr>
+          <td>Voice Identity</td>
+          <td><span class="maybe-mark">~</span> Generic AI voice</td>
+          <td class="highlight-col"><span class="check-mark">✓</span> Cloned from real human</td>
+          <td><span class="check-mark">✓</span> Human, but inconsistent</td>
+        </tr>
+        <tr>
+          <td>Ongoing Tuning</td>
+          <td><span class="x-mark">✕</span> You own the fixes</td>
+          <td class="highlight-col"><span class="check-mark">✓</span> We monitor and improve</td>
+          <td><span class="maybe-mark">~</span> Training cycles</td>
+        </tr>
+        <tr>
+          <td>Cost Structure</td>
+          <td><span class="maybe-mark">~</span> Platform fee + your time</td>
+          <td class="highlight-col"><span class="check-mark">✓</span> Predictable, outcome-based</td>
+          <td><span class="x-mark">✕</span> Scales with headcount</td>
+        </tr>
+        <tr>
+          <td>Methodology Depth</td>
+          <td><span class="x-mark">✕</span> None</td>
+          <td class="highlight-col"><span class="check-mark">✓</span> 8+ years, field-tested</td>
+          <td><span class="maybe-mark">~</span> Script-based</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="rule-gold">
+
+<!-- ════════════════════════════════════════
+     THE PILOT
+════════════════════════════════════════ -->
+<section id="pilot">
+  <div class="container">
+    <div class="pilot-inner">
+      <div>
+        <span class="label reveal">The Ask</span>
+        <h2 class="pilot-heading reveal reveal-delay-1">
+          30 days.
+          <em>One use case.</em>
+          Real data.
+        </h2>
+        <p class="pilot-body reveal reveal-delay-2">
+          Not a contract. Not a commitment to overhaul your operation. A scoped proof of concept on a single call route — inbound collections or outbound payment reminders — where the numbers can speak without any of the risk of a full deployment.
+        </p>
+
+        <div class="pilot-deliverables reveal reveal-delay-3">
+          <div class="pilot-deliverable">
+            <span class="pilot-deliverable-num">01</span>
+            <div class="pilot-deliverable-text">
+              <strong>Agent Build + Deployment</strong>
+              <span>Configured, voice-cloned, and live within the first week.</span>
+            </div>
+          </div>
+          <div class="pilot-deliverable">
+            <span class="pilot-deliverable-num">02</span>
+            <div class="pilot-deliverable-text">
+              <strong>Call Resolution Rate Tracking</strong>
+              <span>What percentage of calls close without escalation.</span>
+            </div>
+          </div>
+          <div class="pilot-deliverable">
+            <span class="pilot-deliverable-num">03</span>
+            <div class="pilot-deliverable-text">
+              <strong>Cost Per Call — Side By Side</strong>
+              <span>Your current cost against Paraclete cost for the same volume.</span>
+            </div>
+          </div>
+          <div class="pilot-deliverable">
+            <span class="pilot-deliverable-num">04</span>
+            <div class="pilot-deliverable-text">
+              <strong>30-Day Performance Report</strong>
+              <span>A document you can pass to whoever needs to make the next decision.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pilot-right reveal reveal-delay-2">
+        <div class="pilot-cta-card">
+          <span class="pilot-cta-tag">Phase 1 · Pilot Proposal</span>
+          <h3 class="pilot-cta-heading">Sign a pilot. Not a contract.</h3>
+          <p class="pilot-cta-body">The goal of 30 days is proof, not profit. If the numbers don't make the case on their own, there is nothing more to discuss. But they will.</p>
+
+          <div class="pilot-cta-metrics">
+            <div class="pilot-metric">
+              <span class="pilot-metric-val">30</span>
+              <span class="pilot-metric-lbl">Day window</span>
+            </div>
+            <div class="pilot-metric">
+              <span class="pilot-metric-val">1</span>
+              <span class="pilot-metric-lbl">Use case</span>
+            </div>
+            <div class="pilot-metric">
+              <span class="pilot-metric-val">≤7</span>
+              <span class="pilot-metric-lbl">Days to live</span>
+            </div>
+            <div class="pilot-metric">
+              <span class="pilot-metric-val">$0</span>
+              <span class="pilot-metric-lbl">Setup delay</span>
+            </div>
+          </div>
+
+          <a href="mailto:hello@tyrrel.org?subject=Paraclete%20Pilot%20Proposal%20%E2%80%94%20PayTomorrow" class="pilot-cta-btn">
+            Request Pilot Scope
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div>
+    <div class="footer-brand">Paraclete</div>
+    <div class="footer-partner" style="margin-top:4px;">In partnership with Tyrrel Design</div>
+  </div>
+  <div class="footer-meta">Confidential · PayTomorrow LLC · 2026</div>
+</footer>
+
+<script>
+  // ─── PROGRESS BAR ───
+  const progressBar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = (scrollTop / docHeight) * 100;
+    progressBar.style.width = pct + '%';
+  });
+
+  // ─── SCROLL REVEAL ───
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  // ─── CALCULATOR ───
+  const volumeInput   = document.getElementById('call-volume');
+  const costInput     = document.getElementById('current-cost');
+  const volDisplay    = document.getElementById('call-volume-display');
+  const costDisplay   = document.getElementById('current-cost-display');
+  const currentAnnual = document.getElementById('current-annual');
+  const paracleteAnn  = document.getElementById('paraclete-annual');
+  const savingsAnn    = document.getElementById('savings-annual');
+  const bpoCostDisp   = document.getElementById('bpo-cost-display');
+
+  function formatCurrency(n) {
+    if (n >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+    if (n >= 1000)    return '$' + Math.round(n / 1000) + 'K';
+    return '$' + n.toFixed(0);
+  }
+
+  function updateCalc() {
+    const volume    = parseInt(volumeInput.value);
+    const costPerMin = parseFloat(costInput.value);
+
+    volDisplay.textContent  = volume.toLocaleString();
+    costDisplay.textContent = '$' + costPerMin.toFixed(2);
+    bpoCostDisp.textContent = '$' + costPerMin.toFixed(2) + '+';
+
+    const currentAnn  = volume * costPerMin * 12;
+    const paracleteAnnVal = volume * 0.22 * 12; // blended $0.22/min
+    const savings     = currentAnn - paracleteAnnVal;
+
+    currentAnnual.textContent = formatCurrency(currentAnn);
+    paracleteAnn.textContent  = formatCurrency(paracleteAnnVal);
+    savingsAnn.textContent    = formatCurrency(savings);
+  }
+
+  volumeInput.addEventListener('input', updateCalc);
+  costInput.addEventListener('input', updateCalc);
+  updateCalc();
+
+  // ─── COUNTER ANIMATION on calc results ───
+  function animateValue(el, from, to, duration) {
+    const start = performance.now();
+    function step(timestamp) {
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = from + (to - from) * eased;
+      el.textContent = formatCurrency(current);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const calcObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const vol  = parseInt(volumeInput.value);
+        const cost = parseFloat(costInput.value);
+        const cur = vol * cost * 12;
+        const par = vol * 0.22 * 12;
+        const sav = cur - par;
+        animateValue(currentAnnual, 0, cur, 1000);
+        animateValue(paracleteAnn,  0, par, 1100);
+        animateValue(savingsAnn,    0, sav, 1200);
+        calcObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  calcObserver.observe(document.querySelector('.calc-results'));
+</script>
+</body>
+</html>
