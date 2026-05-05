@@ -232,13 +232,14 @@
 
   .hero-number {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(120px, 18vw, 220px);
+    font-size: clamp(100px, 16vw, 220px);
     font-weight: 300;
-    line-height: 0.85;
-    color: var(--ivory);
+    line-height: 1;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(220, 180, 80, 0.4), 0 0 60px rgba(220, 180, 80, 0.2);
     letter-spacing: -0.04em;
     animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-    position: relative;
+    display: inline-block;
   }
 
   .hero-number sup {
@@ -246,6 +247,7 @@
     vertical-align: super;
     font-weight: 400;
     color: var(--gold);
+    text-shadow: none;
   }
 
   .hero-number .per {
@@ -256,6 +258,7 @@
     display: block;
     letter-spacing: 0.05em;
     margin-top: 0.4em;
+    text-shadow: none;
   }
 
   .hero-vs-block {
@@ -693,7 +696,7 @@
      SECTION 04 · THE ENGINE
   ───────────────────────────────────────── */
   #engine {
-    background: var(--green);
+    background: linear-gradient(135deg, rgba(13, 35, 20, 0.95) 0%, rgba(8, 20, 12, 0.95) 100%);
     padding: 120px 0;
     position: relative;
     overflow: hidden;
@@ -818,6 +821,7 @@
   .cycle-svg {
     position: absolute;
     inset: 0;
+    filter: drop-shadow(0 0 15px rgba(220, 180, 80, 0.5)) drop-shadow(0 0 30px rgba(220, 180, 80, 0.25));
     animation: spin 30s linear infinite;
   }
 
@@ -1331,11 +1335,25 @@
     nav { padding: 16px 24px; }
     .container, .container-narrow { padding: 0 24px; }
     section { padding: 80px 0; }
+    
+    /* Fix Hero Overlap on Phone */
+    .hero-number { font-size: clamp(70px, 18vw, 120px); line-height: 1; display: block; }
+    .hero-number .per { margin-top: 12px; }
+    .hero-vs-block { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .hero-vs-separator { display: none; }
+    
+    /* Stack Grids */
     .shift-grid, .engine-inner, .pilot-inner { grid-template-columns: 1fr; gap: 48px; }
-    .failsafe-grid, .calc-controls, .comparison-table, .calc-results { grid-template-columns: 1fr; }
-    .cycle-wrapper { width: 240px; height: 240px; }
+    .failsafe-grid, .calc-controls, .calc-results, .cycle-steps { grid-template-columns: 1fr; }
+    
+    /* Override grid-column span for mobile */
+    .cycle-step[style] { grid-column: auto !important; }
+    
+    /* Fix Table Overflow */
+    .comparison-table { display: block; overflow-x: auto; white-space: nowrap; padding-bottom: 20px; }
+    
+    .cycle-wrapper { width: 240px; height: 240px; margin: 0 auto; }
     footer { flex-direction: column; gap: 16px; text-align: center; }
-    .hero-number { font-size: clamp(80px, 18vw, 140px); }
   }
 </style>
 </head>
@@ -1583,30 +1601,30 @@
           </svg>
           <div class="cycle-center">
             <div class="cycle-center-number">5</div>
-            <div class="cycle-center-label">Step Cycle</div>
+            <div class="cycle-center-label">Resolution Cycle</div>
           </div>
         </div>
 
         <div class="cycle-steps">
           <div class="cycle-step">
-            <div class="cycle-step-s">S1</div>
-            <div class="cycle-step-name">Slow Down</div>
+            <div class="cycle-step-s">Phase 1</div>
+            <div class="cycle-step-name">Pace De-escalation</div>
           </div>
           <div class="cycle-step">
-            <div class="cycle-step-s">S2</div>
-            <div class="cycle-step-name">Size Up</div>
+            <div class="cycle-step-s">Phase 2</div>
+            <div class="cycle-step-name">Intent Mapping</div>
           </div>
           <div class="cycle-step">
-            <div class="cycle-step-s">S3</div>
-            <div class="cycle-step-name">Speak Smart</div>
+            <div class="cycle-step-s">Phase 3</div>
+            <div class="cycle-step-name">Dignity Preservation</div>
           </div>
           <div class="cycle-step">
-            <div class="cycle-step-s">S4</div>
-            <div class="cycle-step-name">Select a Move</div>
+            <div class="cycle-step-s">Phase 4</div>
+            <div class="cycle-step-name">Dynamic Pathing</div>
           </div>
           <div class="cycle-step" style="grid-column: 1 / -1;">
-            <div class="cycle-step-s">S5</div>
-            <div class="cycle-step-name">Shut It Down — cleanly, with respect intact</div>
+            <div class="cycle-step-s">Phase 5</div>
+            <div class="cycle-step-name">Clean Resolution — closing the loop definitively</div>
           </div>
         </div>
       </div>
