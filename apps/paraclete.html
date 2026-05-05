@@ -231,9 +231,9 @@
   }
 
   .hero-number {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif; /* Swapped font to fix the 1 */
     font-size: clamp(100px, 16vw, 220px);
-    font-weight: 300;
+    font-weight: 400; /* Bumped weight slightly for better definition */
     line-height: 1;
     color: var(--gold);
     text-shadow: 0 0 30px rgba(220, 180, 80, 0.4), 0 0 60px rgba(220, 180, 80, 0.2);
@@ -1383,18 +1383,18 @@
   <div class="container">
     <div class="hero-eyebrow">
       <div class="hero-eyebrow-line"></div>
-      <span class="label">AI Voice Operations — Pitch Brief</span>
+      <span class="label">The Offshore BPO Replacement</span>
     </div>
 
-    <div class="hero-number">
+    <div class="hero-number" style="font-family: 'Playfair Display', serif;">
       <sup>$</sup>0.31
       <span class="per">or less. Per minute. All in.</span>
     </div>
 
     <div class="hero-vs-block">
       <div class="hero-vs-item">
-        <span class="hero-vs-value current" id="bpo-cost-display">$6.00+</span>
-        <span class="hero-vs-label">Current BPO — per minute</span>
+        <span class="hero-vs-value current" id="bpo-cost-display">$1.20+</span>
+        <span class="hero-vs-label">Standard Offshore — per minute</span>
       </div>
       <div class="hero-vs-separator">vs.</div>
       <div class="hero-vs-item">
@@ -1403,7 +1403,7 @@
       </div>
     </div>
 
-    <p class="hero-sub">That gap is your number. Everything below is the operating model that makes it real.</p>
+    <p class="hero-sub">Stop the $35,000–$50,000 monthly offshore bleed. We replace your outsourced friction with a flawless, empathy-driven agent that handles your frontline volume for a fraction of the cost.</p>
   </div>
 
   <div class="hero-scroll-hint">
@@ -1414,56 +1414,69 @@
   </div>
 </section>
 
-<hr class="rule-gold">
-
 <!-- ════════════════════════════════════════
      CALCULATOR
 ════════════════════════════════════════ -->
-<section id="calculator">
+<section id="calculator" style="padding: 100px 24px; background: var(--dark-2); border-bottom: 1px solid var(--border);">
   <div class="container">
-    <div class="calc-inner reveal">
-      <div class="calc-header">
-        <h2 class="calc-title">Run your <em>own numbers</em></h2>
-        <p class="calc-description">Adjust the inputs. The annual savings calculate in real time. This is the conversation your current vendor doesn't want you having.</p>
+    <div class="section-eyebrow">
+      <span class="section-number">01</span>
+      <span class="section-label">The Cost Comparison</span>
+    </div>
+    <h2 class="section-title">Let the math make<br><em>the decision.</em></h2>
+    
+    <div style="background: var(--dark); border: 1px solid var(--border); padding: 48px; border-radius: 4px; max-width: 900px; margin-top: 40px;">
+      
+      <div style="margin-bottom: 40px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+          <label style="font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ivory-2); text-transform: uppercase; letter-spacing: 0.1em;">Estimated Monthly Call Minutes</label>
+          <span id="minute-display" style="font-family: 'DM Mono', monospace; font-size: 14px; color: var(--gold);">40,000 mins</span>
+        </div>
+        <input type="range" id="volume-slider" min="10000" max="100000" value="40000" step="5000" style="width: 100%; accent-color: var(--gold); cursor: pointer;">
       </div>
 
-      <div class="calc-controls">
-        <div class="calc-input-group">
-          <label>Monthly Call Volume (minutes)</label>
-          <div class="calc-input-wrapper">
-            <input type="range" id="call-volume" min="5000" max="200000" step="5000" value="50000">
-            <span class="calc-value-display mono" id="call-volume-display">50,000</span>
-          </div>
+      <div class="calc-results" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        
+        <div style="background: var(--dark-3); padding: 32px; border-left: 3px solid #8B3A3A;">
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: #9A9688; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">Standard Offshore BPO</div>
+          <div id="cost-old" style="font-family: 'Playfair Display', serif; font-size: 48px; color: #E8E4D8; line-height: 1;">$48,000</div>
+          <div style="font-size: 13px; color: #5A5A52; margin-top: 8px;">Based on est. $1.20 blended rate</div>
         </div>
-        <div class="calc-input-group">
-          <label>Current Cost Per Minute ($)</label>
-          <div class="calc-input-wrapper">
-            <input type="range" id="current-cost" min="2" max="12" step="0.25" value="6.00">
-            <span class="calc-value-display mono" id="current-cost-display">$6.00</span>
-          </div>
-        </div>
-      </div>
 
-      <div class="calc-results">
-        <div class="calc-result-cell">
-          <span class="calc-result-label">Current Annual Spend</span>
-          <span class="calc-result-value negative" id="current-annual">$3.6M</span>
-          <span class="calc-result-sub">At your current rate</span>
-        </div>
-        <div class="calc-result-cell">
-          <span class="calc-result-label">Paraclete Annual Cost</span>
-          <span class="calc-result-value" id="paraclete-annual">$132K</span>
-          <span class="calc-result-sub">At $0.22/min blended avg</span>
-        </div>
-        <div class="calc-result-cell highlight">
-          <span class="calc-result-label">Estimated Annual Savings</span>
-          <span class="calc-result-value positive" id="savings-annual">$3.47M</span>
-          <span class="calc-result-sub">Based on 80% autonomous handling</span>
+        <div style="background: rgba(201, 168, 76, 0.05); padding: 32px; border-left: 3px solid var(--gold);">
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">Paraclete AI Agent</div>
+          <div id="cost-new" style="font-family: 'Playfair Display', serif; font-size: 48px; color: var(--gold); line-height: 1;">$12,400</div>
+          <div style="font-size: 13px; color: #9A9688; margin-top: 8px;">Based on $0.31 maximum rate</div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const slider = document.getElementById('volume-slider');
+    const minuteDisplay = document.getElementById('minute-display');
+    const costOld = document.getElementById('cost-old');
+    const costNew = document.getElementById('cost-new');
+
+    const OLD_RATE = 1.20; 
+    const NEW_RATE = 0.31;
+
+    function updateMath() {
+      if(!slider) return;
+      const mins = parseInt(slider.value);
+      minuteDisplay.textContent = mins.toLocaleString() + ' mins';
+      costOld.textContent = '$' + Math.round(mins * OLD_RATE).toLocaleString();
+      costNew.textContent = '$' + Math.round(mins * NEW_RATE).toLocaleString();
+    }
+
+    if(slider) {
+      slider.addEventListener('input', updateMath);
+      updateMath();
+    }
+  });
+</script>
 
 <hr class="rule-gold">
 
