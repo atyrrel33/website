@@ -821,8 +821,22 @@
   .cycle-svg {
     position: absolute;
     inset: 0;
-    filter: drop-shadow(0 0 15px rgba(220, 180, 80, 0.5)) drop-shadow(0 0 30px rgba(220, 180, 80, 0.25));
+    width: 100%;
+    height: 100%;
+    /* Triple-layered intense gold glow */
+    filter: drop-shadow(0 0 8px rgba(201, 168, 76, 0.9)) 
+            drop-shadow(0 0 20px rgba(201, 168, 76, 0.6)) 
+            drop-shadow(0 0 40px rgba(201, 168, 76, 0.4));
     animation: spin 30s linear infinite;
+  }
+  
+  /* This forces the actual lines of the rings to be thicker and brighter */
+  .cycle-svg circle, 
+  .cycle-svg path, 
+  .cycle-svg ellipse {
+    stroke-width: 2.5px !important;
+    stroke: var(--gold) !important;
+    opacity: 0.95;
   }
 
   @keyframes spin {
@@ -835,14 +849,13 @@
     position: relative;
     z-index: 2;
   }
-
   .cycle-center-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 88px;
-    font-weight: 300;
-    line-height: 0.85;
-    color: white;
-    letter-spacing: -0.04em;
+    font-family: 'Playfair Display', serif;
+    font-size: 90px;
+    line-height: 0.85; /* This pulls the bottom of the 5 up so it stops overlapping */
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(201, 168, 76, 0.5); /* Adds a nice gold glow to the 5 */
+    margin-bottom: 12px; /* Forces breathing room between the 5 and the label */
   }
 
   .cycle-center-label {
