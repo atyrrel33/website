@@ -462,10 +462,8 @@
 
   .calc-results {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--black-5);
-    border: 1px solid var(--border);
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
   }
 
   .calc-result-cell {
@@ -1343,7 +1341,7 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ─── RESPONSIVE ─── */
+ /* ─── RESPONSIVE ─── */
   @media (max-width: 860px) {
     nav { padding: 16px 24px; }
     .container, .container-narrow { padding: 0 24px; }
@@ -1357,7 +1355,7 @@
     
     /* Stack Grids */
     .shift-grid, .engine-inner, .pilot-inner { grid-template-columns: 1fr; gap: 48px; }
-    .failsafe-grid, .calc-controls, .calc-results, .cycle-steps { grid-template-columns: 1fr; }
+    .failsafe-grid, .calc-results, .cycle-steps { grid-template-columns: 1fr !important; }
     
     /* Override grid-column span for mobile */
     .cycle-step[style] { grid-column: auto !important; }
@@ -1365,7 +1363,10 @@
     /* Fix Table Overflow */
     .comparison-table { display: block; overflow-x: auto; white-space: nowrap; padding-bottom: 20px; }
     
-    .cycle-wrapper { width: 240px; height: 240px; margin: 0 auto; }
+    /* Cycle Graphic Fixes for Phone */
+    .cycle-wrapper { width: 280px; height: 280px; margin: 0 auto; }
+    .cycle-center-number { font-size: 72px; margin-bottom: 4px; }
+    
     footer { flex-direction: column; gap: 16px; text-align: center; }
   }
 </style>
@@ -1448,17 +1449,17 @@
         <input type="range" id="volume-slider" min="10000" max="100000" value="40000" step="5000" style="width: 100%; accent-color: var(--gold); cursor: pointer;">
       </div>
 
-      <div class="calc-results" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+      <div class="calc-results">
         
         <div style="background: var(--dark-3); padding: 32px; border-left: 3px solid #8B3A3A;">
           <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: #9A9688; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">Standard Offshore BPO</div>
-          <div id="cost-old" style="font-family: 'Playfair Display', serif; font-size: 48px; color: #E8E4D8; line-height: 1;">$48,000</div>
+          <div id="cost-old" style="font-family: 'Playfair Display', serif; font-size: clamp(36px, 8vw, 48px); color: #E8E4D8; line-height: 1;">$48,000</div>
           <div style="font-size: 13px; color: #5A5A52; margin-top: 8px;">Based on est. $1.20 blended rate</div>
         </div>
 
         <div style="background: rgba(201, 168, 76, 0.05); padding: 32px; border-left: 3px solid var(--gold);">
           <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">Paraclete AI Agent</div>
-          <div id="cost-new" style="font-family: 'Playfair Display', serif; font-size: 48px; color: var(--gold); line-height: 1;">$12,400</div>
+          <div id="cost-new" style="font-family: 'Playfair Display', serif; font-size: clamp(36px, 8vw, 48px); color: var(--gold); line-height: 1;">$12,400</div>
           <div style="font-size: 13px; color: #9A9688; margin-top: 8px;">Based on $0.31 maximum rate</div>
         </div>
       </div>
@@ -1627,7 +1628,7 @@
           </svg>
           <div class="cycle-center">
             <div class="cycle-center-number">5</div>
-            <div class="cycle-center-label">Phase Resolution Cycle</div>
+            <div class="cycle-center-label">Phase<br>Resolution Cycle</div>
           </div>
         </div>
 
