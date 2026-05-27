@@ -57,25 +57,6 @@
 </head>
 <body>
 
-  <script>
-    // Set your password here
-    const correctPassword = "access1990"; 
-    
-    // Prompt the user when the page loads
-    const userAttempt = prompt("Enter the password to access the Apps Directory:");
-
-    if (userAttempt === correctPassword) {
-      // If correct, unhide the content
-      document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("secure-content").style.display = "flex";
-      });
-    } else {
-      // If wrong or cancelled, boot them back to the home page
-      alert("Incorrect password. Returning to home.");
-      window.location.href = "/"; 
-    }
-  </script>
-
   <div id="secure-content">
     <h1>APPS</h1>
 
